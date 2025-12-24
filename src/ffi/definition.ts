@@ -4,6 +4,7 @@ import { InitDefinition } from './init/definition';
 import { LogDefinition } from './log/definition';
 import { PropertiesDefinition } from './properties/definition';
 import { VersionDefinition } from './version/definition';
+import { VideoDefinition } from './video/definition';
 
 export const FFFIDefinition = {
   ...ErrorDefinition,
@@ -12,6 +13,7 @@ export const FFFIDefinition = {
   ...VersionDefinition,
   ...PropertiesDefinition,
   ...LogDefinition,
+  ...VideoDefinition,
 };
 
 export type FFFIDefinition = typeof FFFIDefinition;

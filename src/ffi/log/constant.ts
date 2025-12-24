@@ -9,3 +9,5 @@ export const LogPriority = {
   SDL_LOG_PRIORITY_CRITICAL: 7,
   SDL_LOG_PRIORITY_COUNT: 8,
 } as const;
+
+export type LogPriority = (typeof LogPriority)[keyof typeof LogPriority];

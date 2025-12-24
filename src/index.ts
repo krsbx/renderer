@@ -3,8 +3,12 @@ import {
   FFFIDefinition,
   type FFFIDefinition as FFFIDefinitionType,
 } from './ffi/definition';
+import {
+  Translations,
+  type Translations as TranslationsType,
+} from './translations/index';
 
-export class SDL implements Library<FFFIDefinitionType> {
+export class BaseSDL implements Library<FFFIDefinitionType> {
   public readonly close: () => void;
   public readonly symbols: ConvertFns<FFFIDefinitionType>;
 
@@ -12,5 +16,15 @@ export class SDL implements Library<FFFIDefinitionType> {
     const sdl = dlopen(filePath, FFFIDefinition);
     this.close = sdl.close;
     this.symbols = sdl.symbols;
+
+    Object.entries(Translations).forEach(([key, value]) => {
+      (this as Record<string, unknown>)[key] = value.bind(this as never);
+    });
   }
 }
+
+export interface SDL extends BaseSDL, TranslationsType {}
+
+export const SDL = BaseSDL as new (
+  ...args: ConstructorParameters<typeof BaseSDL>
+) => SDL;

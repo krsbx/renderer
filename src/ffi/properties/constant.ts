@@ -6,3 +6,5 @@ export const PropertyType = {
   SDL_PROPERTY_TYPE_FLOAT: 4,
   SDL_PROPERTY_TYPE_BOOLEAN: 5,
 } as const;
+
+export type PropertyType = (typeof PropertyType)[keyof typeof PropertyType];

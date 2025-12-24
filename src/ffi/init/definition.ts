@@ -2,20 +2,20 @@ import { type FFIFunction, FFIType } from 'bun:ffi';
 
 export const InitDefinition = {
   SDL_Init: {
-    args: [FFIType.u32],
+    args: [FFIType.i32],
     returns: FFIType.bool,
   },
   SDL_InitSubSystem: {
-    args: [FFIType.u32],
+    args: [FFIType.i32],
     returns: FFIType.bool,
   },
   SDL_QuitSubSystem: {
-    args: [FFIType.u32],
+    args: [FFIType.i32],
     returns: FFIType.void,
   },
   SDL_WasInit: {
-    args: [FFIType.u32],
-    returns: FFIType.u32,
+    args: [FFIType.i32],
+    returns: FFIType.i32,
   },
   SDL_Quit: {
     args: [],

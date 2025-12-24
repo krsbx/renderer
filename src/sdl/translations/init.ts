@@ -1,33 +1,33 @@
 import { JSCallback, ptr, type Pointer } from 'bun:ffi';
-import type { SDL } from '..';
+import type { BaseSDL } from '..';
 import type { InitFlags } from '../ffi/init/constant';
 
-export function initTranslations(this: SDL, flags: InitFlags) {
+export function initTranslations(this: BaseSDL, flags: InitFlags) {
   return this.symbols.SDL_Init(flags);
 }
 
-export function initSubSystem(this: SDL, flags: InitFlags) {
+export function initSubSystem(this: BaseSDL, flags: InitFlags) {
   return this.symbols.SDL_InitSubSystem(flags);
 }
 
-export function quitSubSystem(this: SDL, flags: InitFlags) {
+export function quitSubSystem(this: BaseSDL, flags: InitFlags) {
   this.symbols.SDL_QuitSubSystem(flags);
 }
 
-export function wasInit(this: SDL, flags: InitFlags) {
+export function wasInit(this: BaseSDL, flags: InitFlags) {
   return this.symbols.SDL_WasInit(flags);
 }
 
-export function quit(this: SDL) {
+export function quit(this: BaseSDL) {
   this.symbols.SDL_Quit();
 }
 
-export function isMainThread(this: SDL) {
+export function isMainThread(this: BaseSDL) {
   return this.symbols.SDL_IsMainThread();
 }
 
 export function runOnMainThread(
-  this: SDL,
+  this: BaseSDL,
   options: {
     callback: JSCallback;
     userData?: Pointer | null;
@@ -42,7 +42,7 @@ export function runOnMainThread(
 }
 
 export function setAppMetadata(
-  this: SDL,
+  this: BaseSDL,
   options: {
     name: string;
     version: string;
@@ -57,7 +57,7 @@ export function setAppMetadata(
 }
 
 export function setAppMetadataProperty(
-  this: SDL,
+  this: BaseSDL,
   options: {
     name: string;
     value: string;
@@ -69,7 +69,7 @@ export function setAppMetadataProperty(
   );
 }
 
-export function getAppMetdataProperty(this: SDL, name: string) {
+export function getAppMetdataProperty(this: BaseSDL, name: string) {
   return this.symbols.SDL_GetAppMetadataProperty(
     ptr(Buffer.from(name, 'utf-8'))
   );

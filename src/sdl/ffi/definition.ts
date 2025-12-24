@@ -6,7 +6,7 @@ import { PropertiesDefinition } from './properties/definition';
 import { VersionDefinition } from './version/definition';
 import { VideoDefinition } from './video/definition';
 
-export const FFFIDefinition = {
+export const FFIDefinition = {
   ...ErrorDefinition,
   ...HintsDefinition,
   ...InitDefinition,
@@ -16,4 +16,4 @@ export const FFFIDefinition = {
   ...VideoDefinition,
 };
 
-export type FFFIDefinition = typeof FFFIDefinition;
+export type FFIDefinition = typeof FFIDefinition;

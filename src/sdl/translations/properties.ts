@@ -1,17 +1,17 @@
 import { JSCallback, type Pointer, ptr } from 'bun:ffi';
-import type { SDL } from '..';
+import type { BaseSDL } from '..';
 import type { PropertyType } from '../ffi/properties/constant';
 
-export function getGlobalProperties(this: SDL) {
+export function getGlobalProperties(this: BaseSDL) {
   return this.symbols.SDL_GetGlobalProperties();
 }
 
-export function createProerties(this: SDL) {
+export function createProerties(this: BaseSDL) {
   return this.symbols.SDL_CreateProperties();
 }
 
 export function copyProperties(
-  this: SDL,
+  this: BaseSDL,
   options: {
     src: number;
     dest: number;
@@ -20,16 +20,16 @@ export function copyProperties(
   return this.symbols.SDL_CopyProperties(options.src, options.dest);
 }
 
-export function lockProperties(this: SDL, props: number) {
+export function lockProperties(this: BaseSDL, props: number) {
   return this.symbols.SDL_LockProperties(props);
 }
 
-export function unlockProperties(this: SDL, props: number) {
+export function unlockProperties(this: BaseSDL, props: number) {
   return this.symbols.SDL_UnlockProperties(props);
 }
 
 export function setPointerPropertyWithCleanup(
-  this: SDL,
+  this: BaseSDL,
   options: {
     props: number;
     name: string;
@@ -48,7 +48,7 @@ export function setPointerPropertyWithCleanup(
 }
 
 export function setPointerProperty(
-  this: SDL,
+  this: BaseSDL,
   options: {
     props: number;
     name: string;
@@ -63,7 +63,7 @@ export function setPointerProperty(
 }
 
 export function setStringProperty(
-  this: SDL,
+  this: BaseSDL,
   options: {
     props: number;
     name: string;
@@ -78,7 +78,7 @@ export function setStringProperty(
 }
 
 export function setNumberProperty(
-  this: SDL,
+  this: BaseSDL,
   options: {
     props: number;
     name: string;
@@ -93,7 +93,7 @@ export function setNumberProperty(
 }
 
 export function setFloatProperty(
-  this: SDL,
+  this: BaseSDL,
   options: {
     props: number;
     name: string;
@@ -108,7 +108,7 @@ export function setFloatProperty(
 }
 
 export function setBooleanProperty(
-  this: SDL,
+  this: BaseSDL,
   options: {
     props: number;
     name: string;
@@ -123,7 +123,7 @@ export function setBooleanProperty(
 }
 
 export function hasProperty(
-  this: SDL,
+  this: BaseSDL,
   options: {
     props: number;
     name: string;
@@ -136,7 +136,7 @@ export function hasProperty(
 }
 
 export function getPropertyType(
-  this: SDL,
+  this: BaseSDL,
   options: {
     props: number;
     name: string;
@@ -149,7 +149,7 @@ export function getPropertyType(
 }
 
 export function getPointerProperty(
-  this: SDL,
+  this: BaseSDL,
   options: {
     props: number;
     name: string;
@@ -162,7 +162,7 @@ export function getPointerProperty(
 }
 
 export function getStringProperty(
-  this: SDL,
+  this: BaseSDL,
   options: {
     props: number;
     name: string;
@@ -177,7 +177,7 @@ export function getStringProperty(
 }
 
 export function getNumberProperty(
-  this: SDL,
+  this: BaseSDL,
   options: {
     props: number;
     name: string;
@@ -192,7 +192,7 @@ export function getNumberProperty(
 }
 
 export function getFloatProperty(
-  this: SDL,
+  this: BaseSDL,
   options: {
     props: number;
     name: string;
@@ -207,7 +207,7 @@ export function getFloatProperty(
 }
 
 export function getBooleanProperty(
-  this: SDL,
+  this: BaseSDL,
   options: {
     props: number;
     name: string;
@@ -222,7 +222,7 @@ export function getBooleanProperty(
 }
 
 export function clearProperties(
-  this: SDL,
+  this: BaseSDL,
   options: {
     props: number;
     name: string;
@@ -235,7 +235,7 @@ export function clearProperties(
 }
 
 export function enumerateProperties(
-  this: SDL,
+  this: BaseSDL,
   options: {
     props: number;
     callback: JSCallback;
@@ -250,7 +250,7 @@ export function enumerateProperties(
 }
 
 export function destroyProperties(
-  this: SDL,
+  this: BaseSDL,
   options: {
     props: number;
   }

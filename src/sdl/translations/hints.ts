@@ -1,9 +1,9 @@
 import { JSCallback, ptr, type Pointer } from 'bun:ffi';
-import type { SDL } from '..';
+import type { BaseSDL } from '..';
 import type { HintsPriority } from '../ffi/hints/constant';
 
 export function setHintWithPriority(
-  this: SDL,
+  this: BaseSDL,
   options: {
     name: string;
     value: string;
@@ -18,7 +18,7 @@ export function setHintWithPriority(
 }
 
 export function setHint(
-  this: SDL,
+  this: BaseSDL,
   options: {
     name: string;
     value: string;
@@ -30,20 +30,20 @@ export function setHint(
   );
 }
 
-export function resetHint(this: SDL, name: string) {
+export function resetHint(this: BaseSDL, name: string) {
   return this.symbols.SDL_ResetHint(ptr(Buffer.from(name, 'utf-8')));
 }
 
-export function resetHints(this: SDL) {
+export function resetHints(this: BaseSDL) {
   return this.symbols.SDL_ResetHints();
 }
 
-export function getHint(this: SDL, name: string) {
+export function getHint(this: BaseSDL, name: string) {
   return this.symbols.SDL_GetHint(ptr(Buffer.from(name, 'utf-8')));
 }
 
 export function getHintBoolean(
-  this: SDL,
+  this: BaseSDL,
   options: {
     name: string;
     defaultValue: boolean;
@@ -56,7 +56,7 @@ export function getHintBoolean(
 }
 
 export function addHintCallback(
-  this: SDL,
+  this: BaseSDL,
   options: {
     name: string;
     callback: JSCallback;
@@ -71,7 +71,7 @@ export function addHintCallback(
 }
 
 export function removeHintCallback(
-  this: SDL,
+  this: BaseSDL,
   options: {
     name: string;
     callback: JSCallback;

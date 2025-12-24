@@ -1,13 +1,13 @@
 import { JSCallback, ptr, type Pointer } from 'bun:ffi';
-import type { SDL } from '..';
+import type { BaseSDL } from '..';
 import type { LogPriority } from '../ffi/log/constant';
 
-export function setLogPriorities(this: SDL, priority: LogPriority) {
+export function setLogPriorities(this: BaseSDL, priority: LogPriority) {
   this.symbols.SDL_SetLogPriority(priority);
 }
 
 export function setLogPriority(
-  this: SDL,
+  this: BaseSDL,
   options: {
     category: number;
     priority: LogPriority;
@@ -16,16 +16,16 @@ export function setLogPriority(
   return this.symbols.SDL_SetLogPriority(options.category, options.priority);
 }
 
-export function getLogPriority(this: SDL, category: number) {
+export function getLogPriority(this: BaseSDL, category: number) {
   return this.symbols.SDL_GetLogPriority(category) as LogPriority;
 }
 
-export function resetLogPriorities(this: SDL) {
+export function resetLogPriorities(this: BaseSDL) {
   this.symbols.SDL_ResetLogPriorities();
 }
 
 export function setLogPriorityPrefix(
-  this: SDL,
+  this: BaseSDL,
   options: {
     priority: LogPriority;
     prefix: string;
@@ -37,52 +37,52 @@ export function setLogPriorityPrefix(
   );
 }
 
-export function log(this: SDL) {
+export function log(this: BaseSDL) {
   throw new Error('Not implemented');
 }
 
-export function logTrace(this: SDL) {
+export function logTrace(this: BaseSDL) {
   throw new Error('Not implemented');
 }
 
-export function logVerbose(this: SDL) {
+export function logVerbose(this: BaseSDL) {
   throw new Error('Not implemented');
 }
 
-export function logDebug(this: SDL) {
+export function logDebug(this: BaseSDL) {
   throw new Error('Not implemented');
 }
 
-export function logInfo(this: SDL) {
+export function logInfo(this: BaseSDL) {
   throw new Error('Not implemented');
 }
 
-export function logWarn(this: SDL) {
+export function logWarn(this: BaseSDL) {
   throw new Error('Not implemented');
 }
 
-export function logError(this: SDL) {
+export function logError(this: BaseSDL) {
   throw new Error('Not implemented');
 }
 
-export function logCritical(this: SDL) {
+export function logCritical(this: BaseSDL) {
   throw new Error('Not implemented');
 }
 
-export function logMessage(this: SDL) {
+export function logMessage(this: BaseSDL) {
   throw new Error('Not implemented');
 }
 
-export function logMessageV(this: SDL) {
+export function logMessageV(this: BaseSDL) {
   throw new Error('Not implemented');
 }
 
-export function getDefaultLogOutputFunction(this: SDL) {
+export function getDefaultLogOutputFunction(this: BaseSDL) {
   return this.symbols.SDL_GetDefaultLogOutputFunction();
 }
 
 export function getLogOutputFunction(
-  this: SDL,
+  this: BaseSDL,
   options: {
     callback: JSCallback;
     userData?: Pointer | null;
@@ -95,7 +95,7 @@ export function getLogOutputFunction(
 }
 
 export function logSetOutputFunction(
-  this: SDL,
+  this: BaseSDL,
   options: {
     callback: JSCallback;
     userData?: Pointer | null;

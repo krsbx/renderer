@@ -23,3 +23,20 @@ export const SystemCursor = {
 } as const;
 
 export type SystemCursor = (typeof SystemCursor)[keyof typeof SystemCursor];
+
+export const MouseButton = {
+  LEFT: 1,
+  MIDDLE: 2,
+  RIGHT: 3,
+  X1: 4,
+  X2: 5,
+} as const;
+
+export const MouseButtonFlags = {
+  // SDL_BUTTON_MASK(X) logic: (1 << (X - 1))
+  L_MASK: 1 << (MouseButton.LEFT - 1), // 0x01 (00001)
+  M_MASK: 1 << (MouseButton.MIDDLE - 1), // 0x02 (00010)
+  R_MASK: 1 << (MouseButton.RIGHT - 1), // 0x04 (00100)
+  X1_MASK: 1 << (MouseButton.X1 - 1), // 0x08 (01000)
+  X2_MASK: 1 << (MouseButton.X2 - 1), // 0x10 (10000)
+} as const;

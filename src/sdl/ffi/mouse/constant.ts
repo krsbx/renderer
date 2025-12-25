@@ -32,6 +32,8 @@ export const MouseButton = {
   X2: 5,
 } as const;
 
+export type MouseButton = (typeof MouseButton)[keyof typeof MouseButton];
+
 export const MouseButtonFlags = {
   // SDL_BUTTON_MASK(X) logic: (1 << (X - 1))
   L_MASK: 1 << (MouseButton.LEFT - 1), // 0x01 (00001)
@@ -40,3 +42,6 @@ export const MouseButtonFlags = {
   X1_MASK: 1 << (MouseButton.X1 - 1), // 0x08 (01000)
   X2_MASK: 1 << (MouseButton.X2 - 1), // 0x10 (10000)
 } as const;
+
+export type MouseButtonFlags =
+  (typeof MouseButtonFlags)[keyof typeof MouseButtonFlags];

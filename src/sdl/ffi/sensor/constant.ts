@@ -10,4 +10,4 @@ export const SensorType = {
   SDL_SENSOR_COUNT: 9,
 } as const;
 
-export type SensorType = typeof SensorType;
+export type SensorType = (typeof SensorType)[keyof typeof SensorType];

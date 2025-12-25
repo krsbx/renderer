@@ -5,4 +5,5 @@ export const TouchDeviceType = {
   SDL_TOUCH_DEVICE_INDIRECT_RELATIVE: 2 /**< trackpad with screen cursor-relative coordinates */,
 } as const;
 
-export type TouchDeviceType = keyof typeof TouchDeviceType;
+export type TouchDeviceType =
+  (typeof TouchDeviceType)[keyof typeof TouchDeviceType];

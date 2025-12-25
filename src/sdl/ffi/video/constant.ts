@@ -4,6 +4,8 @@ export const SystemTheme = {
   SDL_SYSTEM_THEME_DARK: 2,
 } as const;
 
+export type SystemTheme = (typeof SystemTheme)[keyof typeof SystemTheme];
+
 export const DisplayOrientation = {
   SDL_ORIENTATION_UNKNOWN: 0,
   SDL_ORIENTATION_LANDSCAPE: 1,
@@ -11,6 +13,9 @@ export const DisplayOrientation = {
   SDL_ORIENTATION_PORTRAIT: 3,
   SDL_ORIENTATION_PORTRAIT_FLIPPED: 4,
 } as const;
+
+export type DisplayOrientation =
+  (typeof DisplayOrientation)[keyof typeof DisplayOrientation];
 
 export const PixelFormat = {
   SDL_PIXELFORMAT_UNKNOWN: 0,
@@ -167,6 +172,8 @@ export const PixelFormat = {
   // #endif
 } as const;
 
+export type PixelFormat = (typeof PixelFormat)[keyof typeof PixelFormat];
+
 export const WindowFlags = {
   SDL_WINDOW_FULLSCREEN: 0x0000000000000001n,
   SDL_WINDOW_OPENGL: 0x0000000000000002n,
@@ -196,11 +203,16 @@ export const WindowFlags = {
   SDL_WINDOW_NOT_FOCUSABLE: 0x0000000080000000n,
 } as const;
 
+export type WindowFlags = (typeof WindowFlags)[keyof typeof WindowFlags];
+
 export const FlashOperation = {
   SDL_FLASH_CANCEL: 0,
   SDL_FLASH_BRIEFLY: 1,
   SDL_FLASH_UNTIL_FOCUSED: 2,
 } as const;
+
+export type FlashOperation =
+  (typeof FlashOperation)[keyof typeof FlashOperation];
 
 export const ProgressState = {
   SDL_PROGRESS_STATE_INVALID: -1,
@@ -210,6 +222,8 @@ export const ProgressState = {
   SDL_PROGRESS_STATE_PAUSED: 3,
   SDL_PROGRESS_STATE_ERROR: 4,
 } as const;
+
+export type ProgressState = (typeof ProgressState)[keyof typeof ProgressState];
 
 export const GLAttr = {
   SDL_GL_RED_SIZE: 0 /**< the minimum number of bits for the red channel of the color buffer; defaults to 8. */,
@@ -241,3 +255,5 @@ export const GLAttr = {
   SDL_GL_FLOATBUFFERS: 26,
   SDL_GL_EGL_PLATFORM: 27,
 } as const;
+
+export type GLAttr = (typeof GLAttr)[keyof typeof GLAttr];

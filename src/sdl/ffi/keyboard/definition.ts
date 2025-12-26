@@ -102,7 +102,7 @@ export const KeyboardDefinition = {
     returns: FFIType.bool,
   },
   // bool SDL_SetTextInputArea(SDL_Window *window, const SDL_Rect *rect, int cursor);                 // Set the area used to type Unicode text input.
-  SDL_SetTextInputAre: {
+  SDL_SetTextInputArea: {
     args: [FFIType.ptr, FFIType.ptr, FFIType.i32],
     returns: FFIType.bool,
   },

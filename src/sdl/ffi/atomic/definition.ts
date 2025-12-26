@@ -47,15 +47,17 @@ export const AtomicDefinition = {
     returns: FFIType.i32,
   },
   // #define SDL_AtomicIncRef(a)                                                        // Increment an atomic variable used as a reference count.
-  SDL_AtomicIncRef: {
-    args: [FFIType.ptr],
-    returns: FFIType.void,
-  },
+  // Comment out since FFI cannot use a macro
+  // SDL_AtomicIncRef: {
+  //   args: [FFIType.ptr],
+  //   returns: FFIType.void,
+  // },
   // #define SDL_AtomicDecRef(a)                                                        // Decrement an atomic variable used as a reference count.
-  SDL_AtomicDecRef: {
-    args: [FFIType.ptr],
-    returns: FFIType.void,
-  },
+  // Comment out since FFI cannot use a macro
+  // SDL_AtomicDecRef: {
+  //   args: [FFIType.ptr],
+  //   returns: FFIType.void,
+  // },
   // bool SDL_CompareAndSwapAtomicU32(SDL_AtomicU32 *a, Uint32 oldval, Uint32 newval);  // Set an atomic variable to a new value if it is currently an old value.
   SDL_CompareAndSwapAtomicU32: {
     args: [FFIType.ptr, FFIType.u32, FFIType.u32],

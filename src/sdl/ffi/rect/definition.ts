@@ -2,25 +2,29 @@ import { FFIType, type FFIFunction } from 'bun:ffi';
 
 export const RectDefinition = {
   // void SDL_RectToFRect(const SDL_Rect *rect, SDL_FRect *frect);                                                         // Convert an SDL_Rect to SDL_FRect
-  SDL_RectToFRect: {
-    args: [FFIType.ptr, FFIType.ptr],
-    returns: FFIType.void,
-  },
+  // Comment out since FFI cannot use any SDL_FORCE_INLINE function
+  // SDL_RectToFRect: {
+  //   args: [FFIType.ptr, FFIType.ptr],
+  //   returns: FFIType.void,
+  // },
   // bool SDL_PointInRect(const SDL_Point *p, const SDL_Rect *r);                                                          // Determine whether a point resides inside a rectangle.
-  SDL_PointInRect: {
-    args: [FFIType.ptr, FFIType.ptr],
-    returns: FFIType.bool,
-  },
+  // Comment out since FFI cannot use any SDL_FORCE_INLINE function
+  // SDL_PointInRect: {
+  //   args: [FFIType.ptr, FFIType.ptr],
+  //   returns: FFIType.bool,
+  // },
   // bool SDL_RectEmpty(const SDL_Rect *r);                                                                                // Determine whether a rectangle has no area.
-  SDL_RectEmpty: {
-    args: [FFIType.ptr],
-    returns: FFIType.bool,
-  },
+  // Comment out since FFI cannot use any SDL_FORCE_INLINE function
+  // SDL_RectEmpty: {
+  //   args: [FFIType.ptr],
+  //   returns: FFIType.bool,
+  // },
   // bool SDL_RectsEqual(const SDL_Rect *a, const SDL_Rect *b);                                                            // Determine whether two rectangles are equal.
-  SDL_RectsEqual: {
-    args: [FFIType.ptr, FFIType.ptr],
-    returns: FFIType.bool,
-  },
+  // Comment out since FFI cannot use any SDL_FORCE_INLINE function
+  // SDL_RectsEqual: {
+  //   args: [FFIType.ptr, FFIType.ptr],
+  //   returns: FFIType.bool,
+  // },
   // bool SDL_HasRectIntersection(const SDL_Rect *A, const SDL_Rect *B);                                                   // Determine whether two rectangles intersect.
   SDL_HasRectIntersection: {
     args: [FFIType.ptr, FFIType.ptr],
@@ -47,25 +51,29 @@ export const RectDefinition = {
     returns: FFIType.bool,
   },
   // bool SDL_PointInRectFloat(const SDL_FPoint *p, const SDL_FRect *r);                                                   // Determine whether a point resides inside a floating point rectangle.
-  SDL_PointInRectFloat: {
-    args: [FFIType.ptr, FFIType.ptr],
-    returns: FFIType.bool,
-  },
+  // Comment out since FFI cannot use any SDL_FORCE_INLINE function
+  // SDL_PointInRectFloat: {
+  //   args: [FFIType.ptr, FFIType.ptr],
+  //   returns: FFIType.bool,
+  // },
   // bool SDL_RectEmptyFloat(const SDL_FRect *r);                                                                          // Determine whether a floating point rectangle takes no space.
-  SDL_RectEmptyFloat: {
-    args: [FFIType.ptr],
-    returns: FFIType.bool,
-  },
+  // Comment out since FFI cannot use any SDL_FORCE_INLINE function
+  // SDL_RectEmptyFloat: {
+  //   args: [FFIType.ptr],
+  //   returns: FFIType.bool,
+  // },
   // bool SDL_RectsEqualEpsilon(const SDL_FRect *a, const SDL_FRect *b, float epsilon);                                    // Determine whether two floating point rectangles are equal, within some given epsilon.
-  SDL_RectsEqualEpsilon: {
-    args: [FFIType.ptr, FFIType.ptr, FFIType.f32],
-    returns: FFIType.bool,
-  },
+  // Comment out since FFI cannot use any SDL_FORCE_INLINE function
+  // SDL_RectsEqualEpsilon: {
+  //   args: [FFIType.ptr, FFIType.ptr, FFIType.f32],
+  //   returns: FFIType.bool,
+  // },
   // bool SDL_RectsEqualFloat(const SDL_FRect *a, const SDL_FRect *b);                                                     // Determine whether two floating point rectangles are equal, within a default epsilon.
-  SDL_RectsEqualFloat: {
-    args: [FFIType.ptr, FFIType.ptr],
-    returns: FFIType.bool,
-  },
+  // Comment out since FFI cannot use any SDL_FORCE_INLINE function
+  // SDL_RectsEqualFloat: {
+  //   args: [FFIType.ptr, FFIType.ptr],
+  //   returns: FFIType.bool,
+  // },
   // bool SDL_HasRectIntersectionFloat(const SDL_FRect *A, const SDL_FRect *B);                                            // Determine whether two rectangles intersect with float precision.
   SDL_HasRectIntersectionFloat: {
     args: [FFIType.ptr, FFIType.ptr],

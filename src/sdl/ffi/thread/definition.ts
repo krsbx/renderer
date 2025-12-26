@@ -2,15 +2,17 @@ import { type FFIFunction, FFIType } from 'bun:ffi';
 
 export const ThreadDefinition = {
   // SDL_Thread * SDL_CreateThread(SDL_ThreadFunction fn, const char *name, void *data);       // Create a new thread with a default stack size.
-  SDL_CreateThread: {
-    args: [FFIType.ptr, FFIType.cstring, FFIType.ptr],
-    returns: FFIType.ptr,
-  },
+  // Comment out since FFI cannot use any SDL_FORCE_INLINE function
+  // SDL_CreateThread: {
+  //   args: [FFIType.ptr, FFIType.cstring, FFIType.ptr],
+  //   returns: FFIType.ptr,
+  // },
   // SDL_Thread * SDL_CreateThreadWithProperties(SDL_PropertiesID props);                      // Create a new thread with with the specified properties.
-  SDL_CreateThreadWithProperties: {
-    args: [FFIType.u32],
-    returns: FFIType.ptr,
-  },
+  // Comment out since FFI cannot use any SDL_FORCE_INLINE function
+  // SDL_CreateThreadWithProperties: {
+  //   args: [FFIType.u32],
+  //   returns: FFIType.ptr,
+  // },
   // const char * SDL_GetThreadName(SDL_Thread *thread);                                       // Get the thread name as it was specified in SDL_CreateThread().
   SDL_GetThreadName: {
     args: [FFIType.ptr],

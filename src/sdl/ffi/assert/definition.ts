@@ -7,25 +7,29 @@ export const AssertDefinition = {
     returns: FFIType.i32,
   },
   // #define SDL_assert(condition)                                                                             // An assertion test that is normally performed only in debug builds.
-  SDL_assert: {
-    args: [FFIType.bool],
-    returns: FFIType.void,
-  },
+  // Comment out since FFI cannot use a macro
+  // SDL_assert: {
+  //   args: [FFIType.bool],
+  //   returns: FFIType.void,
+  // },
   // #define SDL_assert_release(condition)                                                                     // An assertion test that is performed even in release builds.
-  SDL_assert_release: {
-    args: [FFIType.bool],
-    returns: FFIType.void,
-  },
+  // Comment out since FFI cannot use a macro
+  // SDL_assert_release: {
+  //   args: [FFIType.bool],
+  //   returns: FFIType.void,
+  // },
   // #define SDL_assert_paranoid(condition)                                                                    // An assertion test that is performed only when built with paranoid settings.
-  SDL_assert_paranoid: {
-    args: [FFIType.bool],
-    returns: FFIType.void,
-  },
+  // Comment out since FFI cannot use a macro
+  // SDL_assert_paranoid: {
+  //   args: [FFIType.bool],
+  //   returns: FFIType.void,
+  // },
   // #define SDL_assert_always(condition)                                                                      // An assertion test that is always performed.
-  SDL_assert_always: {
-    args: [FFIType.bool],
-    returns: FFIType.void,
-  },
+  // Comment out since FFI cannot use a macro
+  // SDL_assert_always: {
+  //   args: [FFIType.bool],
+  //   returns: FFIType.void,
+  // },
   // void SDL_SetAssertionHandler(SDL_AssertionHandler handler, void *userdata);                               // Set an application-defined assertion handler.
   SDL_SetAssertionHandler: {
     args: [FFIType.ptr, FFIType.ptr],

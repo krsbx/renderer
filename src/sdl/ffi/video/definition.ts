@@ -490,7 +490,7 @@ export const VideoDefinition = {
     returns: FFIType.bool,
   },
   // SDL_FunctionPointer SDL_GL_GetProcAddress(const char *proc);                                                                                                                                          // Get an OpenGL function by name.
-  SDL_FunctionPointer: {
+  SDL_GL_GetProcAddress: {
     args: [FFIType.cstring],
     returns: FFIType.ptr,
   },

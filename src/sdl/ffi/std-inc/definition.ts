@@ -2,30 +2,35 @@ import { FFIType, type FFIFunction } from 'bun:ffi';
 
 export const StdIncDefinition = {
   // #define SDL_COMPILE_TIME_ASSERT(name, x)                                                                                                                    // A compile-time assertion.
-  SDL_COMPILE_TIME_ASSERT: {
-    args: [FFIType.cstring, FFIType.bool],
-    returns: FFIType.void,
-  },
+  // Comment out since FFI cannot use a macro
+  // SDL_COMPILE_TIME_ASSERT: {
+  //   args: [FFIType.cstring, FFIType.bool],
+  //   returns: FFIType.void,
+  // },
   // #define SDL_arraysize(array)                                                                                                                                // The number of elements in a static array.
-  SDL_arraysize: {
-    args: [FFIType.ptr],
-    returns: FFIType.i32,
-  },
+  // Comment out since FFI cannot use a macro
+  // SDL_arraysize: {
+  //   args: [FFIType.ptr],
+  //   returns: FFIType.i32,
+  // },
   // #define SDL_reinterpret_cast(type, expression)                                                                                                              // Handle a Reinterpret Cast properly whether using C or C++.
-  SDL_reinterpret_cast: {
-    args: [FFIType.ptr, FFIType.ptr],
-    returns: FFIType.ptr,
-  },
+  // Comment out since FFI cannot use a macro
+  // SDL_reinterpret_cast: {
+  //   args: [FFIType.ptr, FFIType.ptr],
+  //   returns: FFIType.ptr,
+  // },
   // #define SDL_static_cast(type, expression)                                                                                                                   // Handle a Static Cast properly whether using C or C++.
-  SDL_static_cast: {
-    args: [FFIType.ptr, FFIType.ptr],
-    returns: FFIType.ptr,
-  },
+  // Comment out since FFI cannot use a macro
+  // SDL_static_cast: {
+  //   args: [FFIType.ptr, FFIType.ptr],
+  //   returns: FFIType.ptr,
+  // },
   // #define SDL_const_cast(type, expression)                                                                                                                    // Handle a Const Cast properly whether using C or C++.
-  SDL_const_cast: {
-    args: [FFIType.ptr, FFIType.ptr],
-    returns: FFIType.ptr,
-  },
+  // Comment out since FFI cannot use a macro
+  // SDL_const_cast: {
+  //   args: [FFIType.ptr, FFIType.ptr],
+  //   returns: FFIType.ptr,
+  // },
   // void * SDL_malloc(size_t size);                                                                                                                             // Allocate uninitialized memory.
   SDL_malloc: {
     args: [FFIType.u64],
@@ -864,13 +869,13 @@ export const StdIncDefinition = {
     returns: FFIType.ptr,
   },
   // bool SDL_size_mul_check_overflow(size_t a, size_t b, size_t *ret);                                                                                          // Multiply two integers, checking for overflow.
-  SDL_size_mul_check_overflow: {
-    args: [FFIType.u64, FFIType.u64, FFIType.ptr],
-    returns: FFIType.bool,
-  },
+  // SDL_size_mul_check_overflow: {
+  //   args: [FFIType.u64, FFIType.u64, FFIType.ptr],
+  //   returns: FFIType.bool,
+  // },
   // bool SDL_size_add_check_overflow(size_t a, size_t b, size_t *ret);                                                                                          // Add two integers, checking for overflow.
-  SDL_size_add_check_overflow: {
-    args: [FFIType.u64, FFIType.u64, FFIType.ptr],
-    returns: FFIType.bool,
-  },
+  // SDL_size_add_check_overflow: {
+  //   args: [FFIType.u64, FFIType.u64, FFIType.ptr],
+  //   returns: FFIType.bool,
+  // },
 } satisfies Record<string, FFIFunction>;

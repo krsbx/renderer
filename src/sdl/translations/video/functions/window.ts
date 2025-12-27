@@ -9,7 +9,7 @@ import type {
 import type { Vector2, WidthHeight } from '../../../types/shared';
 import { Rect } from '../../rect/rect';
 import { Surface } from '../../surface/surface';
-import { DisplayMode } from './display-mode';
+import { DisplayMode } from '../display-mode';
 
 export function getDisplayForWindow(this: BaseSDL, window: Pointer) {
   return this.symbols.SDL_GetDisplayForWindow(window);

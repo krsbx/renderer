@@ -10,7 +10,7 @@ import type {
   Vector2,
 } from '../../../types/shared';
 import { Rect } from '../../rect/rect';
-import { DisplayMode } from './display-mode';
+import { DisplayMode } from '../display-mode';
 
 export function getNumVideoDrivers(this: BaseSDL) {
   return this.symbols.SDL_GetNumVideoDrivers();

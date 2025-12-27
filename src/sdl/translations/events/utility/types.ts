@@ -263,3 +263,40 @@ export interface RawPenAxisEvent extends RawCommonEvent {
   axis: PenAxis;
   value: number;
 }
+
+export interface RawDropEvent extends RawCommonEvent {
+  windowID: number;
+  x: number;
+  y: number;
+  source: string;
+  data: string;
+}
+
+export interface RawClipboardEvent extends RawCommonEvent {
+  owner: boolean;
+  num_mime_types: number;
+  mime_types: string[];
+}
+
+export interface RawSensorEvent extends RawCommonEvent {
+  which: number;
+  data: [
+    sensor_1: number,
+    sensor_2: number,
+    sensor_3: number,
+    sensor_4: number,
+    sensor_5: number,
+    sensor_6: number,
+  ];
+  sensor_timestamp: bigint;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface RawQuitEvent extends RawCommonEvent {}
+
+export interface RawUserEvent extends RawCommonEvent {
+  windowID: number;
+  code: number;
+  data1: bigint;
+  data2: bigint;
+}

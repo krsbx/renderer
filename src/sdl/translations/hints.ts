@@ -11,8 +11,8 @@ export function setHintWithPriority(
   }
 ) {
   return this.symbols.SDL_SetHintWithPriority(
-    ptr(Buffer.from(options.name, 'utf-8')),
-    ptr(Buffer.from(options.value, 'utf-8')),
+    ptr(Buffer.from(options.name + '\0', 'utf-8')),
+    ptr(Buffer.from(options.value + '\0', 'utf-8')),
     options.priority
   );
 }
@@ -25,13 +25,13 @@ export function setHint(
   }
 ) {
   return this.symbols.SDL_SetHint(
-    ptr(Buffer.from(options.name, 'utf-8')),
-    ptr(Buffer.from(options.value, 'utf-8'))
+    ptr(Buffer.from(options.name + '\0', 'utf-8')),
+    ptr(Buffer.from(options.value + '\0', 'utf-8'))
   );
 }
 
 export function resetHint(this: BaseSDL, name: string) {
-  return this.symbols.SDL_ResetHint(ptr(Buffer.from(name, 'utf-8')));
+  return this.symbols.SDL_ResetHint(ptr(Buffer.from(name + '\0', 'utf-8')));
 }
 
 export function resetHints(this: BaseSDL) {
@@ -39,7 +39,7 @@ export function resetHints(this: BaseSDL) {
 }
 
 export function getHint(this: BaseSDL, name: string) {
-  return this.symbols.SDL_GetHint(ptr(Buffer.from(name, 'utf-8')));
+  return this.symbols.SDL_GetHint(ptr(Buffer.from(name + '\0', 'utf-8')));
 }
 
 export function getHintBoolean(
@@ -50,7 +50,7 @@ export function getHintBoolean(
   }
 ) {
   return this.symbols.SDL_GetHintBoolean(
-    ptr(Buffer.from(options.name, 'utf-8')),
+    ptr(Buffer.from(options.name + '\0', 'utf-8')),
     options.defaultValue
   );
 }
@@ -64,7 +64,7 @@ export function addHintCallback(
   }
 ) {
   return this.symbols.SDL_AddHintCallback(
-    ptr(Buffer.from(options.name, 'utf-8')),
+    ptr(Buffer.from(options.name + '\0', 'utf-8')),
     options.callback.ptr,
     options.userData ?? null
   );
@@ -79,7 +79,7 @@ export function removeHintCallback(
   }
 ) {
   return this.symbols.SDL_RemoveHintCallback(
-    ptr(Buffer.from(options.name, 'utf-8')),
+    ptr(Buffer.from(options.name + '\0', 'utf-8')),
     options.callback.ptr,
     options.userData ?? null
   );

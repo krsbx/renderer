@@ -50,9 +50,9 @@ export function setAppMetadata(
   }
 ) {
   return this.symbols.SDL_SetAppMetadata(
-    ptr(Buffer.from(options.name, 'utf-8')),
-    ptr(Buffer.from(options.version, 'utf-8')),
-    ptr(Buffer.from(options.identifier, 'utf-8'))
+    ptr(Buffer.from(options.name + '\0', 'utf-8')),
+    ptr(Buffer.from(options.version + '\0', 'utf-8')),
+    ptr(Buffer.from(options.identifier + '\0', 'utf-8'))
   );
 }
 
@@ -64,13 +64,13 @@ export function setAppMetadataProperty(
   }
 ) {
   return this.symbols.SDL_SetAppMetadataProperty(
-    ptr(Buffer.from(options.name, 'utf-8')),
-    ptr(Buffer.from(options.value, 'utf-8'))
+    ptr(Buffer.from(options.name + '\0', 'utf-8')),
+    ptr(Buffer.from(options.value + '\0', 'utf-8'))
   );
 }
 
 export function getAppMetdataProperty(this: BaseSDL, name: string) {
   return this.symbols.SDL_GetAppMetadataProperty(
-    ptr(Buffer.from(name, 'utf-8'))
+    ptr(Buffer.from(name + '\0', 'utf-8'))
   );
 }

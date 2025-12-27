@@ -33,7 +33,7 @@ export function setLogPriorityPrefix(
 ) {
   return this.symbols.SDL_SetLogPriorityPrefix(
     options.priority,
-    ptr(Buffer.from(options.prefix, 'utf-8'))
+    ptr(Buffer.from(options.prefix + '\0', 'utf-8'))
   );
 }
 

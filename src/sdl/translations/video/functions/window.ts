@@ -100,7 +100,7 @@ export function createWindow(
   }
 ) {
   return this.symbols.SDL_CreateWindow(
-    ptr(Buffer.from(options.title, 'utf-8')),
+    ptr(Buffer.from(options.title + '\0', 'utf-8')),
     options.w,
     options.h,
     options.flags
@@ -158,7 +158,7 @@ export function setWindowTitle(
 ) {
   return this.symbols.SDL_SetWindowTitle(
     options.window,
-    ptr(Buffer.from(options.title, 'utf-8'))
+    ptr(Buffer.from(options.title + '\0', 'utf-8'))
   );
 }
 

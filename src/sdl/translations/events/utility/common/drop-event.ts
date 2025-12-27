@@ -50,8 +50,8 @@ export class DropEvent implements RawDropEvent {
   }
 
   public static fromPointer(pointer: Pointer, sdl: BaseSDL) {
-    const sourceAdr = read.ptr(pointer, 32);
-    const dataAdr = read.ptr(pointer, 40);
+    const sourceAddr = read.ptr(pointer, 32);
+    const dataAddr = read.ptr(pointer, 40);
 
     const result = {
       type: read.u32(pointer, 0),
@@ -60,11 +60,11 @@ export class DropEvent implements RawDropEvent {
       windowID: read.u32(pointer, 16),
       x: read.f32(pointer, 20),
       y: read.f32(pointer, 24),
-      source: sourceAdr
-        ? new CString(sourceAdr as unknown as Pointer).toString()
+      source: sourceAddr
+        ? new CString(sourceAddr as unknown as Pointer).toString()
         : '',
-      data: dataAdr
-        ? new CString(dataAdr as unknown as Pointer).toString()
+      data: dataAddr
+        ? new CString(dataAddr as unknown as Pointer).toString()
         : '',
       free: () => {
         sdl.symbols.SDL_free(pointer);
@@ -78,8 +78,8 @@ export class DropEvent implements RawDropEvent {
   public static fromMemory(event: Uint8Array) {
     const view = new DataView(event.buffer, event.byteOffset, event.byteLength);
 
-    const sourceAdr = view.getBigUint64(32, true);
-    const dataAdr = view.getBigUint64(40, true);
+    const sourceAddr = view.getBigUint64(32, true);
+    const dataAddr = view.getBigUint64(40, true);
 
     const result = {
       type: view.getUint32(0, true),
@@ -89,12 +89,12 @@ export class DropEvent implements RawDropEvent {
       x: view.getFloat32(20, true),
       y: view.getFloat32(24, true),
       source:
-        sourceAdr !== 0n
-          ? new CString(sourceAdr as unknown as Pointer).toString()
+        sourceAddr !== 0n
+          ? new CString(sourceAddr as unknown as Pointer).toString()
           : '',
       data:
-        dataAdr !== 0n
-          ? new CString(dataAdr as unknown as Pointer).toString()
+        dataAddr !== 0n
+          ? new CString(dataAddr as unknown as Pointer).toString()
           : '',
       free: null,
       address: null,

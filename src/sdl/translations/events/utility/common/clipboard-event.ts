@@ -1,10 +1,9 @@
 import { CString, read, type Pointer } from 'bun:ffi';
 import type { BaseSDL } from '../../../..';
-import type { EventType } from '../../../../ffi/events/constant';
-import type { RawClipboardEvent } from '../types';
+import type { ClipboardEventType, RawClipboardEvent } from '../types';
 
 export class ClipboardEvent implements RawClipboardEvent {
-  public type: EventType;
+  public type: ClipboardEventType;
   public reserved: number;
   public timestamp: bigint;
   public owner: boolean;

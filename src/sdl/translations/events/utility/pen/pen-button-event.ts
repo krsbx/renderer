@@ -1,10 +1,9 @@
 import { read, type Pointer } from 'bun:ffi';
 import type { BaseSDL } from '../../../..';
-import type { EventType } from '../../../../ffi/events/constant';
-import type { RawPenButtonEvent } from '../types';
+import type { PenButtonEventType, RawPenButtonEvent } from '../types';
 
 export class PenButtonEvent implements RawPenButtonEvent {
-  public type: EventType;
+  public type: PenButtonEventType;
   public reserved: number;
   public timestamp: bigint;
   public windowID: number;

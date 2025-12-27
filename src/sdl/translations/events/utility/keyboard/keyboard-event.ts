@@ -1,10 +1,9 @@
 import { read, type Pointer } from 'bun:ffi';
 import type { BaseSDL } from '../../../..';
-import type { EventType } from '../../../../ffi/events/constant';
-import type { RawKeyboardEvent } from '../types';
+import type { KeyboardEventType, RawKeyboardEvent } from '../types';
 
 export class KeyboardEvent implements RawKeyboardEvent {
-  public type: EventType;
+  public type: KeyboardEventType;
   public reserved: number;
   public timestamp: bigint;
   public windowID: number;

@@ -1,10 +1,9 @@
 import { read, type Pointer } from 'bun:ffi';
 import type { BaseSDL } from '../../../..';
-import type { EventType } from '../../../../ffi/events/constant';
-import type { RawWindowEvent } from '../types';
+import type { RawWindowEvent, WindowEventType } from '../types';
 
 export class WindowEvent implements RawWindowEvent {
-  public type: EventType;
+  public type: WindowEventType;
   public reserved: number;
   public timestamp: bigint;
   public displayID: number;

@@ -1,10 +1,9 @@
 import { read, type Pointer } from 'bun:ffi';
 import type { BaseSDL } from '../../../..';
-import type { EventType } from '../../../../ffi/events/constant';
-import type { RawMouseDeviceEvent } from '../types';
+import type { MouseDeviceEventType, RawMouseDeviceEvent } from '../types';
 
 export class MouseDeviceEvent implements RawMouseDeviceEvent {
-  public type: EventType;
+  public type: MouseDeviceEventType;
   public reserved: number;
   public timestamp: bigint;
   public which: number;

@@ -1,10 +1,10 @@
 import { read, type Pointer } from 'bun:ffi';
 import type { BaseSDL } from '../../../..';
-import type { EventType, PenInputFlags } from '../../../../ffi/events/constant';
-import type { RawPenMotionEvent } from '../types';
+import type { PenInputFlags } from '../../../../ffi/events/constant';
+import type { PenMotionEventType, RawPenMotionEvent } from '../types';
 
 export class PenMotionEvent implements RawPenMotionEvent {
-  public type: EventType;
+  public type: PenMotionEventType;
   public reserved: number;
   public timestamp: bigint;
   public windowID: number;

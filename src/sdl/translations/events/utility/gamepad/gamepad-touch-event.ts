@@ -1,10 +1,12 @@
 import { read, type Pointer } from 'bun:ffi';
 import type { BaseSDL } from '../../../..';
-import type { EventType } from '../../../../ffi/events/constant';
-import type { RawGamepadTouchpadEvent } from '../types';
+import type {
+  GamepadTouchpadEventType,
+  RawGamepadTouchpadEvent,
+} from '../types';
 
 export class GamepadTouchpadEvent implements RawGamepadTouchpadEvent {
-  public type: EventType;
+  public type: GamepadTouchpadEventType;
   public reserved: number;
   public timestamp: bigint;
   public which: number;

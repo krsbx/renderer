@@ -1,10 +1,9 @@
 import { read, type Pointer } from 'bun:ffi';
 import type { BaseSDL } from '../../../..';
-import type { EventType } from '../../../../ffi/events/constant';
-import type { RawGamepadAxisEvent } from '../types';
+import type { GamepadAxisEventType, RawGamepadAxisEvent } from '../types';
 
 export class GamepadAxisEvent implements RawGamepadAxisEvent {
-  public type: EventType;
+  public type: GamepadAxisEventType;
   public reserved: number;
   public timestamp: bigint;
   public which: number;

@@ -1,10 +1,9 @@
 import { CString, read, type Pointer } from 'bun:ffi';
 import type { BaseSDL } from '../../../..';
-import type { EventType } from '../../../../ffi/events/constant';
-import type { RawTextEditingEvent } from '../types';
+import type { RawTextEditingEvent, TextEditingEventType } from '../types';
 
 export class TextEditingEvent implements RawTextEditingEvent {
-  public type: EventType;
+  public type: TextEditingEventType;
   public reserved: number;
   public timestamp: bigint;
   public windowID: number;

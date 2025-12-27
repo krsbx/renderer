@@ -1,10 +1,9 @@
 import { read, type Pointer } from 'bun:ffi';
 import type { BaseSDL } from '../../../../';
-import type { EventType } from '../../../../ffi/events/constant';
-import type { RawCameraDeviceEvent } from '../types';
+import type { CameraDeviceEventType, RawCameraDeviceEvent } from '../types';
 
 export class CameraDeviceEvent implements RawCameraDeviceEvent {
-  public type: EventType;
+  public type: CameraDeviceEventType;
   public reserved: number;
   public timestamp: bigint;
   public which: number;

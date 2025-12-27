@@ -1,10 +1,9 @@
 import { read, type Pointer } from 'bun:ffi';
 import type { BaseSDL } from '../../../..';
-import type { EventType } from '../../../../ffi/events/constant';
-import type { RawTouchFingerEvent } from '../types';
+import type { RawTouchFingerEvent, TouchFingerEventType } from '../types';
 
 export class TouchFingerEvent implements RawTouchFingerEvent {
-  public type: EventType;
+  public type: TouchFingerEventType;
   public reserved: number;
   public timestamp: bigint;
   public touchID: bigint;

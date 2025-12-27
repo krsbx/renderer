@@ -1,11 +1,10 @@
 import { read, type Pointer } from 'bun:ffi';
 import type { BaseSDL } from '../../../..';
-import type { EventType } from '../../../../ffi/events/constant';
 import type { MouseButtonFlags } from '../../../../ffi/mouse/constant';
-import type { RawMouseMotionEvent } from '../types';
+import type { MouseMotionEventType, RawMouseMotionEvent } from '../types';
 
 export class MouseMotionEvent implements RawMouseMotionEvent {
-  public type: EventType;
+  public type: MouseMotionEventType;
   public reserved: number;
   public timestamp: bigint;
   public windowID: number;

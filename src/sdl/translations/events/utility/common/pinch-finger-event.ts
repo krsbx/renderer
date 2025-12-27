@@ -1,10 +1,9 @@
 import { read, type Pointer } from 'bun:ffi';
 import type { BaseSDL } from '../../../..';
-import type { EventType } from '../../../../ffi/events/constant';
-import type { RawPinchFingerEvent } from '../types';
+import type { PinchFingerEventType, RawPinchFingerEvent } from '../types';
 
 export class PinchFingerEvent implements RawPinchFingerEvent {
-  public type: EventType;
+  public type: PinchFingerEventType;
   public reserved: number;
   public timestamp: bigint;
   public scale: number;

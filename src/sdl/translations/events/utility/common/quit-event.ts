@@ -1,10 +1,9 @@
 import { read, type Pointer } from 'bun:ffi';
 import type { BaseSDL } from '../../../..';
-import type { EventType } from '../../../../ffi/events/constant';
-import type { RawQuitEvent } from '../types';
+import type { QuitEventType, RawQuitEvent } from '../types';
 
 export class QuitEvent implements RawQuitEvent {
-  public type: EventType;
+  public type: QuitEventType;
   public reserved: number;
   public timestamp: bigint;
   public free: (() => void) | null;

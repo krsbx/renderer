@@ -1,10 +1,9 @@
 import { read, type Pointer } from 'bun:ffi';
 import type { BaseSDL } from '../../../..';
-import type { EventType } from '../../../../ffi/events/constant';
-import type { RawCommonEvent } from '../types';
+import type { CommonEventType, RawCommonEvent } from '../types';
 
 export class CommonEvent implements RawCommonEvent {
-  public type: EventType;
+  public type: CommonEventType;
   public reserved: number;
   public timestamp: bigint;
   public free: (() => void) | null;

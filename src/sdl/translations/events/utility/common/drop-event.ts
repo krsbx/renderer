@@ -1,10 +1,9 @@
 import { CString, read, type Pointer } from 'bun:ffi';
 import type { BaseSDL } from '../../../..';
-import type { EventType } from '../../../../ffi/events/constant';
-import type { RawDropEvent } from '../types';
+import type { DropEventType, RawDropEvent } from '../types';
 
 export class DropEvent implements RawDropEvent {
-  public type: EventType;
+  public type: DropEventType;
   public reserved: number;
   public timestamp: bigint;
   public windowID: number;

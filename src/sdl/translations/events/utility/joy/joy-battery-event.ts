@@ -1,11 +1,10 @@
 import { read, type Pointer } from 'bun:ffi';
 import type { BaseSDL } from '../../../..';
-import type { EventType } from '../../../../ffi/events/constant';
 import type { PowerState } from '../../../../ffi/power/constant';
-import type { RawJoyBatteryEvent } from '../types';
+import type { JoyBatteryEventType, RawJoyBatteryEvent } from '../types';
 
 export class JoyBatteryEvent implements RawJoyBatteryEvent {
-  public type: EventType;
+  public type: JoyBatteryEventType;
   public reserved: number;
   public timestamp: bigint;
   public which: number;

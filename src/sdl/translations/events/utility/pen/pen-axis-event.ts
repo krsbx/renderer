@@ -1,10 +1,10 @@
 import { read, type Pointer } from 'bun:ffi';
 import type { BaseSDL } from '../../../..';
-import type { EventType, PenAxis } from '../../../../ffi/events/constant';
-import type { RawPenAxisEvent } from '../types';
+import type { PenAxis } from '../../../../ffi/events/constant';
+import type { PenAxisEventType, RawPenAxisEvent } from '../types';
 
 export class PenAxisEvent implements RawPenAxisEvent {
-  public type: EventType;
+  public type: PenAxisEventType;
   public reserved: number;
   public timestamp: bigint;
   public windowID: number;

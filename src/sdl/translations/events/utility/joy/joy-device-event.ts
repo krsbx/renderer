@@ -1,10 +1,9 @@
 import { read, type Pointer } from 'bun:ffi';
 import type { BaseSDL } from '../../../..';
-import type { EventType } from '../../../../ffi/events/constant';
-import type { RawJoyDeviceEvent } from '../types';
+import type { JoyDeviceEventType, RawJoyDeviceEvent } from '../types';
 
 export class JoyDeviceEvent implements RawJoyDeviceEvent {
-  public type: EventType;
+  public type: JoyDeviceEventType;
   public reserved: number;
   public timestamp: bigint;
   public which: number;

@@ -1,10 +1,9 @@
 import { read, type Pointer } from 'bun:ffi';
 import type { BaseSDL } from '../../../..';
-import type { EventType } from '../../../../ffi/events/constant';
-import type { RawAudioDeviceEvent } from '../types';
+import type { AudioDeviceEventType, RawAudioDeviceEvent } from '../types';
 
 export class AudioDeviceEvent implements RawAudioDeviceEvent {
-  public type: EventType;
+  public type: AudioDeviceEventType;
   public reserved: number;
   public timestamp: bigint;
   public which: number;

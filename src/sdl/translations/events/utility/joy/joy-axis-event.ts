@@ -1,10 +1,9 @@
 import { read, type Pointer } from 'bun:ffi';
 import type { BaseSDL } from '../../../..';
-import type { EventType } from '../../../../ffi/events/constant';
-import type { RawJoyAxisEvent } from '../types';
+import type { JoyAxisEventType, RawJoyAxisEvent } from '../types';
 
 export class JoyAxisEvent implements RawJoyAxisEvent {
-  public type: EventType;
+  public type: JoyAxisEventType;
   public reserved: number;
   public timestamp: bigint;
   public which: number;

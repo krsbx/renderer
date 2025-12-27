@@ -1,10 +1,9 @@
 import { read, type Pointer } from 'bun:ffi';
 import type { BaseSDL } from '../../../..';
-import type { EventType } from '../../../../ffi/events/constant';
-import type { RawKeyboardDeviceEvent } from '../types';
+import type { KeyboardDeviceEventType, RawKeyboardDeviceEvent } from '../types';
 
 export class KeyboardDeviceEvent implements RawKeyboardDeviceEvent {
-  public type: EventType;
+  public type: KeyboardDeviceEventType;
   public reserved: number;
   public timestamp: bigint;
   public which: number;

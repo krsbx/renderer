@@ -1,10 +1,9 @@
 import { read, type Pointer } from 'bun:ffi';
 import type { BaseSDL } from '../../../..';
-import type { EventType } from '../../../../ffi/events/constant';
-import type { RawSensorEvent } from '../types';
+import type { RawSensorEvent, SensorEventType } from '../types';
 
 export class SensorEvent implements RawSensorEvent {
-  public type: EventType;
+  public type: SensorEventType;
   public reserved: number;
   public timestamp: bigint;
   public which: number;

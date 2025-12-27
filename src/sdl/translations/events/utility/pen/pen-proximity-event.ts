@@ -1,10 +1,9 @@
 import { read, type Pointer } from 'bun:ffi';
 import type { BaseSDL } from '../../../..';
-import type { EventType } from '../../../../ffi/events/constant';
-import type { RawPenProximityEvent } from '../types';
+import type { PenProximityEventType, RawPenProximityEvent } from '../types';
 
 export class PenProximityEvent implements RawPenProximityEvent {
-  public type: EventType;
+  public type: PenProximityEventType;
   public reserved: number;
   public timestamp: bigint;
   public windowID: number;

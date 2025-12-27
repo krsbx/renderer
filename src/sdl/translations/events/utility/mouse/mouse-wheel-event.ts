@@ -1,13 +1,10 @@
 import { read, type Pointer } from 'bun:ffi';
 import type { BaseSDL } from '../../../..';
-import type {
-  EventType,
-  MouseWheelDirection,
-} from '../../../../ffi/events/constant';
-import type { RawMouseWheelEvent } from '../types';
+import type { MouseWheelDirection } from '../../../../ffi/events/constant';
+import type { MouseWheelEventType, RawMouseWheelEvent } from '../types';
 
 export class MouseWheelEvent implements RawMouseWheelEvent {
-  public type: EventType;
+  public type: MouseWheelEventType;
   public reserved: number;
   public timestamp: bigint;
   public windowID: number;

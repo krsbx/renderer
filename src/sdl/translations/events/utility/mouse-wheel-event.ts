@@ -59,7 +59,7 @@ export class MouseWheelEvent implements RawMouseWheelEvent {
     return buffer;
   }
 
-  public fromPointer(pointer: Pointer, sdl: BaseSDL) {
+  public static fromPointer(pointer: Pointer, sdl: BaseSDL) {
     const result = {
       type: read.u32(pointer, 0),
       reserved: read.u32(pointer, 4),
@@ -82,7 +82,7 @@ export class MouseWheelEvent implements RawMouseWheelEvent {
     return new MouseWheelEvent(result);
   }
 
-  public fromMemory(event: Uint8Array) {
+  public static fromMemory(event: Uint8Array) {
     const view = new DataView(event.buffer, event.byteOffset, event.byteLength);
 
     const result = {
@@ -102,6 +102,6 @@ export class MouseWheelEvent implements RawMouseWheelEvent {
       address: null,
     } as RawMouseWheelEvent;
 
-    return result;
+    return new MouseWheelEvent(result);
   }
 }

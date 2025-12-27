@@ -1,33 +1,40 @@
 import { read, type Pointer } from 'bun:ffi';
 import type { BaseSDL } from '../../..';
 import type { EventType } from '../../../ffi/events/constant';
-import type { RawMouseDeviceEvent } from '../types';
+import type { PowerState } from '../../../ffi/power/constant';
+import type { RawJoyBatteryEvent } from '../types';
 
-export class MouseDeviceEvent implements RawMouseDeviceEvent {
+export class JoyBatteryEvent implements RawJoyBatteryEvent {
   public type: EventType;
   public reserved: number;
   public timestamp: bigint;
   public which: number;
+  public state: PowerState;
+  public percent: number;
   public free: (() => void) | null;
   public address: Pointer | null;
 
-  public constructor(options: RawMouseDeviceEvent) {
+  public constructor(options: RawJoyBatteryEvent) {
     this.type = options.type;
     this.reserved = options.reserved;
     this.timestamp = options.timestamp;
     this.which = options.which;
+    this.state = options.state;
+    this.percent = options.percent;
     this.free = options.free;
     this.address = options.address;
   }
 
   public toMemory() {
-    const buffer = new Uint8Array(24);
+    const buffer = new Uint8Array(32);
     const view = new DataView(buffer.buffer);
 
     view.setUint32(0, this.type, true);
     view.setUint32(4, this.reserved, true);
     view.setBigUint64(8, this.timestamp, true);
     view.setUint32(16, this.which, true);
+    view.setInt32(20, this.state, true);
+    view.setInt32(24, this.percent, true);
 
     return buffer;
   }
@@ -38,13 +45,15 @@ export class MouseDeviceEvent implements RawMouseDeviceEvent {
       reserved: read.u32(pointer, 4),
       timestamp: read.u64(pointer, 8),
       which: read.u32(pointer, 16),
+      state: read.i32(pointer, 20),
+      percent: read.i32(pointer, 24),
       free: () => {
         sdl.symbols.SDL_free(pointer);
       },
       address: pointer,
-    } as RawMouseDeviceEvent;
+    } as RawJoyBatteryEvent;
 
-    return new MouseDeviceEvent(result);
+    return new JoyBatteryEvent(result);
   }
 
   public static fromMemory(event: Uint8Array) {
@@ -55,10 +64,12 @@ export class MouseDeviceEvent implements RawMouseDeviceEvent {
       reserved: view.getUint32(4, true),
       timestamp: view.getBigUint64(8, true),
       which: view.getUint32(16, true),
+      state: view.getInt32(20, true),
+      percent: view.getInt32(24, true),
       free: null,
       address: null,
-    } as RawMouseDeviceEvent;
+    } as RawJoyBatteryEvent;
 
-    return new MouseDeviceEvent(result);
+    return new JoyBatteryEvent(result);
   }
 }

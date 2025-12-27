@@ -1,9 +1,9 @@
 import { read, type Pointer } from 'bun:ffi';
 import type { BaseSDL } from '../../..';
 import type { EventType } from '../../../ffi/events/constant';
-import type { RawMouseDeviceEvent } from '../types';
+import type { RawJoyDeviceEvent } from '../types';
 
-export class MouseDeviceEvent implements RawMouseDeviceEvent {
+export class JoyDeviceEvent implements RawJoyDeviceEvent {
   public type: EventType;
   public reserved: number;
   public timestamp: bigint;
@@ -11,7 +11,7 @@ export class MouseDeviceEvent implements RawMouseDeviceEvent {
   public free: (() => void) | null;
   public address: Pointer | null;
 
-  public constructor(options: RawMouseDeviceEvent) {
+  public constructor(options: RawJoyDeviceEvent) {
     this.type = options.type;
     this.reserved = options.reserved;
     this.timestamp = options.timestamp;
@@ -42,9 +42,9 @@ export class MouseDeviceEvent implements RawMouseDeviceEvent {
         sdl.symbols.SDL_free(pointer);
       },
       address: pointer,
-    } as RawMouseDeviceEvent;
+    } as RawJoyDeviceEvent;
 
-    return new MouseDeviceEvent(result);
+    return new JoyDeviceEvent(result);
   }
 
   public static fromMemory(event: Uint8Array) {
@@ -57,8 +57,8 @@ export class MouseDeviceEvent implements RawMouseDeviceEvent {
       which: view.getUint32(16, true),
       free: null,
       address: null,
-    } as RawMouseDeviceEvent;
+    } as RawJoyDeviceEvent;
 
-    return new MouseDeviceEvent(result);
+    return new JoyDeviceEvent(result);
   }
 }

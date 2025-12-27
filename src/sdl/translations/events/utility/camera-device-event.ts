@@ -1,9 +1,9 @@
 import { read, type Pointer } from 'bun:ffi';
 import type { BaseSDL } from '../../..';
 import type { EventType } from '../../../ffi/events/constant';
-import type { RawMouseDeviceEvent } from '../types';
+import type { RawCameraDeviceEvent } from '../types';
 
-export class MouseDeviceEvent implements RawMouseDeviceEvent {
+export class CameraDeviceEvent implements RawCameraDeviceEvent {
   public type: EventType;
   public reserved: number;
   public timestamp: bigint;
@@ -11,25 +11,13 @@ export class MouseDeviceEvent implements RawMouseDeviceEvent {
   public free: (() => void) | null;
   public address: Pointer | null;
 
-  public constructor(options: RawMouseDeviceEvent) {
+  public constructor(options: RawCameraDeviceEvent) {
     this.type = options.type;
     this.reserved = options.reserved;
     this.timestamp = options.timestamp;
     this.which = options.which;
     this.free = options.free;
     this.address = options.address;
-  }
-
-  public toMemory() {
-    const buffer = new Uint8Array(24);
-    const view = new DataView(buffer.buffer);
-
-    view.setUint32(0, this.type, true);
-    view.setUint32(4, this.reserved, true);
-    view.setBigUint64(8, this.timestamp, true);
-    view.setUint32(16, this.which, true);
-
-    return buffer;
   }
 
   public static fromPointer(pointer: Pointer, sdl: BaseSDL) {
@@ -42,9 +30,9 @@ export class MouseDeviceEvent implements RawMouseDeviceEvent {
         sdl.symbols.SDL_free(pointer);
       },
       address: pointer,
-    } as RawMouseDeviceEvent;
+    } as RawCameraDeviceEvent;
 
-    return new MouseDeviceEvent(result);
+    return new CameraDeviceEvent(result);
   }
 
   public static fromMemory(event: Uint8Array) {
@@ -57,8 +45,8 @@ export class MouseDeviceEvent implements RawMouseDeviceEvent {
       which: view.getUint32(16, true),
       free: null,
       address: null,
-    } as RawMouseDeviceEvent;
+    } as RawCameraDeviceEvent;
 
-    return new MouseDeviceEvent(result);
+    return new CameraDeviceEvent(result);
   }
 }

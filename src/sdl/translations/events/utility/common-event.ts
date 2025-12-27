@@ -29,7 +29,7 @@ export class CommonEvent implements RawCommonEvent {
     return buffer;
   }
 
-  public fromPointer(pointer: Pointer, sdl: BaseSDL) {
+  public static fromPointer(pointer: Pointer, sdl: BaseSDL) {
     const result = {
       type: read.u32(pointer, 0),
       reserved: read.u32(pointer, 4),

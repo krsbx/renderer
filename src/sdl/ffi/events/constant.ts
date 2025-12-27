@@ -167,3 +167,31 @@ export const MouseWheelDirection = {
 
 export type MouseWheelDirection =
   (typeof MouseWheelDirection)[keyof typeof MouseWheelDirection];
+
+export const JoyHatPosition = {
+  Centered: 0x00,
+  Up: 0x01,
+  Right: 0x02,
+  Down: 0x04,
+  Left: 0x08,
+  RightUp: 0x02 | 0x01, // 0x03
+  RightDown: 0x02 | 0x04, // 0x06
+  LeftUp: 0x08 | 0x01, // 0x09
+  LeftDown: 0x08 | 0x04, // 0x0C
+} as const;
+
+export type JoyHatPosition =
+  (typeof JoyHatPosition)[keyof typeof JoyHatPosition];
+
+export const PenInputFlags = {
+  SDL_PEN_INPUT_DOWN: (1 << 0) >>> 0,
+  SDL_PEN_INPUT_BUTTON_1: (1 << 1) >>> 0,
+  SDL_PEN_INPUT_BUTTON_2: (1 << 2) >>> 0,
+  SDL_PEN_INPUT_BUTTON_3: (1 << 3) >>> 0,
+  SDL_PEN_INPUT_BUTTON_4: (1 << 4) >>> 0,
+  SDL_PEN_INPUT_BUTTON_5: (1 << 5) >>> 0,
+  SDL_PEN_INPUT_ERASER_TIP: (1 << 30) >>> 0,
+  SDL_PEN_INPUT_IN_PROXIMITY: (1 << 31) >>> 0,
+} as const;
+
+export type PenInputFlags = (typeof PenInputFlags)[keyof typeof PenInputFlags];

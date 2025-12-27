@@ -53,7 +53,7 @@ export class KeyboardEvent implements RawKeyboardEvent {
     return buffer;
   }
 
-  public fromPointer(pointer: Pointer, sdl: BaseSDL) {
+  public static fromPointer(pointer: Pointer, sdl: BaseSDL) {
     const result = {
       type: read.u32(pointer, 0),
       reserved: read.u32(pointer, 4),

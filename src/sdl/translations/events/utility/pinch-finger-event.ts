@@ -1,21 +1,23 @@
 import { read, type Pointer } from 'bun:ffi';
 import type { BaseSDL } from '../../..';
 import type { EventType } from '../../../ffi/events/constant';
-import type { RawMouseDeviceEvent } from '../types';
+import type { RawPinchFingerEvent } from '../types';
 
-export class MouseDeviceEvent implements RawMouseDeviceEvent {
+export class PinchFingerEvent implements RawPinchFingerEvent {
   public type: EventType;
   public reserved: number;
   public timestamp: bigint;
-  public which: number;
+  public scale: number;
+  public windowID: number;
   public free: (() => void) | null;
   public address: Pointer | null;
 
-  public constructor(options: RawMouseDeviceEvent) {
+  public constructor(options: RawPinchFingerEvent) {
     this.type = options.type;
     this.reserved = options.reserved;
     this.timestamp = options.timestamp;
-    this.which = options.which;
+    this.scale = options.scale;
+    this.windowID = options.windowID;
     this.free = options.free;
     this.address = options.address;
   }
@@ -27,7 +29,8 @@ export class MouseDeviceEvent implements RawMouseDeviceEvent {
     view.setUint32(0, this.type, true);
     view.setUint32(4, this.reserved, true);
     view.setBigUint64(8, this.timestamp, true);
-    view.setUint32(16, this.which, true);
+    view.setFloat32(16, this.scale, true);
+    view.setUint32(20, this.windowID, true);
 
     return buffer;
   }
@@ -37,14 +40,15 @@ export class MouseDeviceEvent implements RawMouseDeviceEvent {
       type: read.u32(pointer, 0),
       reserved: read.u32(pointer, 4),
       timestamp: read.u64(pointer, 8),
-      which: read.u32(pointer, 16),
+      scale: read.f32(pointer, 16),
+      windowID: read.u32(pointer, 20),
       free: () => {
         sdl.symbols.SDL_free(pointer);
       },
       address: pointer,
-    } as RawMouseDeviceEvent;
+    } as RawPinchFingerEvent;
 
-    return new MouseDeviceEvent(result);
+    return new PinchFingerEvent(result);
   }
 
   public static fromMemory(event: Uint8Array) {
@@ -54,11 +58,12 @@ export class MouseDeviceEvent implements RawMouseDeviceEvent {
       type: view.getUint32(0, true),
       reserved: view.getUint32(4, true),
       timestamp: view.getBigUint64(8, true),
-      which: view.getUint32(16, true),
+      scale: view.getFloat32(16, true),
+      windowID: view.getUint32(20, true),
       free: null,
       address: null,
-    } as RawMouseDeviceEvent;
+    } as RawPinchFingerEvent;
 
-    return new MouseDeviceEvent(result);
+    return new PinchFingerEvent(result);
   }
 }

@@ -20,7 +20,20 @@ export class Rect implements RawRect {
   }
 
   public toMemory() {
-    return new Int32Array([this.x, this.y, this.w, this.h]);
+    const buffer = Rect.allocMemory();
+
+    buffer[0] = this.x;
+    buffer[1] = this.y;
+    buffer[2] = this.w;
+    buffer[3] = this.h;
+
+    return buffer;
+  }
+
+  public static allocMemory() {
+    const buffer = new Int32Array(4);
+
+    return buffer;
   }
 
   public static fromPointer(pointer: Pointer, sdl: BaseSDL) {

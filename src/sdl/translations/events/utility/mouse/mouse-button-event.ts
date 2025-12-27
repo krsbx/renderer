@@ -36,7 +36,7 @@ export class MouseButtonEvent implements RawMouseButtonEvent {
   }
 
   public toMemory() {
-    const buffer = new Uint8Array(40);
+    const buffer = MouseButtonEvent.allocMemory();
     const view = new DataView(buffer.buffer);
 
     view.setUint32(0, this.type, true);
@@ -50,6 +50,12 @@ export class MouseButtonEvent implements RawMouseButtonEvent {
     view.setUint8(27, this.padding);
     view.setFloat32(28, this.x, true);
     view.setFloat32(32, this.y, true);
+
+    return buffer;
+  }
+
+  public static allocMemory() {
+    const buffer = new Uint8Array(40);
 
     return buffer;
   }

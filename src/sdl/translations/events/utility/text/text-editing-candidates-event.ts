@@ -37,7 +37,7 @@ export class TextEditingCandidatesEvent
   }
 
   public toMemory() {
-    const buffer = new Uint8Array(48);
+    const buffer = TextEditingCandidatesEvent.allocMemory();
     const view = new DataView(buffer.buffer);
 
     view.setUint32(0, this.type, true);
@@ -53,6 +53,12 @@ export class TextEditingCandidatesEvent
     view.setUint8(41, this.padding1);
     view.setUint8(42, this.padding2);
     view.setUint8(43, this.padding3);
+
+    return buffer;
+  }
+
+  public static allocMemory() {
+    const buffer = new Uint8Array(48);
 
     return buffer;
   }

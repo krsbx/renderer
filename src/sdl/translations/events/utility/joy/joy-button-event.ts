@@ -29,7 +29,7 @@ export class JoyButtonEvent implements RawJoyButtonEvent {
   }
 
   public toMemory() {
-    const buffer = new Uint8Array(32);
+    const buffer = JoyButtonEvent.allocMemory();
     const view = new DataView(buffer.buffer);
 
     view.setUint32(0, this.type, true);
@@ -40,6 +40,12 @@ export class JoyButtonEvent implements RawJoyButtonEvent {
     view.setUint8(21, this.down ? 1 : 0);
     view.setUint8(22, this.padding1);
     view.setUint8(23, this.padding2);
+
+    return buffer;
+  }
+
+  public static allocMemory() {
+    const buffer = new Uint8Array(32);
 
     return buffer;
   }

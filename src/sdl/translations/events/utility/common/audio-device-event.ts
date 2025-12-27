@@ -29,7 +29,7 @@ export class AudioDeviceEvent implements RawAudioDeviceEvent {
   }
 
   public toMemory() {
-    const buffer = new Uint8Array(24);
+    const buffer = AudioDeviceEvent.allocMemory();
     const view = new DataView(buffer.buffer);
 
     view.setUint32(0, this.type, true);
@@ -40,6 +40,12 @@ export class AudioDeviceEvent implements RawAudioDeviceEvent {
     view.setUint8(21, this.padding1);
     view.setUint8(22, this.padding2);
     view.setUint8(23, this.padding3);
+
+    return buffer;
+  }
+
+  public static allocMemory() {
+    const buffer = new Uint8Array(24);
 
     return buffer;
   }

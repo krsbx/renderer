@@ -19,12 +19,18 @@ export class CommonEvent implements RawCommonEvent {
   }
 
   public toMemory() {
-    const buffer = new Uint8Array(16);
+    const buffer = CommonEvent.allocMemory();
     const view = new DataView(buffer.buffer);
 
     view.setUint32(0, this.type, true);
     view.setUint32(4, this.reserved, true);
     view.setBigUint64(8, this.timestamp, true);
+
+    return buffer;
+  }
+
+  public static allocMemory() {
+    const buffer = new Uint8Array(16);
 
     return buffer;
   }

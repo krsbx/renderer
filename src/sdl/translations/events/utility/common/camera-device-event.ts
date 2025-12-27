@@ -20,6 +20,24 @@ export class CameraDeviceEvent implements RawCameraDeviceEvent {
     this.address = options.address;
   }
 
+  public toMemory() {
+    const buffer = CameraDeviceEvent.allocMemory();
+    const view = new DataView(buffer.buffer);
+
+    view.setUint32(0, this.type, true);
+    view.setUint32(4, this.reserved, true);
+    view.setBigUint64(8, this.timestamp, true);
+    view.setUint32(16, this.which, true);
+
+    return buffer;
+  }
+
+  public static allocMemory() {
+    const buffer = new Uint8Array(24);
+
+    return buffer;
+  }
+
   public static fromPointer(pointer: Pointer, sdl: BaseSDL) {
     const result = {
       type: read.u32(pointer, 0),

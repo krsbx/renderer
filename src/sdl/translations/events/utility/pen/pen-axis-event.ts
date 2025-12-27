@@ -33,7 +33,7 @@ export class PenAxisEvent implements RawPenAxisEvent {
   }
 
   public toMemory() {
-    const buffer = new Uint8Array(48);
+    const buffer = PenAxisEvent.allocMemory();
     const view = new DataView(buffer.buffer);
 
     view.setUint32(0, this.type, true);
@@ -46,6 +46,12 @@ export class PenAxisEvent implements RawPenAxisEvent {
     view.setFloat32(32, this.y, true);
     view.setInt32(36, this.axis, true);
     view.setFloat32(40, this.value, true);
+
+    return buffer;
+  }
+
+  public static allocMemory() {
+    const buffer = new Uint8Array(48);
 
     return buffer;
   }

@@ -26,7 +26,7 @@ export class JoyBatteryEvent implements RawJoyBatteryEvent {
   }
 
   public toMemory() {
-    const buffer = new Uint8Array(32);
+    const buffer = JoyBatteryEvent.allocMemory();
     const view = new DataView(buffer.buffer);
 
     view.setUint32(0, this.type, true);
@@ -35,6 +35,12 @@ export class JoyBatteryEvent implements RawJoyBatteryEvent {
     view.setUint32(16, this.which, true);
     view.setInt32(20, this.state, true);
     view.setInt32(24, this.percent, true);
+
+    return buffer;
+  }
+
+  public static allocMemory() {
+    const buffer = new Uint8Array(32);
 
     return buffer;
   }

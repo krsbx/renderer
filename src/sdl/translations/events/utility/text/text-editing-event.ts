@@ -27,7 +27,7 @@ export class TextEditingEvent implements RawTextEditingEvent {
   }
 
   public toMemory() {
-    const buffer = new Uint8Array(48);
+    const buffer = TextEditingEvent.allocMemory();
     const view = new DataView(buffer.buffer);
 
     view.setUint32(0, this.type, true);
@@ -39,6 +39,12 @@ export class TextEditingEvent implements RawTextEditingEvent {
 
     view.setUint32(32, this.start, true);
     view.setUint32(36, this.length, true);
+
+    return buffer;
+  }
+
+  public static allocMemory() {
+    const buffer = new Uint8Array(48);
 
     return buffer;
   }

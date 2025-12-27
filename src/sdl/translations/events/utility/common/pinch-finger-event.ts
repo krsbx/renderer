@@ -23,7 +23,7 @@ export class PinchFingerEvent implements RawPinchFingerEvent {
   }
 
   public toMemory() {
-    const buffer = new Uint8Array(24);
+    const buffer = PinchFingerEvent.allocMemory();
     const view = new DataView(buffer.buffer);
 
     view.setUint32(0, this.type, true);
@@ -31,6 +31,12 @@ export class PinchFingerEvent implements RawPinchFingerEvent {
     view.setBigUint64(8, this.timestamp, true);
     view.setFloat32(16, this.scale, true);
     view.setUint32(20, this.windowID, true);
+
+    return buffer;
+  }
+
+  public static allocMemory() {
+    const buffer = new Uint8Array(24);
 
     return buffer;
   }

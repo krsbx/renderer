@@ -23,7 +23,7 @@ export class PenProximityEvent implements RawPenProximityEvent {
   }
 
   public toMemory() {
-    const buffer = new Uint8Array(24);
+    const buffer = PenProximityEvent.allocMemory();
     const view = new DataView(buffer.buffer);
 
     view.setUint32(0, this.type, true);
@@ -31,6 +31,12 @@ export class PenProximityEvent implements RawPenProximityEvent {
     view.setBigUint64(8, this.timestamp, true);
     view.setUint32(16, this.windowID, true);
     view.setUint32(20, this.which, true);
+
+    return buffer;
+  }
+
+  public static allocMemory() {
+    const buffer = new Uint8Array(24);
 
     return buffer;
   }

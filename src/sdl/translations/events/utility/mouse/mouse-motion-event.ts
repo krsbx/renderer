@@ -34,7 +34,7 @@ export class MouseMotionEvent implements RawMouseMotionEvent {
   }
 
   public toMemory() {
-    const buffer = new Uint8Array(48);
+    const buffer = MouseMotionEvent.allocMemory();
     const view = new DataView(buffer.buffer);
 
     view.setUint32(0, this.type, true);
@@ -47,6 +47,12 @@ export class MouseMotionEvent implements RawMouseMotionEvent {
     view.setFloat32(32, this.y, true);
     view.setFloat32(36, this.xrel, true);
     view.setFloat32(40, this.yrel, true);
+
+    return buffer;
+  }
+
+  public static allocMemory() {
+    const buffer = new Uint8Array(48);
 
     return buffer;
   }

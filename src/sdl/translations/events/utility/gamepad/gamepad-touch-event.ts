@@ -31,7 +31,7 @@ export class GamepadTouchpadEvent implements RawGamepadTouchpadEvent {
   }
 
   public toMemory() {
-    const buffer = new Uint8Array(48);
+    const buffer = GamepadTouchpadEvent.allocMemory();
     const view = new DataView(buffer.buffer);
 
     view.setUint32(0, this.type, true);
@@ -43,6 +43,12 @@ export class GamepadTouchpadEvent implements RawGamepadTouchpadEvent {
     view.setFloat32(28, this.x);
     view.setFloat32(32, this.y);
     view.setFloat32(36, this.pressure);
+
+    return buffer;
+  }
+
+  public static allocMemory() {
+    const buffer = new Uint8Array(48);
 
     return buffer;
   }

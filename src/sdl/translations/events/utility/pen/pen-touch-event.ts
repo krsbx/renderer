@@ -35,7 +35,7 @@ export class PenTouchEvent implements RawPenTouchEvent {
   }
 
   public toMemory() {
-    const buffer = new Uint8Array(48);
+    const buffer = PenTouchEvent.allocMemory();
     const view = new DataView(buffer.buffer);
 
     view.setUint32(0, this.type, true);
@@ -49,6 +49,12 @@ export class PenTouchEvent implements RawPenTouchEvent {
     view.setFloat32(36, this.pressure, true);
     view.setInt8(40, this.eraser ? 1 : 0);
     view.setInt8(44, this.down ? 1 : 0);
+
+    return buffer;
+  }
+
+  public static allocMemory() {
+    const buffer = new Uint8Array(48);
 
     return buffer;
   }

@@ -33,7 +33,7 @@ export class JoyAxisEvent implements RawJoyAxisEvent {
   }
 
   public toMemory() {
-    const buffer = new Uint8Array(32);
+    const buffer = JoyAxisEvent.allocMemory();
     const view = new DataView(buffer.buffer);
 
     view.setUint32(0, this.type, true);
@@ -46,6 +46,12 @@ export class JoyAxisEvent implements RawJoyAxisEvent {
     view.setUint8(23, this.padding3);
     view.setInt16(24, this.value, true);
     view.setInt16(26, this.padding4);
+
+    return buffer;
+  }
+
+  public static allocMemory() {
+    const buffer = new Uint8Array(32);
 
     return buffer;
   }

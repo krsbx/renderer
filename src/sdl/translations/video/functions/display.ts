@@ -64,7 +64,7 @@ export function getDisplayName(this: BaseSDL, displayID: number) {
 }
 
 export function getDisplayBounds(this: BaseSDL, displayID: number) {
-  const rect = new Int32Array(4);
+  const rect = Rect.allocMemory();
 
   const success = this.symbols.SDL_GetDisplayBounds(displayID, ptr(rect));
 
@@ -74,7 +74,7 @@ export function getDisplayBounds(this: BaseSDL, displayID: number) {
 }
 
 export function getDisplayUsableBounds(this: BaseSDL, displayID: number) {
-  const rect = new Int32Array(4);
+  const rect = Rect.allocMemory();
 
   const success = this.symbols.SDL_GetDisplayUsableBounds(displayID, ptr(rect));
 
@@ -149,7 +149,7 @@ export function getClosestFullscreenDisplayMode(
     include_high_density_modes?: boolean;
   }
 ) {
-  const closestBuf = new Int32Array(40);
+  const closestBuf = DisplayMode.allocMemory();
 
   const success = this.symbols.SDL_GetClosestFullscreenDisplayMode(
     options.displayID,

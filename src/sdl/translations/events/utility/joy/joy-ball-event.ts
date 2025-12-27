@@ -33,7 +33,7 @@ export class JoyBallEvent implements RawJoyBallEvent {
   }
 
   public toMemory() {
-    const buffer = new Uint8Array(32);
+    const buffer = JoyBallEvent.allocMemory();
     const view = new DataView(buffer.buffer);
 
     view.setUint32(0, this.type, true);
@@ -46,6 +46,12 @@ export class JoyBallEvent implements RawJoyBallEvent {
     view.setUint8(23, this.padding3);
     view.setInt16(24, this.xrel, true);
     view.setInt16(26, this.yrel, true);
+
+    return buffer;
+  }
+
+  public static allocMemory() {
+    const buffer = new Uint8Array(32);
 
     return buffer;
   }

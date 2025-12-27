@@ -35,7 +35,7 @@ export class KeyboardEvent implements RawKeyboardEvent {
   }
 
   public toMemory() {
-    const buffer = new Uint8Array(40);
+    const buffer = KeyboardEvent.allocMemory();
     const view = new DataView(buffer.buffer);
 
     view.setUint32(0, this.type, true);
@@ -49,6 +49,12 @@ export class KeyboardEvent implements RawKeyboardEvent {
     view.setUint16(34, this.raw, true);
     view.setUint8(36, this.down ? 1 : 0);
     view.setUint8(37, this.repeat ? 1 : 0);
+
+    return buffer;
+  }
+
+  public static allocMemory() {
+    const buffer = new Uint8Array(40);
 
     return buffer;
   }

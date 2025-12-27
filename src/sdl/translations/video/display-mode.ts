@@ -29,16 +29,24 @@ export class DisplayMode implements RawDisplayMode {
   }
 
   public toMemory() {
-    return new Int32Array([
-      this.displayID,
-      this.format,
-      this.w,
-      this.h,
-      this.pixelDensity,
-      this.refreshRate,
-      this.refreshRateNumerator,
-      this.refreshRateDenominator,
-    ]);
+    const buffer = DisplayMode.allocMemory();
+
+    buffer[0] = this.displayID;
+    buffer[1] = this.format;
+    buffer[2] = this.w;
+    buffer[3] = this.h;
+    buffer[4] = this.pixelDensity;
+    buffer[5] = this.refreshRate;
+    buffer[6] = this.refreshRateNumerator;
+    buffer[7] = this.refreshRateDenominator;
+
+    return buffer;
+  }
+
+  public static allocMemory() {
+    const buffer = new Int32Array(40);
+
+    return buffer;
   }
 
   public static fromPointer(pointer: Pointer, sdl: BaseSDL) {

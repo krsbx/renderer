@@ -29,7 +29,7 @@ export class PenMotionEvent implements RawPenMotionEvent {
   }
 
   public toMemory() {
-    const buffer = new Uint8Array(40);
+    const buffer = PenMotionEvent.allocMemory();
     const view = new DataView(buffer.buffer);
 
     view.setUint32(0, this.type, true);
@@ -40,6 +40,12 @@ export class PenMotionEvent implements RawPenMotionEvent {
     view.setUint32(24, this.pen_state, true);
     view.setFloat32(28, this.x, true);
     view.setFloat32(32, this.y, true);
+
+    return buffer;
+  }
+
+  public static allocMemory() {
+    const buffer = new Uint8Array(40);
 
     return buffer;
   }

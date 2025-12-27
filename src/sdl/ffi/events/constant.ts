@@ -195,3 +195,16 @@ export const PenInputFlags = {
 } as const;
 
 export type PenInputFlags = (typeof PenInputFlags)[keyof typeof PenInputFlags];
+
+export const PenAxis = {
+  SDL_PEN_AXIS_PRESSURE: 0 /**< Pen pressure.  Unidirectional: 0 to 1.0 */,
+  SDL_PEN_AXIS_XTILT: 1 /**< Pen horizontal tilt angle.  Bidirectional: -90.0 to 90.0 (left-to-right). */,
+  SDL_PEN_AXIS_YTILT: 2 /**< Pen vertical tilt angle.  Bidirectional: -90.0 to 90.0 (top-to-down). */,
+  SDL_PEN_AXIS_DISTANCE: 3 /**< Pen distance to drawing surface.  Unidirectional: 0.0 to 1.0 */,
+  SDL_PEN_AXIS_ROTATION: 4 /**< Pen barrel rotation.  Bidirectional: -180 to 179.9 (clockwise, 0 is facing up, -180.0 is facing down). */,
+  SDL_PEN_AXIS_SLIDER: 5 /**< Pen finger wheel or slider (e.g., Airbrush Pen).  Unidirectional: 0 to 1.0 */,
+  SDL_PEN_AXIS_TANGENTIAL_PRESSURE: 6 /**< Pressure from squeezing the pen ("barrel pressure"). */,
+  SDL_PEN_AXIS_COUNT: 7 /**< Total known pen axis types in this version of SDL. This number may grow in future releases! */,
+} as const;
+
+export type PenAxis = (typeof PenAxis)[keyof typeof PenAxis];

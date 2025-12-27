@@ -25,7 +25,7 @@ export class DisplayEvent implements RawDisplayEvent {
   }
 
   public toMemory() {
-    const buffer = new Uint8Array(32);
+    const buffer = DisplayEvent.allocMemory();
     const view = new DataView(buffer.buffer);
 
     view.setUint32(0, this.type, true);
@@ -34,6 +34,12 @@ export class DisplayEvent implements RawDisplayEvent {
     view.setUint32(16, this.displayID, true);
     view.setInt32(20, this.data1, true);
     view.setInt32(24, this.data2, true);
+
+    return buffer;
+  }
+
+  public static allocMemory() {
+    const buffer = new Uint8Array(32);
 
     return buffer;
   }

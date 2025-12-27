@@ -23,7 +23,7 @@ export class TextInputEvent implements RawTextInputEvent {
   }
 
   public toMemory() {
-    const buffer = new Uint8Array(48);
+    const buffer = TextInputEvent.allocMemory();
     const view = new DataView(buffer.buffer);
 
     view.setUint32(0, this.type, true);
@@ -32,6 +32,12 @@ export class TextInputEvent implements RawTextInputEvent {
     view.setUint32(16, this.windowID, true);
 
     view.setBigUint64(24, 0n, true);
+
+    return buffer;
+  }
+
+  public static allocMemory() {
+    const buffer = new Uint8Array(48);
 
     return buffer;
   }

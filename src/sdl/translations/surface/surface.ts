@@ -26,7 +26,7 @@ export class Surface implements RawSurface {
   }
 
   public toMemory() {
-    const buffer = new Uint8Array(48);
+    const buffer = Surface.allocMemory();
     const view = new DataView(buffer.buffer);
 
     view.setUint32(0, this.flags, true);
@@ -40,6 +40,12 @@ export class Surface implements RawSurface {
     }
 
     view.setInt32(32, this.refcount, true);
+
+    return buffer;
+  }
+
+  public static allocMemory() {
+    const buffer = new Uint8Array(48);
 
     return buffer;
   }

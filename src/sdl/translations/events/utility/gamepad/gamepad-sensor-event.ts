@@ -27,7 +27,7 @@ export class GamepadSensorEvent implements RawGamepadSensorEvent {
   }
 
   public toMemory() {
-    const buffer = new Uint8Array(48);
+    const buffer = GamepadSensorEvent.allocMemory();
     const view = new DataView(buffer.buffer);
 
     view.setUint32(0, this.type, true);
@@ -39,6 +39,12 @@ export class GamepadSensorEvent implements RawGamepadSensorEvent {
     view.setFloat32(28, this.data[1], true);
     view.setFloat32(32, this.data[2], true);
     view.setBigUint64(40, this.sensor_timestamp, true);
+
+    return buffer;
+  }
+
+  public static allocMemory() {
+    const buffer = new Uint8Array(48);
 
     return buffer;
   }

@@ -40,7 +40,7 @@ export class MouseWheelEvent implements RawMouseWheelEvent {
   }
 
   public toMemory() {
-    const buffer = new Uint8Array(56);
+    const buffer = MouseWheelEvent.allocMemory();
     const view = new DataView(buffer.buffer);
 
     view.setUint32(0, this.type, true);
@@ -55,6 +55,12 @@ export class MouseWheelEvent implements RawMouseWheelEvent {
     view.setFloat32(40, this.mouse_y, true);
     view.setInt32(44, this.integer_x, true);
     view.setInt32(48, this.integer_y, true);
+
+    return buffer;
+  }
+
+  public static allocMemory() {
+    const buffer = new Uint8Array(56);
 
     return buffer;
   }

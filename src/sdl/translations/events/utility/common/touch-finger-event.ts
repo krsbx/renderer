@@ -35,7 +35,7 @@ export class TouchFingerEvent implements RawTouchFingerEvent {
   }
 
   public toMemory() {
-    const buffer = new Uint8Array(56);
+    const buffer = TouchFingerEvent.allocMemory();
     const view = new DataView(buffer.buffer);
 
     view.setUint32(0, this.type, true);
@@ -49,6 +49,12 @@ export class TouchFingerEvent implements RawTouchFingerEvent {
     view.setFloat32(44, this.dy, true);
     view.setFloat32(48, this.pressure, true);
     view.setUint32(52, this.windowID, true);
+
+    return buffer;
+  }
+
+  public static allocMemory() {
+    const buffer = new Uint8Array(56);
 
     return buffer;
   }

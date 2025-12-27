@@ -159,3 +159,11 @@ export const EventType = {
 } as const;
 
 export type EventType = (typeof EventType)[keyof typeof EventType];
+
+export const MouseWheelDirection = {
+  SDL_MOUSEWHEEL_NORMAL: 0,
+  SDL_MOUSEWHEEL_FLIPPED: 1,
+} as const;
+
+export type MouseWheelDirection =
+  (typeof MouseWheelDirection)[keyof typeof MouseWheelDirection];

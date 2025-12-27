@@ -4,6 +4,7 @@ import * as init from './init';
 import * as log from './log';
 import * as properties from './properties';
 import * as version from './version';
+import * as video from './video';
 
 export const Translations = {
   ...error,
@@ -12,6 +13,7 @@ export const Translations = {
   ...log,
   ...properties,
   ...version,
+  ...video,
 };
 
 export type Translations = typeof Translations;

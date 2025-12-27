@@ -9,7 +9,9 @@ import {
 } from './translations/index';
 
 export class BaseSDL implements Library<FFIDefinitionType> {
+  /** Close the SDL library */
   public readonly close: () => void;
+  /** Raw SDL functions */
   public readonly symbols: ConvertFns<FFIDefinitionType>;
 
   public constructor(filePath: string) {

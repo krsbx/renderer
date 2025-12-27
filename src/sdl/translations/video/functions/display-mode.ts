@@ -1,7 +1,7 @@
 import { read, type Pointer } from 'bun:ffi';
-import type { BaseSDL } from '../..';
-import type { PixelFormat } from '../../ffi/video/constant';
-import type { RawDisplayMode } from './types';
+import type { BaseSDL } from '../../..';
+import type { PixelFormat } from '../../../ffi/video/constant';
+import type { RawDisplayMode } from '../types';
 
 export class DisplayMode implements RawDisplayMode {
   public displayID: number;

@@ -1,5 +1,5 @@
 import { type Pointer, read } from 'bun:ffi';
-import type { BaseSDL } from '../..';
+import type { BaseSDL } from '../../..';
 import type { RawRect } from './types';
 
 export class Rect implements RawRect {
@@ -21,17 +21,18 @@ export class Rect implements RawRect {
 
   public toMemory() {
     const buffer = Rect.allocMemory();
+    const view = new DataView(buffer.buffer);
 
-    buffer[0] = this.x;
-    buffer[1] = this.y;
-    buffer[2] = this.w;
-    buffer[3] = this.h;
+    view.setInt32(0, this.x);
+    view.setInt32(4, this.y);
+    view.setInt32(8, this.w);
+    view.setInt32(12, this.h);
 
     return buffer;
   }
 
   public static allocMemory() {
-    const buffer = new Int32Array(4);
+    const buffer = new Uint8Array(16);
 
     return buffer;
   }
@@ -51,12 +52,14 @@ export class Rect implements RawRect {
     return new Rect(result);
   }
 
-  public static fromMemory(rect: Int32Array) {
+  public static fromMemory(rect: Uint8Array) {
+    const view = new DataView(rect.buffer, rect.byteOffset, rect.byteLength);
+
     const result = {
-      x: rect[0],
-      y: rect[1],
-      w: rect[2],
-      h: rect[3],
+      x: view.getInt32(0, true),
+      y: view.getInt32(4, true),
+      w: view.getInt32(8, true),
+      h: view.getInt32(12, true),
       free: null,
       address: null,
     } as RawRect;

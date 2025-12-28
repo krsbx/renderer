@@ -1,7 +1,6 @@
 import { read, type Pointer } from 'bun:ffi';
 import type { BaseSDL } from '../..';
-import type { Colorspace } from '../../ffi/surface/constant';
-import type { PixelFormat } from '../../ffi/video/constant';
+import type { Colorspace, PixelFormat } from '../../ffi/pixels/constant';
 import type { RawCameraSpec } from './types';
 
 export class CameraSpec implements RawCameraSpec {

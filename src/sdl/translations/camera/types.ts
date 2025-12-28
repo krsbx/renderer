@@ -1,5 +1,5 @@
-import type { Colorspace } from '../../ffi/surface/constant';
-import type { PixelFormat } from '../../ffi/video/constant';
+import type { Colorspace, PixelFormat } from '../../ffi/pixels/constant';
+import type {} from '../../ffi/video/constant';
 import type { FreeAddress, MemoryAddress } from '../../types/shared';
 
 export interface RawCameraSpec extends FreeAddress, MemoryAddress {

@@ -1,13 +1,13 @@
 import { JSCallback, ptr, read, toArrayBuffer, type Pointer } from 'bun:ffi';
 import type { BaseSDL } from '../../..';
+import type { PixelFormat } from '../../../ffi/pixels/constant';
 import type {
   FlashOperation,
-  PixelFormat,
   ProgressState,
   WindowFlags,
 } from '../../../ffi/video/constant';
 import type { Vector2, WidthHeight } from '../../../types/shared';
-import { Rect } from '../../rect/rect';
+import { Rect } from '../../rect/utility/rect';
 import { Surface } from '../../surface/surface';
 import { DisplayMode } from '../display-mode';
 
@@ -234,7 +234,7 @@ export function getWindowSize(this: BaseSDL, window: Pointer) {
 }
 
 export function getWindowSafeArea(this: BaseSDL, window: Pointer) {
-  const rect = new Int32Array(4);
+  const rect = Rect.allocMemory();
 
   const success = this.symbols.SDL_GetWindowSafeArea(window);
 

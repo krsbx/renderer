@@ -9,7 +9,7 @@ import type {
   MemoryAddress,
   Vector2,
 } from '../../../types/shared';
-import { Rect } from '../../rect/rect';
+import { Rect } from '../../rect/utility/rect';
 import { DisplayMode } from '../display-mode';
 
 export function getNumVideoDrivers(this: BaseSDL) {

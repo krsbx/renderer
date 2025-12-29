@@ -26,7 +26,7 @@ export class Point implements RawPoint {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(186);
+    const buffer = new Uint8Array(8);
 
     return buffer;
   }

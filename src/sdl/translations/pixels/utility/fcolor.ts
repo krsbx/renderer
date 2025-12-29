@@ -23,26 +23,26 @@ export class FColor implements RawFColor {
     const buffer = FColor.allocMemory();
     const view = new DataView(buffer.buffer);
 
-    view.setInt32(0, this.r, true);
-    view.setInt32(1, this.g, true);
-    view.setInt32(2, this.b, true);
-    view.setInt32(3, this.a, true);
+    view.setFloat32(0, this.r, true);
+    view.setFloat32(4, this.g, true);
+    view.setFloat32(8, this.b, true);
+    view.setFloat32(12, this.a, true);
 
     return buffer;
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(4);
+    const buffer = new Uint8Array(16);
 
     return buffer;
   }
 
   public static fromPointer(pointer: Pointer, sdl: BaseSDL) {
     const result = {
-      r: read.i32(pointer, 0),
-      g: read.i32(pointer, 1),
-      b: read.i32(pointer, 2),
-      a: read.i32(pointer, 3),
+      r: read.f32(pointer, 0),
+      g: read.f32(pointer, 4),
+      b: read.f32(pointer, 8),
+      a: read.f32(pointer, 12),
       free: () => {
         sdl.symbols.SDL_free(pointer);
       },
@@ -60,10 +60,10 @@ export class FColor implements RawFColor {
     );
 
     const result = {
-      r: view.getInt32(0, true),
-      g: view.getInt32(1, true),
-      b: view.getInt32(2, true),
-      a: view.getInt32(3, true),
+      r: view.getFloat32(0, true),
+      g: view.getFloat32(4, true),
+      b: view.getFloat32(8, true),
+      a: view.getFloat32(12, true),
       free: null,
       address: null,
     } as RawFColor;

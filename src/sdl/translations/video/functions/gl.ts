@@ -1,14 +1,15 @@
-import { JSCallback, ptr, type Pointer } from 'bun:ffi';
+import { JSCallback, type Pointer } from 'bun:ffi';
 import type { BaseSDL } from '../../..';
 import type { GLAttr } from '../../../ffi/video/constant';
+import { convertStringToFfi } from '../../../utility/comon';
 import { Surface } from '../../surface/surface';
 
 export function glLoadLibrary(this: BaseSDL, path: string) {
-  return this.symbols.SDL_GL_LoadLibrary(ptr(Buffer.from(path, 'utf8')));
+  return this.symbols.SDL_GL_LoadLibrary(convertStringToFfi(path).reference);
 }
 
 export function glGetProcAddress(this: BaseSDL, proc: string) {
-  return this.symbols.SDL_GL_GetProcAddress(ptr(Buffer.from(proc, 'utf8')));
+  return this.symbols.SDL_GL_GetProcAddress(convertStringToFfi(proc).reference);
 }
 
 export function glUnloadLibrary(this: BaseSDL) {
@@ -17,7 +18,7 @@ export function glUnloadLibrary(this: BaseSDL) {
 
 export function glExtensionSupported(this: BaseSDL, extension: string) {
   return this.symbols.SDL_GL_ExtensionSupported(
-    ptr(Buffer.from(extension, 'utf8'))
+    convertStringToFfi(extension).reference
   );
 }
 

@@ -7,6 +7,7 @@ import type {
   WindowFlags,
 } from '../../../ffi/video/constant';
 import type { Vector2, WidthHeight } from '../../../types/shared';
+import { convertStringToFfi } from '../../../utility/comon';
 import { Rect } from '../../rect/utility/rect';
 import { Surface } from '../../surface/surface';
 import { DisplayMode } from '../display-mode';
@@ -100,7 +101,7 @@ export function createWindow(
   }
 ) {
   return this.symbols.SDL_CreateWindow(
-    ptr(Buffer.from(options.title + '\0', 'utf-8')),
+    convertStringToFfi(options.title).reference,
     options.w,
     options.h,
     options.flags
@@ -158,7 +159,7 @@ export function setWindowTitle(
 ) {
   return this.symbols.SDL_SetWindowTitle(
     options.window,
-    ptr(Buffer.from(options.title + '\0', 'utf-8'))
+    convertStringToFfi(options.title).reference
   );
 }
 

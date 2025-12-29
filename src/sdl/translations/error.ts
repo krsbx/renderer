@@ -1,8 +1,8 @@
-import { ptr } from 'bun:ffi';
 import type { BaseSDL } from '..';
+import { convertStringToFfi } from '../utility/comon';
 
 export function setError(this: BaseSDL, message: string) {
-  return this.symbols.SDL_SetError(ptr(Buffer.from(message + '\0', 'utf-8')));
+  return this.symbols.SDL_SetError(convertStringToFfi(message).reference);
 }
 
 export function setErrorV(this: BaseSDL) {

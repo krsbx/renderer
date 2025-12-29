@@ -1,6 +1,7 @@
-import { JSCallback, type Pointer, ptr } from 'bun:ffi';
+import { JSCallback, type Pointer } from 'bun:ffi';
 import type { BaseSDL } from '..';
 import type { PropertyType } from '../ffi/properties/constant';
+import { convertStringToFfi } from '../utility/comon';
 
 export function getGlobalProperties(this: BaseSDL) {
   return this.symbols.SDL_GetGlobalProperties();
@@ -40,7 +41,7 @@ export function setPointerPropertyWithCleanup(
 ) {
   return this.symbols.SDL_SetPointerPropertyWithCleanup(
     options.props,
-    ptr(Buffer.from(options.name + '\0', 'utf-8')),
+    convertStringToFfi(options.name).reference,
     options.value ?? null,
     options.cleanup.ptr,
     options.userData ?? null
@@ -57,7 +58,7 @@ export function setPointerProperty(
 ) {
   return this.symbols.SDL_SetPointerProperty(
     options.props,
-    ptr(Buffer.from(options.name + '\0', 'utf-8')),
+    convertStringToFfi(options.name).reference,
     options.value ?? null
   );
 }
@@ -72,8 +73,8 @@ export function setStringProperty(
 ) {
   return this.symbols.SDL_SetStringProperty(
     options.props,
-    ptr(Buffer.from(options.name + '\0', 'utf-8')),
-    ptr(Buffer.from(options.value + '\0', 'utf-8'))
+    convertStringToFfi(options.name).reference,
+    convertStringToFfi(options.value).reference
   );
 }
 
@@ -87,7 +88,7 @@ export function setNumberProperty(
 ) {
   return this.symbols.SDL_SetNumberProperty(
     options.props,
-    ptr(Buffer.from(options.name + '\0', 'utf-8')),
+    convertStringToFfi(options.name).reference,
     options.value
   );
 }
@@ -102,7 +103,7 @@ export function setFloatProperty(
 ) {
   return this.symbols.SDL_SetFloatProperty(
     options.props,
-    ptr(Buffer.from(options.name + '\0', 'utf-8')),
+    convertStringToFfi(options.name).reference,
     options.value
   );
 }
@@ -117,7 +118,7 @@ export function setBooleanProperty(
 ) {
   return this.symbols.SDL_SetBooleanProperty(
     options.props,
-    ptr(Buffer.from(options.name + '\0', 'utf-8')),
+    convertStringToFfi(options.name).reference,
     options.value
   );
 }
@@ -131,7 +132,7 @@ export function hasProperty(
 ) {
   return this.symbols.SDL_HasProperty(
     options.props,
-    ptr(Buffer.from(options.name + '\0', 'utf-8'))
+    convertStringToFfi(options.name).reference
   );
 }
 
@@ -144,7 +145,7 @@ export function getPropertyType(
 ) {
   return this.symbols.SDL_GetPropertyType(
     options.props,
-    ptr(Buffer.from(options.name + '\0', 'utf-8'))
+    convertStringToFfi(options.name).reference
   ) as PropertyType;
 }
 
@@ -157,7 +158,7 @@ export function getPointerProperty(
 ) {
   return this.symbols.SDL_GetPointerProperty(
     options.props,
-    ptr(Buffer.from(options.name + '\0', 'utf-8'))
+    convertStringToFfi(options.name).reference
   );
 }
 
@@ -171,8 +172,8 @@ export function getStringProperty(
 ) {
   return this.symbols.SDL_GetStringProperty(
     options.props,
-    ptr(Buffer.from(options.name + '\0', 'utf-8')),
-    ptr(Buffer.from(options.defaultValue + '\0', 'utf-8'))
+    convertStringToFfi(options.name).reference,
+    convertStringToFfi(options.defaultValue).reference
   );
 }
 
@@ -186,7 +187,7 @@ export function getNumberProperty(
 ) {
   return this.symbols.SDL_GetNumberProperty(
     options.props,
-    ptr(Buffer.from(options.name + '\0', 'utf-8')),
+    convertStringToFfi(options.name).reference,
     options.defaultValue
   );
 }
@@ -201,7 +202,7 @@ export function getFloatProperty(
 ) {
   return this.symbols.SDL_GetFloatProperty(
     options.props,
-    ptr(Buffer.from(options.name + '\0', 'utf-8')),
+    convertStringToFfi(options.name).reference,
     options.defaultValue
   );
 }
@@ -216,7 +217,7 @@ export function getBooleanProperty(
 ) {
   return this.symbols.SDL_GetBooleanProperty(
     options.props,
-    ptr(Buffer.from(options.name + '\0', 'utf-8')),
+    convertStringToFfi(options.name).reference,
     options.defaultValue
   );
 }
@@ -230,7 +231,7 @@ export function clearProperties(
 ) {
   return this.symbols.SDL_ClearProperty(
     options.props,
-    ptr(Buffer.from(options.name + '\0', 'utf-8'))
+    convertStringToFfi(options.name).reference
   );
 }
 

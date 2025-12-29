@@ -1,6 +1,7 @@
-import { JSCallback, ptr, type Pointer } from 'bun:ffi';
+import { JSCallback, type Pointer } from 'bun:ffi';
 import type { BaseSDL } from '..';
 import type { LogPriority } from '../ffi/log/constant';
+import { convertStringToFfi } from '../utility/comon';
 
 export function setLogPriorities(this: BaseSDL, priority: LogPriority) {
   this.symbols.SDL_SetLogPriority(priority);
@@ -33,7 +34,7 @@ export function setLogPriorityPrefix(
 ) {
   return this.symbols.SDL_SetLogPriorityPrefix(
     options.priority,
-    ptr(Buffer.from(options.prefix + '\0', 'utf-8'))
+    convertStringToFfi(options.prefix).reference
   );
 }
 

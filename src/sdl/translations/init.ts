@@ -1,6 +1,7 @@
-import { JSCallback, ptr, type Pointer } from 'bun:ffi';
+import { JSCallback, type Pointer } from 'bun:ffi';
 import type { BaseSDL } from '..';
 import type { InitFlags } from '../ffi/init/constant';
+import { convertStringToFfi } from '../utility/comon';
 
 export function initTranslations(this: BaseSDL, flags: InitFlags) {
   return this.symbols.SDL_Init(flags);
@@ -50,9 +51,9 @@ export function setAppMetadata(
   }
 ) {
   return this.symbols.SDL_SetAppMetadata(
-    ptr(Buffer.from(options.name + '\0', 'utf-8')),
-    ptr(Buffer.from(options.version + '\0', 'utf-8')),
-    ptr(Buffer.from(options.identifier + '\0', 'utf-8'))
+    convertStringToFfi(options.name).reference,
+    convertStringToFfi(options.version).reference,
+    convertStringToFfi(options.identifier).reference
   );
 }
 
@@ -64,13 +65,13 @@ export function setAppMetadataProperty(
   }
 ) {
   return this.symbols.SDL_SetAppMetadataProperty(
-    ptr(Buffer.from(options.name + '\0', 'utf-8')),
-    ptr(Buffer.from(options.value + '\0', 'utf-8'))
+    convertStringToFfi(options.name).reference,
+    convertStringToFfi(options.value).reference
   );
 }
 
 export function getAppMetdataProperty(this: BaseSDL, name: string) {
   return this.symbols.SDL_GetAppMetadataProperty(
-    ptr(Buffer.from(name + '\0', 'utf-8'))
+    convertStringToFfi(name).reference
   );
 }

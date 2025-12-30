@@ -52,8 +52,8 @@ export class Rect implements RawRect {
     return new Rect(result);
   }
 
-  public static fromMemory(rect: Uint8Array) {
-    const view = new DataView(rect.buffer, rect.byteOffset, rect.byteLength);
+  public static fromMemory(data: Uint8Array) {
+    const view = new DataView(data.buffer, data.byteOffset, data.byteLength);
 
     const result = {
       x: view.getInt32(0, true),

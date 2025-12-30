@@ -52,12 +52,8 @@ export class FColor implements RawFColor {
     return new FColor(result);
   }
 
-  public static fromMemory(fcolor: Uint8Array) {
-    const view = new DataView(
-      fcolor.buffer,
-      fcolor.byteLength,
-      fcolor.byteOffset
-    );
+  public static fromMemory(data: Uint8Array) {
+    const view = new DataView(data.buffer, data.byteLength, data.byteOffset);
 
     const result = {
       r: view.getFloat32(0, true),

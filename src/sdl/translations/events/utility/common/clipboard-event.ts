@@ -74,8 +74,8 @@ export class ClipboardEvent implements RawClipboardEvent {
     return new ClipboardEvent(result);
   }
 
-  public static fromMemory(event: Uint8Array) {
-    const view = new DataView(event.buffer, event.byteOffset, event.byteLength);
+  public static fromMemory(data: Uint8Array) {
+    const view = new DataView(data.buffer, data.byteOffset, data.byteLength);
     const numMimeTypes = view.getInt32(20, true);
     const mimeTypesAddr = view.getBigUint64(
       24,

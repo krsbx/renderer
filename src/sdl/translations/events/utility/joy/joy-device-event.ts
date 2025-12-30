@@ -52,8 +52,8 @@ export class JoyDeviceEvent implements RawJoyDeviceEvent {
     return new JoyDeviceEvent(result);
   }
 
-  public static fromMemory(event: Uint8Array) {
-    const view = new DataView(event.buffer, event.byteOffset, event.byteLength);
+  public static fromMemory(data: Uint8Array) {
+    const view = new DataView(data.buffer, data.byteOffset, data.byteLength);
 
     const result = {
       type: view.getUint32(0, true),

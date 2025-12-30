@@ -52,8 +52,8 @@ export class Color implements RawColor {
     return new Color(result);
   }
 
-  public static fromMemory(color: Uint8Array) {
-    const view = new DataView(color.buffer, color.byteLength, color.byteOffset);
+  public static fromMemory(data: Uint8Array) {
+    const view = new DataView(data.buffer, data.byteLength, data.byteOffset);
 
     const result = {
       r: view.getInt8(0),

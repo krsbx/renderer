@@ -47,12 +47,8 @@ export class DialogFileFilter implements RawDialogFileFilter {
     return new DialogFileFilter(result);
   }
 
-  public static fromMemory(dialogFileFilter: Uint8Array) {
-    const view = new DataView(
-      dialogFileFilter.buffer,
-      dialogFileFilter.byteOffset,
-      dialogFileFilter.byteLength
-    );
+  public static fromMemory(data: Uint8Array) {
+    const view = new DataView(data.buffer, data.byteOffset, data.byteLength);
 
     const nameAddr = view.getBigUint64(0, true);
     const patternAddr = view.getBigUint64(8, true);

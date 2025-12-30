@@ -251,12 +251,8 @@ export class StorageInterface implements RawStorageInterface {
     return new StorageInterface(result);
   }
 
-  public static fromMemory(storageInterface: Uint8Array) {
-    const view = new DataView(
-      storageInterface.buffer,
-      storageInterface.byteOffset,
-      storageInterface.byteLength
-    );
+  public static fromMemory(data: Uint8Array) {
+    const view = new DataView(data.buffer, data.byteOffset, data.byteLength);
 
     const version = view.getUint32(0, true);
     const closePtr = view.getBigUint64(8, true) as unknown as Pointer;

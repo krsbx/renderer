@@ -68,16 +68,16 @@ export class DisplayMode implements RawDisplayMode {
     return new DisplayMode(result);
   }
 
-  public static fromMemory(displayMode: Int32Array) {
+  public static fromMemory(data: Int32Array) {
     const result = {
-      displayID: displayMode[0],
-      format: displayMode[1] as PixelFormat,
-      w: displayMode[2],
-      h: displayMode[3],
-      pixelDensity: displayMode[4],
-      refreshRate: displayMode[5],
-      refreshRateNumerator: displayMode[6],
-      refreshRateDenominator: displayMode[7],
+      displayID: data[0],
+      format: data[1] as PixelFormat,
+      w: data[2],
+      h: data[3],
+      pixelDensity: data[4],
+      refreshRate: data[5],
+      refreshRateNumerator: data[6],
+      refreshRateDenominator: data[7],
       free: null,
       address: null,
     } as RawDisplayMode;

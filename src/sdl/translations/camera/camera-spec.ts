@@ -59,12 +59,8 @@ export class CameraSpec implements RawCameraSpec {
     return new CameraSpec(result);
   }
 
-  public static fromMemory(cameraSpec: Uint8Array) {
-    const view = new DataView(
-      cameraSpec.buffer,
-      cameraSpec.byteOffset,
-      cameraSpec.byteLength
-    );
+  public static fromMemory(data: Uint8Array) {
+    const view = new DataView(data.buffer, data.byteOffset, data.byteLength);
 
     const result = {
       format: view.getUint32(0, true),

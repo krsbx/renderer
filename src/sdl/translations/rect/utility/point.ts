@@ -44,8 +44,8 @@ export class Point implements RawPoint {
     return new Point(result);
   }
 
-  public static fromMemory(point: Uint8Array) {
-    const view = new DataView(point.buffer, point.byteOffset, point.byteLength);
+  public static fromMemory(data: Uint8Array) {
+    const view = new DataView(data.buffer, data.byteOffset, data.byteLength);
 
     const result = {
       x: view.getInt32(0, true),

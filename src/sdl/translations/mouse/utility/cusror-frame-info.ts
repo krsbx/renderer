@@ -49,12 +49,8 @@ export class CursorFrameInfo implements RawCursorFrameInfo {
     return new CursorFrameInfo(result);
   }
 
-  public static fromMemory(cursorFrameInfo: Uint8Array, sdl: BaseSDL) {
-    const view = new DataView(
-      cursorFrameInfo.buffer,
-      cursorFrameInfo.byteOffset,
-      cursorFrameInfo.byteLength
-    );
+  public static fromMemory(data: Uint8Array, sdl: BaseSDL) {
+    const view = new DataView(data.buffer, data.byteOffset, data.byteLength);
 
     const surfacePtr = view.getBigUint64(0, true) as unknown as Pointer;
     const duration = view.getUint32(8, true);

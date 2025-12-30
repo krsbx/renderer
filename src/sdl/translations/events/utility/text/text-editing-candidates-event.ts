@@ -102,8 +102,8 @@ export class TextEditingCandidatesEvent
     return new TextEditingCandidatesEvent(result);
   }
 
-  public static fromMemory(event: Uint8Array) {
-    const view = new DataView(event.buffer, event.byteOffset, event.byteLength);
+  public static fromMemory(data: Uint8Array) {
+    const view = new DataView(data.buffer, data.byteOffset, data.byteLength);
     const candidatesAddr = view.getBigUint64(24, true);
     const numCandidates = view.getInt32(32, true);
     const candidates: string[] = [];

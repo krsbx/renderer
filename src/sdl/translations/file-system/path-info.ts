@@ -56,12 +56,8 @@ export class PathInfo implements RawPathInfo {
     return new PathInfo(result);
   }
 
-  public static fromMemory(pathInfo: Uint8Array) {
-    const view = new DataView(
-      pathInfo.buffer,
-      pathInfo.byteOffset,
-      pathInfo.byteLength
-    );
+  public static fromMemory(data: Uint8Array) {
+    const view = new DataView(data.buffer, data.byteOffset, data.byteLength);
 
     const result = {
       type: view.getInt32(0, true),

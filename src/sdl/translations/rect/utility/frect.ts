@@ -52,8 +52,8 @@ export class FRect implements RawFRect {
     return new FRect(result);
   }
 
-  public static fromMemory(frect: Uint8Array) {
-    const view = new DataView(frect.buffer, frect.byteOffset, frect.byteLength);
+  public static fromMemory(data: Uint8Array) {
+    const view = new DataView(data.buffer, data.byteOffset, data.byteLength);
 
     const result = {
       x: view.getFloat32(0, true),

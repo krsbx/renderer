@@ -60,11 +60,11 @@ export class Vertex implements RawVertex {
     return new Vertex(result);
   }
 
-  public static fromMemory(vertex: Uint8Array) {
+  public static fromMemory(data: Uint8Array) {
     const result = {
-      position: FPoint.fromMemory(vertex.slice(0, 8)),
-      color: FColor.fromMemory(vertex.slice(8, 24)),
-      tex_coord: FPoint.fromMemory(vertex.slice(24, 32)),
+      position: FPoint.fromMemory(data.slice(0, 8)),
+      color: FColor.fromMemory(data.slice(8, 24)),
+      tex_coord: FPoint.fromMemory(data.slice(24, 32)),
       free: null,
       address: null,
     } as RawVertex;

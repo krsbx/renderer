@@ -44,12 +44,8 @@ export class FPoint implements RawFPoint {
     return new FPoint(result);
   }
 
-  public static fromMemory(fpoint: Uint8Array) {
-    const view = new DataView(
-      fpoint.buffer,
-      fpoint.byteOffset,
-      fpoint.byteLength
-    );
+  public static fromMemory(data: Uint8Array) {
+    const view = new DataView(data.buffer, data.byteOffset, data.byteLength);
 
     const result = {
       x: view.getFloat32(0, true),

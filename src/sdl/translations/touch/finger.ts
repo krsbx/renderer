@@ -52,12 +52,8 @@ export class Finger implements RawFinger {
     return new Finger(result);
   }
 
-  public static fromMemory(finger: Uint8Array) {
-    const view = new DataView(
-      finger.buffer,
-      finger.byteOffset,
-      finger.byteLength
-    );
+  public static fromMemory(data: Uint8Array) {
+    const view = new DataView(data.buffer, data.byteOffset, data.byteLength);
 
     const result = {
       id: view.getBigUint64(0, true),

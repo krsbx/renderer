@@ -75,8 +75,8 @@ export class DropEvent implements RawDropEvent {
     return new DropEvent(result);
   }
 
-  public static fromMemory(event: Uint8Array) {
-    const view = new DataView(event.buffer, event.byteOffset, event.byteLength);
+  public static fromMemory(data: Uint8Array) {
+    const view = new DataView(data.buffer, data.byteOffset, data.byteLength);
 
     const sourceAddr = view.getBigUint64(32, true);
     const dataAddr = view.getBigUint64(40, true);

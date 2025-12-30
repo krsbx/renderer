@@ -54,12 +54,8 @@ export class MessageBoxButtonData implements RawMessageBoxButtonData {
     return new MessageBoxButtonData(result);
   }
 
-  public static fromMemory(messageBoxButtonData: Uint8Array) {
-    const view = new DataView(
-      messageBoxButtonData.buffer,
-      messageBoxButtonData.byteOffset,
-      messageBoxButtonData.byteLength
-    );
+  public static fromMemory(data: Uint8Array) {
+    const view = new DataView(data.buffer, data.byteOffset, data.byteLength);
 
     const textPtr = view.getBigUint64(8) as unknown as Pointer;
 

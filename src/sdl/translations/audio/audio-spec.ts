@@ -48,12 +48,8 @@ export class AudioSpec implements RawAudioSpec {
     return new AudioSpec(result);
   }
 
-  public static fromMemory(audioSpec: Uint8Array) {
-    const view = new DataView(
-      audioSpec.buffer,
-      audioSpec.byteOffset,
-      audioSpec.byteLength
-    );
+  public static fromMemory(data: Uint8Array) {
+    const view = new DataView(data.buffer, data.byteOffset, data.byteLength);
 
     const result = {
       format: view.getUint32(0, true),

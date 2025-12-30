@@ -71,17 +71,17 @@ export class DateTime implements RawDateTime {
     return new DateTime(result);
   }
 
-  public static fromMemory(dateTime: Int32Array) {
+  public static fromMemory(data: Int32Array) {
     const result = {
-      year: dateTime[0],
-      month: dateTime[1],
-      day: dateTime[2],
-      hour: dateTime[3],
-      minute: dateTime[4],
-      second: dateTime[5],
-      nanosecond: dateTime[6],
-      day_of_week: dateTime[7],
-      utc_offset: dateTime[8],
+      year: data[0],
+      month: data[1],
+      day: data[2],
+      hour: data[3],
+      minute: data[4],
+      second: data[5],
+      nanosecond: data[6],
+      day_of_week: data[7],
+      utc_offset: data[8],
       free: null,
       address: null,
     } as RawDateTime;

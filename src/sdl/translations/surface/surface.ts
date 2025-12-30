@@ -68,12 +68,8 @@ export class Surface implements RawSurface {
     return new Surface(result);
   }
 
-  public static fromMemory(surface: Uint8Array) {
-    const view = new DataView(
-      surface.buffer,
-      surface.byteOffset,
-      surface.byteLength
-    );
+  public static fromMemory(data: Uint8Array) {
+    const view = new DataView(data.buffer, data.byteOffset, data.byteLength);
 
     const result = {
       flags: view.getUint32(0, true),

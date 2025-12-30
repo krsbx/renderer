@@ -1,0 +1,54 @@
+import { read, type Pointer } from 'bun:ffi';
+import type { BaseSDL } from '../../..';
+import type { RawAtomicInt } from './types';
+
+export class AtomicInt implements RawAtomicInt {
+  public value: number;
+  public free: (() => void) | null;
+  public address: Pointer | null;
+
+  public constructor(options: RawAtomicInt) {
+    this.value = options.value;
+    this.free = options.free;
+    this.address = options.address;
+  }
+
+  public toMemory() {
+    const buffer = AtomicInt.allocMemory();
+    const view = new DataView(buffer.buffer);
+
+    view.setInt32(0, this.value, true);
+
+    return buffer;
+  }
+
+  public static allocMemory() {
+    const buffer = new Uint8Array(4);
+
+    return buffer;
+  }
+
+  public static fromPointer(pointer: Pointer, sdl: BaseSDL) {
+    const result = {
+      value: read.i32(pointer, 0),
+      free: () => {
+        sdl.symbols.SDL_free(pointer);
+      },
+      address: pointer,
+    } as RawAtomicInt;
+
+    return new AtomicInt(result);
+  }
+
+  public static fromMemory(data: Uint8Array) {
+    const view = new DataView(data.buffer, data.byteOffset, data.byteLength);
+
+    const result = {
+      value: view.getInt32(0, true),
+      free: null,
+      address: null,
+    } as RawAtomicInt;
+
+    return new AtomicInt(result);
+  }
+}

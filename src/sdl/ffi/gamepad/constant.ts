@@ -29,6 +29,16 @@ export const GamepadAxis = {
 
 export type GamepadAxis = (typeof GamepadAxis)[keyof typeof GamepadAxis];
 
+export const GamepadBindingType = {
+  SDL_GAMEPAD_BINDTYPE_NONE: 0,
+  SDL_GAMEPAD_BINDTYPE_BUTTON: 1,
+  SDL_GAMEPAD_BINDTYPE_AXIS: 2,
+  SDL_GAMEPAD_BINDTYPE_HAT: 3,
+} as const;
+
+export type GamepadBindingType =
+  (typeof GamepadBindingType)[keyof typeof GamepadBindingType];
+
 export const GamepadButton = {
   SDL_GAMEPAD_BUTTON_INVALID: -1,
   SDL_GAMEPAD_BUTTON_SOUTH: 0 /**< Bottom face button (e.g. Xbox A button) */,

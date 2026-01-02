@@ -1,3 +1,27 @@
+export const BlendMode = {
+  NONE: 0x00000000 /**< no blending: dstRGBA = srcRGBA */,
+  BLEND: 0x00000001 /**< alpha blending: dstRGB = (srcRGB * srcA) + (dstRGB * (1-srcA)), dstA = srcA + (dstA * (1-srcA)) */,
+  BLEND_PREMULTIPLIED: 0x00000010 /**< pre-multiplied alpha blending: dstRGBA = srcRGBA + (dstRGBA * (1-srcA)) */,
+  ADD: 0x00000002 /**< additive blending: dstRGB = (srcRGB * srcA) + dstRGB, dstA = dstA */,
+  ADD_PREMULTIPLIED: 0x00000020 /**< pre-multiplied additive blending: dstRGB = srcRGB + dstRGB, dstA = dstA */,
+  MOD: 0x00000004 /**< color modulate: dstRGB = srcRGB * dstRGB, dstA = dstA */,
+  MUL: 0x00000008 /**< color multiply: dstRGB = (srcRGB * dstRGB) + (dstRGB * (1-srcA)), dstA = dstA */,
+  INVALID: 0x7fffffff,
+} as const;
+
+export type BlendMode = (typeof BlendMode)[keyof typeof BlendMode];
+
+export const BlendOperation = {
+  ADD: 0x1,
+  SUBTRACT: 0x2,
+  REV_SUBTRACT: 0x3,
+  MINIMUM: 0x4,
+  MAXIMUM: 0x5,
+} as const;
+
+export type BlendOperation =
+  (typeof BlendOperation)[keyof typeof BlendOperation];
+
 export const BlendFactor = {
   SDL_BLENDFACTOR_ZERO: 0x1 /**< 0, 0, 0, 0 */,
   SDL_BLENDFACTOR_ONE: 0x2 /**< 1, 1, 1, 1 */,
@@ -12,14 +36,3 @@ export const BlendFactor = {
 } as const;
 
 export type BlendFactor = (typeof BlendFactor)[keyof typeof BlendFactor];
-
-export const BlendOperation = {
-  SDL_BLENDOPERATION_ADD: 0x1,
-  SDL_BLENDOPERATION_SUBTRACT: 0x2,
-  SDL_BLENDOPERATION_REV_SUBTRACT: 0x3,
-  SDL_BLENDOPERATION_MINIMUM: 0x4,
-  SDL_BLENDOPERATION_MAXIMUM: 0x5,
-} as const;
-
-export type BlendOperation =
-  (typeof BlendOperation)[keyof typeof BlendOperation];

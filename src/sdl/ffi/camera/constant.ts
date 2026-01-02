@@ -1,8 +1,17 @@
 export const CameraPosition = {
-  SDL_CAMERA_POSITION_UNKNOWN: 0,
-  SDL_CAMERA_POSITION_FRONT_FACING: 1,
-  SDL_CAMERA_POSITION_BACK_FACING: 2,
+  UNKNOWN: 0,
+  FRONT_FACING: 1,
+  BACK_FACING: 2,
 } as const;
 
 export type CameraPosition =
   (typeof CameraPosition)[keyof typeof CameraPosition];
+
+export const CameraPermissionState = {
+  DENIED: -1,
+  PENDING: 0,
+  APPROVED: 1,
+} as const;
+
+export type CameraPositionState =
+  (typeof CameraPermissionState)[keyof typeof CameraPermissionState];

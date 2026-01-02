@@ -19,29 +19,29 @@ export class HapticEffect {
     const type = read.u16(args[0], 0);
 
     switch (type) {
-      case HapticEffectType.SDL_HAPTIC_CONSTANT:
+      case HapticEffectType.CONSTANT:
         return HapticConstant.fromPointer(...args);
 
-      case HapticEffectType.SDL_HAPTIC_SINE:
-      case HapticEffectType.SDL_HAPTIC_SQUARE:
-      case HapticEffectType.SDL_HAPTIC_TRIANGLE:
-      case HapticEffectType.SDL_HAPTIC_SAWTOOTHUP:
-      case HapticEffectType.SDL_HAPTIC_SAWTOOTHDOWN:
+      case HapticEffectType.SINE:
+      case HapticEffectType.SQUARE:
+      case HapticEffectType.TRIANGLE:
+      case HapticEffectType.SAWTOOTHUP:
+      case HapticEffectType.SAWTOOTHDOWN:
         return HapticPeriodic.fromPointer(...args);
 
-      case HapticEffectType.SDL_HAPTIC_RAMP:
+      case HapticEffectType.RAMP:
         return HapticRamp.fromPointer(...args);
 
-      case HapticEffectType.SDL_HAPTIC_SPRING:
-      case HapticEffectType.SDL_HAPTIC_DAMPER:
-      case HapticEffectType.SDL_HAPTIC_INERTIA:
-      case HapticEffectType.SDL_HAPTIC_FRICTION:
+      case HapticEffectType.SPRING:
+      case HapticEffectType.DAMPER:
+      case HapticEffectType.INERTIA:
+      case HapticEffectType.FRICTION:
         return HapticCondition.fromPointer(...args);
 
-      case HapticEffectType.SDL_HAPTIC_LEFTRIGHT:
+      case HapticEffectType.LEFTRIGHT:
         return HapticLeftRight.fromPointer(...args);
 
-      case HapticEffectType.SDL_HAPTIC_CUSTOM:
+      case HapticEffectType.CUSTOM:
         return HapticCustom.fromPointer(...args);
 
       default:

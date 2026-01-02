@@ -1,5 +1,5 @@
 import type { BaseSDL } from '..';
-import { convertStringToFfi } from '../utility/comon';
+import { convertStringToFfi } from '../utility/common';
 
 export function setError(this: BaseSDL, message: string) {
   return this.symbols.SDL_SetError(convertStringToFfi(message).reference);

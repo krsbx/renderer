@@ -1,7 +1,7 @@
 import { JSCallback, type Pointer } from 'bun:ffi';
 import type { BaseSDL } from '..';
 import type { PropertyType } from '../ffi/properties/constant';
-import { convertStringToFfi } from '../utility/comon';
+import { convertStringToFfi } from '../utility/common';
 
 export function getGlobalProperties(this: BaseSDL) {
   return this.symbols.SDL_GetGlobalProperties();

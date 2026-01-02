@@ -1,7 +1,7 @@
 import { JSCallback, type Pointer } from 'bun:ffi';
 import type { BaseSDL } from '../../..';
 import type { GLAttr } from '../../../ffi/video/constant';
-import { convertStringToFfi } from '../../../utility/comon';
+import { convertStringToFfi } from '../../../utility/common';
 import { Surface } from '../../surface/surface';
 
 export function glLoadLibrary(this: BaseSDL, path: string) {

@@ -1,6 +1,6 @@
 import { read, type Pointer } from 'bun:ffi';
 import type { BaseSDL } from '../../../..';
-import type { PenAxis } from '../../../../ffi/events/constant';
+import type { PenAxis } from '../../../../ffi/pen/constant';
 import type { PenAxisEventType, RawPenAxisEvent } from '../types';
 
 export class PenAxisEvent implements RawPenAxisEvent {

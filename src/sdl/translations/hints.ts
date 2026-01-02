@@ -1,7 +1,7 @@
 import { JSCallback, type Pointer } from 'bun:ffi';
 import type { BaseSDL } from '..';
 import type { HintsPriority } from '../ffi/hints/constant';
-import { convertStringToFfi } from '../utility/comon';
+import { convertStringToFfi } from '../utility/common';
 
 export function setHintWithPriority(
   this: BaseSDL,

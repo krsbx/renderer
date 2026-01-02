@@ -1,14 +1,11 @@
-import type {
-  EventType,
-  JoyHatPosition,
-  MouseWheelDirection,
-  PenAxis,
-  PenInputFlags,
-} from '../../../ffi/events/constant';
+import type { EventType } from '../../../ffi/events/constant';
+import type { JoyHatPosition } from '../../../ffi/joystick/constant';
 import type {
   MouseButton,
   MouseButtonFlags,
+  MouseWheelDirection,
 } from '../../../ffi/mouse/constant';
+import type { PenAxis, PenInputFlags } from '../../../ffi/pen/constant';
 import type { PowerState } from '../../../ffi/power/constant';
 import type { FreeAddress, MemoryAddress } from '../../../types/shared';
 
@@ -18,20 +15,20 @@ export interface SharedEvent extends FreeAddress, MemoryAddress {
 }
 
 export type CommonEventType =
-  | typeof EventType.SDL_TERMINATING
-  | typeof EventType.SDL_LOW_MEMORY
-  | typeof EventType.SDL_WILL_ENTER_BACKGROUND
-  | typeof EventType.SDL_DID_ENTER_BACKGROUND
-  | typeof EventType.SDL_WILL_ENTER_FOREGROUND
-  | typeof EventType.SDL_DID_ENTER_FOREGROUND
-  | typeof EventType.SDL_LOCALE_CHANGED
-  | typeof EventType.SDL_SYSTEM_THEME_CHANGED
-  | typeof EventType.SDL_KEYMAP_CHANGED
-  | typeof EventType.SDL_SCREEN_KEYBOARD_SHOWN
-  | typeof EventType.SDL_SCREEN_KEYBOARD_HIDDEN
-  | typeof EventType.SDL_JOYSTICK_UPDATE_COMPLETE
-  | typeof EventType.SDL_GAMEPAD_UPDATE_COMPLETE
-  | typeof EventType.SDL_POLL_SENTINEL;
+  | typeof EventType.TERMINATING
+  | typeof EventType.LOW_MEMORY
+  | typeof EventType.WILL_ENTER_BACKGROUND
+  | typeof EventType.DID_ENTER_BACKGROUND
+  | typeof EventType.WILL_ENTER_FOREGROUND
+  | typeof EventType.DID_ENTER_FOREGROUND
+  | typeof EventType.LOCALE_CHANGED
+  | typeof EventType.SYSTEM_THEME_CHANGED
+  | typeof EventType.KEYMAP_CHANGED
+  | typeof EventType.SCREEN_KEYBOARD_SHOWN
+  | typeof EventType.SCREEN_KEYBOARD_HIDDEN
+  | typeof EventType.JOYSTICK_UPDATE_COMPLETE
+  | typeof EventType.GAMEPAD_UPDATE_COMPLETE
+  | typeof EventType.POLL_SENTINEL;
 
 export interface RawCommonEvent extends FreeAddress, MemoryAddress {
   type: CommonEventType;
@@ -40,14 +37,14 @@ export interface RawCommonEvent extends FreeAddress, MemoryAddress {
 }
 
 export type DisplayEventType =
-  | typeof EventType.SDL_DISPLAY_ORIENTATION
-  | typeof EventType.SDL_DISPLAY_ADDED
-  | typeof EventType.SDL_DISPLAY_REMOVED
-  | typeof EventType.SDL_DISPLAY_MOVED
-  | typeof EventType.SDL_DISPLAY_DESKTOP_MODE_CHANGED
-  | typeof EventType.SDL_DISPLAY_CURRENT_MODE_CHANGED
-  | typeof EventType.SDL_DISPLAY_CONTENT_SCALE_CHANGED
-  | typeof EventType.SDL_DISPLAY_USABLE_BOUNDS_CHANGED;
+  | typeof EventType.DISPLAY_ORIENTATION
+  | typeof EventType.DISPLAY_ADDED
+  | typeof EventType.DISPLAY_REMOVED
+  | typeof EventType.DISPLAY_MOVED
+  | typeof EventType.DISPLAY_DESKTOP_MODE_CHANGED
+  | typeof EventType.DISPLAY_CURRENT_MODE_CHANGED
+  | typeof EventType.DISPLAY_CONTENT_SCALE_CHANGED
+  | typeof EventType.DISPLAY_USABLE_BOUNDS_CHANGED;
 
 export interface RawDisplayEvent extends SharedEvent {
   type: DisplayEventType;
@@ -57,31 +54,31 @@ export interface RawDisplayEvent extends SharedEvent {
 }
 
 export type WindowEventType =
-  | typeof EventType.SDL_WINDOW_SHOWN
-  | typeof EventType.SDL_WINDOW_HIDDEN
-  | typeof EventType.SDL_WINDOW_EXPOSED
-  | typeof EventType.SDL_WINDOW_MOVED
-  | typeof EventType.SDL_WINDOW_RESIZED
-  | typeof EventType.SDL_WINDOW_PIXEL_SIZE_CHANGED
-  | typeof EventType.SDL_WINDOW_METAL_VIEW_RESIZED
-  | typeof EventType.SDL_WINDOW_MINIMIZED
-  | typeof EventType.SDL_WINDOW_MAXIMIZED
-  | typeof EventType.SDL_WINDOW_RESTORED
-  | typeof EventType.SDL_WINDOW_MOUSE_ENTER
-  | typeof EventType.SDL_WINDOW_MOUSE_LEAVE
-  | typeof EventType.SDL_WINDOW_FOCUS_GAINED
-  | typeof EventType.SDL_WINDOW_FOCUS_LOST
-  | typeof EventType.SDL_WINDOW_CLOSE_REQUESTED
-  | typeof EventType.SDL_WINDOW_HIT_TEST
-  | typeof EventType.SDL_WINDOW_ICCPROF_CHANGED
-  | typeof EventType.SDL_WINDOW_DISPLAY_CHANGED
-  | typeof EventType.SDL_WINDOW_DISPLAY_SCALE_CHANGED
-  | typeof EventType.SDL_WINDOW_SAFE_AREA_CHANGED
-  | typeof EventType.SDL_WINDOW_OCCLUDED
-  | typeof EventType.SDL_WINDOW_ENTER_FULLSCREEN
-  | typeof EventType.SDL_WINDOW_LEAVE_FULLSCREEN
-  | typeof EventType.SDL_WINDOW_DESTROYED
-  | typeof EventType.SDL_WINDOW_HDR_STATE_CHANGED;
+  | typeof EventType.WINDOW_SHOWN
+  | typeof EventType.WINDOW_HIDDEN
+  | typeof EventType.WINDOW_EXPOSED
+  | typeof EventType.WINDOW_MOVED
+  | typeof EventType.WINDOW_RESIZED
+  | typeof EventType.WINDOW_PIXEL_SIZE_CHANGED
+  | typeof EventType.WINDOW_METAL_VIEW_RESIZED
+  | typeof EventType.WINDOW_MINIMIZED
+  | typeof EventType.WINDOW_MAXIMIZED
+  | typeof EventType.WINDOW_RESTORED
+  | typeof EventType.WINDOW_MOUSE_ENTER
+  | typeof EventType.WINDOW_MOUSE_LEAVE
+  | typeof EventType.WINDOW_FOCUS_GAINED
+  | typeof EventType.WINDOW_FOCUS_LOST
+  | typeof EventType.WINDOW_CLOSE_REQUESTED
+  | typeof EventType.WINDOW_HIT_TEST
+  | typeof EventType.WINDOW_ICCPROF_CHANGED
+  | typeof EventType.WINDOW_DISPLAY_CHANGED
+  | typeof EventType.WINDOW_DISPLAY_SCALE_CHANGED
+  | typeof EventType.WINDOW_SAFE_AREA_CHANGED
+  | typeof EventType.WINDOW_OCCLUDED
+  | typeof EventType.WINDOW_ENTER_FULLSCREEN
+  | typeof EventType.WINDOW_LEAVE_FULLSCREEN
+  | typeof EventType.WINDOW_DESTROYED
+  | typeof EventType.WINDOW_HDR_STATE_CHANGED;
 
 export interface RawWindowEvent extends SharedEvent {
   type: WindowEventType;
@@ -91,8 +88,8 @@ export interface RawWindowEvent extends SharedEvent {
 }
 
 export type KeyboardDeviceEventType =
-  | typeof EventType.SDL_KEYBOARD_ADDED
-  | typeof EventType.SDL_KEYBOARD_REMOVED;
+  | typeof EventType.KEYBOARD_ADDED
+  | typeof EventType.KEYBOARD_REMOVED;
 
 export interface RawKeyboardDeviceEvent extends SharedEvent {
   type: KeyboardDeviceEventType;
@@ -100,8 +97,8 @@ export interface RawKeyboardDeviceEvent extends SharedEvent {
 }
 
 export type KeyboardEventType =
-  | typeof EventType.SDL_KEY_DOWN
-  | typeof EventType.SDL_KEY_UP;
+  | typeof EventType.KEY_DOWN
+  | typeof EventType.KEY_UP;
 
 export interface RawKeyboardEvent extends SharedEvent {
   type: KeyboardEventType;
@@ -115,7 +112,7 @@ export interface RawKeyboardEvent extends SharedEvent {
   repeat: boolean;
 }
 
-export type TextEditingEventType = typeof EventType.SDL_TEXT_EDITING;
+export type TextEditingEventType = typeof EventType.TEXT_EDITING;
 
 export interface RawTextEditingEvent extends SharedEvent {
   type: TextEditingEventType;
@@ -126,7 +123,7 @@ export interface RawTextEditingEvent extends SharedEvent {
 }
 
 export type TextEditingCandidatesEventType =
-  typeof EventType.SDL_TEXT_EDITING_CANDIDATES;
+  typeof EventType.TEXT_EDITING_CANDIDATES;
 
 export interface RawTextEditingCandidatesEvent extends SharedEvent {
   type: TextEditingCandidatesEventType;
@@ -140,7 +137,7 @@ export interface RawTextEditingCandidatesEvent extends SharedEvent {
   padding3: number;
 }
 
-export type TextInputEventType = typeof EventType.SDL_TEXT_INPUT;
+export type TextInputEventType = typeof EventType.TEXT_INPUT;
 
 export interface RawTextInputEvent extends SharedEvent {
   type: TextInputEventType;
@@ -149,15 +146,15 @@ export interface RawTextInputEvent extends SharedEvent {
 }
 
 export type MouseDeviceEventType =
-  | typeof EventType.SDL_MOUSE_ADDED
-  | typeof EventType.SDL_MOUSE_REMOVED;
+  | typeof EventType.MOUSE_ADDED
+  | typeof EventType.MOUSE_REMOVED;
 
 export interface RawMouseDeviceEvent extends SharedEvent {
   type: MouseDeviceEventType;
   which: number;
 }
 
-export type MouseMotionEventType = typeof EventType.SDL_MOUSE_MOTION;
+export type MouseMotionEventType = typeof EventType.MOUSE_MOTION;
 
 export interface RawMouseMotionEvent extends SharedEvent {
   type: MouseMotionEventType;
@@ -171,8 +168,8 @@ export interface RawMouseMotionEvent extends SharedEvent {
 }
 
 export type MouseButtonEventType =
-  | typeof EventType.SDL_MOUSE_BUTTON_DOWN
-  | typeof EventType.SDL_MOUSE_BUTTON_UP;
+  | typeof EventType.MOUSE_BUTTON_DOWN
+  | typeof EventType.MOUSE_BUTTON_UP;
 
 export interface RawMouseButtonEvent extends SharedEvent {
   type: MouseButtonEventType;
@@ -186,7 +183,7 @@ export interface RawMouseButtonEvent extends SharedEvent {
   y: number;
 }
 
-export type MouseWheelEventType = typeof EventType.SDL_MOUSE_WHEEL;
+export type MouseWheelEventType = typeof EventType.MOUSE_WHEEL;
 
 export interface RawMouseWheelEvent extends SharedEvent {
   type: MouseWheelEventType;
@@ -201,7 +198,7 @@ export interface RawMouseWheelEvent extends SharedEvent {
   integer_y: number;
 }
 
-export type JoyAxisEventType = typeof EventType.SDL_JOYSTICK_AXIS_MOTION;
+export type JoyAxisEventType = typeof EventType.JOYSTICK_AXIS_MOTION;
 
 export interface RawJoyAxisEvent extends SharedEvent {
   type: JoyAxisEventType;
@@ -214,7 +211,7 @@ export interface RawJoyAxisEvent extends SharedEvent {
   padding4: number;
 }
 
-export type JoyBallEventType = typeof EventType.SDL_JOYSTICK_BALL_MOTION;
+export type JoyBallEventType = typeof EventType.JOYSTICK_BALL_MOTION;
 
 export interface RawJoyBallEvent extends SharedEvent {
   type: JoyBallEventType;
@@ -227,7 +224,7 @@ export interface RawJoyBallEvent extends SharedEvent {
   yrel: number;
 }
 
-export type JoyHatEventType = typeof EventType.SDL_JOYSTICK_HAT_MOTION;
+export type JoyHatEventType = typeof EventType.JOYSTICK_HAT_MOTION;
 
 export interface RawJoyHatEvent extends SharedEvent {
   type: JoyHatEventType;
@@ -239,8 +236,8 @@ export interface RawJoyHatEvent extends SharedEvent {
 }
 
 export type JoyButtonEventType =
-  | typeof EventType.SDL_JOYSTICK_BUTTON_DOWN
-  | typeof EventType.SDL_JOYSTICK_BUTTON_UP;
+  | typeof EventType.JOYSTICK_BUTTON_DOWN
+  | typeof EventType.JOYSTICK_BUTTON_UP;
 
 export interface RawJoyButtonEvent extends SharedEvent {
   type: JoyButtonEventType;
@@ -252,15 +249,15 @@ export interface RawJoyButtonEvent extends SharedEvent {
 }
 
 export type JoyDeviceEventType =
-  | typeof EventType.SDL_JOYSTICK_ADDED
-  | typeof EventType.SDL_JOYSTICK_REMOVED;
+  | typeof EventType.JOYSTICK_ADDED
+  | typeof EventType.JOYSTICK_REMOVED;
 
 export interface RawJoyDeviceEvent extends SharedEvent {
   type: JoyDeviceEventType;
   which: number;
 }
 
-export type JoyBatteryEventType = typeof EventType.SDL_JOYSTICK_BATTERY_UPDATED;
+export type JoyBatteryEventType = typeof EventType.JOYSTICK_BATTERY_UPDATED;
 
 export interface RawJoyBatteryEvent extends SharedEvent {
   type: JoyBatteryEventType;
@@ -269,7 +266,7 @@ export interface RawJoyBatteryEvent extends SharedEvent {
   percent: number;
 }
 
-export type GamepadAxisEventType = typeof EventType.SDL_GAMEPAD_AXIS_MOTION;
+export type GamepadAxisEventType = typeof EventType.GAMEPAD_AXIS_MOTION;
 
 export interface RawGamepadAxisEvent extends SharedEvent {
   type: GamepadAxisEventType;
@@ -283,8 +280,8 @@ export interface RawGamepadAxisEvent extends SharedEvent {
 }
 
 export type GamepadButtonEventType =
-  | typeof EventType.SDL_GAMEPAD_BUTTON_DOWN
-  | typeof EventType.SDL_GAMEPAD_BUTTON_UP;
+  | typeof EventType.GAMEPAD_BUTTON_DOWN
+  | typeof EventType.GAMEPAD_BUTTON_UP;
 
 export interface RawGamepadButtonEvent extends SharedEvent {
   type: GamepadButtonEventType;
@@ -296,10 +293,10 @@ export interface RawGamepadButtonEvent extends SharedEvent {
 }
 
 export type GamepadDeviceEventType =
-  | typeof EventType.SDL_GAMEPAD_ADDED
-  | typeof EventType.SDL_GAMEPAD_REMOVED
-  | typeof EventType.SDL_GAMEPAD_REMAPPED
-  | typeof EventType.SDL_GAMEPAD_STEAM_HANDLE_UPDATED;
+  | typeof EventType.GAMEPAD_ADDED
+  | typeof EventType.GAMEPAD_REMOVED
+  | typeof EventType.GAMEPAD_REMAPPED
+  | typeof EventType.GAMEPAD_STEAM_HANDLE_UPDATED;
 
 export interface RawGamepadDeviceEvent extends SharedEvent {
   type: GamepadDeviceEventType;
@@ -307,9 +304,9 @@ export interface RawGamepadDeviceEvent extends SharedEvent {
 }
 
 export type GamepadTouchpadEventType =
-  | typeof EventType.SDL_GAMEPAD_TOUCHPAD_DOWN
-  | typeof EventType.SDL_GAMEPAD_TOUCHPAD_MOTION
-  | typeof EventType.SDL_GAMEPAD_TOUCHPAD_UP;
+  | typeof EventType.GAMEPAD_TOUCHPAD_DOWN
+  | typeof EventType.GAMEPAD_TOUCHPAD_MOTION
+  | typeof EventType.GAMEPAD_TOUCHPAD_UP;
 
 export interface RawGamepadTouchpadEvent extends SharedEvent {
   type: GamepadTouchpadEventType;
@@ -321,7 +318,7 @@ export interface RawGamepadTouchpadEvent extends SharedEvent {
   pressure: number;
 }
 
-export type GamepadSensorEventType = typeof EventType.SDL_GAMEPAD_SENSOR_UPDATE;
+export type GamepadSensorEventType = typeof EventType.GAMEPAD_SENSOR_UPDATE;
 
 export interface RawGamepadSensorEvent extends SharedEvent {
   type: GamepadSensorEventType;
@@ -332,9 +329,9 @@ export interface RawGamepadSensorEvent extends SharedEvent {
 }
 
 export type AudioDeviceEventType =
-  | typeof EventType.SDL_AUDIO_DEVICE_ADDED
-  | typeof EventType.SDL_AUDIO_DEVICE_REMOVED
-  | typeof EventType.SDL_AUDIO_DEVICE_FORMAT_CHANGED;
+  | typeof EventType.AUDIO_DEVICE_ADDED
+  | typeof EventType.AUDIO_DEVICE_REMOVED
+  | typeof EventType.AUDIO_DEVICE_FORMAT_CHANGED;
 
 export interface RawAudioDeviceEvent extends SharedEvent {
   type: AudioDeviceEventType;
@@ -346,10 +343,10 @@ export interface RawAudioDeviceEvent extends SharedEvent {
 }
 
 export type CameraDeviceEventType =
-  | typeof EventType.SDL_CAMERA_DEVICE_ADDED
-  | typeof EventType.SDL_CAMERA_DEVICE_REMOVED
-  | typeof EventType.SDL_CAMERA_DEVICE_APPROVED
-  | typeof EventType.SDL_CAMERA_DEVICE_DENIED;
+  | typeof EventType.CAMERA_DEVICE_ADDED
+  | typeof EventType.CAMERA_DEVICE_REMOVED
+  | typeof EventType.CAMERA_DEVICE_APPROVED
+  | typeof EventType.CAMERA_DEVICE_DENIED;
 
 export interface RawCameraDeviceEvent extends SharedEvent {
   type: CameraDeviceEventType;
@@ -357,9 +354,9 @@ export interface RawCameraDeviceEvent extends SharedEvent {
 }
 
 export type RenderEventType =
-  | typeof EventType.SDL_RENDER_TARGETS_RESET
-  | typeof EventType.SDL_RENDER_DEVICE_RESET
-  | typeof EventType.SDL_RENDER_DEVICE_LOST;
+  | typeof EventType.RENDER_TARGETS_RESET
+  | typeof EventType.RENDER_DEVICE_RESET
+  | typeof EventType.RENDER_DEVICE_LOST;
 
 export interface RawRenderEvent extends SharedEvent {
   type: RenderEventType;
@@ -367,10 +364,10 @@ export interface RawRenderEvent extends SharedEvent {
 }
 
 export type TouchFingerEventType =
-  | typeof EventType.SDL_FINGER_DOWN
-  | typeof EventType.SDL_FINGER_UP
-  | typeof EventType.SDL_FINGER_MOTION
-  | typeof EventType.SDL_FINGER_CANCELED;
+  | typeof EventType.FINGER_DOWN
+  | typeof EventType.FINGER_UP
+  | typeof EventType.FINGER_MOTION
+  | typeof EventType.FINGER_CANCELED;
 
 export interface RawTouchFingerEvent extends SharedEvent {
   type: TouchFingerEventType;
@@ -385,9 +382,9 @@ export interface RawTouchFingerEvent extends SharedEvent {
 }
 
 export type PinchFingerEventType =
-  | typeof EventType.SDL_PINCH_BEGIN
-  | typeof EventType.SDL_PINCH_UPDATE
-  | typeof EventType.SDL_PINCH_END;
+  | typeof EventType.PINCH_BEGIN
+  | typeof EventType.PINCH_UPDATE
+  | typeof EventType.PINCH_END;
 
 export interface RawPinchFingerEvent extends SharedEvent {
   type: PinchFingerEventType;
@@ -396,8 +393,8 @@ export interface RawPinchFingerEvent extends SharedEvent {
 }
 
 export type PenProximityEventType =
-  | typeof EventType.SDL_PEN_PROXIMITY_IN
-  | typeof EventType.SDL_PEN_PROXIMITY_OUT;
+  | typeof EventType.PEN_PROXIMITY_IN
+  | typeof EventType.PEN_PROXIMITY_OUT;
 
 export interface RawPenProximityEvent extends SharedEvent {
   type: PenProximityEventType;
@@ -405,7 +402,7 @@ export interface RawPenProximityEvent extends SharedEvent {
   which: number;
 }
 
-export type PenMotionEventType = typeof EventType.SDL_PEN_MOTION;
+export type PenMotionEventType = typeof EventType.PEN_MOTION;
 
 export interface RawPenMotionEvent extends SharedEvent {
   type: PenMotionEventType;
@@ -417,8 +414,8 @@ export interface RawPenMotionEvent extends SharedEvent {
 }
 
 export type PenTouchEventType =
-  | typeof EventType.SDL_PEN_DOWN
-  | typeof EventType.SDL_PEN_UP;
+  | typeof EventType.PEN_DOWN
+  | typeof EventType.PEN_UP;
 
 export interface RawPenTouchEvent extends SharedEvent {
   type: PenTouchEventType;
@@ -433,8 +430,8 @@ export interface RawPenTouchEvent extends SharedEvent {
 }
 
 export type PenButtonEventType =
-  | typeof EventType.SDL_PEN_BUTTON_DOWN
-  | typeof EventType.SDL_PEN_BUTTON_UP;
+  | typeof EventType.PEN_BUTTON_DOWN
+  | typeof EventType.PEN_BUTTON_UP;
 
 export interface RawPenButtonEvent extends SharedEvent {
   type: PenButtonEventType;
@@ -447,7 +444,7 @@ export interface RawPenButtonEvent extends SharedEvent {
   down: boolean;
 }
 
-export type PenAxisEventType = typeof EventType.SDL_PEN_AXIS;
+export type PenAxisEventType = typeof EventType.PEN_AXIS;
 
 export interface RawPenAxisEvent extends SharedEvent {
   type: PenAxisEventType;
@@ -461,11 +458,11 @@ export interface RawPenAxisEvent extends SharedEvent {
 }
 
 export type DropEventType =
-  | typeof EventType.SDL_DROP_FILE
-  | typeof EventType.SDL_DROP_TEXT
-  | typeof EventType.SDL_DROP_BEGIN
-  | typeof EventType.SDL_DROP_COMPLETE
-  | typeof EventType.SDL_DROP_POSITION;
+  | typeof EventType.DROP_FILE
+  | typeof EventType.DROP_TEXT
+  | typeof EventType.DROP_BEGIN
+  | typeof EventType.DROP_COMPLETE
+  | typeof EventType.DROP_POSITION;
 
 export interface RawDropEvent extends SharedEvent {
   type: DropEventType;
@@ -476,7 +473,7 @@ export interface RawDropEvent extends SharedEvent {
   data: string;
 }
 
-export type ClipboardEventType = typeof EventType.SDL_CLIPBOARD_UPDATE;
+export type ClipboardEventType = typeof EventType.CLIPBOARD_UPDATE;
 
 export interface RawClipboardEvent extends SharedEvent {
   type: ClipboardEventType;
@@ -485,7 +482,7 @@ export interface RawClipboardEvent extends SharedEvent {
   mime_types: string[];
 }
 
-export type SensorEventType = typeof EventType.SDL_SENSOR_UPDATE;
+export type SensorEventType = typeof EventType.SENSOR_UPDATE;
 
 export interface RawSensorEvent extends SharedEvent {
   type: SensorEventType;
@@ -501,15 +498,13 @@ export interface RawSensorEvent extends SharedEvent {
   sensor_timestamp: bigint;
 }
 
-export type QuitEventType = typeof EventType.SDL_QUIT;
+export type QuitEventType = typeof EventType.QUIT;
 
 export interface RawQuitEvent extends SharedEvent {
   type: QuitEventType;
 }
 
-export type UserEventType =
-  | typeof EventType.SDL_LAST
-  | typeof EventType.SDL_USER;
+export type UserEventType = typeof EventType.LAST | typeof EventType.USER;
 
 export interface RawUserEvent extends SharedEvent {
   type: UserEventType;

@@ -1,6 +1,6 @@
 import { read, type Pointer } from 'bun:ffi';
 import type { BaseSDL } from '../../../..';
-import type { MouseWheelDirection } from '../../../../ffi/events/constant';
+import type { MouseWheelDirection } from '../../../../ffi/mouse/constant';
 import type { MouseWheelEventType, RawMouseWheelEvent } from '../types';
 
 export class MouseWheelEvent implements RawMouseWheelEvent {

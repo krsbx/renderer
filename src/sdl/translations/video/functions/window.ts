@@ -7,7 +7,7 @@ import type {
   WindowFlags,
 } from '../../../ffi/video/constant';
 import type { Vector2, WidthHeight } from '../../../types/shared';
-import { convertStringToFfi } from '../../../utility/comon';
+import { convertStringToFfi } from '../../../utility/common';
 import { Rect } from '../../rect/utility/rect';
 import { Surface } from '../../surface/surface';
 import { DisplayMode } from '../display-mode';

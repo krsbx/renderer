@@ -27,22 +27,22 @@ export class GamepadBinding implements RawGamepadBinding {
     view.setInt32(0, this.input_type, true);
 
     switch (this.input_type) {
-      case GamepadBindingType.SDL_GAMEPAD_BINDTYPE_BUTTON:
+      case GamepadBindingType.BUTTON:
         view.setInt32(4, this.input.button, true);
         break;
 
-      case GamepadBindingType.SDL_GAMEPAD_BINDTYPE_AXIS:
+      case GamepadBindingType.AXIS:
         view.setInt32(4, this.input.axis.axis, true);
         view.setInt32(8, this.input.axis.axis_min, true);
         view.setInt32(12, this.input.axis.axis_max, true);
         break;
 
-      case GamepadBindingType.SDL_GAMEPAD_BINDTYPE_HAT:
+      case GamepadBindingType.HAT:
         view.setInt32(4, this.input.hat.hat, true);
         view.setInt32(8, this.input.hat.hat_mask, true);
         break;
 
-      case GamepadBindingType.SDL_GAMEPAD_BINDTYPE_NONE:
+      case GamepadBindingType.NONE:
       default:
         break;
     }
@@ -50,13 +50,13 @@ export class GamepadBinding implements RawGamepadBinding {
     view.setInt32(16, this.output_type, true);
 
     switch (this.output_type) {
-      case GamepadBindingType.SDL_GAMEPAD_BINDTYPE_BUTTON:
+      case GamepadBindingType.BUTTON:
         view.setInt32(20, this.output.button, true);
         break;
 
-      case GamepadBindingType.SDL_GAMEPAD_BINDTYPE_AXIS:
-      case GamepadBindingType.SDL_GAMEPAD_BINDTYPE_HAT:
-      case GamepadBindingType.SDL_GAMEPAD_BINDTYPE_NONE:
+      case GamepadBindingType.AXIS:
+      case GamepadBindingType.HAT:
+      case GamepadBindingType.NONE:
       default:
         view.setInt32(20, this.output.axis.axis, true);
         view.setInt32(24, this.output.axis.axis_min, true);

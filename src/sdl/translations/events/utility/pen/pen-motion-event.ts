@@ -1,6 +1,6 @@
 import { read, type Pointer } from 'bun:ffi';
 import type { BaseSDL } from '../../../..';
-import type { PenInputFlags } from '../../../../ffi/events/constant';
+import type { PenInputFlags } from '../../../../ffi/pen/constant';
 import type { PenMotionEventType, RawPenMotionEvent } from '../types';
 
 export class PenMotionEvent implements RawPenMotionEvent {

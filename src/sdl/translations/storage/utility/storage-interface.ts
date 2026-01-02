@@ -1,6 +1,6 @@
 import { type Library, type Pointer, linkSymbols, ptr, read } from 'bun:ffi';
 import type { BaseSDL } from '../../..';
-import { convertStringToFfi } from '../../../utility/comon';
+import { convertStringToFfi } from '../../../utility/common';
 import { PathInfo } from '../../file-system/path-info';
 import { StorageInterfaceDefinition } from './definition';
 import type {

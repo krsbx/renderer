@@ -1,7 +1,7 @@
 import { CString, read, type Pointer } from 'bun:ffi';
 import type { BaseSDL } from '../../..';
 import type { MessageBoxButtonFlags } from '../../../ffi/message-box/constant';
-import { convertStringToFfi } from '../../../utility/comon';
+import { convertStringToFfi } from '../../../utility/common';
 import type { RawMessageBoxButtonData } from './types';
 
 export class MessageBoxButtonData implements RawMessageBoxButtonData {

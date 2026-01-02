@@ -1,7 +1,7 @@
 import { JSCallback, type Pointer } from 'bun:ffi';
 import type { BaseSDL } from '..';
 import type { InitFlags } from '../ffi/init/constant';
-import { convertStringToFfi } from '../utility/comon';
+import { convertStringToFfi } from '../utility/common';
 
 export function initTranslations(this: BaseSDL, flags: InitFlags) {
   return this.symbols.SDL_Init(flags);

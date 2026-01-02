@@ -1,6 +1,6 @@
 import { CString, read, type Pointer } from 'bun:ffi';
 import type { BaseSDL } from '../..';
-import { convertStringToFfi } from '../../utility/comon';
+import { convertStringToFfi } from '../../utility/common';
 import type { RawLocale } from './types';
 
 export class Locale implements RawLocale {

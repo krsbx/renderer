@@ -3,6 +3,8 @@ import type { BaseSDL } from '../../../..';
 import type { PenTouchEventType, RawPenTouchEvent } from '../types';
 
 export class PenTouchEvent implements RawPenTouchEvent {
+  public static readonly BYTE_SIZE = 48;
+
   public type: PenTouchEventType;
   public reserved: number;
   public timestamp: bigint;
@@ -53,7 +55,7 @@ export class PenTouchEvent implements RawPenTouchEvent {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(48);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

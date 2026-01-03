@@ -3,6 +3,8 @@ import type { BaseSDL } from '../../../..';
 import type { PenButtonEventType, RawPenButtonEvent } from '../types';
 
 export class PenButtonEvent implements RawPenButtonEvent {
+  public static readonly BYTE_SIZE = 40;
+
   public type: PenButtonEventType;
   public reserved: number;
   public timestamp: bigint;
@@ -50,7 +52,7 @@ export class PenButtonEvent implements RawPenButtonEvent {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(40);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

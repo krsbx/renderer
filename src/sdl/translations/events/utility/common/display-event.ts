@@ -3,6 +3,8 @@ import type { BaseSDL } from '../../../..';
 import type { DisplayEventType, RawDisplayEvent } from '../types';
 
 export class DisplayEvent implements RawDisplayEvent {
+  public static readonly BYTE_SIZE = 32;
+
   public type: DisplayEventType;
   public reserved: number;
   public timestamp: bigint;
@@ -38,7 +40,7 @@ export class DisplayEvent implements RawDisplayEvent {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(32);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

@@ -3,6 +3,8 @@ import type { BaseSDL } from '../../../..';
 import type { RawTextEditingEvent, TextEditingEventType } from '../types';
 
 export class TextEditingEvent implements RawTextEditingEvent {
+  public static readonly BYTE_SIZE = 48;
+
   public type: TextEditingEventType;
   public reserved: number;
   public timestamp: bigint;
@@ -43,7 +45,7 @@ export class TextEditingEvent implements RawTextEditingEvent {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(48);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

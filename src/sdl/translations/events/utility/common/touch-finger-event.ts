@@ -3,6 +3,8 @@ import type { BaseSDL } from '../../../..';
 import type { RawTouchFingerEvent, TouchFingerEventType } from '../types';
 
 export class TouchFingerEvent implements RawTouchFingerEvent {
+  public static readonly BYTE_SIZE = 56;
+
   public type: TouchFingerEventType;
   public reserved: number;
   public timestamp: bigint;
@@ -53,7 +55,7 @@ export class TouchFingerEvent implements RawTouchFingerEvent {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(56);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

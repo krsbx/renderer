@@ -3,6 +3,8 @@ import type { BaseSDL } from '../../../..';
 import type { CommonEventType, RawCommonEvent } from '../types';
 
 export class CommonEvent implements RawCommonEvent {
+  public static readonly BYTE_SIZE = 16;
+
   public type: CommonEventType;
   public reserved: number;
   public timestamp: bigint;
@@ -29,7 +31,7 @@ export class CommonEvent implements RawCommonEvent {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(16);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

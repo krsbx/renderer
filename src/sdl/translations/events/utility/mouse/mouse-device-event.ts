@@ -3,6 +3,8 @@ import type { BaseSDL } from '../../../..';
 import type { MouseDeviceEventType, RawMouseDeviceEvent } from '../types';
 
 export class MouseDeviceEvent implements RawMouseDeviceEvent {
+  public static readonly BYTE_SIZE = 24;
+
   public type: MouseDeviceEventType;
   public reserved: number;
   public timestamp: bigint;
@@ -32,7 +34,7 @@ export class MouseDeviceEvent implements RawMouseDeviceEvent {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(24);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

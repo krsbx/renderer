@@ -4,6 +4,8 @@ import type { PenAxis } from '../../../../ffi/pen/constant';
 import type { PenAxisEventType, RawPenAxisEvent } from '../types';
 
 export class PenAxisEvent implements RawPenAxisEvent {
+  public static readonly BYTE_SIZE = 48;
+
   public type: PenAxisEventType;
   public reserved: number;
   public timestamp: bigint;
@@ -51,7 +53,7 @@ export class PenAxisEvent implements RawPenAxisEvent {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(48);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

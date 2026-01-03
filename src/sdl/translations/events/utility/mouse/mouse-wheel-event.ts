@@ -4,6 +4,8 @@ import type { MouseWheelDirection } from '../../../../ffi/mouse/constant';
 import type { MouseWheelEventType, RawMouseWheelEvent } from '../types';
 
 export class MouseWheelEvent implements RawMouseWheelEvent {
+  public static readonly BYTE_SIZE = 56;
+
   public type: MouseWheelEventType;
   public reserved: number;
   public timestamp: bigint;
@@ -57,7 +59,7 @@ export class MouseWheelEvent implements RawMouseWheelEvent {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(56);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

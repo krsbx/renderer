@@ -6,6 +6,8 @@ import type {
 } from '../types';
 
 export class GamepadTouchpadEvent implements RawGamepadTouchpadEvent {
+  public static readonly BYTE_SIZE = 48;
+
   public type: GamepadTouchpadEventType;
   public reserved: number;
   public timestamp: bigint;
@@ -50,7 +52,7 @@ export class GamepadTouchpadEvent implements RawGamepadTouchpadEvent {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(48);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

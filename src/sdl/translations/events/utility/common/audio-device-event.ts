@@ -3,6 +3,8 @@ import type { BaseSDL } from '../../../..';
 import type { AudioDeviceEventType, RawAudioDeviceEvent } from '../types';
 
 export class AudioDeviceEvent implements RawAudioDeviceEvent {
+  public static readonly BYTE_SIZE = 24;
+
   public type: AudioDeviceEventType;
   public reserved: number;
   public timestamp: bigint;
@@ -44,7 +46,7 @@ export class AudioDeviceEvent implements RawAudioDeviceEvent {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(24);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

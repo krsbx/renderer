@@ -3,6 +3,8 @@ import type { BaseSDL } from '../../../..';
 import type { JoyButtonEventType, RawJoyButtonEvent } from '../types';
 
 export class JoyButtonEvent implements RawJoyButtonEvent {
+  public static readonly BYTE_SIZE = 32;
+
   public type: JoyButtonEventType;
   public reserved: number;
   public timestamp: bigint;
@@ -44,7 +46,7 @@ export class JoyButtonEvent implements RawJoyButtonEvent {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(32);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

@@ -3,6 +3,8 @@ import type { BaseSDL } from '../../../..';
 import type { PinchFingerEventType, RawPinchFingerEvent } from '../types';
 
 export class PinchFingerEvent implements RawPinchFingerEvent {
+  public static readonly BYTE_SIZE = 24;
+
   public type: PinchFingerEventType;
   public reserved: number;
   public timestamp: bigint;
@@ -35,7 +37,7 @@ export class PinchFingerEvent implements RawPinchFingerEvent {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(24);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

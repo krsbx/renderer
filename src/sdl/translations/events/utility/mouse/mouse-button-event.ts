@@ -4,6 +4,8 @@ import type { MouseButton } from '../../../../ffi/mouse/constant';
 import type { MouseButtonEventType, RawMouseButtonEvent } from '../types';
 
 export class MouseButtonEvent implements RawMouseButtonEvent {
+  public static readonly BYTE_SIZE = 40;
+
   public type: MouseButtonEventType;
   public reserved: number;
   public timestamp: bigint;
@@ -54,7 +56,7 @@ export class MouseButtonEvent implements RawMouseButtonEvent {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(40);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

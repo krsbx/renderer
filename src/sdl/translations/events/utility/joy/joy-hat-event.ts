@@ -3,6 +3,8 @@ import type { BaseSDL } from '../../../..';
 import type { JoyHatEventType, RawJoyHatEvent } from '../types';
 
 export class JoyHatEvent implements RawJoyHatEvent {
+  public static readonly BYTE_SIZE = 32;
+
   public type: JoyHatEventType;
   public reserved: number;
   public timestamp: bigint;
@@ -44,7 +46,7 @@ export class JoyHatEvent implements RawJoyHatEvent {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(32);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

@@ -3,6 +3,8 @@ import type { BaseSDL } from '../../../..';
 import type { KeyboardDeviceEventType, RawKeyboardDeviceEvent } from '../types';
 
 export class KeyboardDeviceEvent implements RawKeyboardDeviceEvent {
+  public static readonly BYTE_SIZE = 24;
+
   public type: KeyboardDeviceEventType;
   public reserved: number;
   public timestamp: bigint;
@@ -32,7 +34,7 @@ export class KeyboardDeviceEvent implements RawKeyboardDeviceEvent {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(24);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

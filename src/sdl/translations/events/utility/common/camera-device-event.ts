@@ -3,6 +3,8 @@ import type { BaseSDL } from '../../../../';
 import type { CameraDeviceEventType, RawCameraDeviceEvent } from '../types';
 
 export class CameraDeviceEvent implements RawCameraDeviceEvent {
+  public static readonly BYTE_SIZE = 24;
+
   public type: CameraDeviceEventType;
   public reserved: number;
   public timestamp: bigint;
@@ -32,7 +34,7 @@ export class CameraDeviceEvent implements RawCameraDeviceEvent {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(24);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

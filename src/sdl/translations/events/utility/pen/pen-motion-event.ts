@@ -4,6 +4,8 @@ import type { PenInputFlags } from '../../../../ffi/pen/constant';
 import type { PenMotionEventType, RawPenMotionEvent } from '../types';
 
 export class PenMotionEvent implements RawPenMotionEvent {
+  public static readonly BYTE_SIZE = 40;
+
   public type: PenMotionEventType;
   public reserved: number;
   public timestamp: bigint;
@@ -45,7 +47,7 @@ export class PenMotionEvent implements RawPenMotionEvent {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(40);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

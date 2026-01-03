@@ -3,6 +3,8 @@ import type { BaseSDL } from '../../../..';
 import type { GamepadAxisEventType, RawGamepadAxisEvent } from '../types';
 
 export class GamepadAxisEvent implements RawGamepadAxisEvent {
+  public static readonly BYTE_SIZE = 32;
+
   public type: GamepadAxisEventType;
   public reserved: number;
   public timestamp: bigint;
@@ -50,7 +52,7 @@ export class GamepadAxisEvent implements RawGamepadAxisEvent {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(32);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

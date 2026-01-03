@@ -3,6 +3,8 @@ import type { BaseSDL } from '../../../..';
 import type { RawSensorEvent, SensorEventType } from '../types';
 
 export class SensorEvent implements RawSensorEvent {
+  public static readonly BYTE_SIZE = 56;
+
   public type: SensorEventType;
   public reserved: number;
   public timestamp: bigint;
@@ -50,7 +52,7 @@ export class SensorEvent implements RawSensorEvent {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(56);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

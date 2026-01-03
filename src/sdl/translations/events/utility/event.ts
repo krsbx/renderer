@@ -43,8 +43,10 @@ import {
 } from './index';
 
 export class Event {
+  public static readonly BYTE_SIZE = 128;
+
   public static allocMemory() {
-    const buffer = new Uint8Array(128);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

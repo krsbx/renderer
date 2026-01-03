@@ -4,6 +4,8 @@ import { Surface } from '../../surface/surface';
 import type { RawCursorFrameInfo } from './types';
 
 export class CursorFrameInfo implements RawCursorFrameInfo {
+  public static readonly BYTE_SIZE = 16;
+
   public surface: Surface;
   public duration: number;
   public free: (() => void) | null;
@@ -27,7 +29,7 @@ export class CursorFrameInfo implements RawCursorFrameInfo {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(16);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

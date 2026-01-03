@@ -3,6 +3,8 @@ import type { BaseSDL } from '../../..';
 import type { RawHapticLeftRight } from './types';
 
 export class HapticLeftRight implements RawHapticLeftRight {
+  public static readonly BYTE_SIZE = 12;
+
   public type: number;
   public length: number;
   public large_magnitude: number;
@@ -32,7 +34,7 @@ export class HapticLeftRight implements RawHapticLeftRight {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(12);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

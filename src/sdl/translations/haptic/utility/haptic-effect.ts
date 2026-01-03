@@ -9,8 +9,10 @@ import { HapticPeriodic } from './haptic-periodic';
 import { HapticRamp } from './haptic-ramp';
 
 export class HapticEffect {
+  public static readonly BYTE_SIZE = 72;
+
   public static allocMemory() {
-    const buffer = new Uint8Array(72);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

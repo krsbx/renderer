@@ -4,6 +4,8 @@ import { convertStringToFfi } from '../../utility/common';
 import type { RawLocale } from './types';
 
 export class Locale implements RawLocale {
+  public static readonly BYTE_SIZE = 16;
+
   public language: string;
   public country: string;
   public free: (() => void) | null;
@@ -34,7 +36,7 @@ export class Locale implements RawLocale {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(16);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

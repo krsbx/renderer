@@ -4,6 +4,8 @@ import { Color } from './color';
 import type { RawPalette } from './types';
 
 export class Palette implements RawPalette {
+  public static readonly BYTE_SIZE = 24;
+
   public ncolors: number;
   public colors: Color[];
   public version: number;
@@ -29,7 +31,7 @@ export class Palette implements RawPalette {
 
     for (let i = 0; i < this.colors.length; i++) {
       const color = this.colors[i];
-      const offset = i * 4;
+      const offset = i * Color.BYTE_SIZE;
 
       if (!color) continue;
 
@@ -50,7 +52,7 @@ export class Palette implements RawPalette {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(24);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }
@@ -63,8 +65,9 @@ export class Palette implements RawPalette {
 
     if (colorsPtr && ncolors > 0) {
       for (let i = 0; i < ncolors; i++) {
-        // Each SDL_Color is 4 bytes. We offset by (i * 4)
-        const colorPtr = (Number(colorsPtr) + i * 4) as Pointer | null;
+        const offset = BigInt(i) * BigInt(Color.BYTE_SIZE);
+        const colorPtr = (BigInt(pointer) +
+          offset) as unknown as Pointer | null;
 
         if (!colorPtr) continue;
 
@@ -83,7 +86,33 @@ export class Palette implements RawPalette {
     return new Palette(result);
   }
 
-  public static fromMemory() {
-    throw new Error('Not implemented');
+  public static fromMemory(data: Uint8Array, sdl: BaseSDL) {
+    const view = new DataView(data.buffer, data.byteOffset, data.byteLength);
+
+    const ncolors = view.getInt32(0, true);
+    const colorsPtr = view.getBigUint64(8, true);
+
+    const colorList: Color[] = [];
+
+    for (let i = 0; i < ncolors; i++) {
+      const offset = BigInt(i) * BigInt(Color.BYTE_SIZE);
+      const colorPtr = (BigInt(colorsPtr) +
+        offset) as unknown as Pointer | null;
+
+      if (!colorPtr) continue;
+
+      colorList.push(Color.fromPointer(colorPtr, sdl));
+    }
+
+    const result = {
+      ncolors,
+      colors: colorList,
+      version: view.getUint32(16, true),
+      refcount: view.getInt32(20, true),
+      free: null,
+      address: null,
+    } as RawPalette;
+
+    return new Palette(result);
   }
 }

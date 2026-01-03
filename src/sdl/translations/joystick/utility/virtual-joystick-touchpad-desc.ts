@@ -5,6 +5,8 @@ import type { RawVirtualJoystickTouchpadDesc } from './types';
 export class VirtualJoystickTouchpadDesc
   implements RawVirtualJoystickTouchpadDesc
 {
+  public static readonly BYTE_SIZE = 8;
+
   public nfingers: number;
   public padding: [padding1: number, padding2: number, padding3: number];
   public free: (() => void) | null;
@@ -27,7 +29,7 @@ export class VirtualJoystickTouchpadDesc
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(8);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

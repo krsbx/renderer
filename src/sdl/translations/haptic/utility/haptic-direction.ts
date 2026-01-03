@@ -4,6 +4,8 @@ import type { HapticDirectionType } from '../../../ffi/haptic/constant';
 import type { RawHapticDirection } from './types';
 
 export class HapticDirection implements RawHapticDirection {
+  public static readonly BYTE_SIZE = 16;
+
   type: HapticDirectionType;
   dir: [number, number, number];
   free: (() => void) | null;
@@ -29,7 +31,7 @@ export class HapticDirection implements RawHapticDirection {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(16);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

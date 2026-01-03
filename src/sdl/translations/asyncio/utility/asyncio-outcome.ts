@@ -7,6 +7,8 @@ import type {
 import type { RawAsyncIOOutcome } from './types';
 
 export class AsyncIOOutcome implements RawAsyncIOOutcome {
+  public static readonly BYTE_SIZE = 56;
+
   public asyncio: Pointer | null;
   public type: AsyncIOTaskType;
   public result: AsyncIOResult;
@@ -48,7 +50,9 @@ export class AsyncIOOutcome implements RawAsyncIOOutcome {
   }
 
   public static allocMemory() {
-    return new Uint8Array(56);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
+
+    return buffer;
   }
 
   public static fromPointer(pointer: Pointer, sdl: BaseSDL) {

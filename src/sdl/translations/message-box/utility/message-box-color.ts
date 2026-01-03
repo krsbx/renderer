@@ -3,6 +3,8 @@ import type { BaseSDL } from '../../..';
 import type { RawMessageBoxColor } from './types';
 
 export class MessageBoxColor implements RawMessageBoxColor {
+  public static readonly BYTE_SIZE = 3;
+
   public r: number;
   public g: number;
   public b: number;
@@ -29,7 +31,7 @@ export class MessageBoxColor implements RawMessageBoxColor {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(4);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

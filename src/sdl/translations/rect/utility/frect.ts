@@ -3,6 +3,8 @@ import type { BaseSDL } from '../../..';
 import type { RawFRect } from './types';
 
 export class FRect implements RawFRect {
+  public static readonly BYTE_SIZE = 16;
+
   public x: number;
   public y: number;
   public w: number;
@@ -32,7 +34,7 @@ export class FRect implements RawFRect {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(16);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

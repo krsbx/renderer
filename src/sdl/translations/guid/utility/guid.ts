@@ -3,6 +3,8 @@ import type { BaseSDL } from '../../..';
 import type { RawGUID } from './types';
 
 export class GUID implements RawGUID {
+  public static readonly BYTE_SIZE = 16;
+
   public data: number[];
   public free: (() => void) | null;
   public address: Pointer | null;
@@ -18,7 +20,7 @@ export class GUID implements RawGUID {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(16);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

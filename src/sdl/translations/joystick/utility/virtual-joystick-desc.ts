@@ -21,6 +21,8 @@ import { VirtualJoystickSensorDesc } from './virtual-joystick-sensor-desc';
 import { VirtualJoystickTouchpadDesc } from './virtual-joystick-touchpad-desc';
 
 export class VirtualJoystickDesc implements RawVirtualJoystickDesc {
+  public static readonly BYTE_SIZE = 136;
+
   public version: number;
   public type: number;
   public padding: number;
@@ -125,7 +127,9 @@ export class VirtualJoystickDesc implements RawVirtualJoystickDesc {
   }
 
   public static allocMemory() {
-    return new Uint8Array(136);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
+
+    return buffer;
   }
 
   private static createFfi(options: CreateFfiOptions) {
@@ -187,7 +191,11 @@ export class VirtualJoystickDesc implements RawVirtualJoystickDesc {
 
     if (touchpadsPtr && ntouchpads > 0) {
       for (let i = 0; i < ntouchpads; i++) {
-        const touchpadPtr = (Number(touchpadsPtr) + i * 8) as Pointer | null;
+        const offset =
+          BigInt(i) * BigInt(VirtualJoystickTouchpadDesc.BYTE_SIZE);
+
+        const touchpadPtr = (BigInt(touchpadsPtr) +
+          offset) as unknown as Pointer | null;
 
         if (!touchpadPtr) continue;
 
@@ -199,7 +207,10 @@ export class VirtualJoystickDesc implements RawVirtualJoystickDesc {
 
     if (sensorsPtr && nsensors > 0) {
       for (let i = 0; i < nsensors; i++) {
-        const sensorPtr = (Number(sensorsPtr) + i * 8) as Pointer | null;
+        const offset = BigInt(i) * BigInt(VirtualJoystickSensorDesc.BYTE_SIZE);
+
+        const sensorPtr = (BigInt(sensorsPtr) +
+          offset) as unknown as Pointer | null;
 
         if (!sensorPtr) continue;
 
@@ -274,7 +285,11 @@ export class VirtualJoystickDesc implements RawVirtualJoystickDesc {
 
     if (touchpadsPtr && ntouchpads > 0) {
       for (let i = 0; i < ntouchpads; i++) {
-        const touchpadPtr = (Number(touchpadsPtr) + i * 8) as Pointer | null;
+        const offset =
+          BigInt(i) * BigInt(VirtualJoystickTouchpadDesc.BYTE_SIZE);
+
+        const touchpadPtr = (BigInt(touchpadsPtr) +
+          offset) as unknown as Pointer | null;
 
         if (!touchpadPtr) continue;
 
@@ -286,7 +301,10 @@ export class VirtualJoystickDesc implements RawVirtualJoystickDesc {
 
     if (sensorsPtr && nsensors > 0) {
       for (let i = 0; i < nsensors; i++) {
-        const sensorPtr = (Number(sensorsPtr) + i * 8) as Pointer | null;
+        const offset = BigInt(i) * BigInt(VirtualJoystickSensorDesc.BYTE_SIZE);
+
+        const sensorPtr = (BigInt(sensorsPtr) +
+          offset) as unknown as Pointer | null;
 
         if (!sensorPtr) continue;
 

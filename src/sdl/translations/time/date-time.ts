@@ -3,6 +3,8 @@ import type { BaseSDL } from '../..';
 import type { RawDateTime } from './types';
 
 export class DateTime implements RawDateTime {
+  public static readonly BYTE_SIZE = 36;
+
   year: number;
   month: number;
   day: number;

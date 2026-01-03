@@ -4,6 +4,8 @@ import type { SensorType } from '../../../ffi/sensor/constant';
 import type { RawVirtualJoystickSensorDesc } from './types';
 
 export class VirtualJoystickSensorDesc implements RawVirtualJoystickSensorDesc {
+  public static readonly BYTE_SIZE = 8;
+
   public type: SensorType;
   public rate: number;
   public free: (() => void) | null;
@@ -27,7 +29,7 @@ export class VirtualJoystickSensorDesc implements RawVirtualJoystickSensorDesc {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(8);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

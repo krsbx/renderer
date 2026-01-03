@@ -1,10 +1,13 @@
 import { read, type Pointer } from 'bun:ffi';
 import type { BaseSDL } from '../../..';
+import type { HapticEffectType } from '../../../ffi/haptic/constant';
 import { HapticDirection } from './haptic-direction';
 import type { RawHapticCondition } from './types';
 
 export class HapticCondition implements RawHapticCondition {
-  public type: number;
+  public static readonly BYTE_SIZE = 72;
+
+  public type: HapticEffectType;
   public direction: HapticDirection;
   public length: number;
   public delay: number;
@@ -86,7 +89,7 @@ export class HapticCondition implements RawHapticCondition {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(72);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

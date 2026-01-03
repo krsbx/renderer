@@ -4,6 +4,8 @@ import { HapticDirection } from './haptic-direction';
 import type { RawHapticCustom } from './types';
 
 export class HapticCustom implements RawHapticCustom {
+  public static readonly BYTE_SIZE = 64;
+
   public type: number;
   public direction: HapticDirection;
   public length: number;
@@ -80,7 +82,7 @@ export class HapticCustom implements RawHapticCustom {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(64);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

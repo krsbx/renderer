@@ -4,6 +4,8 @@ import { AtomicInt } from '../../atomic/utility/atomic-int';
 import type { RawInitState } from './types';
 
 export class InitState implements RawInitState {
+  public static readonly BYTE_SIZE = 24;
+
   public status: AtomicInt;
   public thread: bigint;
   public reserved: bigint;
@@ -30,7 +32,7 @@ export class InitState implements RawInitState {
   }
 
   public static allocMemory() {
-    return new Uint8Array(24);
+    return new Uint8Array(this.BYTE_SIZE);
   }
 
   public static fromPointer(pointer: Pointer, sdl: BaseSDL) {

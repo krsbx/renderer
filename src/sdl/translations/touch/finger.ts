@@ -3,6 +3,8 @@ import type { BaseSDL } from '../..';
 import type { RawFinger } from './types';
 
 export class Finger implements RawFinger {
+  public static readonly BYTE_SIZE = 24;
+
   public id: bigint;
   public x: number;
   public y: number;
@@ -32,7 +34,7 @@ export class Finger implements RawFinger {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(24);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

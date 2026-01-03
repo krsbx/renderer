@@ -4,6 +4,8 @@ import type { Colorspace, PixelFormat } from '../../ffi/pixels/constant';
 import type { RawCameraSpec } from './types';
 
 export class CameraSpec implements RawCameraSpec {
+  public static readonly BYTE_SIZE = 24;
+
   public format: PixelFormat;
   public colorspace: Colorspace;
   public width: number;
@@ -37,7 +39,7 @@ export class CameraSpec implements RawCameraSpec {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(24);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

@@ -4,6 +4,8 @@ import type { HIDBusType } from '../../../ffi/hidapi/constant';
 import type { RawHIDDeviceInfo } from './types';
 
 export class HIDDeviceInfo implements RawHIDDeviceInfo {
+  public static readonly BYTE_SIZE = 80;
+
   public path: string;
   public vendor_id: number;
   public product_id: number;
@@ -43,7 +45,7 @@ export class HIDDeviceInfo implements RawHIDDeviceInfo {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(80);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

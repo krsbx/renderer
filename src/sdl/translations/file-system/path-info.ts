@@ -3,6 +3,8 @@ import type { BaseSDL } from '../..';
 import type { RawPathInfo } from './types';
 
 export class PathInfo implements RawPathInfo {
+  public static readonly BYTE_SIZE = 40;
+
   public type: number;
   public size: bigint;
   public create_time: bigint;
@@ -35,7 +37,7 @@ export class PathInfo implements RawPathInfo {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(40);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

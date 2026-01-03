@@ -3,6 +3,8 @@ import type { BaseSDL } from '../..';
 import type { RawDialogFileFilter } from './types';
 
 export class DialogFileFilter implements RawDialogFileFilter {
+  public static readonly BYTE_SIZE = 16;
+
   public name: string;
   public pattern: string;
   public free: (() => void) | null;
@@ -26,7 +28,7 @@ export class DialogFileFilter implements RawDialogFileFilter {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(2);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

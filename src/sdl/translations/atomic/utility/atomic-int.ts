@@ -3,6 +3,8 @@ import type { BaseSDL } from '../../..';
 import type { RawAtomicInt } from './types';
 
 export class AtomicInt implements RawAtomicInt {
+  public static readonly BYTE_SIZE = 4;
+
   public value: number;
   public free: (() => void) | null;
   public address: Pointer | null;
@@ -23,7 +25,7 @@ export class AtomicInt implements RawAtomicInt {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(4);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

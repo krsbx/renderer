@@ -5,6 +5,8 @@ import { HapticDirection } from './haptic-direction';
 import type { RawHapticRamp } from './types';
 
 export class HapticRamp implements RawHapticRamp {
+  public static readonly BYTE_SIZE = 44;
+
   public type: HapticEffectType;
   public direction: HapticDirection;
   public length: number;
@@ -60,7 +62,7 @@ export class HapticRamp implements RawHapticRamp {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(44);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

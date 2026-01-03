@@ -11,6 +11,8 @@ import type {
 } from './types';
 
 export class IOStreamInterface implements RawIOStreamInterface {
+  public static readonly BYTE_SIZE = 56;
+
   public version: number;
   public $ffi: Library<IOStreamInterfaceDefinition>;
   public free: (() => void) | null;
@@ -87,7 +89,7 @@ export class IOStreamInterface implements RawIOStreamInterface {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(56);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

@@ -4,6 +4,8 @@ import type { PixelFormat } from '../../ffi/pixels/constant';
 import type { RawDisplayMode } from './types';
 
 export class DisplayMode implements RawDisplayMode {
+  public static readonly BYTE_SIZE = 32;
+
   public displayID: number;
   public format: PixelFormat;
   public w: number;
@@ -44,7 +46,7 @@ export class DisplayMode implements RawDisplayMode {
   }
 
   public static allocMemory() {
-    const buffer = new Int32Array(40);
+    const buffer = new Int32Array(8);
 
     return buffer;
   }

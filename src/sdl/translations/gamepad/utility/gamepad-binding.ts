@@ -4,6 +4,8 @@ import { GamepadBindingType } from '../../../ffi/gamepad/constant';
 import type { GamepadInput, GamepadOutput, RawGamepadBinding } from './types';
 
 export class GamepadBinding implements RawGamepadBinding {
+  public static readonly BYTE_SIZE = 32;
+
   public input_type: GamepadBindingType;
   public input: GamepadInput;
   public output_type: GamepadBindingType;
@@ -68,7 +70,7 @@ export class GamepadBinding implements RawGamepadBinding {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(32);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

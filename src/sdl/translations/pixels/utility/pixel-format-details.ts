@@ -3,6 +3,8 @@ import type { BaseSDL } from '../../..';
 import type { RawPixelFormatDetails } from './types';
 
 export class PixelFormatDetails implements RawPixelFormatDetails {
+  public static readonly BYTE_SIZE = 32;
+
   public format: number;
   public bits_per_pixel: number;
   public bytes_per_pixel: number;
@@ -43,10 +45,6 @@ export class PixelFormatDetails implements RawPixelFormatDetails {
     this.address = options.address;
   }
 
-  public static allocMemory() {
-    return new Uint8Array(32);
-  }
-
   public toMemory() {
     const buffer = PixelFormatDetails.allocMemory();
     const view = new DataView(buffer.buffer);
@@ -67,6 +65,12 @@ export class PixelFormatDetails implements RawPixelFormatDetails {
     view.setUint8(29, this.Gshift);
     view.setUint8(30, this.Bshift);
     view.setUint8(31, this.Ashift);
+
+    return buffer;
+  }
+
+  public static allocMemory() {
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

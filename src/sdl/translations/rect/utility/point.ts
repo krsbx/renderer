@@ -3,6 +3,8 @@ import type { BaseSDL } from '../../..';
 import type { RawPoint } from './types';
 
 export class Point implements RawPoint {
+  public static readonly BYTE_SIZE = 8;
+
   public x: number;
   public y: number;
   public free: (() => void) | null;
@@ -26,7 +28,7 @@ export class Point implements RawPoint {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(8);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

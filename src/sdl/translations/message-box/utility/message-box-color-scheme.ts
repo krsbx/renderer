@@ -4,6 +4,8 @@ import { MessageBoxColor } from './message-box-color';
 import type { RawMessageBoxColorScheme } from './types';
 
 export class MessageBoxColorScheme implements RawMessageBoxColorScheme {
+  public static readonly BYTE_SIZE = 15;
+
   public colors: MessageBoxColor[];
   public free: (() => void) | null;
   public address: Pointer | null;
@@ -24,21 +26,26 @@ export class MessageBoxColorScheme implements RawMessageBoxColorScheme {
 
       const colorBuf = color.toMemory();
 
-      buffer.set(colorBuf, i * 3);
+      buffer.set(colorBuf, i * MessageBoxColor.BYTE_SIZE);
     }
     return buffer;
   }
 
   public static allocMemory() {
-    return new Uint8Array(15);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
+
+    return buffer;
   }
 
   public static fromPointer(pointer: Pointer, sdl: BaseSDL) {
     const colors: MessageBoxColor[] = [];
 
     for (let i = 0; i < 5; i++) {
-      // Move pointer by 3 bytes for each color
-      const colorPtr = (BigInt(pointer) + BigInt(i * 3)) as unknown as Pointer;
+      const offset = BigInt(i) * BigInt(MessageBoxColor.BYTE_SIZE);
+      const colorPtr = (BigInt(pointer) + offset) as unknown as Pointer | null;
+
+      if (!colorPtr) continue;
+
       colors.push(MessageBoxColor.fromPointer(colorPtr, sdl));
     }
 
@@ -55,8 +62,9 @@ export class MessageBoxColorScheme implements RawMessageBoxColorScheme {
     const colors: MessageBoxColor[] = [];
 
     for (let i = 0; i < 5; i++) {
-      const start = i * 3;
-      const end = i * 3 + 3;
+      const start = i * MessageBoxColor.BYTE_SIZE;
+      const end = start + MessageBoxColor.BYTE_SIZE;
+
       const colorBuf = data.slice(start, end);
       const color = MessageBoxColor.fromMemory(colorBuf);
 

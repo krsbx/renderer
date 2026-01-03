@@ -3,6 +3,8 @@ import type { BaseSDL } from '../..';
 import type { RawAudioSpec } from './types';
 
 export class AudioSpec implements RawAudioSpec {
+  public static readonly BYTE_SIZE = 12;
+
   public format: number;
   public channels: number;
   public freq: number;
@@ -29,7 +31,7 @@ export class AudioSpec implements RawAudioSpec {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(12);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

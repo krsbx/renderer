@@ -5,6 +5,8 @@ import { convertStringToFfi } from '../../../utility/common';
 import type { RawMessageBoxButtonData } from './types';
 
 export class MessageBoxButtonData implements RawMessageBoxButtonData {
+  public static readonly BYTE_SIZE = 16;
+
   public flags: MessageBoxButtonFlags;
   public buttonID: number;
   public text: string;
@@ -33,7 +35,7 @@ export class MessageBoxButtonData implements RawMessageBoxButtonData {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(16);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

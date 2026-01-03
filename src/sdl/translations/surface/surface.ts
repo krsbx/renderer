@@ -3,6 +3,8 @@ import type { BaseSDL } from '../..';
 import type { RawSurface } from './types';
 
 export class Surface implements RawSurface {
+  public static readonly BYTE_SIZE = 48;
+
   public flags: number;
   public format: number;
   public w: number;
@@ -45,7 +47,7 @@ export class Surface implements RawSurface {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(48);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

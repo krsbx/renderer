@@ -17,6 +17,8 @@ import type {
 } from './types';
 
 export class StorageInterface implements RawStorageInterface {
+  public static readonly BYTE_SIZE = 96;
+
   public version: number;
   public $ffi: Library<StorageInterfaceDefinition>;
   public free: (() => void) | null;
@@ -155,7 +157,7 @@ export class StorageInterface implements RawStorageInterface {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(96);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

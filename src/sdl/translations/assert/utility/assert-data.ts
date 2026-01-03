@@ -3,6 +3,8 @@ import type { BaseSDL } from '../../..';
 import type { RawAssertData } from './types';
 
 export class AssertData implements RawAssertData {
+  public static readonly BYTE_SIZE = 48;
+
   public always_ignore: boolean;
   public trigger_count: number;
   public condition: string;
@@ -26,7 +28,7 @@ export class AssertData implements RawAssertData {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(48);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

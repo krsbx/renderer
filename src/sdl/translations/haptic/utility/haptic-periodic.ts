@@ -5,6 +5,8 @@ import { HapticDirection } from './haptic-direction';
 import type { RawHapticPeriodic } from './types';
 
 export class HapticPeriodic implements RawHapticPeriodic {
+  public static readonly BYTE_SIZE = 48;
+
   public type: HapticEffectType;
   public direction: HapticDirection;
   public length: number;
@@ -66,7 +68,7 @@ export class HapticPeriodic implements RawHapticPeriodic {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(48);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

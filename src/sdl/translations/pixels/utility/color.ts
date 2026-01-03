@@ -3,6 +3,8 @@ import type { BaseSDL } from '../../..';
 import type { RawColor } from './types';
 
 export class Color implements RawColor {
+  public static readonly BYTE_SIZE = 4;
+
   public r: number;
   public g: number;
   public b: number;
@@ -32,7 +34,7 @@ export class Color implements RawColor {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(4);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

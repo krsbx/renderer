@@ -3,6 +3,8 @@ import type { BaseSDL } from '../../..';
 import type { RawAlignmentTest } from './types';
 
 export class AlignmentTest implements RawAlignmentTest {
+  public static readonly BYTE_SIZE = 16;
+
   public a: number;
   public b: Pointer;
   public free: (() => void) | null;
@@ -26,7 +28,7 @@ export class AlignmentTest implements RawAlignmentTest {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(16);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

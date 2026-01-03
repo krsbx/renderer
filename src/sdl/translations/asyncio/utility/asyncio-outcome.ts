@@ -8,8 +8,8 @@ import type { RawAsyncIOOutcome } from './types';
 
 export class AsyncIOOutcome implements RawAsyncIOOutcome {
   public asyncio: Pointer | null;
-  type: AsyncIOTaskType;
-  result: AsyncIOResult;
+  public type: AsyncIOTaskType;
+  public result: AsyncIOResult;
   public buffer: Pointer | null;
   public offset: bigint;
   public bytes_requested: bigint;

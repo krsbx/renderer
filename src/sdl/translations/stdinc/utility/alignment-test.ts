@@ -20,7 +20,7 @@ export class AlignmentTest implements RawAlignmentTest {
     const view = new DataView(buffer.buffer);
 
     view.setInt8(0, this.a);
-    view.setBigInt64(8, BigInt(this.b), true);
+    view.setBigUint64(8, BigInt(this.b), true);
 
     return buffer;
   }

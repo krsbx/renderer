@@ -6,7 +6,7 @@ export class VirtualJoystickTouchpadDesc
   implements RawVirtualJoystickTouchpadDesc
 {
   public nfingers: number;
-  public padding: [padding1: number, padding2: number, padding: 3];
+  public padding: [padding1: number, padding2: number, padding3: number];
   public free: (() => void) | null;
   public address: Pointer | null;
 

@@ -52,4 +52,27 @@ export class AssertData implements RawAssertData {
 
     return new AssertData(result);
   }
+
+  public static fromMemory(data: Uint8Array) {
+    const view = new DataView(data.buffer, data.byteOffset, data.byteLength);
+    const conditionPtr = view.getBigUint64(8, true) as unknown as Pointer;
+    const filenamePtr = view.getBigUint64(16, true) as unknown as Pointer;
+    const functionPtr = view.getBigUint64(32, true) as unknown as Pointer;
+    const nextPtr = view.getBigUint64(40, true) as unknown as Pointer | null;
+
+    const result = {
+      always_ignore: view.getUint8(0) === 1,
+      trigger_count: view.getUint32(4, true),
+      // Use your existing helper to read the C string from the pointer
+      condition: new CString(conditionPtr).toString(),
+      filename: new CString(filenamePtr).toString(),
+      linenum: view.getInt32(24, true),
+      function: new CString(functionPtr).toString(),
+      next: nextPtr,
+      free: null,
+      address: null,
+    } as RawAssertData;
+
+    return new AssertData(result);
+  }
 }

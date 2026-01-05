@@ -3,6 +3,8 @@ import type { BaseSDL } from '../../..';
 import type { RawGPUTextureTransferInfo } from './types';
 
 export class GPUTextureTransferInfo implements RawGPUTextureTransferInfo {
+  public static readonly BYTE_SIZE = 24;
+
   public transfer_buffer: Pointer;
   public offset: number;
   public pixels_per_row: number;
@@ -32,7 +34,7 @@ export class GPUTextureTransferInfo implements RawGPUTextureTransferInfo {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(24);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

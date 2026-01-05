@@ -5,6 +5,8 @@ import type { RawGPUIndexedIndirectDrawCommand } from './types';
 export class GPUIndexedIndirectDrawCommand
   implements RawGPUIndexedIndirectDrawCommand
 {
+  public static readonly BYTE_SIZE = 20;
+
   public num_indices: number;
   public num_instances: number;
   public first_index: number;
@@ -37,7 +39,7 @@ export class GPUIndexedIndirectDrawCommand
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(20);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

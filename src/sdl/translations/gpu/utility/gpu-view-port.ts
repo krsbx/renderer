@@ -3,6 +3,8 @@ import type { BaseSDL } from '../../..';
 import type { RawGPUViewport } from './types';
 
 export class GPUViewport implements RawGPUViewport {
+  public static readonly BYTE_SIZE = 24;
+
   public x: number;
   public y: number;
   public w: number;
@@ -38,7 +40,7 @@ export class GPUViewport implements RawGPUViewport {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(24);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

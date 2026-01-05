@@ -3,6 +3,8 @@ import type { BaseSDL } from '../../..';
 import type { RawGPUBufferRegion } from './types';
 
 export class GPUBufferRegion implements RawGPUBufferRegion {
+  public static readonly BYTE_SIZE = 16;
+
   public buffer: Pointer;
   public offset: number;
   public size: number;
@@ -29,7 +31,7 @@ export class GPUBufferRegion implements RawGPUBufferRegion {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(16);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

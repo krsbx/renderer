@@ -5,6 +5,8 @@ import type { RawGPUIndirectDispatchCommand } from './types';
 export class GPUIndirectDispatchCommand
   implements RawGPUIndirectDispatchCommand
 {
+  public static readonly BYTE_SIZE = 12;
+
   public groupcount_x: number;
   public groupcount_y: number;
   public groupcount_z: number;
@@ -31,7 +33,7 @@ export class GPUIndirectDispatchCommand
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(12);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

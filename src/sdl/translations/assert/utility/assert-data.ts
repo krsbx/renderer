@@ -65,7 +65,6 @@ export class AssertData implements RawAssertData {
     const result = {
       always_ignore: view.getUint8(0) === 1,
       trigger_count: view.getUint32(4, true),
-      // Use your existing helper to read the C string from the pointer
       condition: new CString(conditionPtr).toString(),
       filename: new CString(filenamePtr).toString(),
       linenum: view.getInt32(24, true),

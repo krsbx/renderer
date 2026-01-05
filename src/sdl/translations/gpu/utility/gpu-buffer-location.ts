@@ -3,6 +3,8 @@ import type { BaseSDL } from '../../..';
 import type { RawGPUBufferLocation } from './types';
 
 export class GPUBufferLocation implements RawGPUBufferLocation {
+  public static readonly BYTE_SIZE = 16;
+
   public buffer: Pointer;
   public offset: number;
   public free: (() => void) | null;
@@ -26,7 +28,7 @@ export class GPUBufferLocation implements RawGPUBufferLocation {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(16);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

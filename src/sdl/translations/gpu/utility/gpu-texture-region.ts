@@ -3,6 +3,8 @@ import type { BaseSDL } from '../../..';
 import type { RawGPUTextureRegion } from './types';
 
 export class GPUTextureRegion implements RawGPUTextureRegion {
+  public static readonly BYTE_SIZE = 48;
+
   public texture: Pointer;
   public mip_level: number;
   public layer: number;
@@ -47,7 +49,7 @@ export class GPUTextureRegion implements RawGPUTextureRegion {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(48);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

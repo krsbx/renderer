@@ -3,6 +3,8 @@ import type { BaseSDL } from '../../..';
 import type { RawGPUIndirectDrawCommand } from './types';
 
 export class GPUIndirectDrawCommand implements RawGPUIndirectDrawCommand {
+  public static readonly BYTE_SIZE = 16;
+
   public num_vertices: number;
   public num_instances: number;
   public first_vertex: number;
@@ -32,7 +34,7 @@ export class GPUIndirectDrawCommand implements RawGPUIndirectDrawCommand {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(16);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

@@ -3,6 +3,8 @@ import type { BaseSDL } from '../../..';
 import type { RawGPUBlitRegion } from './types';
 
 export class GPUBlitRegion implements RawGPUBlitRegion {
+  public static readonly BYTE_SIZE = 32;
+
   public texture: Pointer;
   public mip_level: number;
   public layer_or_depth_plane: number;
@@ -41,7 +43,7 @@ export class GPUBlitRegion implements RawGPUBlitRegion {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(32);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

@@ -1,4 +1,4 @@
-import { read, type Pointer } from 'bun:ffi';
+import { ptr, read, type Pointer } from 'bun:ffi';
 import type { BaseSDL } from '../../..';
 import { GPUVertexAttribute } from './gpu-vertex-attribute';
 import { GPUVertexBufferDescription } from './gpu-vertex-buffer-description';
@@ -24,7 +24,42 @@ export class GPUVertexInputState implements RawGPUVertexInputState {
   }
 
   public toMemory() {
-    throw new Error('Not implemented');
+    const buffer = GPUVertexInputState.allocMemory();
+    const view = new DataView(buffer.buffer);
+
+    const vertexBuffers = new Uint8Array(
+      this.num_vertex_buffers * GPUVertexBufferDescription.BYTE_SIZE
+    );
+    const vertexAttributes = new Uint8Array(
+      this.num_vertex_attributes * GPUVertexAttribute.BYTE_SIZE
+    );
+
+    for (let i = 0; i < this.num_vertex_buffers; i++) {
+      const offset = i * GPUVertexBufferDescription.BYTE_SIZE;
+
+      const vertexBuffer = this.vertex_buffer_descriptions[i];
+
+      if (!vertexBuffer) continue;
+
+      vertexBuffers.set(vertexBuffer.toMemory(), offset);
+    }
+
+    for (let i = 0; i < this.num_vertex_attributes; i++) {
+      const offset = i * GPUVertexAttribute.BYTE_SIZE;
+
+      const vertexAttribute = this.vertex_attributes[i];
+
+      if (!vertexAttribute) continue;
+
+      vertexAttributes.set(vertexAttribute.toMemory(), offset);
+    }
+
+    view.setBigUint64(0, BigInt(ptr(vertexBuffers.buffer)), true);
+    view.setUint32(8, this.num_vertex_buffers, true);
+    view.setBigUint64(16, BigInt(ptr(vertexAttributes.buffer)), true);
+    view.setUint32(24, this.num_vertex_attributes, true);
+
+    return buffer;
   }
 
   public static allocMemory() {

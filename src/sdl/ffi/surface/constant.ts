@@ -24,3 +24,5 @@ export const FlipMode = {
     return this.HORIZONTAL | this.VERTICAL;
   } /**< flip horizontally and vertically (not a diagonal flip) */,
 } as const;
+
+export type FlipMode = (typeof FlipMode)[keyof typeof FlipMode];

@@ -1,73 +1,59 @@
-import { CString, read, type Pointer } from 'bun:ffi';
-import type { BaseSDL } from '../..';
-import type { RawDialogFileFilter } from './types';
+import { CString, ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
+import { ByteOffset } from './constant';
 
-export class DialogFileFilter implements RawDialogFileFilter {
+export class DialogFileFilter {
   public static readonly BYTE_SIZE = 16;
 
-  public name: string;
-  public pattern: string;
-  public free: (() => void) | null;
-  public address: Pointer | null;
+  public $address: Pointer;
+  public $memory: Uint8Array;
+  public $view: DataView;
 
-  public constructor(options: RawDialogFileFilter) {
-    this.name = options.name;
-    this.pattern = options.pattern;
-    this.free = options.free;
-    this.address = options.address;
-  }
+  public constructor(data: Pointer | Uint8Array) {
+    if (data instanceof Uint8Array) {
+      this.$memory = data;
+      this.$address = ptr(data);
+    } else {
+      const buffer = toArrayBuffer(data, 0, DialogFileFilter.BYTE_SIZE);
+      this.$memory = new Uint8Array(buffer);
+      this.$address = data;
+    }
 
-  public toMemory() {
-    const buffer = DialogFileFilter.allocMemory();
-    const view = new DataView(buffer.buffer);
-
-    view.setBigUint64(0, 0n, true);
-    view.setBigUint64(8, 0n, true);
-
-    return buffer;
+    this.$view = new DataView(
+      this.$memory.buffer,
+      this.$memory.byteOffset,
+      this.$memory.byteLength
+    );
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(this.BYTE_SIZE);
+    const buffer = new Uint8Array(DialogFileFilter.BYTE_SIZE);
 
     return buffer;
   }
 
-  public static fromPointer(pointer: Pointer, sdl: BaseSDL) {
-    const namePtr = read.ptr(pointer, 0) as Pointer | null;
-    const patternPtr = read.ptr(pointer, 8) as Pointer | null;
+  public get name() {
+    const namePtr = this.$view.getBigUint64(
+      ByteOffset.name,
+      true
+    ) as unknown as Pointer;
 
-    const result = {
-      name: namePtr ? new CString(namePtr).toString() : '',
-      pattern: patternPtr ? new CString(patternPtr).toString() : '',
-      free: () => {
-        sdl.symbols.SDL_free(pointer);
-      },
-      address: pointer,
-    } as RawDialogFileFilter;
-
-    return new DialogFileFilter(result);
+    return new CString(namePtr);
   }
 
-  public static fromMemory(data: Uint8Array) {
-    const view = new DataView(data.buffer, data.byteOffset, data.byteLength);
+  public set name(value: CString) {
+    this.$view.setBigUint64(ByteOffset.name, BigInt(value.ptr), true);
+  }
 
-    const nameAddr = view.getBigUint64(0, true);
-    const patternAddr = view.getBigUint64(8, true);
+  public get pattern() {
+    const patternPtr = this.$view.getBigUint64(
+      ByteOffset.pattern,
+      true
+    ) as unknown as Pointer;
 
-    const result = {
-      name:
-        nameAddr !== 0n
-          ? new CString(nameAddr as unknown as Pointer).toString()
-          : '',
-      pattern:
-        patternAddr !== 0n
-          ? new CString(patternAddr as unknown as Pointer).toString()
-          : '',
-      free: null,
-      address: null,
-    } as RawDialogFileFilter;
+    return new CString(patternPtr);
+  }
 
-    return new DialogFileFilter(result);
+  public set pattern(value: CString) {
+    this.$view.setBigUint64(ByteOffset.pattern, BigInt(value.ptr), true);
   }
 }

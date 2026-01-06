@@ -1,95 +1,106 @@
-import { read, type Pointer } from 'bun:ffi';
-import type { BaseSDL } from '../../..';
-import type {
-  AsyncIOResult,
-  AsyncIOTaskType,
-} from '../../../ffi/asyncio/constant';
-import type { RawAsyncIOOutcome } from './types';
+import { ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
+import { ByteOffset } from './constant';
 
-export class AsyncIOOutcome implements RawAsyncIOOutcome {
+export class AsyncIOOutcome {
   public static readonly BYTE_SIZE = 56;
 
-  public asyncio: Pointer | null;
-  public type: AsyncIOTaskType;
-  public result: AsyncIOResult;
-  public buffer: Pointer | null;
-  public offset: bigint;
-  public bytes_requested: bigint;
-  public bytes_transferred: bigint;
-  public userdata: Pointer | null;
-  public free: (() => void) | null;
-  public address: Pointer | null;
+  public $address: Pointer;
+  public $memory: Uint8Array;
+  public $view: DataView;
 
-  public constructor(options: RawAsyncIOOutcome) {
-    this.asyncio = options.asyncio;
-    this.type = options.type;
-    this.result = options.result;
-    this.buffer = options.buffer;
-    this.offset = options.offset;
-    this.bytes_requested = options.bytes_requested;
-    this.bytes_transferred = options.bytes_transferred;
-    this.userdata = options.userdata;
-    this.free = options.free;
-    this.address = options.address;
-  }
+  public constructor(data: Pointer | Uint8Array) {
+    if (data instanceof Uint8Array) {
+      this.$memory = data;
+      this.$address = ptr(data);
+    } else {
+      const buffer = toArrayBuffer(data, 0, AsyncIOOutcome.BYTE_SIZE);
+      this.$memory = new Uint8Array(buffer);
+      this.$address = data;
+    }
 
-  public toMemory() {
-    const buffer = AsyncIOOutcome.allocMemory();
-    const view = new DataView(buffer.buffer);
-
-    view.setBigUint64(0, BigInt(this.asyncio ?? 0n), true);
-    view.setInt32(8, this.type, true);
-    view.setInt32(12, this.result, true);
-    view.setBigUint64(16, BigInt(this.buffer ?? 0n), true);
-    view.setBigUint64(24, this.offset, true);
-    view.setBigUint64(32, this.bytes_requested, true);
-    view.setBigUint64(40, this.bytes_transferred, true);
-    view.setBigUint64(48, BigInt(this.userdata ?? 0n), true);
-
-    return buffer;
+    this.$view = new DataView(
+      this.$memory.buffer,
+      this.$memory.byteOffset,
+      this.$memory.byteLength
+    );
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(this.BYTE_SIZE);
+    const buffer = new Uint8Array(AsyncIOOutcome.BYTE_SIZE);
 
     return buffer;
   }
 
-  public static fromPointer(pointer: Pointer, sdl: BaseSDL) {
-    const result = {
-      asyncio: read.ptr(pointer, 0),
-      type: read.i32(pointer, 8),
-      result: read.i32(pointer, 12),
-      buffer: read.ptr(pointer, 16),
-      offset: read.u64(pointer, 24),
-      bytes_requested: read.u64(pointer, 32),
-      bytes_transferred: read.u64(pointer, 40),
-      userdata: read.ptr(pointer, 48),
-      free: () => {
-        sdl.symbols.SDL_free(pointer);
-      },
-      address: pointer,
-    } as RawAsyncIOOutcome;
-
-    return new AsyncIOOutcome(result);
+  public get asyncio() {
+    return this.$view.getBigUint64(
+      ByteOffset.asyncio,
+      true
+    ) as unknown as Pointer;
   }
 
-  public static fromMemory(data: Uint8Array) {
-    const view = new DataView(data.buffer, data.byteOffset, data.byteLength);
+  public set asyncio(value: Pointer) {
+    this.$view.setBigUint64(ByteOffset.asyncio, BigInt(value ?? 0n), true);
+  }
 
-    const result = {
-      asyncio: view.getBigUint64(0, true) as unknown as Pointer,
-      type: view.getInt32(8, true),
-      result: view.getInt32(12, true),
-      buffer: view.getBigUint64(16, true) as unknown as Pointer,
-      offset: view.getBigUint64(24, true),
-      bytes_requested: view.getBigUint64(32, true),
-      bytes_transferred: view.getBigUint64(40, true),
-      userdata: view.getBigUint64(48, true) as unknown as Pointer,
-      free: null,
-      address: null,
-    } as RawAsyncIOOutcome;
+  public get type() {
+    return this.$view.getInt32(ByteOffset.type, true);
+  }
 
-    return new AsyncIOOutcome(result);
+  public set type(value: number) {
+    this.$view.setInt32(ByteOffset.type, value, true);
+  }
+
+  public get result() {
+    return this.$view.getInt32(ByteOffset.result, true);
+  }
+
+  public set result(value: number) {
+    this.$view.setInt32(ByteOffset.result, value, true);
+  }
+
+  public get buffer() {
+    return this.$view.getBigUint64(
+      ByteOffset.buffer,
+      true
+    ) as unknown as Pointer;
+  }
+
+  public set buffer(value: Pointer) {
+    this.$view.setBigUint64(ByteOffset.buffer, BigInt(value ?? 0n), true);
+  }
+
+  public get offset() {
+    return this.$view.getBigUint64(ByteOffset.offset, true);
+  }
+
+  public set offset(value: bigint) {
+    this.$view.setBigUint64(ByteOffset.offset, value, true);
+  }
+
+  public get bytes_requested() {
+    return this.$view.getBigUint64(ByteOffset.bytes_requested, true);
+  }
+
+  public set bytes_requested(value: bigint) {
+    this.$view.setBigUint64(ByteOffset.bytes_requested, value, true);
+  }
+
+  public get bytes_transferred() {
+    return this.$view.getBigUint64(ByteOffset.bytes_transferred, true);
+  }
+
+  public set bytes_transferred(value: bigint) {
+    this.$view.setBigUint64(ByteOffset.bytes_transferred, value, true);
+  }
+
+  public get userdata() {
+    return this.$view.getBigUint64(
+      ByteOffset.userdata,
+      true
+    ) as unknown as Pointer;
+  }
+
+  public set userdata(value: Pointer) {
+    this.$view.setBigUint64(ByteOffset.userdata, BigInt(value ?? 0n), true);
   }
 }

@@ -1,27 +1,28 @@
-import { read, type Pointer } from 'bun:ffi';
-import type { BaseSDL } from '../../..';
-import type { RawAtomicInt } from './types';
+import { ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
+import { ByteOffset } from './constant';
 
-export class AtomicInt implements RawAtomicInt {
+export class AtomicInt {
   public static readonly BYTE_SIZE = 4;
 
-  public value: number;
-  public free: (() => void) | null;
-  public address: Pointer | null;
+  public $address: Pointer;
+  public $memory: Uint8Array;
+  public $view: DataView;
 
-  public constructor(options: RawAtomicInt) {
-    this.value = options.value;
-    this.free = options.free;
-    this.address = options.address;
-  }
+  public constructor(data: Pointer | Uint8Array) {
+    if (data instanceof Uint8Array) {
+      this.$memory = data;
+      this.$address = ptr(data);
+    } else {
+      const buffer = toArrayBuffer(data, 0, AtomicInt.BYTE_SIZE);
+      this.$memory = new Uint8Array(buffer);
+      this.$address = data;
+    }
 
-  public toMemory() {
-    const buffer = AtomicInt.allocMemory();
-    const view = new DataView(buffer.buffer);
-
-    view.setInt32(0, this.value, true);
-
-    return buffer;
+    this.$view = new DataView(
+      this.$memory.buffer,
+      this.$memory.byteOffset,
+      this.$memory.byteLength
+    );
   }
 
   public static allocMemory() {
@@ -30,27 +31,11 @@ export class AtomicInt implements RawAtomicInt {
     return buffer;
   }
 
-  public static fromPointer(pointer: Pointer, sdl: BaseSDL) {
-    const result = {
-      value: read.i32(pointer, 0),
-      free: () => {
-        sdl.symbols.SDL_free(pointer);
-      },
-      address: pointer,
-    } as RawAtomicInt;
-
-    return new AtomicInt(result);
+  public get value() {
+    return this.$view.getInt32(ByteOffset.value, true);
   }
 
-  public static fromMemory(data: Uint8Array) {
-    const view = new DataView(data.buffer, data.byteOffset, data.byteLength);
-
-    const result = {
-      value: view.getInt32(0, true),
-      free: null,
-      address: null,
-    } as RawAtomicInt;
-
-    return new AtomicInt(result);
+  public set value(value: number) {
+    this.$view.setInt32(ByteOffset.value, value, true);
   }
 }

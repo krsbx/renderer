@@ -1,30 +1,28 @@
-import { CString, read, type Pointer } from 'bun:ffi';
-import type { BaseSDL } from '../../..';
-import type { RawAssertData } from './types';
+import { CString, ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
+import { ByteOffset } from './constant';
 
-export class AssertData implements RawAssertData {
+export class AssertData {
   public static readonly BYTE_SIZE = 48;
 
-  public always_ignore: boolean;
-  public trigger_count: number;
-  public condition: string;
-  public filename: string;
-  public linenum: number;
-  public function: string;
-  public next: Pointer | null;
-  public free: (() => void) | null;
-  public address: Pointer | null;
+  public $address: Pointer;
+  public $memory: Uint8Array;
+  public $view: DataView;
 
-  public constructor(options: RawAssertData) {
-    this.always_ignore = options.always_ignore;
-    this.trigger_count = options.trigger_count;
-    this.condition = options.condition;
-    this.filename = options.filename;
-    this.linenum = options.linenum;
-    this.function = options.function;
-    this.next = options.next;
-    this.free = options.free;
-    this.address = options.address;
+  public constructor(data: Pointer | Uint8Array) {
+    if (data instanceof Uint8Array) {
+      this.$memory = data;
+      this.$address = ptr(data);
+    } else {
+      const buffer = toArrayBuffer(data, 0, AssertData.BYTE_SIZE);
+      this.$memory = new Uint8Array(buffer);
+      this.$address = data;
+    }
+
+    this.$view = new DataView(
+      this.$memory.buffer,
+      this.$memory.byteOffset,
+      this.$memory.byteLength
+    );
   }
 
   public static allocMemory() {
@@ -33,47 +31,77 @@ export class AssertData implements RawAssertData {
     return buffer;
   }
 
-  public static fromPointer(pointer: Pointer, sdl: BaseSDL | null = null) {
-    const conditionPtr = read.ptr(pointer, 8) as Pointer;
-    const filenamePtr = read.ptr(pointer, 16) as Pointer;
-    const functionPtr = read.ptr(pointer, 32) as Pointer;
-    const nextPtr = read.ptr(pointer, 40) as Pointer | null;
-
-    const result = {
-      always_ignore: read.u8(pointer, 0) === 1,
-      trigger_count: read.u32(pointer, 4),
-      // Use your existing helper to read the C string from the pointer
-      condition: new CString(conditionPtr).toString(),
-      filename: new CString(filenamePtr).toString(),
-      linenum: read.i32(pointer, 24),
-      function: new CString(functionPtr).toString(),
-      next: nextPtr,
-      free: sdl ? () => sdl.symbols.SDL_free(pointer) : null,
-      address: pointer,
-    } as RawAssertData;
-
-    return new AssertData(result);
+  public get always_ignore() {
+    return this.$view.getUint8(ByteOffset.always_ignore) === 1;
   }
 
-  public static fromMemory(data: Uint8Array) {
-    const view = new DataView(data.buffer, data.byteOffset, data.byteLength);
-    const conditionPtr = view.getBigUint64(8, true) as unknown as Pointer;
-    const filenamePtr = view.getBigUint64(16, true) as unknown as Pointer;
-    const functionPtr = view.getBigUint64(32, true) as unknown as Pointer;
-    const nextPtr = view.getBigUint64(40, true) as unknown as Pointer | null;
+  public set always_ignore(value: boolean) {
+    this.$view.setUint8(ByteOffset.always_ignore, value ? 1 : 0);
+  }
 
-    const result = {
-      always_ignore: view.getUint8(0) === 1,
-      trigger_count: view.getUint32(4, true),
-      condition: new CString(conditionPtr).toString(),
-      filename: new CString(filenamePtr).toString(),
-      linenum: view.getInt32(24, true),
-      function: new CString(functionPtr).toString(),
-      next: nextPtr,
-      free: null,
-      address: null,
-    } as RawAssertData;
+  public get trigger_count() {
+    return this.$view.getUint32(ByteOffset.trigger_count, true);
+  }
 
-    return new AssertData(result);
+  public set trigger_count(value: number) {
+    this.$view.setUint32(ByteOffset.trigger_count, value, true);
+  }
+
+  public get condition() {
+    const conditionPtr = this.$view.getBigUint64(
+      ByteOffset.condition,
+      true
+    ) as unknown as Pointer;
+
+    return new CString(conditionPtr);
+  }
+
+  public set condition(value: CString) {
+    this.$view.setBigUint64(ByteOffset.condition, BigInt(value.ptr), true);
+  }
+
+  public get filename() {
+    const filenamePtr = this.$view.getBigUint64(
+      ByteOffset.filename,
+      true
+    ) as unknown as Pointer;
+
+    return new CString(filenamePtr);
+  }
+
+  public set filename(value: CString) {
+    this.$view.setBigUint64(ByteOffset.filename, BigInt(value.ptr), true);
+  }
+
+  public get linenum() {
+    return this.$view.getInt32(ByteOffset.linenum, true);
+  }
+
+  public set linenum(value: number) {
+    this.$view.setInt32(ByteOffset.linenum, value, true);
+  }
+
+  public get function() {
+    const functionPtr = this.$view.getBigUint64(
+      ByteOffset.function,
+      true
+    ) as unknown as Pointer;
+
+    return new CString(functionPtr);
+  }
+
+  public set function(value: CString) {
+    this.$view.setBigUint64(ByteOffset.function, BigInt(value.ptr), true);
+  }
+
+  public get next(): AssertData | null {
+    const next = this.$view.getBigUint64(
+      ByteOffset.next,
+      true
+    ) as unknown as Pointer | null;
+
+    if (!next || next === (0n as unknown as Pointer)) return null;
+
+    return new AssertData(next);
   }
 }

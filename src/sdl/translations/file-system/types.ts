@@ -1,7 +1,8 @@
+import type { PathType } from '../../ffi/file-system/constant';
 import type { FreeAddress, MemoryAddress } from '../../types/shared';
 
 export interface RawPathInfo extends FreeAddress, MemoryAddress {
-  type: number;
+  type: PathType;
   size: bigint;
   create_time: bigint;
   modify_time: bigint;

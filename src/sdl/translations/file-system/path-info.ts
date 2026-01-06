@@ -1,76 +1,74 @@
-import { read, type Pointer } from 'bun:ffi';
-import type { BaseSDL } from '../..';
-import type { RawPathInfo } from './types';
+import { ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
+import type { PathType } from '../../ffi/file-system/constant';
+import { ByteOffset } from './constant';
 
-export class PathInfo implements RawPathInfo {
-  public static readonly BYTE_SIZE = 40;
+export class PathInfo {
+  public static readonly BYTE_SIZE = 16;
 
-  public type: number;
-  public size: bigint;
-  public create_time: bigint;
-  public modify_time: bigint;
-  public access_time: bigint;
-  public free: (() => void) | null;
-  public address: Pointer | null;
+  public $address: Pointer;
+  public $memory: Uint8Array;
+  public $view: DataView;
 
-  public constructor(options: RawPathInfo) {
-    this.type = options.type;
-    this.size = options.size;
-    this.create_time = options.create_time;
-    this.modify_time = options.modify_time;
-    this.access_time = options.access_time;
-    this.free = options.free;
-    this.address = options.address;
-  }
+  public constructor(data: Pointer | Uint8Array) {
+    if (data instanceof Uint8Array) {
+      this.$memory = data;
+      this.$address = ptr(data);
+    } else {
+      const buffer = toArrayBuffer(data, 0, PathInfo.BYTE_SIZE);
+      this.$memory = new Uint8Array(buffer);
+      this.$address = data;
+    }
 
-  public toMemory() {
-    const buffer = PathInfo.allocMemory();
-    const view = new DataView(buffer.buffer);
-
-    view.setInt32(0, this.type, true);
-    view.setBigUint64(8, this.size, true);
-    view.setBigInt64(16, this.create_time, true);
-    view.setBigInt64(24, this.modify_time, true);
-    view.setBigInt64(32, this.access_time, true);
-
-    return buffer;
+    this.$view = new DataView(
+      this.$memory.buffer,
+      this.$memory.byteOffset,
+      this.$memory.byteLength
+    );
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(this.BYTE_SIZE);
+    const buffer = new Uint8Array(PathInfo.BYTE_SIZE);
 
     return buffer;
   }
 
-  public static fromPointer(pointer: Pointer, sdl: BaseSDL) {
-    const result = {
-      type: read.i32(pointer, 0),
-      size: read.u64(pointer, 8),
-      create_time: read.i64(pointer, 16),
-      modify_time: read.i64(pointer, 24),
-      access_time: read.i64(pointer, 32),
-      free: () => {
-        sdl.symbols.SDL_free(pointer);
-      },
-      address: pointer,
-    } as RawPathInfo;
-
-    return new PathInfo(result);
+  public get type() {
+    return this.$view.getInt32(ByteOffset.type, true) as PathType;
   }
 
-  public static fromMemory(data: Uint8Array) {
-    const view = new DataView(data.buffer, data.byteOffset, data.byteLength);
+  public set type(value: PathType) {
+    this.$view.setInt32(ByteOffset.type, value, true);
+  }
 
-    const result = {
-      type: view.getInt32(0, true),
-      size: view.getBigUint64(8, true),
-      create_time: view.getBigInt64(16, true),
-      modify_time: view.getBigInt64(24, true),
-      access_time: view.getBigInt64(32, true),
-      free: null,
-      address: null,
-    } as RawPathInfo;
+  public get size() {
+    return this.$view.getBigUint64(ByteOffset.size, true);
+  }
 
-    return new PathInfo(result);
+  public set size(value: bigint) {
+    this.$view.setBigUint64(ByteOffset.size, value, true);
+  }
+
+  public get create_time() {
+    return this.$view.getBigInt64(ByteOffset.create_time, true);
+  }
+
+  public set create_time(value: bigint) {
+    this.$view.setBigInt64(ByteOffset.create_time, value, true);
+  }
+
+  public get modify_time() {
+    return this.$view.getBigInt64(ByteOffset.modify_time, true);
+  }
+
+  public set modify_time(value: bigint) {
+    this.$view.setBigInt64(ByteOffset.modify_time, value, true);
+  }
+
+  public get access_time() {
+    return this.$view.getBigInt64(ByteOffset.access_time, true);
+  }
+
+  public set access_time(value: bigint) {
+    this.$view.setBigInt64(ByteOffset.access_time, value, true);
   }
 }

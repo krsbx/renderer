@@ -9,7 +9,7 @@ export class CursorFrameInfo {
   public $memory: Uint8Array;
   public $view: DataView;
 
-  public surface: Surface;
+  public readonly surface: Surface;
 
   public constructor(data: Pointer | Uint8Array) {
     if (data instanceof Uint8Array) {

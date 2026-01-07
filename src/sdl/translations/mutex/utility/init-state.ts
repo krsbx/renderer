@@ -9,7 +9,7 @@ export class InitState {
   public $memory: Uint8Array;
   public $view: DataView;
 
-  public status: AtomicInt;
+  public readonly status: AtomicInt;
 
   public constructor(data: Pointer | Uint8Array) {
     if (data instanceof Uint8Array) {

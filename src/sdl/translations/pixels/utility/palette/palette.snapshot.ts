@@ -1,6 +1,7 @@
 import { ptr, read, type Pointer } from 'bun:ffi';
-import type { BaseSDL } from '../../..';
-import { Color } from './color';
+import type { BaseSDL } from '../../../..';
+import { Color } from '../color/color.snapshot';
+import { ByteOffset } from './constant';
 import type { RawPalette } from './types';
 
 export class Palette implements RawPalette {
@@ -58,8 +59,8 @@ export class Palette implements RawPalette {
   }
 
   public static fromPointer(pointer: Pointer, sdl: BaseSDL) {
-    const ncolors = read.i32(pointer, 0);
-    const colorsPtr = read.ptr(pointer, 8) as Pointer | null;
+    const ncolors = read.i32(pointer, ByteOffset.ncolors);
+    const colorsPtr = read.ptr(pointer, ByteOffset.colors) as Pointer | null;
 
     const colorList: Color[] = [];
 
@@ -78,8 +79,8 @@ export class Palette implements RawPalette {
     const result = {
       ncolors,
       colors: colorList,
-      version: read.u32(pointer, 16),
-      refcount: read.i32(pointer, 20),
+      version: read.u32(pointer, ByteOffset.version),
+      refcount: read.i32(pointer, ByteOffset.refcount),
       address: pointer,
     } as RawPalette;
 
@@ -89,8 +90,8 @@ export class Palette implements RawPalette {
   public static fromMemory(data: Uint8Array, sdl: BaseSDL) {
     const view = new DataView(data.buffer, data.byteOffset, data.byteLength);
 
-    const ncolors = view.getInt32(0, true);
-    const colorsPtr = view.getBigUint64(8, true);
+    const ncolors = view.getInt32(ByteOffset.ncolors, true);
+    const colorsPtr = view.getBigUint64(ByteOffset.colors, true);
 
     const colorList: Color[] = [];
 
@@ -107,8 +108,8 @@ export class Palette implements RawPalette {
     const result = {
       ncolors,
       colors: colorList,
-      version: view.getUint32(16, true),
-      refcount: view.getInt32(20, true),
+      version: view.getUint32(ByteOffset.version, true),
+      refcount: view.getInt32(ByteOffset.refcount, true),
       free: null,
       address: null,
     } as RawPalette;

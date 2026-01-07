@@ -1,5 +1,6 @@
 import { read, type Pointer } from 'bun:ffi';
-import type { BaseSDL } from '../../..';
+import type { BaseSDL } from '../../../..';
+import { ByteOffset } from './constant';
 import type { RawColor } from './types';
 
 export class Color implements RawColor {
@@ -25,10 +26,10 @@ export class Color implements RawColor {
     const buffer = Color.allocMemory();
     const view = new DataView(buffer.buffer);
 
-    view.setInt8(0, this.r);
-    view.setInt8(1, this.g);
-    view.setInt8(2, this.b);
-    view.setInt8(3, this.a);
+    view.setInt8(ByteOffset.r, this.r);
+    view.setInt8(ByteOffset.g, this.g);
+    view.setInt8(ByteOffset.b, this.b);
+    view.setInt8(ByteOffset.a, this.a);
 
     return buffer;
   }
@@ -41,10 +42,10 @@ export class Color implements RawColor {
 
   public static fromPointer(pointer: Pointer, sdl: BaseSDL) {
     const result = {
-      r: read.i8(pointer, 0),
-      g: read.i8(pointer, 1),
-      b: read.i8(pointer, 2),
-      a: read.i8(pointer, 3),
+      r: read.i8(pointer, ByteOffset.r),
+      g: read.i8(pointer, ByteOffset.g),
+      b: read.i8(pointer, ByteOffset.b),
+      a: read.i8(pointer, ByteOffset.a),
       free: () => {
         sdl.symbols.SDL_free(pointer);
       },
@@ -58,10 +59,10 @@ export class Color implements RawColor {
     const view = new DataView(data.buffer, data.byteLength, data.byteOffset);
 
     const result = {
-      r: view.getInt8(0),
-      g: view.getInt8(1),
-      b: view.getInt8(2),
-      a: view.getInt8(3),
+      r: view.getInt8(ByteOffset.r),
+      g: view.getInt8(ByteOffset.g),
+      b: view.getInt8(ByteOffset.b),
+      a: view.getInt8(ByteOffset.a),
       free: null,
       address: null,
     } as RawColor;

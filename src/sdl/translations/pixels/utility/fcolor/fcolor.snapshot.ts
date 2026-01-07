@@ -1,5 +1,6 @@
 import { read, type Pointer } from 'bun:ffi';
-import type { BaseSDL } from '../../..';
+import type { BaseSDL } from '../../../..';
+import { ByteOffset } from './constant';
 import type { RawFColor } from './types';
 
 export class FColor implements RawFColor {
@@ -25,10 +26,10 @@ export class FColor implements RawFColor {
     const buffer = FColor.allocMemory();
     const view = new DataView(buffer.buffer);
 
-    view.setFloat32(0, this.r, true);
-    view.setFloat32(4, this.g, true);
-    view.setFloat32(8, this.b, true);
-    view.setFloat32(12, this.a, true);
+    view.setFloat32(ByteOffset.r, this.r, true);
+    view.setFloat32(ByteOffset.g, this.g, true);
+    view.setFloat32(ByteOffset.b, this.b, true);
+    view.setFloat32(ByteOffset.a, this.a, true);
 
     return buffer;
   }
@@ -41,10 +42,10 @@ export class FColor implements RawFColor {
 
   public static fromPointer(pointer: Pointer, sdl: BaseSDL) {
     const result = {
-      r: read.f32(pointer, 0),
-      g: read.f32(pointer, 4),
-      b: read.f32(pointer, 8),
-      a: read.f32(pointer, 12),
+      r: read.f32(pointer, ByteOffset.r),
+      g: read.f32(pointer, ByteOffset.g),
+      b: read.f32(pointer, ByteOffset.b),
+      a: read.f32(pointer, ByteOffset.a),
       free: () => {
         sdl.symbols.SDL_free(pointer);
       },
@@ -58,10 +59,10 @@ export class FColor implements RawFColor {
     const view = new DataView(data.buffer, data.byteLength, data.byteOffset);
 
     const result = {
-      r: view.getFloat32(0, true),
-      g: view.getFloat32(4, true),
-      b: view.getFloat32(8, true),
-      a: view.getFloat32(12, true),
+      r: view.getFloat32(ByteOffset.r, true),
+      g: view.getFloat32(ByteOffset.g, true),
+      b: view.getFloat32(ByteOffset.b, true),
+      a: view.getFloat32(ByteOffset.a, true),
       free: null,
       address: null,
     } as RawFColor;

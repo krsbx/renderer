@@ -1,19 +1,22 @@
 import { ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
+import { Surface } from '../../surface/surface';
 import { ByteOffset } from './constant';
 
-export class AlignmentTest {
+export class CursorFrameInfo {
   public static readonly BYTE_SIZE = 16;
 
   public $address: Pointer;
   public $memory: Uint8Array;
   public $view: DataView;
 
+  public surface: Surface;
+
   public constructor(data: Pointer | Uint8Array) {
     if (data instanceof Uint8Array) {
       this.$memory = data;
       this.$address = ptr(data);
     } else {
-      const buffer = toArrayBuffer(data, 0, AlignmentTest.BYTE_SIZE);
+      const buffer = toArrayBuffer(data, 0, CursorFrameInfo.BYTE_SIZE);
       this.$memory = new Uint8Array(buffer);
       this.$address = data;
     }
@@ -23,6 +26,8 @@ export class AlignmentTest {
       this.$memory.byteOffset,
       this.$memory.byteLength
     );
+
+    this.surface = new Surface(this.$address);
   }
 
   public static allocMemory() {
@@ -31,19 +36,11 @@ export class AlignmentTest {
     return buffer;
   }
 
-  public get a(): number {
-    return this.$view.getUint8(ByteOffset.a);
+  public get duration() {
+    return this.$view.getUint32(ByteOffset.duration, true);
   }
 
-  public set a(value: number) {
-    this.$view.setUint8(ByteOffset.a, value);
-  }
-
-  public get b() {
-    return this.$view.getBigUint64(ByteOffset.b, true) as unknown as Pointer;
-  }
-
-  public set b(value: Pointer) {
-    this.$view.setBigUint64(ByteOffset.b, BigInt(value ?? 0n), true);
+  public set duration(value: number) {
+    this.$view.setUint32(ByteOffset.duration, value, true);
   }
 }

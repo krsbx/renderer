@@ -1,49 +1,28 @@
-import { read, type Pointer } from 'bun:ffi';
-import type { BaseSDL } from '../..';
-import type { RawSurface } from './types';
+import { ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
+import { ByteOffset } from './constant';
 
-export class Surface implements RawSurface {
+export class Surface {
   public static readonly BYTE_SIZE = 48;
 
-  public flags: number;
-  public format: number;
-  public w: number;
-  public h: number;
-  public pitch: number;
-  public pixels: bigint;
-  public refcount: number;
-  public free: (() => void) | null;
-  public address: Pointer | null;
+  public $address: Pointer;
+  public $memory: Uint8Array;
+  public $view: DataView;
 
-  public constructor(options: RawSurface) {
-    this.flags = options.flags;
-    this.format = options.format;
-    this.w = options.w;
-    this.h = options.h;
-    this.pitch = options.pitch;
-    this.pixels = options.pixels;
-    this.refcount = options.refcount;
-    this.free = options.free;
-    this.address = options.address;
-  }
-
-  public toMemory() {
-    const buffer = Surface.allocMemory();
-    const view = new DataView(buffer.buffer);
-
-    view.setUint32(0, this.flags, true);
-    view.setUint32(4, this.format, true);
-    view.setInt32(8, this.w, true);
-    view.setInt32(12, this.h, true);
-    view.setInt32(16, this.pitch, true);
-
-    if (this.pixels) {
-      view.setBigUint64(24, BigInt(this.pixels), true);
+  public constructor(data: Pointer | Uint8Array) {
+    if (data instanceof Uint8Array) {
+      this.$memory = data;
+      this.$address = ptr(data);
+    } else {
+      const buffer = toArrayBuffer(data, 0, Surface.BYTE_SIZE);
+      this.$memory = new Uint8Array(buffer);
+      this.$address = data;
     }
 
-    view.setInt32(32, this.refcount, true);
-
-    return buffer;
+    this.$view = new DataView(
+      this.$memory.buffer,
+      this.$memory.byteOffset,
+      this.$memory.byteLength
+    );
   }
 
   public static allocMemory() {
@@ -52,39 +31,59 @@ export class Surface implements RawSurface {
     return buffer;
   }
 
-  public static fromPointer(pointer: Pointer, sdl: BaseSDL) {
-    const result = {
-      flags: read.u32(pointer, 0),
-      format: read.u32(pointer, 4),
-      w: read.i32(pointer, 8),
-      h: read.i32(pointer, 12),
-      pitch: read.i32(pointer, 16),
-      pixels: read.ptr(pointer, 24) as unknown as bigint,
-      refcount: read.i32(pointer, 32),
-      free: () => {
-        sdl.symbols.SDL_DestroySurface(pointer);
-      },
-      address: pointer,
-    } as RawSurface;
-
-    return new Surface(result);
+  public get flags() {
+    return this.$view.getUint32(ByteOffset.flags, true);
   }
 
-  public static fromMemory(data: Uint8Array) {
-    const view = new DataView(data.buffer, data.byteOffset, data.byteLength);
+  public set flags(value: number) {
+    this.$view.setUint32(ByteOffset.flags, value, true);
+  }
 
-    const result = {
-      flags: view.getUint32(0, true),
-      format: view.getUint32(4, true),
-      w: view.getInt32(8, true),
-      h: view.getInt32(12, true),
-      pitch: view.getInt32(16, true),
-      pixels: view.getBigUint64(24, true),
-      refcount: view.getInt32(32, true),
-      free: null,
-      address: null,
-    } as RawSurface;
+  public get format() {
+    return this.$view.getUint32(ByteOffset.format, true);
+  }
 
-    return new Surface(result);
+  public set format(value: number) {
+    this.$view.setUint32(ByteOffset.format, value, true);
+  }
+
+  public get w() {
+    return this.$view.getInt32(ByteOffset.w, true);
+  }
+
+  public set w(value: number) {
+    this.$view.setInt32(ByteOffset.w, value, true);
+  }
+
+  public get h() {
+    return this.$view.getInt32(ByteOffset.h, true);
+  }
+
+  public set h(value: number) {
+    this.$view.setInt32(ByteOffset.h, value, true);
+  }
+
+  public get pitch() {
+    return this.$view.getInt32(ByteOffset.pitch, true);
+  }
+
+  public set pitch(value: number) {
+    this.$view.setInt32(ByteOffset.pitch, value, true);
+  }
+
+  public get pixels() {
+    return this.$view.getBigUint64(ByteOffset.pixels, true);
+  }
+
+  public set pixels(value: bigint) {
+    this.$view.setBigUint64(ByteOffset.pitch, value, true);
+  }
+
+  public get refcount() {
+    return this.$view.getInt32(ByteOffset.refcount, true);
+  }
+
+  public set refcount(value: number) {
+    this.$view.setInt32(ByteOffset.refcount, value, true);
   }
 }

@@ -1,6 +1,7 @@
 import { read, type Pointer } from 'bun:ffi';
 import type { BaseSDL } from '../../..';
-import { Surface } from '../../surface/surface';
+import { Surface } from '../../surface/surface.snapshot';
+import { ByteOffset } from './constant';
 import type { RawCursorFrameInfo } from './types';
 
 export class CursorFrameInfo implements RawCursorFrameInfo {
@@ -22,8 +23,8 @@ export class CursorFrameInfo implements RawCursorFrameInfo {
     const buffer = CursorFrameInfo.allocMemory();
     const view = new DataView(buffer.buffer);
 
-    view.setBigUint64(0, BigInt(this.address ?? 0), true);
-    view.setUint32(8, this.duration, true);
+    view.setBigUint64(ByteOffset.surface, BigInt(this.address ?? 0), true);
+    view.setUint32(ByteOffset.duration, this.duration, true);
 
     return buffer;
   }
@@ -35,8 +36,8 @@ export class CursorFrameInfo implements RawCursorFrameInfo {
   }
 
   public static fromPointer(pointer: Pointer, sdl: BaseSDL) {
-    const surfacePtr = read.ptr(pointer, 0) as Pointer;
-    const duration = read.u32(pointer, 8);
+    const surfacePtr = read.ptr(pointer, ByteOffset.surface) as Pointer;
+    const duration = read.u32(pointer, ByteOffset.duration);
     const surface = Surface.fromPointer(surfacePtr, sdl);
 
     const result = {
@@ -54,8 +55,11 @@ export class CursorFrameInfo implements RawCursorFrameInfo {
   public static fromMemory(data: Uint8Array, sdl: BaseSDL) {
     const view = new DataView(data.buffer, data.byteOffset, data.byteLength);
 
-    const surfacePtr = view.getBigUint64(0, true) as unknown as Pointer;
-    const duration = view.getUint32(8, true);
+    const surfacePtr = view.getBigUint64(
+      ByteOffset.surface,
+      true
+    ) as unknown as Pointer;
+    const duration = view.getUint32(ByteOffset.duration, true);
     const surface = Surface.fromPointer(surfacePtr, sdl);
 
     const result = {

@@ -1,0 +1,16 @@
+export const ByteOffset = {
+  type: 0,
+  direction: 4,
+  length: 20,
+  delay: 24,
+  button: 26,
+  interval: 28,
+  period: 30,
+  magnitude: 32,
+  offset: 34,
+  phase: 36,
+  attack_length: 38,
+  attack_level: 40,
+  fade_length: 42,
+  fade_level: 44,
+} as const;

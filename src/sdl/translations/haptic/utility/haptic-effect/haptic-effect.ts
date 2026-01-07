@@ -1,0 +1,61 @@
+import { ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
+import type { HapticEffectType } from '../../../../ffi/haptic/constant';
+import { HapticCondition } from '../haptic-condition/haptic-condition';
+import { HapticConstant } from '../haptic-constant/haptic-constant';
+import { HapticCustom } from '../haptic-custom/haptic-custom';
+import { HapticLeftRight } from '../haptic-left-right/haptic-left-right';
+import { HapticPeriodic } from '../haptic-periodic/haptic-periodic';
+import { HapticRamp } from '../haptic-ramp/haptic-ramp';
+
+export class HapticEffect {
+  public static readonly BYTE_SIZE = 72;
+
+  public $address: Pointer;
+  public $memory: Uint8Array;
+  public $view: DataView;
+
+  public readonly constant: HapticConstant;
+  public readonly periodic: HapticPeriodic;
+  public readonly condition: HapticCondition;
+  public readonly ramp: HapticRamp;
+  public readonly custom: HapticCustom;
+  public readonly leftright: HapticLeftRight;
+
+  public constructor(data: Pointer | Uint8Array) {
+    if (data instanceof Uint8Array) {
+      this.$memory = data;
+      this.$address = ptr(data);
+    } else {
+      const buffer = toArrayBuffer(data, 0, HapticEffect.BYTE_SIZE);
+      this.$memory = new Uint8Array(buffer);
+      this.$address = data;
+    }
+
+    this.$view = new DataView(
+      this.$memory.buffer,
+      this.$memory.byteOffset,
+      this.$memory.byteLength
+    );
+
+    this.constant = new HapticConstant(this.$memory);
+    this.periodic = new HapticPeriodic(this.$memory);
+    this.condition = new HapticCondition(this.$memory);
+    this.ramp = new HapticRamp(this.$memory);
+    this.custom = new HapticCustom(this.$memory);
+    this.leftright = new HapticLeftRight(this.$memory);
+  }
+
+  public static allocMemory() {
+    const buffer = new Uint8Array(this.BYTE_SIZE);
+
+    return buffer;
+  }
+
+  public get type() {
+    return this.$view.getUint16(0, true) as HapticEffectType;
+  }
+
+  public set type(value: HapticEffectType) {
+    this.$view.setUint16(0, value, true);
+  }
+}

@@ -1,12 +1,13 @@
 import { read, type Pointer } from 'bun:ffi';
-import type { BaseSDL } from '../../..';
-import { HapticEffectType } from '../../../ffi/haptic/constant';
-import { HapticCondition } from './haptic-condition';
-import { HapticConstant } from './haptic-constant';
-import { HapticCustom } from './haptic-custom';
-import { HapticLeftRight } from './haptic-left-right';
-import { HapticPeriodic } from './haptic-periodic';
-import { HapticRamp } from './haptic-ramp';
+import type { BaseSDL } from '../../../..';
+import { HapticEffectType } from '../../../../ffi/haptic/constant';
+import { HapticCondition } from '../haptic-condition/haptic-condition.snapshot';
+import { HapticConstant } from '../haptic-constant/haptic-constant.snapshot';
+import { HapticCustom } from '../haptic-custom/haptic-custom.snapshot';
+import { HapticLeftRight } from '../haptic-left-right/haptic-left-right.snapshot';
+import { HapticPeriodic } from '../haptic-periodic/haptic-periodic.snapshot';
+import { HapticRamp } from '../haptic-ramp/haptic-ramp.snapshot';
+import { ByteOffset } from './constant';
 
 export class HapticEffect {
   public static readonly BYTE_SIZE = 72;
@@ -18,7 +19,7 @@ export class HapticEffect {
   }
 
   public static fromPointer(...args: [pointer: Pointer, sdl: BaseSDL]) {
-    const type = read.u16(args[0], 0);
+    const type = read.u16(args[0], ByteOffset.type);
 
     switch (type) {
       case HapticEffectType.CONSTANT:

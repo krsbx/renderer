@@ -1,6 +1,7 @@
 import { ptr, read, toArrayBuffer, type Pointer } from 'bun:ffi';
-import type { BaseSDL } from '../../..';
-import { HapticDirection } from './haptic-direction';
+import type { BaseSDL } from '../../../..';
+import { HapticDirection } from '../haptic-direction/haptic-direction.snapshot';
+import { ByteOffset } from './constant';
 import type { RawHapticCustom } from './types';
 
 export class HapticCustom implements RawHapticCustom {
@@ -48,18 +49,18 @@ export class HapticCustom implements RawHapticCustom {
     const buffer = HapticCustom.allocMemory(); // 64 or 72 bytes
     const view = new DataView(buffer.buffer);
 
-    view.setUint16(0, this.type, true);
-    buffer.set(this.direction.toMemory(), 4);
+    view.setUint16(ByteOffset.type, this.type, true);
+    buffer.set(this.direction.toMemory(), ByteOffset.direction);
 
-    view.setUint32(20, this.length, true);
-    view.setUint16(24, this.delay, true);
-    view.setUint16(26, this.button, true);
-    view.setUint16(28, this.interval, true);
+    view.setUint32(ByteOffset.length, this.length, true);
+    view.setUint16(ByteOffset.delay, this.delay, true);
+    view.setUint16(ByteOffset.button, this.button, true);
+    view.setUint16(ByteOffset.interval, this.interval, true);
 
-    view.setUint8(30, this.channels);
+    view.setUint8(ByteOffset.channels, this.channels);
     // Offset 31 is padding
-    view.setUint16(32, this.period, true);
-    view.setUint16(34, this.samples, true);
+    view.setUint16(ByteOffset.period, this.period, true);
+    view.setUint16(ByteOffset.samples, this.samples, true);
 
     // POINTER MANAGEMENT (Offset 40)
     // We must keep a reference to 'this.data' to prevent GC from moving it.
@@ -71,12 +72,12 @@ export class HapticCustom implements RawHapticCustom {
     );
 
     // We write the 64-bit address of the data array into the struct memory
-    view.setBigUint64(40, BigInt(ptr(this._dataRaw)), true);
+    view.setBigUint64(ByteOffset.data, BigInt(ptr(this._dataRaw)), true);
 
-    view.setUint16(48, this.attack_length, true);
-    view.setUint16(50, this.attack_level, true);
-    view.setUint16(52, this.fade_length, true);
-    view.setUint16(54, this.fade_level, true);
+    view.setUint16(ByteOffset.attack_length, this.attack_length, true);
+    view.setUint16(ByteOffset.attack_level, this.attack_level, true);
+    view.setUint16(ByteOffset.fade_length, this.fade_length, true);
+    view.setUint16(ByteOffset.fade_level, this.fade_level, true);
 
     return buffer;
   }
@@ -88,30 +89,30 @@ export class HapticCustom implements RawHapticCustom {
   }
 
   public static fromPointer(pointer: Pointer, sdl: BaseSDL) {
-    const samplesCount = read.u16(pointer, 34);
-    const channelsCount = read.u8(pointer, 30);
-    const dataPtr = read.ptr(pointer, 40) as Pointer;
+    const samplesCount = read.u16(pointer, ByteOffset.samples);
+    const channelsCount = read.u8(pointer, ByteOffset.channels);
+    const dataPtr = read.ptr(pointer, ByteOffset.data) as Pointer;
     const dataByteLength = samplesCount * channelsCount * 2;
     const dataRawBuffer = toArrayBuffer(dataPtr, 0, dataByteLength);
 
     const result = {
       type: read.u16(pointer, 0),
       direction: HapticDirection.fromPointer(
-        (BigInt(pointer) + 4n) as unknown as Pointer,
+        (BigInt(pointer) + BigInt(ByteOffset.direction)) as unknown as Pointer,
         sdl
       ),
-      length: read.u32(pointer, 20),
-      delay: read.u16(pointer, 24),
-      button: read.u16(pointer, 26),
-      interval: read.u16(pointer, 28),
+      length: read.u32(pointer, ByteOffset.length),
+      delay: read.u16(pointer, ByteOffset.delay),
+      button: read.u16(pointer, ByteOffset.button),
+      interval: read.u16(pointer, ByteOffset.interval),
       channels: channelsCount,
-      period: read.u16(pointer, 32),
+      period: read.u16(pointer, ByteOffset.period),
       samples: samplesCount,
       data: new Uint16Array(dataRawBuffer),
-      attack_length: read.u16(pointer, 48),
-      attack_level: read.u16(pointer, 50),
-      fade_length: read.u16(pointer, 52),
-      fade_level: read.u16(pointer, 54),
+      attack_length: read.u16(pointer, ByteOffset.attack_length),
+      attack_level: read.u16(pointer, ByteOffset.attack_level),
+      fade_length: read.u16(pointer, ByteOffset.fade_length),
+      fade_level: read.u16(pointer, ByteOffset.fade_level),
       free: () => {
         sdl.symbols.SDL_free(pointer);
       },
@@ -124,27 +125,35 @@ export class HapticCustom implements RawHapticCustom {
   public static fromMemory(data: Uint8Array) {
     const view = new DataView(data.buffer, data.byteOffset, data.byteLength);
 
-    const samplesCount = view.getUint16(34, true);
-    const channelsCount = view.getUint8(30);
-    const dataPtr = view.getBigUint64(40, true) as unknown as Pointer;
+    const samplesCount = view.getUint16(ByteOffset.samples, true);
+    const channelsCount = view.getUint8(ByteOffset.channels);
+    const dataPtr = view.getBigUint64(
+      ByteOffset.data,
+      true
+    ) as unknown as Pointer;
     const dataByteLength = samplesCount * channelsCount * 2;
     const dataRawBuffer = toArrayBuffer(dataPtr, 0, dataByteLength);
 
     const result = {
-      type: view.getUint16(0, true),
-      direction: HapticDirection.fromMemory(data.slice(4, 20)),
-      length: view.getUint32(20, true),
-      delay: view.getUint16(24, true),
-      button: view.getUint16(26, true),
-      interval: view.getUint16(28, true),
+      type: view.getUint16(ByteOffset.type, true),
+      direction: HapticDirection.fromMemory(
+        data.slice(
+          ByteOffset.direction,
+          HapticDirection.BYTE_SIZE + ByteOffset.direction
+        )
+      ),
+      length: view.getUint32(ByteOffset.length, true),
+      delay: view.getUint16(ByteOffset.delay, true),
+      button: view.getUint16(ByteOffset.button, true),
+      interval: view.getUint16(ByteOffset.interval, true),
       channels: channelsCount,
-      period: view.getUint16(32, true),
+      period: view.getUint16(ByteOffset.period, true),
       samples: samplesCount,
       data: new Uint16Array(dataRawBuffer),
-      attack_length: view.getUint16(48, true),
-      attack_level: view.getUint16(50, true),
-      fade_length: view.getUint16(52, true),
-      fade_level: view.getUint16(54, true),
+      attack_length: view.getUint16(ByteOffset.attack_length, true),
+      attack_level: view.getUint16(ByteOffset.attack_level, true),
+      fade_length: view.getUint16(ByteOffset.fade_length, true),
+      fade_level: view.getUint16(ByteOffset.fade_level, true),
       free: null,
       address: null,
     } as RawHapticCustom;

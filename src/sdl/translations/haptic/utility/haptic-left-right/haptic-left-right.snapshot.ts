@@ -1,5 +1,6 @@
 import { read, type Pointer } from 'bun:ffi';
-import type { BaseSDL } from '../../..';
+import type { BaseSDL } from '../../../..';
+import { ByteOffset } from './constant';
 import type { RawHapticLeftRight } from './types';
 
 export class HapticLeftRight implements RawHapticLeftRight {
@@ -25,10 +26,10 @@ export class HapticLeftRight implements RawHapticLeftRight {
     const buffer = HapticLeftRight.allocMemory();
     const view = new DataView(buffer.buffer);
 
-    view.setUint16(0, this.type, true);
-    view.setUint32(4, this.length, true);
-    view.setUint16(8, this.large_magnitude, true);
-    view.setUint16(10, this.small_magnitude, true);
+    view.setUint16(ByteOffset.type, this.type, true);
+    view.setUint32(ByteOffset.length, this.length, true);
+    view.setUint16(ByteOffset.large_magnitude, this.large_magnitude, true);
+    view.setUint16(ByteOffset.small_magnitude, this.small_magnitude, true);
 
     return buffer;
   }
@@ -41,10 +42,10 @@ export class HapticLeftRight implements RawHapticLeftRight {
 
   public static fromPointer(pointer: Pointer, sdl: BaseSDL) {
     const result = {
-      type: read.u16(pointer, 0),
-      length: read.u32(pointer, 4),
-      large_magnitude: read.u16(pointer, 8),
-      small_magnitude: read.u16(pointer, 10),
+      type: read.u16(pointer, ByteOffset.type),
+      length: read.u32(pointer, ByteOffset.length),
+      large_magnitude: read.u16(pointer, ByteOffset.large_magnitude),
+      small_magnitude: read.u16(pointer, ByteOffset.small_magnitude),
       free: () => {
         sdl.symbols.SDL_free(pointer);
       },
@@ -58,10 +59,10 @@ export class HapticLeftRight implements RawHapticLeftRight {
     const view = new DataView(data.buffer, data.byteOffset, data.byteLength);
 
     const result = {
-      type: view.getUint16(0, true),
-      length: view.getUint32(4, true),
-      large_magnitude: view.getUint16(8, true),
-      small_magnitude: view.getUint16(10, true),
+      type: view.getUint16(ByteOffset.type, true),
+      length: view.getUint32(ByteOffset.length, true),
+      large_magnitude: view.getUint16(ByteOffset.large_magnitude, true),
+      small_magnitude: view.getUint16(ByteOffset.small_magnitude, true),
       free: null,
       address: null,
     } as RawHapticLeftRight;

@@ -1,7 +1,8 @@
 import { read, type Pointer } from 'bun:ffi';
-import type { BaseSDL } from '../../..';
-import type { HapticEffectType } from '../../../ffi/haptic/constant';
-import { HapticDirection } from './haptic-direction';
+import type { BaseSDL } from '../../../..';
+import type { HapticEffectType } from '../../../../ffi/haptic/constant';
+import { HapticDirection } from '../haptic-direction/haptic-direction.snapshot';
+import { ByteOffset } from './constant';
 import type { RawHapticCondition } from './types';
 
 export class HapticCondition implements RawHapticCondition {
@@ -43,13 +44,13 @@ export class HapticCondition implements RawHapticCondition {
     const buffer = HapticCondition.allocMemory();
     const view = new DataView(buffer.buffer);
 
-    view.setUint16(0, this.type, true);
-    buffer.set(this.direction.toMemory(), 4);
+    view.setUint16(ByteOffset.type, this.type, true);
+    buffer.set(this.direction.toMemory(), ByteOffset.direction);
 
-    view.setUint32(20, this.length, true);
-    view.setUint16(24, this.delay, true);
-    view.setUint16(26, this.button, true);
-    view.setUint16(28, this.interval, true);
+    view.setUint32(ByteOffset.length, this.length, true);
+    view.setUint16(ByteOffset.delay, this.delay, true);
+    view.setUint16(ByteOffset.button, this.button, true);
+    view.setUint16(ByteOffset.interval, this.interval, true);
 
     // Array writing (starting at offset 32)
     for (let i = 0; i < 3; i++) {
@@ -61,27 +62,27 @@ export class HapticCondition implements RawHapticCondition {
       const center = this.center[i];
 
       if (right_sat) {
-        view.setUint16(32 + i * 2, right_sat, true);
+        view.setUint16(ByteOffset.right_sat1 + i * 2, right_sat, true);
       }
 
       if (left_sat) {
-        view.setUint16(38 + i * 2, left_sat, true);
+        view.setUint16(ByteOffset.left_sat1 + i * 2, left_sat, true);
       }
 
       if (right_coeff) {
-        view.setInt16(44 + i * 2, right_coeff, true);
+        view.setInt16(ByteOffset.right_coeff1 + i * 2, right_coeff, true);
       }
 
       if (left_coeff) {
-        view.setInt16(50 + i * 2, left_coeff, true);
+        view.setInt16(ByteOffset.left_coeff1 + i * 2, left_coeff, true);
       }
 
       if (deadband) {
-        view.setUint16(56 + i * 2, deadband, true);
+        view.setUint16(ByteOffset.deadband1 + i * 2, deadband, true);
       }
 
       if (center) {
-        view.setInt16(62 + i * 2, center, true);
+        view.setInt16(ByteOffset.center1 + i * 2, center, true);
       }
     }
 
@@ -114,21 +115,21 @@ export class HapticCondition implements RawHapticCondition {
     ];
 
     const result = {
-      type: read.u16(pointer, 0),
+      type: read.u16(pointer, ByteOffset.type),
       direction: HapticDirection.fromPointer(
-        (BigInt(pointer) + 4n) as unknown as Pointer,
+        (BigInt(pointer) + BigInt(ByteOffset.direction)) as unknown as Pointer,
         sdl
       ),
-      length: read.u32(pointer, 20),
-      delay: read.u16(pointer, 24),
-      button: read.u16(pointer, 26),
-      interval: read.u16(pointer, 28),
-      right_sat: readU16Array(pointer, 32),
-      left_sat: readU16Array(pointer, 38),
-      right_coeff: readI16Array(pointer, 44),
-      left_coeff: readI16Array(pointer, 50),
-      deadband: readU16Array(pointer, 56),
-      center: readI16Array(pointer, 62),
+      length: read.u32(pointer, ByteOffset.length),
+      delay: read.u16(pointer, ByteOffset.delay),
+      button: read.u16(pointer, ByteOffset.button),
+      interval: read.u16(pointer, ByteOffset.interval),
+      right_sat: readU16Array(pointer, ByteOffset.right_sat1),
+      left_sat: readU16Array(pointer, ByteOffset.left_sat1),
+      right_coeff: readI16Array(pointer, ByteOffset.right_coeff1),
+      left_coeff: readI16Array(pointer, ByteOffset.left_coeff1),
+      deadband: readU16Array(pointer, ByteOffset.deadband1),
+      center: readI16Array(pointer, ByteOffset.center1),
       free: () => {
         sdl.symbols.SDL_free(pointer);
       },
@@ -154,18 +155,18 @@ export class HapticCondition implements RawHapticCondition {
     ];
 
     const result = {
-      type: view.getUint16(0, true),
-      direction: HapticDirection.fromMemory(data.slice(4, 20)),
-      length: view.getUint32(20, true),
-      delay: view.getUint16(24, true),
-      button: view.getUint16(26, true),
-      interval: view.getUint16(28, true),
-      right_sat: getU16Array(32),
-      left_sat: getU16Array(38),
-      right_coeff: getI16Array(44),
-      left_coeff: getI16Array(50),
-      deadband: getU16Array(56),
-      center: getI16Array(62),
+      type: view.getUint16(ByteOffset.type, true),
+      direction: HapticDirection.fromMemory(data.slice(ByteOffset.button, 20)),
+      length: view.getUint32(ByteOffset.length, true),
+      delay: view.getUint16(ByteOffset.delay, true),
+      button: view.getUint16(ByteOffset.button, true),
+      interval: view.getUint16(ByteOffset.interval, true),
+      right_sat: getU16Array(ByteOffset.right_sat1),
+      left_sat: getU16Array(ByteOffset.left_sat1),
+      right_coeff: getI16Array(ByteOffset.right_coeff1),
+      left_coeff: getI16Array(ByteOffset.left_coeff1),
+      deadband: getU16Array(ByteOffset.deadband1),
+      center: getI16Array(ByteOffset.center1),
       free: null,
       address: null,
     } as RawHapticCondition;

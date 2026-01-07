@@ -1,9 +1,9 @@
 import { ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
-import type { PathType } from '../../ffi/file-system/constant';
+import type { PathType } from '../../../ffi/file-system/constant';
 import { ByteOffset } from './constant';
 
 export class PathInfo {
-  public static readonly BYTE_SIZE = 16;
+  public static readonly BYTE_SIZE = 40;
 
   public $address: Pointer;
   public $memory: Uint8Array;

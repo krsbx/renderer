@@ -2,7 +2,7 @@ import { ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
 import { ByteOffset } from './constant';
 
 export class FColor {
-  public static readonly BYTE_SIZE = 4;
+  public static readonly BYTE_SIZE = 16;
 
   public $address: Pointer;
   public $memory: Uint8Array;

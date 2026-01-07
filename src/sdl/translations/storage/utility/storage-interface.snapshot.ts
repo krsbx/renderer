@@ -1,6 +1,6 @@
 import { type Library, type Pointer, linkSymbols, ptr, read } from 'bun:ffi';
 import type { BaseSDL } from '../../..';
-import { PathInfo } from '../../file-system/path-info.snapshot';
+import { PathInfo } from '../../file-system/utility/path-info.snapshot';
 import { ByteOffset } from './constant';
 import { StorageInterfaceDefinition } from './definition';
 import type {

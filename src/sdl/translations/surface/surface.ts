@@ -2,7 +2,7 @@ import { ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
 import { ByteOffset } from './constant';
 
 export class Surface {
-  public static readonly BYTE_SIZE = 48;
+  public static readonly BYTE_SIZE = 40;
 
   public $address: Pointer;
   public $memory: Uint8Array;

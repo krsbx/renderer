@@ -1,6 +1,6 @@
 import { read, type Pointer } from 'bun:ffi';
-import type { BaseSDL } from '../..';
-import type { PathType } from '../../ffi/file-system/constant';
+import type { BaseSDL } from '../../..';
+import type { PathType } from '../../../ffi/file-system/constant';
 import { ByteOffset } from './constant';
 import type { RawPathInfo } from './types';
 

@@ -26,7 +26,7 @@ export class AudioSpec {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(AudioSpec.BYTE_SIZE);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

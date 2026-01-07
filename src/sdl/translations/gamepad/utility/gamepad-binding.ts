@@ -30,7 +30,7 @@ export class GamepadBinding {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(GamepadBinding.BYTE_SIZE);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

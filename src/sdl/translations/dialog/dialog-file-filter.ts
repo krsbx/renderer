@@ -26,7 +26,7 @@ export class DialogFileFilter {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(DialogFileFilter.BYTE_SIZE);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

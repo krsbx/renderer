@@ -25,7 +25,7 @@ export class GUID {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(GUID.BYTE_SIZE);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

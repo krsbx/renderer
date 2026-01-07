@@ -27,7 +27,7 @@ export class PathInfo {
   }
 
   public static allocMemory() {
-    const buffer = new Uint8Array(PathInfo.BYTE_SIZE);
+    const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
   }

@@ -1,5 +1,6 @@
 import { type Pointer, read } from 'bun:ffi';
-import type { BaseSDL } from '../../..';
+import type { BaseSDL } from '../../../..';
+import { ByteOffset } from './constant';
 import type { RawPoint } from './types';
 
 export class Point implements RawPoint {
@@ -21,8 +22,8 @@ export class Point implements RawPoint {
     const buffer = Point.allocMemory();
     const view = new DataView(buffer.buffer);
 
-    view.setInt32(0, this.x);
-    view.setInt32(4, this.y);
+    view.setInt32(ByteOffset.x, this.x);
+    view.setInt32(ByteOffset.y, this.y);
 
     return buffer;
   }
@@ -35,8 +36,8 @@ export class Point implements RawPoint {
 
   public static fromPointer(pointer: Pointer, sdl: BaseSDL) {
     const result = {
-      x: read.i32(pointer, 0),
-      y: read.i32(pointer, 4),
+      x: read.i32(pointer, ByteOffset.x),
+      y: read.i32(pointer, ByteOffset.y),
       free: () => {
         sdl.symbols.SDL_free(pointer);
       },
@@ -50,8 +51,8 @@ export class Point implements RawPoint {
     const view = new DataView(data.buffer, data.byteOffset, data.byteLength);
 
     const result = {
-      x: view.getInt32(0, true),
-      y: view.getInt32(4, true),
+      x: view.getInt32(ByteOffset.x, true),
+      y: view.getInt32(ByteOffset.y, true),
       free: null,
       address: null,
     } as RawPoint;

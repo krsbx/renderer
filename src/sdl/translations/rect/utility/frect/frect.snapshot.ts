@@ -1,5 +1,6 @@
 import { type Pointer, read } from 'bun:ffi';
-import type { BaseSDL } from '../../..';
+import type { BaseSDL } from '../../../..';
+import { ByteOffset } from './constant';
 import type { RawFRect } from './types';
 
 export class FRect implements RawFRect {
@@ -25,10 +26,10 @@ export class FRect implements RawFRect {
     const buffer = FRect.allocMemory();
     const view = new DataView(buffer.buffer);
 
-    view.setFloat32(0, this.x);
-    view.setFloat32(4, this.y);
-    view.setFloat32(8, this.w);
-    view.setFloat32(12, this.h);
+    view.setFloat32(ByteOffset.x, this.x);
+    view.setFloat32(ByteOffset.y, this.y);
+    view.setFloat32(ByteOffset.w, this.w);
+    view.setFloat32(ByteOffset.h, this.h);
 
     return buffer;
   }
@@ -41,10 +42,10 @@ export class FRect implements RawFRect {
 
   public static fromPointer(pointer: Pointer, sdl: BaseSDL) {
     const result = {
-      x: read.f32(pointer, 0),
-      y: read.f32(pointer, 4),
-      w: read.f32(pointer, 8),
-      h: read.f32(pointer, 12),
+      x: read.f32(pointer, ByteOffset.x),
+      y: read.f32(pointer, ByteOffset.y),
+      w: read.f32(pointer, ByteOffset.w),
+      h: read.f32(pointer, ByteOffset.h),
       free: () => {
         sdl.symbols.SDL_free(pointer);
       },
@@ -58,10 +59,10 @@ export class FRect implements RawFRect {
     const view = new DataView(data.buffer, data.byteOffset, data.byteLength);
 
     const result = {
-      x: view.getFloat32(0, true),
-      y: view.getFloat32(4, true),
-      w: view.getFloat32(8, true),
-      h: view.getFloat32(12, true),
+      x: view.getFloat32(ByteOffset.x, true),
+      y: view.getFloat32(ByteOffset.y, true),
+      w: view.getFloat32(ByteOffset.w, true),
+      h: view.getFloat32(ByteOffset.h, true),
       free: null,
       address: null,
     } as RawFRect;

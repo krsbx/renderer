@@ -1,5 +1,6 @@
 import { type Pointer, read } from 'bun:ffi';
-import type { BaseSDL } from '../../..';
+import type { BaseSDL } from '../../../..';
+import { ByteOffset } from './constant';
 import type { RawRect } from './types';
 
 export class Rect implements RawRect {
@@ -25,10 +26,10 @@ export class Rect implements RawRect {
     const buffer = Rect.allocMemory();
     const view = new DataView(buffer.buffer);
 
-    view.setInt32(0, this.x);
-    view.setInt32(4, this.y);
-    view.setInt32(8, this.w);
-    view.setInt32(12, this.h);
+    view.setInt32(ByteOffset.x, this.x);
+    view.setInt32(ByteOffset.y, this.y);
+    view.setInt32(ByteOffset.w, this.w);
+    view.setInt32(ByteOffset.h, this.h);
 
     return buffer;
   }
@@ -41,10 +42,10 @@ export class Rect implements RawRect {
 
   public static fromPointer(pointer: Pointer, sdl: BaseSDL) {
     const result = {
-      x: read.i32(pointer, 0),
-      y: read.i32(pointer, 4),
-      w: read.i32(pointer, 8),
-      h: read.i32(pointer, 12),
+      x: read.i32(pointer, ByteOffset.x),
+      y: read.i32(pointer, ByteOffset.y),
+      w: read.i32(pointer, ByteOffset.w),
+      h: read.i32(pointer, ByteOffset.h),
       free: () => {
         sdl.symbols.SDL_free(pointer);
       },
@@ -58,10 +59,10 @@ export class Rect implements RawRect {
     const view = new DataView(data.buffer, data.byteOffset, data.byteLength);
 
     const result = {
-      x: view.getInt32(0, true),
-      y: view.getInt32(4, true),
-      w: view.getInt32(8, true),
-      h: view.getInt32(12, true),
+      x: view.getInt32(ByteOffset.x, true),
+      y: view.getInt32(ByteOffset.y, true),
+      w: view.getInt32(ByteOffset.w, true),
+      h: view.getInt32(ByteOffset.h, true),
       free: null,
       address: null,
     } as RawRect;

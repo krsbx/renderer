@@ -1,6 +1,7 @@
 import { CString, read, type Pointer } from 'bun:ffi';
 import type { BaseSDL } from '../../..';
 import type { HIDBusType } from '../../../ffi/hidapi/constant';
+import { ByteOffset } from './constant';
 import type { RawHIDDeviceInfo } from './types';
 
 export class HIDDeviceInfo implements RawHIDDeviceInfo {
@@ -51,27 +52,36 @@ export class HIDDeviceInfo implements RawHIDDeviceInfo {
   }
 
   public static fromPointer(pointer: Pointer, sdl: BaseSDL | null = null) {
-    const pathPtr = read.ptr(pointer, 0) as Pointer;
-    const serialNumberPtr = read.ptr(pointer, 16) as Pointer;
-    const manufacturerStringPtr = read.ptr(pointer, 32) as Pointer;
-    const productStringPtr = read.ptr(pointer, 40) as Pointer;
-    const nextPtr = read.ptr(pointer, 72) as Pointer | null;
+    const pathPtr = read.ptr(pointer, ByteOffset.path) as Pointer;
+    const serialNumberPtr = read.ptr(
+      pointer,
+      ByteOffset.serial_number
+    ) as Pointer;
+    const manufacturerStringPtr = read.ptr(
+      pointer,
+      ByteOffset.manufacturer_string
+    ) as Pointer;
+    const productStringPtr = read.ptr(
+      pointer,
+      ByteOffset.product_string
+    ) as Pointer;
+    const nextPtr = read.ptr(pointer, ByteOffset.next) as Pointer | null;
 
     const result = {
       path: new CString(pathPtr).toString(),
-      vendor_id: read.u16(pointer, 8),
-      product_id: read.u16(pointer, 10),
+      vendor_id: read.u16(pointer, ByteOffset.vendor_id),
+      product_id: read.u16(pointer, ByteOffset.product_id),
       serial_number: new CString(serialNumberPtr).toString(),
-      release_number: read.u16(pointer, 24),
+      release_number: read.u16(pointer, ByteOffset.release_number),
       manufacturer_string: new CString(manufacturerStringPtr).toString(),
       product_string: new CString(productStringPtr).toString(),
-      usage_page: read.u16(pointer, 48),
-      usage: read.u16(pointer, 50),
-      interface_number: read.i32(pointer, 52),
-      interface_class: read.i32(pointer, 56),
-      interface_subclass: read.i32(pointer, 60),
-      interface_protocol: read.i32(pointer, 64),
-      bus_type: read.i32(pointer, 68),
+      usage_page: read.u16(pointer, ByteOffset.usage_page),
+      usage: read.u16(pointer, ByteOffset.usage),
+      interface_number: read.i32(pointer, ByteOffset.interface_number),
+      interface_class: read.i32(pointer, ByteOffset.interface_class),
+      interface_subclass: read.i32(pointer, ByteOffset.interface_subclass),
+      interface_protocol: read.i32(pointer, ByteOffset.interface_protocol),
+      bus_type: read.i32(pointer, ByteOffset.bus_type),
       next: nextPtr,
       free: sdl ? () => sdl.symbols.SDL_free(pointer) : null,
       address: pointer,
@@ -82,30 +92,42 @@ export class HIDDeviceInfo implements RawHIDDeviceInfo {
 
   public static fromMemory(data: Uint8Array) {
     const view = new DataView(data.buffer, data.byteOffset, data.byteLength);
-    const pathPtr = view.getBigUint64(0, true) as unknown as Pointer;
-    const serialNumberPtr = view.getBigUint64(16, true) as unknown as Pointer;
-    const manufacturerStringPtr = view.getBigUint64(
-      32,
+    const pathPtr = view.getBigUint64(
+      ByteOffset.path,
       true
     ) as unknown as Pointer;
-    const productStringPtr = view.getBigUint64(40, true) as unknown as Pointer;
-    const nextPtr = view.getBigUint64(72, true) as unknown as Pointer | null;
+    const serialNumberPtr = view.getBigUint64(
+      ByteOffset.serial_number,
+      true
+    ) as unknown as Pointer;
+    const manufacturerStringPtr = view.getBigUint64(
+      ByteOffset.manufacturer_string,
+      true
+    ) as unknown as Pointer;
+    const productStringPtr = view.getBigUint64(
+      ByteOffset.product_string,
+      true
+    ) as unknown as Pointer;
+    const nextPtr = view.getBigUint64(
+      ByteOffset.next,
+      true
+    ) as unknown as Pointer | null;
 
     const result = {
       path: new CString(pathPtr).toString(),
-      vendor_id: view.getUint16(8, true),
-      product_id: view.getUint16(10, true),
+      vendor_id: view.getUint16(ByteOffset.vendor_id, true),
+      product_id: view.getUint16(ByteOffset.product_id, true),
       serial_number: new CString(serialNumberPtr).toString(),
-      release_number: view.getUint16(24, true),
+      release_number: view.getUint16(ByteOffset.release_number, true),
       manufacturer_string: new CString(manufacturerStringPtr).toString(),
       product_string: new CString(productStringPtr).toString(),
-      usage_page: view.getUint16(48, true),
-      usage: view.getUint16(50, true),
-      interface_number: view.getInt32(52, true),
-      interface_class: view.getInt32(56, true),
-      interface_subclass: view.getInt32(60, true),
-      interface_protocol: view.getInt32(64, true),
-      bus_type: view.getInt32(68, true),
+      usage_page: view.getUint16(ByteOffset.usage_page, true),
+      usage: view.getUint16(ByteOffset.usage, true),
+      interface_number: view.getInt32(ByteOffset.interface_number, true),
+      interface_class: view.getInt32(ByteOffset.interface_class, true),
+      interface_subclass: view.getInt32(ByteOffset.interface_subclass, true),
+      interface_protocol: view.getInt32(ByteOffset.interface_protocol, true),
+      bus_type: view.getInt32(ByteOffset.bus_type, true),
       next: nextPtr,
       free: null,
       address: null,

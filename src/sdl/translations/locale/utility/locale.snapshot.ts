@@ -1,6 +1,7 @@
 import { CString, read, type Pointer } from 'bun:ffi';
-import type { BaseSDL } from '../..';
-import { convertStringToFfi } from '../../utility/common';
+import type { BaseSDL } from '../../..';
+import { convertStringToFfi } from '../../../utility/common';
+import { ByteOffset } from './constant';
 import type { RawLocale } from './types';
 
 export class Locale implements RawLocale {
@@ -29,8 +30,8 @@ export class Locale implements RawLocale {
     const language = convertStringToFfi(this.language);
     const country = convertStringToFfi(this.country);
 
-    view.setBigUint64(0, BigInt(language.reference), true);
-    view.setBigUint64(8, BigInt(country.reference), true);
+    view.setBigUint64(ByteOffset.language, BigInt(language.reference), true);
+    view.setBigUint64(ByteOffset.country, BigInt(country.reference), true);
 
     return buffer;
   }
@@ -42,8 +43,8 @@ export class Locale implements RawLocale {
   }
 
   public static fromPointer(pointer: Pointer, sdl: BaseSDL) {
-    const languagePtr = read.ptr(pointer, 0) as Pointer;
-    const countryPtr = read.ptr(pointer, 8) as Pointer;
+    const languagePtr = read.ptr(pointer, ByteOffset.language) as Pointer;
+    const countryPtr = read.ptr(pointer, ByteOffset.country) as Pointer;
 
     const language = new CString(languagePtr).toString();
     const country = new CString(countryPtr).toString();
@@ -63,8 +64,14 @@ export class Locale implements RawLocale {
   public static fromMemory(data: Uint8Array) {
     const view = new DataView(data.buffer, data.byteOffset, data.byteLength);
 
-    const languagePtr = view.getBigUint64(0, true) as unknown as Pointer;
-    const countryPtr = view.getBigUint64(8, true) as unknown as Pointer;
+    const languagePtr = view.getBigUint64(
+      ByteOffset.language,
+      true
+    ) as unknown as Pointer;
+    const countryPtr = view.getBigUint64(
+      ByteOffset.country,
+      true
+    ) as unknown as Pointer;
 
     const language = new CString(languagePtr).toString();
     const country = new CString(countryPtr).toString();

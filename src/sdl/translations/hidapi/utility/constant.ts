@@ -1,0 +1,17 @@
+export const ByteOffset = {
+  path: 0,
+  vendor_id: 8,
+  product_id: 10,
+  serial_number: 16,
+  release_number: 24,
+  manufacturer_string: 32,
+  product_string: 40,
+  usage_page: 48,
+  usage: 50,
+  interface_number: 52,
+  interface_class: 56,
+  interface_subclass: 60,
+  interface_protocol: 64,
+  bus_type: 68,
+  next: 72,
+} as const;

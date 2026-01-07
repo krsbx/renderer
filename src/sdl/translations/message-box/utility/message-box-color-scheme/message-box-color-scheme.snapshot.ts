@@ -1,6 +1,6 @@
 import { type Pointer } from 'bun:ffi';
-import type { BaseSDL } from '../../..';
-import { MessageBoxColor } from './message-box-color';
+import type { BaseSDL } from '../../../..';
+import { MessageBoxColor } from '../message-box-color/message-box-color.snapshot';
 import type { RawMessageBoxColorScheme } from './types';
 
 export class MessageBoxColorScheme implements RawMessageBoxColorScheme {

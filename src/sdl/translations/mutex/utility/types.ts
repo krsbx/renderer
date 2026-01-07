@@ -1,5 +1,5 @@
 import type { FreeAddress, MemoryAddress } from '../../../types/shared';
-import type { AtomicInt } from '../../atomic/utility/atomic-int';
+import type { AtomicInt } from '../../atomic/utility/atomic-int.snapshot.ts';
 
 export interface RawInitState extends FreeAddress, MemoryAddress {
   status: AtomicInt;

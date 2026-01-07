@@ -1,0 +1,65 @@
+import { CString, ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
+import type { MessageBoxButtonFlags } from '../../../../ffi/message-box/constant';
+import { ByteOffset } from './constant';
+
+export class MessageBoxButtonData {
+  public static readonly BYTE_SIZE = 16;
+
+  public $address: Pointer;
+  public $memory: Uint8Array;
+  public $view: DataView;
+
+  public constructor(data: Pointer | Uint8Array) {
+    if (data instanceof Uint8Array) {
+      this.$memory = data;
+      this.$address = ptr(data);
+    } else {
+      const buffer = toArrayBuffer(data, 0, MessageBoxButtonData.BYTE_SIZE);
+      this.$memory = new Uint8Array(buffer);
+      this.$address = data;
+    }
+
+    this.$view = new DataView(
+      this.$memory.buffer,
+      this.$memory.byteOffset,
+      this.$memory.byteLength
+    );
+  }
+
+  public static allocMemory() {
+    const buffer = new Uint8Array(this.BYTE_SIZE);
+
+    return buffer;
+  }
+
+  public get flags() {
+    return this.$view.getUint32(
+      ByteOffset.flags,
+      true
+    ) as MessageBoxButtonFlags;
+  }
+
+  public set flags(value: MessageBoxButtonFlags) {
+    this.$view.setUint32(ByteOffset.flags, value, true);
+  }
+
+  public get buttonID() {
+    return this.$view.getInt32(ByteOffset.buttonID, true);
+  }
+
+  public set buttonID(value: number) {
+    this.$view.setInt32(ByteOffset.buttonID, value, true);
+  }
+
+  public get text() {
+    const textPtr = this.$view.getBigUint64(
+      ByteOffset.text
+    ) as unknown as Pointer;
+
+    return new CString(textPtr);
+  }
+
+  public set text(value: CString) {
+    this.$view.setBigUint64(ByteOffset.text, BigInt(value.ptr), true);
+  }
+}

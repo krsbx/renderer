@@ -1,51 +1,51 @@
-import { JSCallback, type Library, type Pointer } from 'bun:ffi';
+import { CString, JSCallback, type Library, type Pointer } from 'bun:ffi';
 import type { FreeAddress, MemoryAddress } from '../../../types/shared';
 import type { StorageInterfaceDefinition } from './definition';
 
 export interface EnumerateDirectoryOptions {
   userdata?: Pointer | null;
-  path: string;
+  path: CString;
   callback: JSCallback;
   callback_userdata?: Pointer | null;
 }
 
 export interface InfoOptions {
   userdata?: Pointer | null;
-  path: string;
+  path: CString;
 }
 
 export interface ReadFileOptionss {
   userdata?: Pointer | null;
   length?: bigint;
-  path: string;
+  path: CString;
 }
 
 export interface WriteFileOptions {
   userdata?: Pointer | null;
-  path: string;
+  path: CString;
   source: Uint8Array;
 }
 
 export interface MkdirOptions {
   userdata?: Pointer | null;
-  path: string;
+  path: CString;
 }
 
 export interface RemoveOptions {
   userdata?: Pointer | null;
-  path: string;
+  path: CString;
 }
 
 export interface RenameOptions {
   userdata?: Pointer | null;
-  oldPath: string;
-  newPath: string;
+  oldPath: CString;
+  newPath: CString;
 }
 
 export interface CopyOptions {
   userdata?: Pointer | null;
-  oldPath: string;
-  newPath: string;
+  oldPath: CString;
+  newPath: CString;
 }
 
 export interface CreateFfiOptions {

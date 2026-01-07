@@ -1,22 +1,19 @@
 import { ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
-import { AtomicInt } from '../../atomic/utility/atomic-int';
 import { ByteOffset } from './constant';
 
-export class InitState {
-  public static readonly BYTE_SIZE = 24;
+export class MessageBoxColor {
+  public static readonly BYTE_SIZE = 3;
 
   public $address: Pointer;
   public $memory: Uint8Array;
   public $view: DataView;
-
-  public status: AtomicInt;
 
   public constructor(data: Pointer | Uint8Array) {
     if (data instanceof Uint8Array) {
       this.$memory = data;
       this.$address = ptr(data);
     } else {
-      const buffer = toArrayBuffer(data, 0, InitState.BYTE_SIZE);
+      const buffer = toArrayBuffer(data, 0, MessageBoxColor.BYTE_SIZE);
       this.$memory = new Uint8Array(buffer);
       this.$address = data;
     }
@@ -26,8 +23,6 @@ export class InitState {
       this.$memory.byteOffset,
       this.$memory.byteLength
     );
-
-    this.status = new AtomicInt(this.$address);
   }
 
   public static allocMemory() {
@@ -36,19 +31,27 @@ export class InitState {
     return buffer;
   }
 
-  public get thread() {
-    return this.$view.getBigUint64(ByteOffset.thread, true);
+  public get r() {
+    return this.$view.getUint8(ByteOffset.r);
   }
 
-  public set thread(value: bigint) {
-    this.$view.setBigUint64(ByteOffset.thread, value, true);
+  public set r(value: number) {
+    this.$view.setUint8(ByteOffset.r, value);
   }
 
-  public get reserved() {
-    return this.$view.getBigUint64(ByteOffset.reserved, true);
+  public get g() {
+    return this.$view.getUint8(ByteOffset.g);
   }
 
-  public set reserved(value: bigint) {
-    this.$view.setBigUint64(ByteOffset.reserved, value, true);
+  public set g(value: number) {
+    this.$view.setUint8(ByteOffset.g, value);
+  }
+
+  public get b() {
+    return this.$view.getUint8(ByteOffset.b);
+  }
+
+  public set b(value: number) {
+    this.$view.setUint8(ByteOffset.b, value);
   }
 }

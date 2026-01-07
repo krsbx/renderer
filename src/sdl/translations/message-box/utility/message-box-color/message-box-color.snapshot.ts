@@ -1,5 +1,6 @@
 import { read, type Pointer } from 'bun:ffi';
-import type { BaseSDL } from '../../..';
+import type { BaseSDL } from '../../../..';
+import { ByteOffset } from './constant';
 import type { RawMessageBoxColor } from './types';
 
 export class MessageBoxColor implements RawMessageBoxColor {
@@ -23,9 +24,9 @@ export class MessageBoxColor implements RawMessageBoxColor {
     const buffer = MessageBoxColor.allocMemory();
     const view = new DataView(buffer.buffer);
 
-    view.setInt8(0, this.r);
-    view.setInt8(1, this.g);
-    view.setInt8(2, this.b);
+    view.setUint8(ByteOffset.r, this.r);
+    view.setUint8(ByteOffset.g, this.g);
+    view.setUint8(ByteOffset.b, this.b);
 
     return buffer;
   }
@@ -38,9 +39,9 @@ export class MessageBoxColor implements RawMessageBoxColor {
 
   public static fromPointer(pointer: Pointer, sdl: BaseSDL) {
     const result = {
-      r: read.i8(pointer, 0),
-      g: read.i8(pointer, 1),
-      b: read.i8(pointer, 2),
+      r: read.u8(pointer, ByteOffset.r),
+      g: read.u8(pointer, ByteOffset.g),
+      b: read.u8(pointer, ByteOffset.b),
       free: () => {
         sdl.symbols.SDL_free(pointer);
       },
@@ -54,9 +55,9 @@ export class MessageBoxColor implements RawMessageBoxColor {
     const view = new DataView(data.buffer, data.byteLength, data.byteOffset);
 
     const result = {
-      r: view.getInt8(0),
-      g: view.getInt8(1),
-      b: view.getInt8(2),
+      r: view.getUint8(ByteOffset.r),
+      g: view.getUint8(ByteOffset.g),
+      b: view.getUint8(ByteOffset.b),
       free: null,
       address: null,
     } as RawMessageBoxColor;

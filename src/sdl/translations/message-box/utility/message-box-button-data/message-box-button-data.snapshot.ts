@@ -1,7 +1,8 @@
 import { CString, read, type Pointer } from 'bun:ffi';
-import type { BaseSDL } from '../../..';
-import type { MessageBoxButtonFlags } from '../../../ffi/message-box/constant';
-import { convertStringToFfi } from '../../../utility/common';
+import type { BaseSDL } from '../../../..';
+import type { MessageBoxButtonFlags } from '../../../../ffi/message-box/constant';
+import { convertStringToFfi } from '../../../../utility/common';
+import { ByteOffset } from './constant';
 import type { RawMessageBoxButtonData } from './types';
 
 export class MessageBoxButtonData implements RawMessageBoxButtonData {
@@ -25,11 +26,11 @@ export class MessageBoxButtonData implements RawMessageBoxButtonData {
     const buffer = MessageBoxButtonData.allocMemory();
     const view = new DataView(buffer.buffer);
 
-    view.setUint32(0, this.flags, true);
-    view.setInt32(4, this.buttonID, true);
+    view.setUint32(ByteOffset.flags, this.flags, true);
+    view.setInt32(ByteOffset.buttonID, this.buttonID, true);
 
     const textPtr = convertStringToFfi(this.text);
-    view.setBigUint64(8, BigInt(textPtr.reference), true);
+    view.setBigUint64(ByteOffset.text, BigInt(textPtr.reference), true);
 
     return buffer;
   }
@@ -41,11 +42,11 @@ export class MessageBoxButtonData implements RawMessageBoxButtonData {
   }
 
   public static fromPointer(pointer: Pointer, sdl: BaseSDL) {
-    const textPtr = read.ptr(pointer, 8) as Pointer;
+    const textPtr = read.ptr(pointer, ByteOffset.text) as Pointer;
 
     const result = {
-      flags: read.u32(pointer, 0),
-      buttonID: read.i32(pointer, 4),
+      flags: read.u32(pointer, ByteOffset.flags),
+      buttonID: read.i32(pointer, ByteOffset.buttonID),
       text: new CString(textPtr).toString(),
       free: () => {
         sdl.symbols.SDL_free(pointer);
@@ -59,11 +60,11 @@ export class MessageBoxButtonData implements RawMessageBoxButtonData {
   public static fromMemory(data: Uint8Array) {
     const view = new DataView(data.buffer, data.byteOffset, data.byteLength);
 
-    const textPtr = view.getBigUint64(8) as unknown as Pointer;
+    const textPtr = view.getBigUint64(ByteOffset.text) as unknown as Pointer;
 
     const result = {
-      flags: view.getUint32(0, true),
-      buttonID: view.getInt32(4, true),
+      flags: view.getUint32(ByteOffset.flags, true),
+      buttonID: view.getInt32(ByteOffset.buttonID, true),
       text: new CString(textPtr).toString(),
       free: null,
       address: null,

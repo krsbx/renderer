@@ -1,7 +1,7 @@
 import { read, type Pointer } from 'bun:ffi';
 import type { BaseSDL } from '../../..';
 import type { GPULoadOp, GPUStoreOp } from '../../../ffi/gpu/constant';
-import { FColor } from '../../pixels/utility/fcolor';
+import { FColor } from '../../pixels/utility/fcolor/fcolor.snapshot';
 import type { RawGPUColorTargetInfo } from './types';
 
 export class GPUColorTargetInfo implements RawGPUColorTargetInfo {

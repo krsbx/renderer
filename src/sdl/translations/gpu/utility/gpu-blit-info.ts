@@ -2,7 +2,7 @@ import { read, type Pointer } from 'bun:ffi';
 import type { BaseSDL } from '../../..';
 import type { GPUFilter, GPULoadOp } from '../../../ffi/gpu/constant';
 import type { FlipMode } from '../../../ffi/surface/constant';
-import { FColor } from '../../pixels/utility/fcolor';
+import { FColor } from '../../pixels/utility/fcolor/fcolor.snapshot';
 import { GPUBlitRegion } from './gpu-blit-region';
 import type { RawGPUBlitInfo } from './types';
 

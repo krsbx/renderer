@@ -27,7 +27,7 @@ import type {
 } from '../../../ffi/gpu/constant';
 import type { FlipMode } from '../../../ffi/surface/constant';
 import type { FreeAddress, MemoryAddress } from '../../../types/shared';
-import type { FColor } from '../../pixels/utility/fcolor';
+import type { FColor } from '../../pixels/utility/fcolor/fcolor.snapshot';
 import type { GPUBlitRegion } from './gpu-blit-region';
 import type { GPUColorTargetBlendState } from './gpu-color-target-blend-state';
 import type { GPUColorTargetDescription } from './gpu-color-target-description';

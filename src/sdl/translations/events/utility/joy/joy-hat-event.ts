@@ -1,5 +1,6 @@
 import { read, type Pointer } from 'bun:ffi';
 import type { BaseSDL } from '../../../..';
+import { JoyHatPosition } from '../../../../ffi/joystick/constant';
 import type { JoyHatEventType, RawJoyHatEvent } from '../types';
 
 export class JoyHatEvent implements RawJoyHatEvent {
@@ -10,7 +11,7 @@ export class JoyHatEvent implements RawJoyHatEvent {
   public timestamp: bigint;
   public which: number;
   public hat: number;
-  public value: number;
+  public value: JoyHatPosition;
   public padding1: number;
   public padding2: number;
   public free: (() => void) | null;

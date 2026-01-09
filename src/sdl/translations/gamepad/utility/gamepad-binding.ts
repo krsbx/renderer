@@ -12,6 +12,17 @@ export class GamepadBinding {
   public $memory: Uint8Array;
   public $view: DataView;
 
+  public readonly input: {
+    button: GamepadButton;
+    readonly axis: { axis: number; min: number; max: number };
+    readonly hat: { hat: number; mask: number };
+  };
+
+  public readonly output: {
+    button: GamepadButton;
+    readonly axis: { axis: number; min: number; max: number };
+  };
+
   public constructor(data: Pointer | Uint8Array) {
     if (data instanceof Uint8Array) {
       this.$memory = data;
@@ -27,6 +38,89 @@ export class GamepadBinding {
       this.$memory.byteOffset,
       this.$memory.byteLength
     );
+
+    this.input = this.createInputBinding();
+    this.output = this.createOutputBinding();
+  }
+
+  private createInputBinding() {
+    const view = this.$view;
+
+    return {
+      get button() {
+        return view.getInt32(ByteOffset.input.button, true) as GamepadButton;
+      },
+      set button(value: GamepadButton) {
+        view.setInt32(ByteOffset.input.button, value, true);
+      },
+      axis: {
+        get axis() {
+          return view.getInt32(ByteOffset.input.axis.axis, true);
+        },
+        set axis(value: number) {
+          view.setInt32(ByteOffset.input.axis.axis, value, true);
+        },
+        get min() {
+          return view.getInt32(ByteOffset.input.axis.axis_min, true);
+        },
+        set min(value: number) {
+          view.setInt32(ByteOffset.input.axis.axis_min, value, true);
+        },
+        get max() {
+          return view.getInt32(ByteOffset.input.axis.axis_max, true);
+        },
+        set max(value: number) {
+          view.setInt32(ByteOffset.input.axis.axis_max, value, true);
+        },
+      },
+      hat: {
+        get hat() {
+          return view.getInt32(ByteOffset.input.hat.hat, true);
+        },
+        set hat(value: number) {
+          view.setInt32(ByteOffset.input.hat.hat, value, true);
+        },
+        get mask() {
+          return view.getInt32(ByteOffset.input.hat.hat_mask, true);
+        },
+        set mask(value: number) {
+          view.setInt32(ByteOffset.input.hat.hat_mask, value, true);
+        },
+      },
+    };
+  }
+
+  private createOutputBinding() {
+    const view = this.$view;
+
+    return {
+      get button() {
+        return view.getInt32(ByteOffset.output.button, true) as GamepadButton;
+      },
+      set button(value: GamepadButton) {
+        view.setInt32(ByteOffset.output.button, value, true);
+      },
+      axis: {
+        get axis() {
+          return view.getInt32(ByteOffset.output.axis.axis, true);
+        },
+        set axis(value: number) {
+          view.setInt32(ByteOffset.output.axis.axis, value, true);
+        },
+        get min() {
+          return view.getInt32(ByteOffset.output.axis.axis_min, true);
+        },
+        set min(value: number) {
+          view.setInt32(ByteOffset.output.axis.axis_min, value, true);
+        },
+        get max() {
+          return view.getInt32(ByteOffset.output.axis.axis_max, true);
+        },
+        set max(value: number) {
+          view.setInt32(ByteOffset.output.axis.axis_max, value, true);
+        },
+      },
+    };
   }
 
   public static allocMemory() {
@@ -46,54 +140,6 @@ export class GamepadBinding {
     this.$view.setInt32(ByteOffset.input_type, value, true);
   }
 
-  public get input_button() {
-    return this.$view.getInt32(ByteOffset.input.button, true) as GamepadButton;
-  }
-
-  public set input_button(value: GamepadButton) {
-    this.$view.setInt32(ByteOffset.input.button, value, true);
-  }
-
-  public get input_axis_axis() {
-    return this.$view.getInt32(ByteOffset.input.axis.axis, true);
-  }
-
-  public set input_axis_axis(value: number) {
-    this.$view.setInt32(ByteOffset.input.axis.axis, value, true);
-  }
-
-  public get input_axis_axis_min() {
-    return this.$view.getInt32(ByteOffset.input.axis.axis_min, true);
-  }
-
-  public set input_axis_axis_min(value: number) {
-    this.$view.setInt32(ByteOffset.input.axis.axis_min, value, true);
-  }
-
-  public get input_axis_axis_max() {
-    return this.$view.getInt32(ByteOffset.input.axis.axis_max, true);
-  }
-
-  public set input_axis_axis_max(value: number) {
-    this.$view.setInt32(ByteOffset.input.axis.axis_max, value, true);
-  }
-
-  public get input_hat_hat() {
-    return this.$view.getInt32(ByteOffset.input.hat.hat, true);
-  }
-
-  public set input_hat_hat(value: number) {
-    this.$view.setInt32(ByteOffset.input.hat.hat, value, true);
-  }
-
-  public get input_hat_hat_mask() {
-    return this.$view.getInt32(ByteOffset.input.hat.hat_mask, true);
-  }
-
-  public set input_hat_hat_mask(value: number) {
-    this.$view.setInt32(ByteOffset.input.hat.hat_mask, value, true);
-  }
-
   public get output_type() {
     return this.$view.getInt32(
       ByteOffset.output_type,
@@ -103,37 +149,5 @@ export class GamepadBinding {
 
   public set output_type(value: GamepadBindingType) {
     this.$view.setInt32(ByteOffset.output_type, value, true);
-  }
-
-  public get output_button() {
-    return this.$view.getInt32(ByteOffset.output.button, true) as GamepadButton;
-  }
-
-  public set output_button(value: GamepadButton) {
-    this.$view.setInt32(ByteOffset.output.button, value, true);
-  }
-
-  public get output_axis_axis() {
-    return this.$view.getInt32(ByteOffset.output.axis.axis, true);
-  }
-
-  public set output_axis_axis(value: number) {
-    this.$view.setInt32(ByteOffset.output.axis.axis, value, true);
-  }
-
-  public get output_axis_axis_min() {
-    return this.$view.getInt32(ByteOffset.output.axis.axis_min, true);
-  }
-
-  public set output_axis_axis_min(value: number) {
-    this.$view.setInt32(ByteOffset.output.axis.axis_min, value, true);
-  }
-
-  public get output_axis_axis_max() {
-    return this.$view.getInt32(ByteOffset.output.axis.axis_max, true);
-  }
-
-  public set output_axis_axis_max(value: number) {
-    this.$view.setInt32(ByteOffset.output.axis.axis_max, value, true);
   }
 }

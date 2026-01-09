@@ -1,21 +1,16 @@
-export const SystemTheme = {
-  UNKNOWN: 0,
-  LIGHT: 1,
-  DARK: 2,
-} as const;
+export enum SystemTheme {
+  UNKNOWN = 0,
+  LIGHT = 1,
+  DARK = 2,
+}
 
-export type SystemTheme = (typeof SystemTheme)[keyof typeof SystemTheme];
-
-export const DisplayOrientation = {
-  UNKNOWN: 0,
-  LANDSCAPE: 1,
-  LANDSCAPE_FLIPPED: 2,
-  PORTRAIT: 3,
-  PORTRAIT_FLIPPED: 4,
-} as const;
-
-export type DisplayOrientation =
-  (typeof DisplayOrientation)[keyof typeof DisplayOrientation];
+export enum DisplayOrientation {
+  UNKNOWN = 0,
+  LANDSCAPE = 1,
+  LANDSCAPE_FLIPPED = 2,
+  PORTRAIT = 3,
+  PORTRAIT_FLIPPED = 4,
+}
 
 export const WindowFlags = {
   FULLSCREEN: 0x0000000000000001n,
@@ -48,88 +43,71 @@ export const WindowFlags = {
 
 export type WindowFlags = (typeof WindowFlags)[keyof typeof WindowFlags];
 
-export const FlashOperation = {
-  CANCEL: 0,
-  BRIEFLY: 1,
-  UNTIL_FOCUSED: 2,
-} as const;
+export enum FlashOperation {
+  CANCEL = 0,
+  BRIEFLY = 1,
+  UNTIL_FOCUSED = 2,
+}
 
-export type FlashOperation =
-  (typeof FlashOperation)[keyof typeof FlashOperation];
+export enum ProgressState {
+  INVALID = -1,
+  NONE = 0,
+  INDETERMINATE = 1,
+  NORMAL = 2,
+  PAUSED = 3,
+  ERROR = 4,
+}
 
-export const ProgressState = {
-  INVALID: -1,
-  NONE: 0,
-  INDETERMINATE: 1,
-  NORMAL: 2,
-  PAUSED: 3,
-  ERROR: 4,
-} as const;
+export enum GLAttr {
+  RED_SIZE = 0 /**< the minimum number of bits for the red channel of the color buffer; defaults to 8. */,
+  GREEN_SIZE = 1 /**< the minimum number of bits for the green channel of the color buffer; defaults to 8. */,
+  BLUE_SIZE = 2 /**< the minimum number of bits for the blue channel of the color buffer; defaults to 8. */,
+  ALPHA_SIZE = 3 /**< the minimum number of bits for the alpha channel of the color buffer; defaults to 8. */,
+  BUFFER_SIZE = 4 /**< the minimum number of bits for frame buffer size; defaults to 0. */,
+  DOUBLEBUFFER = 5 /**< whether the output is single or double buffered; defaults to double buffering on. */,
+  DEPTH_SIZE = 6 /**< the minimum number of bits in the depth buffer; defaults to 16. */,
+  STENCIL_SIZE = 7 /**< the minimum number of bits in the stencil buffer; defaults to 0. */,
+  ACCUM_RED_SIZE = 8 /**< the minimum number of bits for the red channel of the accumulation buffer; defaults to 0. */,
+  ACCUM_GREEN_SIZE = 9 /**< the minimum number of bits for the green channel of the accumulation buffer; defaults to 0. */,
+  ACCUM_BLUE_SIZE = 10 /**< the minimum number of bits for the blue channel of the accumulation buffer; defaults to 0. */,
+  ACCUM_ALPHA_SIZE = 11 /**< the minimum number of bits for the alpha channel of the accumulation buffer; defaults to 0. */,
+  STEREO = 12 /**< whether the output is stereo 3D; defaults to off. */,
+  MULTISAMPLEBUFFERS = 13 /**< the number of buffers used for multisample anti-aliasing; defaults to 0. */,
+  MULTISAMPLESAMPLES = 14 /**< the number of samples used around the current pixel used for multisample anti-aliasing. */,
+  ACCELERATED_VISUAL = 15 /**< set to 1 to require hardware acceleration, set to 0 to force software rendering; defaults to allow either. */,
+  RETAINED_BACKING = 16 /**< not used (deprecated). */,
+  CONTEXT_MAJOR_VERSION = 17 /**< OpenGL context major version. */,
+  CONTEXT_MINOR_VERSION = 18 /**< OpenGL context minor version. */,
+  CONTEXT_FLAGS = 19 /**< some combination of 0 or more of elements of the SDL_GLContextFlag enumeration; defaults to 0. */,
+  CONTEXT_PROFILE_MASK = 20 /**< type of GL context (Core, Compatibility, ES). See SDL_GLProfile; default value depends on platform. */,
+  SHARE_WITH_CURRENT_CONTEXT = 21 /**< OpenGL context sharing; defaults to 0. */,
+  FRAMEBUFFER_SRGB_CAPABLE = 22 /**< requests sRGB-capable visual if 1. Defaults to -1 ("don't care"). This is a request; GL drivers might not comply! */,
+  CONTEXT_RELEASE_BEHAVIOR = 23 /**< sets context the release behavior. See SDL_GLContextReleaseFlag; defaults to FLUSH. */,
+  CONTEXT_RESET_NOTIFICATION = 24 /**< set context reset notification. See SDL_GLContextResetNotification; defaults to NO_NOTIFICATION. */,
+  CONTEXT_NO_ERROR = 25,
+  FLOATBUFFERS = 26,
+  EGL_PLATFORM = 27,
+}
 
-export type ProgressState = (typeof ProgressState)[keyof typeof ProgressState];
+export enum GLProfile {
+  CORE = 0x0001 /**< OpenGL Core Profile context */,
+  COMPATIBILITY = 0x0002 /**< OpenGL Compatibility Profile context */,
+  ES = 0x0004 /**< GLX_CONTEXT_ES2_PROFILE_BIT_EXT */,
+}
 
-export const GLAttr = {
-  RED_SIZE: 0 /**< the minimum number of bits for the red channel of the color buffer; defaults to 8. */,
-  GREEN_SIZE: 1 /**< the minimum number of bits for the green channel of the color buffer; defaults to 8. */,
-  BLUE_SIZE: 2 /**< the minimum number of bits for the blue channel of the color buffer; defaults to 8. */,
-  ALPHA_SIZE: 3 /**< the minimum number of bits for the alpha channel of the color buffer; defaults to 8. */,
-  BUFFER_SIZE: 4 /**< the minimum number of bits for frame buffer size; defaults to 0. */,
-  DOUBLEBUFFER: 5 /**< whether the output is single or double buffered; defaults to double buffering on. */,
-  DEPTH_SIZE: 6 /**< the minimum number of bits in the depth buffer; defaults to 16. */,
-  STENCIL_SIZE: 7 /**< the minimum number of bits in the stencil buffer; defaults to 0. */,
-  ACCUM_RED_SIZE: 8 /**< the minimum number of bits for the red channel of the accumulation buffer; defaults to 0. */,
-  ACCUM_GREEN_SIZE: 9 /**< the minimum number of bits for the green channel of the accumulation buffer; defaults to 0. */,
-  ACCUM_BLUE_SIZE: 10 /**< the minimum number of bits for the blue channel of the accumulation buffer; defaults to 0. */,
-  ACCUM_ALPHA_SIZE: 11 /**< the minimum number of bits for the alpha channel of the accumulation buffer; defaults to 0. */,
-  STEREO: 12 /**< whether the output is stereo 3D; defaults to off. */,
-  MULTISAMPLEBUFFERS: 13 /**< the number of buffers used for multisample anti-aliasing; defaults to 0. */,
-  MULTISAMPLESAMPLES: 14 /**< the number of samples used around the current pixel used for multisample anti-aliasing. */,
-  ACCELERATED_VISUAL: 15 /**< set to 1 to require hardware acceleration, set to 0 to force software rendering; defaults to allow either. */,
-  RETAINED_BACKING: 16 /**< not used (deprecated). */,
-  CONTEXT_MAJOR_VERSION: 17 /**< OpenGL context major version. */,
-  CONTEXT_MINOR_VERSION: 18 /**< OpenGL context minor version. */,
-  CONTEXT_FLAGS: 19 /**< some combination of 0 or more of elements of the SDL_GLContextFlag enumeration; defaults to 0. */,
-  CONTEXT_PROFILE_MASK: 20 /**< type of GL context (Core, Compatibility, ES). See SDL_GLProfile; default value depends on platform. */,
-  SHARE_WITH_CURRENT_CONTEXT: 21 /**< OpenGL context sharing; defaults to 0. */,
-  FRAMEBUFFER_SRGB_CAPABLE: 22 /**< requests sRGB-capable visual if 1. Defaults to -1 ("don't care"). This is a request; GL drivers might not comply! */,
-  CONTEXT_RELEASE_BEHAVIOR: 23 /**< sets context the release behavior. See SDL_GLContextReleaseFlag; defaults to FLUSH. */,
-  CONTEXT_RESET_NOTIFICATION: 24 /**< set context reset notification. See SDL_GLContextResetNotification; defaults to NO_NOTIFICATION. */,
-  CONTEXT_NO_ERROR: 25,
-  FLOATBUFFERS: 26,
-  EGL_PLATFORM: 27,
-} as const;
+export enum GLContextFlag {
+  DEBUG_FLAG = 0x0001,
+  FORWARD_COMPATIBLE_FLAG = 0x0002,
+  ROBUST_ACCESS_FLAG = 0x0004,
+  RESET_ISOLATION_FLAG = 0x0008,
+}
 
-export type GLAttr = (typeof GLAttr)[keyof typeof GLAttr];
+export enum GLContextReleaseFlag {
+  FLUSH = 0x0001,
+  NONE = 0x0000,
+}
 
-export const GLProfile = {
-  CORE: 0x0001 /**< OpenGL Core Profile context */,
-  COMPATIBILITY: 0x0002 /**< OpenGL Compatibility Profile context */,
-  ES: 0x0004 /**< GLX_CONTEXT_ES2_PROFILE_BIT_EXT */,
-} as const;
-
-export type GLProfile = (typeof GLProfile)[keyof typeof GLProfile];
-
-export const GLContextFlag = {
-  DEBUG_FLAG: 0x0001,
-  FORWARD_COMPATIBLE_FLAG: 0x0002,
-  ROBUST_ACCESS_FLAG: 0x0004,
-  RESET_ISOLATION_FLAG: 0x0008,
-} as const;
-
-export type GLContextFlag = (typeof GLContextFlag)[keyof typeof GLContextFlag];
-
-export const GLContextReleaseFlag = {
-  FLUSH: 0x0001,
-  NONE: 0x0000,
-} as const;
-
-export type GLContextReleaseFlag =
-  (typeof GLContextReleaseFlag)[keyof typeof GLContextReleaseFlag];
-
-export const GLContextResetNotification = {
-  NO_NOTIFICATION: 0x0000,
-  LOSE_CONTEXT_ON_RESET: 0x0001,
-} as const;
-
-export type GLContextResetNotification =
-  (typeof GLContextResetNotification)[keyof typeof GLContextResetNotification];
+export enum GLContextResetNotification {
+  NO_NOTIFICATION = 0x0000,
+  LOSE_CONTEXT_ON_RESET = 0x0001,
+}

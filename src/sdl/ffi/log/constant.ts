@@ -1,25 +1,25 @@
-export const LogCategory = {
-  APPLICATION: 0,
-  ERROR: 1,
-  ASSERT: 2,
-  SYSTEM: 3,
-  AUDIO: 4,
-  VIDEO: 5,
-  RENDER: 6,
-  INPUT: 7,
-  TEST: 8,
-  GPU: 9,
+export enum LogCategory {
+  APPLICATION = 0,
+  ERROR = 1,
+  ASSERT = 2,
+  SYSTEM = 3,
+  AUDIO = 4,
+  VIDEO = 5,
+  RENDER = 6,
+  INPUT = 7,
+  TEST = 8,
+  GPU = 9,
 
   /* Reserved for future SDL library use */
-  RESERVED2: 10,
-  RESERVED3: 11,
-  RESERVED4: 12,
-  RESERVED5: 13,
-  RESERVED6: 14,
-  RESERVED7: 15,
-  RESERVED8: 16,
-  RESERVED9: 17,
-  RESERVED10: 18,
+  RESERVED2 = 10,
+  RESERVED3 = 11,
+  RESERVED4 = 12,
+  RESERVED5 = 13,
+  RESERVED6 = 14,
+  RESERVED7 = 15,
+  RESERVED8 = 16,
+  RESERVED9 = 17,
+  RESERVED10 = 18,
 
   /* Beyond this point is reserved for application use, e.g.
        enum {
@@ -29,21 +29,17 @@ export const LogCategory = {
            ...
        };
      */
-  CUSTOM: 19,
-} as const;
+  CUSTOM = 19,
+}
 
-export type LogCategory = (typeof LogCategory)[keyof typeof LogCategory];
-
-export const LogPriority = {
-  INVALID: 0,
-  TRACE: 1,
-  VERBOSE: 2,
-  DEBUG: 3,
-  INFO: 4,
-  WARN: 5,
-  ERROR: 6,
-  CRITICAL: 7,
-  COUNT: 8,
-} as const;
-
-export type LogPriority = (typeof LogPriority)[keyof typeof LogPriority];
+export enum LogPriority {
+  INVALID = 0,
+  TRACE = 1,
+  VERBOSE = 2,
+  DEBUG = 3,
+  INFO = 4,
+  WARN = 5,
+  ERROR = 6,
+  CRITICAL = 7,
+  COUNT = 8,
+}

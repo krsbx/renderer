@@ -1,3 +1,3 @@
-export const ByteOffset = {
-  type: 0,
-} as const;
+export enum ByteOffset {
+  type = 0,
+}

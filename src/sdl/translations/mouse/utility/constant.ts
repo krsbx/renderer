@@ -1,4 +1,4 @@
-export const ByteOffset = {
-  surface: 0,
-  duration: 8,
-} as const;
+export enum ByteOffset {
+  surface = 0,
+  duration = 8,
+}

@@ -1,4 +1,4 @@
-export const ByteOffset = {
-  language: 0,
-  country: 8,
-} as const;
+export enum ByteOffset {
+  language = 0,
+  country = 8,
+}

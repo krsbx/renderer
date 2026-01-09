@@ -1,4 +1,4 @@
-import type { FreeAddress, MemoryAddress } from '../../types/shared';
+import type { FreeAddress, MemoryAddress } from '../../../types/shared';
 
 export interface RawDateTime extends FreeAddress, MemoryAddress {
   year: number;

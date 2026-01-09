@@ -1,5 +1,5 @@
-import type { PixelFormat } from '../../ffi/pixels/constant';
-import type { FreeAddress, MemoryAddress } from '../../types/shared';
+import type { PixelFormat } from '../../../ffi/pixels/constant';
+import type { FreeAddress, MemoryAddress } from '../../../types/shared';
 
 export interface RawDisplayMode extends FreeAddress, MemoryAddress {
   displayID: number;

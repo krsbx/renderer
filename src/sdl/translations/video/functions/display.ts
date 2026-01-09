@@ -9,8 +9,8 @@ import type {
   MemoryAddress,
   Vector2,
 } from '../../../types/shared';
-import { Rect } from '../../rect/utility/rect';
-import { DisplayMode } from '../display-mode';
+import { Rect } from '../../rect/utility/rect/rect.snapshot';
+import { DisplayMode } from '../utility/display-mode.snapshot';
 
 export function getNumVideoDrivers(this: BaseSDL) {
   return this.symbols.SDL_GetNumVideoDrivers();

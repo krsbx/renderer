@@ -1,4 +1,4 @@
-import type { FreeAddress, MemoryAddress } from '../../types/shared';
+import type { FreeAddress, MemoryAddress } from '../../../types/shared';
 
 export interface RawAudioSpec extends FreeAddress, MemoryAddress {
   format: number;

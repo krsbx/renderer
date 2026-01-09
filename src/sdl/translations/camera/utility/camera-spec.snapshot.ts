@@ -1,6 +1,6 @@
 import { read, type Pointer } from 'bun:ffi';
-import type { BaseSDL } from '../..';
-import type { Colorspace, PixelFormat } from '../../ffi/pixels/constant';
+import type { BaseSDL } from '../../..';
+import type { Colorspace, PixelFormat } from '../../../ffi/pixels/constant';
 import { ByteOffset } from './constant';
 import type { RawCameraSpec } from './types';
 

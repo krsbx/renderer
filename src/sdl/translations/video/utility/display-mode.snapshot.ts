@@ -1,6 +1,6 @@
 import { read, type Pointer } from 'bun:ffi';
-import type { BaseSDL } from '../..';
-import type { PixelFormat } from '../../ffi/pixels/constant';
+import type { BaseSDL } from '../../..';
+import type { PixelFormat } from '../../../ffi/pixels/constant';
 import { ByteOffset } from './constant';
 import type { RawDisplayMode } from './types';
 

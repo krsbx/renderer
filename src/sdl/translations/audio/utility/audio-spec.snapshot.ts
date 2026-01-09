@@ -1,5 +1,5 @@
 import { read, type Pointer } from 'bun:ffi';
-import type { BaseSDL } from '../..';
+import type { BaseSDL } from '../../..';
 import { ByteOffset } from './constant';
 import type { RawAudioSpec } from './types';
 

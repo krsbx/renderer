@@ -2,7 +2,7 @@ import { JSCallback, type Pointer } from 'bun:ffi';
 import type { BaseSDL } from '../../..';
 import type { GLAttr } from '../../../ffi/video/constant';
 import { convertStringToFfi } from '../../../utility/common';
-import { Surface } from '../../surface/utility/surface.snapshot';
+import { Surface } from '../../surface/utility/surface';
 
 export function glLoadLibrary(this: BaseSDL, path: string) {
   return this.symbols.SDL_GL_LoadLibrary(convertStringToFfi(path).reference);
@@ -71,7 +71,7 @@ export function eglGetWindowSurface(this: BaseSDL, window: Pointer) {
 
   if (!result) return null;
 
-  return Surface.fromPointer(result, this);
+  return new Surface(result);
 }
 
 export function eglSetAttributeCallbacks(

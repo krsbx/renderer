@@ -8,9 +8,9 @@ import type {
 } from '../../../ffi/video/constant';
 import type { Vector2, WidthHeight } from '../../../types/shared';
 import { convertStringToFfi } from '../../../utility/common';
-import { Rect } from '../../rect/utility/rect/rect.snapshot';
-import { Surface } from '../../surface/utility/surface.snapshot';
-import { DisplayMode } from '../utility/display-mode.snapshot';
+import { Rect } from '../../rect/utility/rect';
+import { Surface } from '../../surface/utility/surface';
+import { DisplayMode } from '../utility/display-mode';
 
 export function getDisplayForWindow(this: BaseSDL, window: Pointer) {
   return this.symbols.SDL_GetDisplayForWindow(window);
@@ -33,7 +33,7 @@ export function setWindowFullscreenMode(
 ) {
   return this.symbols.SDL_SetWindowFullscreenMode(
     options.window,
-    options.mode.toMemory()
+    options.mode.$address
   );
 }
 
@@ -42,7 +42,7 @@ export function getWindowFullscreenMode(this: BaseSDL, window: Pointer) {
 
   if (!result) return null;
 
-  return DisplayMode.fromPointer(result, this);
+  return new DisplayMode(result);
 }
 
 export function getWindowIccProfile(this: BaseSDL, window: Pointer) {
@@ -174,10 +174,7 @@ export function setWindowIcon(
     icon: Surface;
   }
 ) {
-  return this.symbols.SDL_SetWindowIcon(
-    options.window,
-    ptr(options.icon.toMemory())
-  );
+  return this.symbols.SDL_SetWindowIcon(options.window, options.icon.$address);
 }
 
 export function setWindowPosition(
@@ -241,7 +238,7 @@ export function getWindowSafeArea(this: BaseSDL, window: Pointer) {
 
   if (!success) return null;
 
-  return Rect.fromMemory(rect);
+  return new Rect(rect);
 }
 
 export function setWindowAspectRatio(
@@ -545,7 +542,7 @@ export function setWindowMouseRect(
 ) {
   return this.symbols.SDL_SetWindowMouseRect(
     options.window,
-    ptr(options.rect.toMemory())
+    options.rect.$address
   );
 }
 
@@ -623,10 +620,7 @@ export function setWindowShape(
     rect: Rect;
   }
 ) {
-  return this.symbols.SDL_SetWindowShape(
-    options.window,
-    ptr(options.rect.toMemory())
-  );
+  return this.symbols.SDL_SetWindowShape(options.window, options.rect.$address);
 }
 
 export function flashWindow(

@@ -9,8 +9,8 @@ import type {
   MemoryAddress,
   Vector2,
 } from '../../../types/shared';
-import { Rect } from '../../rect/utility/rect/rect.snapshot';
-import { DisplayMode } from '../utility/display-mode.snapshot';
+import { Rect } from '../../rect/utility/rect';
+import { DisplayMode } from '../utility/display-mode';
 
 export function getNumVideoDrivers(this: BaseSDL) {
   return this.symbols.SDL_GetNumVideoDrivers();
@@ -70,7 +70,7 @@ export function getDisplayBounds(this: BaseSDL, displayID: number) {
 
   if (!success) return null;
 
-  return Rect.fromMemory(rect);
+  return new Rect(rect);
 }
 
 export function getDisplayUsableBounds(this: BaseSDL, displayID: number) {
@@ -80,7 +80,7 @@ export function getDisplayUsableBounds(this: BaseSDL, displayID: number) {
 
   if (!success) return null;
 
-  return Rect.fromMemory(rect);
+  return new Rect(rect);
 }
 
 export function getNaturalDisplayOrientation(this: BaseSDL, displayID: number) {
@@ -127,7 +127,7 @@ export function getFullscreenDisplayModes(this: BaseSDL, displayID: number) {
 
       if (!modePtr) continue;
 
-      const mode = DisplayMode.fromPointer(modePtr, this);
+      const mode = new DisplayMode(modePtr);
 
       results.modes.push(mode);
     }
@@ -162,7 +162,7 @@ export function getClosestFullscreenDisplayMode(
 
   if (!success) return null;
 
-  return DisplayMode.fromMemory(closestBuf);
+  return new DisplayMode(closestBuf);
 }
 
 export function getDesktopDisplayMode(this: BaseSDL, displayID: number) {
@@ -170,7 +170,7 @@ export function getDesktopDisplayMode(this: BaseSDL, displayID: number) {
 
   if (!result) return null;
 
-  return DisplayMode.fromPointer(result, this);
+  return new DisplayMode(result);
 }
 
 export function getCurrentDisplayMode(this: BaseSDL, displayID: number) {
@@ -178,7 +178,7 @@ export function getCurrentDisplayMode(this: BaseSDL, displayID: number) {
 
   if (!result) return null;
 
-  return DisplayMode.fromPointer(result, this);
+  return new DisplayMode(result);
 }
 
 export function getDisplayForPoint(this: BaseSDL, point: Vector2) {

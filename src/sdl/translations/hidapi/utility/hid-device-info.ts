@@ -171,10 +171,9 @@ export class HIDDeviceInfo {
   }
 
   public get next(): HIDDeviceInfo | null {
-    const nextAddr = this.$view.getBigUint64(
-      ByteOffset.next,
-      true
-    ) as unknown as bigint | null;
+    const nextAddr = this.$view.getBigUint64(ByteOffset.next, true) as
+      | bigint
+      | null;
 
     if (!nextAddr || nextAddr === 0n) return null;
 

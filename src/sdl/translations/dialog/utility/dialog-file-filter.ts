@@ -32,10 +32,8 @@ export class DialogFileFilter {
   }
 
   public get name() {
-    const namePtr = this.$view.getBigUint64(
-      ByteOffset.name,
-      true
-    ) as unknown as Pointer;
+    const nameAddr = this.$view.getBigUint64(ByteOffset.name, true);
+    const namePtr = Number(nameAddr) as Pointer;
 
     return new CString(namePtr);
   }
@@ -45,10 +43,8 @@ export class DialogFileFilter {
   }
 
   public get pattern() {
-    const patternPtr = this.$view.getBigUint64(
-      ByteOffset.pattern,
-      true
-    ) as unknown as Pointer;
+    const patternAddr = this.$view.getBigUint64(ByteOffset.pattern, true);
+    const patternPtr = Number(patternAddr) as Pointer;
 
     return new CString(patternPtr);
   }

@@ -1,4 +1,5 @@
 import { ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
+import type { Colorspace, PixelFormat } from '../../../ffi/pixels/constant';
 import { ByteOffset } from './constant';
 
 export class CameraSpec {
@@ -32,18 +33,18 @@ export class CameraSpec {
   }
 
   public get format() {
-    return this.$view.getUint32(ByteOffset.format, true);
+    return this.$view.getUint32(ByteOffset.format, true) as PixelFormat;
   }
 
-  public set format(value: number) {
+  public set format(value: PixelFormat) {
     this.$view.setUint32(ByteOffset.format, value, true);
   }
 
   public get colorspace() {
-    return this.$view.getUint32(ByteOffset.colorspace, true);
+    return this.$view.getUint32(ByteOffset.colorspace, true) as Colorspace;
   }
 
-  public set colorspace(value: number) {
+  public set colorspace(value: Colorspace) {
     this.$view.setUint32(ByteOffset.colorspace, value, true);
   }
 

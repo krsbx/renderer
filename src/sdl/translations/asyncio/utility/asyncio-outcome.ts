@@ -1,4 +1,8 @@
 import { ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
+import type {
+  AsyncIOResult,
+  AsyncIOTaskType,
+} from '../../../ffi/asyncio/constant';
 import { ByteOffset } from './constant';
 
 export class AsyncIOOutcome {
@@ -32,41 +36,41 @@ export class AsyncIOOutcome {
   }
 
   public get asyncio() {
-    return this.$view.getBigUint64(
-      ByteOffset.asyncio,
-      true
-    ) as unknown as Pointer;
+    const asyncioAddr = this.$view.getBigUint64(ByteOffset.asyncio, true);
+    const asyncioPtr = Number(asyncioAddr) as Pointer;
+
+    return asyncioPtr;
   }
 
   public set asyncio(value: Pointer) {
-    this.$view.setBigUint64(ByteOffset.asyncio, BigInt(value ?? 0n), true);
+    this.$view.setBigUint64(ByteOffset.asyncio, BigInt(value), true);
   }
 
   public get type() {
-    return this.$view.getInt32(ByteOffset.type, true);
+    return this.$view.getInt32(ByteOffset.type, true) as AsyncIOTaskType;
   }
 
-  public set type(value: number) {
+  public set type(value: AsyncIOTaskType) {
     this.$view.setInt32(ByteOffset.type, value, true);
   }
 
   public get result() {
-    return this.$view.getInt32(ByteOffset.result, true);
+    return this.$view.getInt32(ByteOffset.result, true) as AsyncIOResult;
   }
 
-  public set result(value: number) {
+  public set result(value: AsyncIOResult) {
     this.$view.setInt32(ByteOffset.result, value, true);
   }
 
   public get buffer() {
-    return this.$view.getBigUint64(
-      ByteOffset.buffer,
-      true
-    ) as unknown as Pointer;
+    const bufferAddr = this.$view.getBigUint64(ByteOffset.buffer, true);
+    const bufferPtr = Number(bufferAddr) as Pointer;
+
+    return bufferPtr;
   }
 
   public set buffer(value: Pointer) {
-    this.$view.setBigUint64(ByteOffset.buffer, BigInt(value ?? 0n), true);
+    this.$view.setBigUint64(ByteOffset.buffer, BigInt(value), true);
   }
 
   public get offset() {
@@ -94,13 +98,13 @@ export class AsyncIOOutcome {
   }
 
   public get userdata() {
-    return this.$view.getBigUint64(
-      ByteOffset.userdata,
-      true
-    ) as unknown as Pointer;
+    const userdataAddr = this.$view.getBigUint64(ByteOffset.userdata, true);
+    const userdataPtr = Number(userdataAddr) as Pointer;
+
+    return userdataPtr;
   }
 
   public set userdata(value: Pointer) {
-    this.$view.setBigUint64(ByteOffset.userdata, BigInt(value ?? 0n), true);
+    this.$view.setBigUint64(ByteOffset.userdata, BigInt(value), true);
   }
 }

@@ -1,4 +1,5 @@
 import { ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
+import type { AudioFormat } from '../../../ffi/audio/constant';
 import { ByteOffset } from './constant';
 
 export class AudioSpec {
@@ -32,10 +33,10 @@ export class AudioSpec {
   }
 
   public get format() {
-    return this.$view.getInt32(ByteOffset.format, true);
+    return this.$view.getInt32(ByteOffset.format, true) as AudioFormat;
   }
 
-  public set format(value: number) {
+  public set format(value: AudioFormat) {
     this.$view.setInt32(ByteOffset.format, value, true);
   }
 

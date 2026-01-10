@@ -48,10 +48,8 @@ export class AssertData {
   }
 
   public get condition() {
-    const conditionPtr = this.$view.getBigUint64(
-      ByteOffset.condition,
-      true
-    ) as unknown as Pointer;
+    const conditionAddr = this.$view.getBigUint64(ByteOffset.condition, true);
+    const conditionPtr = Number(conditionAddr) as Pointer;
 
     return new CString(conditionPtr);
   }
@@ -61,10 +59,8 @@ export class AssertData {
   }
 
   public get filename() {
-    const filenamePtr = this.$view.getBigUint64(
-      ByteOffset.filename,
-      true
-    ) as unknown as Pointer;
+    const filenameAddr = this.$view.getBigUint64(ByteOffset.filename, true);
+    const filenamePtr = Number(filenameAddr) as Pointer;
 
     return new CString(filenamePtr);
   }
@@ -82,10 +78,8 @@ export class AssertData {
   }
 
   public get function() {
-    const functionPtr = this.$view.getBigUint64(
-      ByteOffset.function,
-      true
-    ) as unknown as Pointer;
+    const functionAdr = this.$view.getBigUint64(ByteOffset.function, true);
+    const functionPtr = Number(functionAdr) as Pointer;
 
     return new CString(functionPtr);
   }
@@ -95,13 +89,15 @@ export class AssertData {
   }
 
   public get next(): AssertData | null {
-    const next = this.$view.getBigUint64(
+    const nextAddr = this.$view.getBigUint64(
       ByteOffset.next,
       true
-    ) as unknown as Pointer | null;
+    ) as unknown as bigint | null;
 
-    if (!next || next === (0n as unknown as Pointer)) return null;
+    if (!nextAddr || nextAddr === 0n) return null;
 
-    return new AssertData(next);
+    const nextPtr = Number(nextAddr) as Pointer;
+
+    return new AssertData(nextPtr);
   }
 }

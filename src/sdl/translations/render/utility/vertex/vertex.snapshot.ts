@@ -1,7 +1,7 @@
 import { type Pointer } from 'bun:ffi';
-import type { BaseSDL } from '../../..';
-import { FColor } from '../../pixels/utility/fcolor/fcolor.snapshot';
-import { FPoint } from '../../rect/utility/fpoint/fpoint.snapshot';
+import type { BaseSDL } from '../../../..';
+import { FColor } from '../../../pixels/utility/fcolor/fcolor.snapshot';
+import { FPoint } from '../../../rect/utility/fpoint/fpoint.snapshot';
 import type { RawVertex } from './types';
 
 export class Vertex implements RawVertex {

@@ -1,6 +1,7 @@
 import { ptr, read, type Pointer } from 'bun:ffi';
-import type { BaseSDL } from '../../..';
-import { GPUTextureSamplerBinding } from '../../gpu/utility/gpu-texture-sampler-binding';
+import type { BaseSDL } from '../../../..';
+import { GPUTextureSamplerBinding } from '../../../gpu/utility/gpu-texture-sampler-binding';
+import { ByteOffset } from './constant';
 import type { RawGPURenderStateCreateInfo } from './types';
 
 export class GPURenderStateCreateInfo implements RawGPURenderStateCreateInfo {
@@ -38,8 +39,16 @@ export class GPURenderStateCreateInfo implements RawGPURenderStateCreateInfo {
       this.num_sampler_bindings * GPUTextureSamplerBinding.BYTE_SIZE
     );
 
-    view.setBigUint64(0, BigInt(this.fragment_shader), true);
-    view.setUint32(8, this.num_sampler_bindings, true);
+    view.setBigUint64(
+      ByteOffset.fragment_shader,
+      BigInt(this.fragment_shader),
+      true
+    );
+    view.setUint32(
+      ByteOffset.num_sampler_bindings,
+      this.num_sampler_bindings,
+      true
+    );
 
     for (let i = 0; i < this.num_sampler_bindings; i++) {
       const offset = i * GPUTextureSamplerBinding.BYTE_SIZE;
@@ -51,12 +60,32 @@ export class GPURenderStateCreateInfo implements RawGPURenderStateCreateInfo {
       samplerBindingsBuffers.set(samplerBinding.toMemory(), offset);
     }
 
-    view.setBigUint64(16, BigInt(ptr(samplerBindingsBuffers)), true);
-    view.setUint32(24, this.num_storage_textures, true);
-    view.setBigUint64(32, BigInt(this.storage_textures), true);
-    view.setUint32(40, this.num_storage_buffers, true);
-    view.setBigUint64(48, BigInt(this.storage_buffers), true);
-    view.setUint32(56, this.props, true);
+    view.setBigUint64(
+      ByteOffset.sampler_bindings,
+      BigInt(ptr(samplerBindingsBuffers)),
+      true
+    );
+    view.setUint32(
+      ByteOffset.num_storage_textures,
+      this.num_storage_textures,
+      true
+    );
+    view.setBigUint64(
+      ByteOffset.storage_textures,
+      BigInt(this.storage_textures),
+      true
+    );
+    view.setUint32(
+      ByteOffset.num_storage_buffers,
+      this.num_storage_buffers,
+      true
+    );
+    view.setBigUint64(
+      ByteOffset.storage_buffers,
+      BigInt(this.storage_buffers),
+      true
+    );
+    view.setUint32(ByteOffset.props, this.props, true);
 
     return buffer;
   }
@@ -68,8 +97,11 @@ export class GPURenderStateCreateInfo implements RawGPURenderStateCreateInfo {
   }
 
   public static fromPointer(pointer: Pointer, sdl: BaseSDL) {
-    const numSamplers = read.u32(pointer, 8);
-    const samplerBindingsPtr = read.ptr(pointer, 16) as Pointer | null;
+    const numSamplers = read.u32(pointer, ByteOffset.num_sampler_bindings);
+    const samplerBindingsPtr = read.ptr(
+      pointer,
+      ByteOffset.sampler_bindings
+    ) as Pointer | null;
     const samplerBindings: GPUTextureSamplerBinding[] = [];
 
     if (samplerBindingsPtr && numSamplers > 0) {
@@ -87,14 +119,14 @@ export class GPURenderStateCreateInfo implements RawGPURenderStateCreateInfo {
     }
 
     const result = {
-      fragment_shader: read.ptr(pointer, 0),
+      fragment_shader: read.ptr(pointer, ByteOffset.fragment_shader),
       num_sampler_bindings: numSamplers,
       sampler_bindings: samplerBindings,
-      num_storage_textures: read.u32(pointer, 24),
-      storage_textures: read.ptr(pointer, 32),
-      num_storage_buffers: read.u32(pointer, 40),
-      storage_buffers: read.ptr(pointer, 48),
-      props: read.u32(pointer, 56),
+      num_storage_textures: read.u32(pointer, ByteOffset.num_storage_textures),
+      storage_textures: read.ptr(pointer, ByteOffset.storage_textures),
+      num_storage_buffers: read.u32(pointer, ByteOffset.num_storage_buffers),
+      storage_buffers: read.ptr(pointer, ByteOffset.storage_buffers),
+      props: read.u32(pointer, ByteOffset.props),
       free: () => {
         sdl.symbols.SDL_free(pointer);
       },
@@ -107,9 +139,9 @@ export class GPURenderStateCreateInfo implements RawGPURenderStateCreateInfo {
   public static fromMemory(data: Uint8Array, sdl: BaseSDL) {
     const view = new DataView(data.buffer, data.byteOffset, data.byteLength);
 
-    const numSamplers = view.getUint32(8, true);
+    const numSamplers = view.getUint32(ByteOffset.num_sampler_bindings, true);
     const samplerBindingsPtr = view.getBigUint64(
-      16,
+      ByteOffset.sampler_bindings,
       true
     ) as unknown as Pointer;
     const samplerBindings: GPUTextureSamplerBinding[] = [];
@@ -129,14 +161,26 @@ export class GPURenderStateCreateInfo implements RawGPURenderStateCreateInfo {
     }
 
     const result = {
-      fragment_shader: view.getBigUint64(0, true) as unknown as Pointer,
+      fragment_shader: view.getBigUint64(
+        ByteOffset.fragment_shader,
+        true
+      ) as unknown as Pointer,
       num_sampler_bindings: numSamplers,
       sampler_bindings: samplerBindings,
-      num_storage_textures: view.getUint32(24, true),
-      storage_textures: view.getBigUint64(32, true) as unknown as Pointer,
-      num_storage_buffers: view.getUint32(40, true),
-      storage_buffers: view.getBigUint64(48, true) as unknown as Pointer,
-      props: view.getUint32(56, true),
+      num_storage_textures: view.getUint32(
+        ByteOffset.num_storage_textures,
+        true
+      ),
+      storage_textures: view.getBigUint64(
+        ByteOffset.storage_textures,
+        true
+      ) as unknown as Pointer,
+      num_storage_buffers: view.getUint32(ByteOffset.num_storage_buffers, true),
+      storage_buffers: view.getBigUint64(
+        ByteOffset.storage_buffers,
+        true
+      ) as unknown as Pointer,
+      props: view.getUint32(ByteOffset.props, true),
       free: null,
       address: null,
     } as RawGPURenderStateCreateInfo;

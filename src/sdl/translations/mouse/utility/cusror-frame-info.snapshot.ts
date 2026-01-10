@@ -1,6 +1,6 @@
 import { read, type Pointer } from 'bun:ffi';
 import type { BaseSDL } from '../../..';
-import { Surface } from '../../surface/surface.snapshot';
+import { Surface } from '../../surface/utility/surface.snapshot';
 import { ByteOffset } from './constant';
 import type { RawCursorFrameInfo } from './types';
 

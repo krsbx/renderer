@@ -1,3 +1,3 @@
 import type { EventType } from '../../../../../ffi/events/constant';
 
-export type MouseWheelEventType = typeof EventType.MOUSE_WHEEL;
+export type MouseWheelEventType = EventType.MOUSE_WHEEL;

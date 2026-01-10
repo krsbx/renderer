@@ -1,3 +1,3 @@
 import type { EventType } from '../../../../../ffi/events/constant';
 
-export type UserEventType = typeof EventType.LAST | typeof EventType.USER;
+export type UserEventType = EventType.LAST | EventType.USER;

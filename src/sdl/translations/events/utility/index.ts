@@ -1,4 +1,5 @@
 export * from './common';
+export * from './event';
 export * from './gamepad';
 export * from './joy';
 export * from './keyboard';

@@ -1,28 +1,28 @@
 import type { EventType } from '../../../../../ffi/events/constant';
 
 export type WindowEventType =
-  | typeof EventType.WINDOW_SHOWN
-  | typeof EventType.WINDOW_HIDDEN
-  | typeof EventType.WINDOW_EXPOSED
-  | typeof EventType.WINDOW_MOVED
-  | typeof EventType.WINDOW_RESIZED
-  | typeof EventType.WINDOW_PIXEL_SIZE_CHANGED
-  | typeof EventType.WINDOW_METAL_VIEW_RESIZED
-  | typeof EventType.WINDOW_MINIMIZED
-  | typeof EventType.WINDOW_MAXIMIZED
-  | typeof EventType.WINDOW_RESTORED
-  | typeof EventType.WINDOW_MOUSE_ENTER
-  | typeof EventType.WINDOW_MOUSE_LEAVE
-  | typeof EventType.WINDOW_FOCUS_GAINED
-  | typeof EventType.WINDOW_FOCUS_LOST
-  | typeof EventType.WINDOW_CLOSE_REQUESTED
-  | typeof EventType.WINDOW_HIT_TEST
-  | typeof EventType.WINDOW_ICCPROF_CHANGED
-  | typeof EventType.WINDOW_DISPLAY_CHANGED
-  | typeof EventType.WINDOW_DISPLAY_SCALE_CHANGED
-  | typeof EventType.WINDOW_SAFE_AREA_CHANGED
-  | typeof EventType.WINDOW_OCCLUDED
-  | typeof EventType.WINDOW_ENTER_FULLSCREEN
-  | typeof EventType.WINDOW_LEAVE_FULLSCREEN
-  | typeof EventType.WINDOW_DESTROYED
-  | typeof EventType.WINDOW_HDR_STATE_CHANGED;
+  | EventType.WINDOW_SHOWN
+  | EventType.WINDOW_HIDDEN
+  | EventType.WINDOW_EXPOSED
+  | EventType.WINDOW_MOVED
+  | EventType.WINDOW_RESIZED
+  | EventType.WINDOW_PIXEL_SIZE_CHANGED
+  | EventType.WINDOW_METAL_VIEW_RESIZED
+  | EventType.WINDOW_MINIMIZED
+  | EventType.WINDOW_MAXIMIZED
+  | EventType.WINDOW_RESTORED
+  | EventType.WINDOW_MOUSE_ENTER
+  | EventType.WINDOW_MOUSE_LEAVE
+  | EventType.WINDOW_FOCUS_GAINED
+  | EventType.WINDOW_FOCUS_LOST
+  | EventType.WINDOW_CLOSE_REQUESTED
+  | EventType.WINDOW_HIT_TEST
+  | EventType.WINDOW_ICCPROF_CHANGED
+  | EventType.WINDOW_DISPLAY_CHANGED
+  | EventType.WINDOW_DISPLAY_SCALE_CHANGED
+  | EventType.WINDOW_SAFE_AREA_CHANGED
+  | EventType.WINDOW_OCCLUDED
+  | EventType.WINDOW_ENTER_FULLSCREEN
+  | EventType.WINDOW_LEAVE_FULLSCREEN
+  | EventType.WINDOW_DESTROYED
+  | EventType.WINDOW_HDR_STATE_CHANGED;

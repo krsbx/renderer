@@ -44,12 +44,20 @@ export class Locale {
 
   public get country() {
     const countryAddr = this.$view.getBigUint64(ByteOffset.country, true);
+
+    if (!countryAddr || countryAddr === 0n) return null;
+
     const countryPtr = Number(countryAddr) as Pointer;
 
     return new CString(countryPtr);
   }
 
-  public set country(value: CString) {
+  public set country(value: CString | null) {
+    if (!value) {
+      this.$view.setBigUint64(ByteOffset.country, 0n, true);
+      return;
+    }
+
     this.$view.setBigUint64(ByteOffset.country, BigInt(value.ptr), true);
   }
 }

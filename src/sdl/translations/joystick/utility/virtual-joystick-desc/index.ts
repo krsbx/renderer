@@ -213,6 +213,7 @@ export class VirtualJoystickDesc {
     }
 
     this.$touchpadsBuffer = buffer;
+    this.ntouchpads = value.length;
 
     this.$view.setBigUint64(
       ByteOffset.touchpads,
@@ -253,6 +254,7 @@ export class VirtualJoystickDesc {
     }
 
     this.$sensorsBuffer = buffer;
+    this.nsensors = value.length;
 
     this.$view.setBigUint64(
       ByteOffset.sensors,

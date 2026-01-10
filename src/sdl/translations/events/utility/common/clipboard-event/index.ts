@@ -88,11 +88,11 @@ export class ClipboardEvent {
     const mimeTypesPtr = Number(mimeTypesAddr) as Pointer;
 
     for (let i = 0; i < num_mime_types; i++) {
-      const strPtr = read.ptr(mimeTypesPtr, i * 8) as Pointer | null;
+      const stringPtr = read.ptr(mimeTypesPtr, i * 8) as Pointer | null;
 
-      if (!strPtr) continue;
+      if (!stringPtr) continue;
 
-      mimeTypes.push(new CString(strPtr));
+      mimeTypes.push(new CString(stringPtr));
     }
 
     return mimeTypes;

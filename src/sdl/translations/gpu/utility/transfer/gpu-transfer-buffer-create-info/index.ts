@@ -1,8 +1,9 @@
 import { ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
+import type { GPUTransferBufferUsage } from '../../../../../ffi/gpu/constant';
 import { ByteOffset } from './constant';
 
-export class GPUBufferRegion {
-  public static readonly BYTE_SIZE = 16;
+export class GPUTransferBufferCreateInfo {
+  public static readonly BYTE_SIZE = 12;
 
   public $address: Pointer;
   public $memory: Uint8Array;
@@ -13,7 +14,11 @@ export class GPUBufferRegion {
       this.$memory = data;
       this.$address = ptr(data);
     } else {
-      const buffer = toArrayBuffer(data, 0, GPUBufferRegion.BYTE_SIZE);
+      const buffer = toArrayBuffer(
+        data,
+        0,
+        GPUTransferBufferCreateInfo.BYTE_SIZE
+      );
       this.$memory = new Uint8Array(buffer);
       this.$address = data;
     }
@@ -31,22 +36,15 @@ export class GPUBufferRegion {
     return buffer;
   }
 
-  public get buffer() {
-    const addr = this.$view.getBigUint64(ByteOffset.buffer, true);
-
-    return Number(addr) as Pointer;
+  public get usage() {
+    return this.$view.getInt32(
+      ByteOffset.usage,
+      true
+    ) as GPUTransferBufferUsage;
   }
 
-  public set buffer(value: Pointer) {
-    this.$view.setBigUint64(ByteOffset.buffer, BigInt(value), true);
-  }
-
-  public get offset() {
-    return this.$view.getUint32(ByteOffset.offset, true);
-  }
-
-  public set offset(value: number) {
-    this.$view.setUint32(ByteOffset.offset, value, true);
+  public set usage(value: GPUTransferBufferUsage) {
+    this.$view.setInt32(ByteOffset.usage, value, true);
   }
 
   public get size() {
@@ -55,5 +53,13 @@ export class GPUBufferRegion {
 
   public set size(value: number) {
     this.$view.setUint32(ByteOffset.size, value, true);
+  }
+
+  public get props() {
+    return this.$view.getUint32(ByteOffset.props, true);
+  }
+
+  public set props(value: number) {
+    this.$view.setUint32(ByteOffset.props, value, true);
   }
 }

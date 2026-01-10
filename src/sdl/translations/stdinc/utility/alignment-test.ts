@@ -31,7 +31,7 @@ export class AlignmentTest {
     return buffer;
   }
 
-  public get a(): number {
+  public get a() {
     return this.$view.getUint8(ByteOffset.a);
   }
 
@@ -40,10 +40,13 @@ export class AlignmentTest {
   }
 
   public get b() {
-    return this.$view.getBigUint64(ByteOffset.b, true) as unknown as Pointer;
+    const bAddr = this.$view.getBigUint64(ByteOffset.b, true);
+    const bPtr = Number(bAddr) as Pointer;
+
+    return bPtr;
   }
 
   public set b(value: Pointer) {
-    this.$view.setBigUint64(ByteOffset.b, BigInt(value ?? 0n), true);
+    this.$view.setBigUint64(ByteOffset.b, BigInt(value), true);
   }
 }

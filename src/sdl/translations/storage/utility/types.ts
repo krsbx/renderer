@@ -1,6 +1,4 @@
-import { CString, JSCallback, type Library, type Pointer } from 'bun:ffi';
-import type { FreeAddress, MemoryAddress } from '../../../types/shared';
-import type { StorageInterfaceDefinition } from './definition';
+import { CString, JSCallback, type Pointer } from 'bun:ffi';
 
 export interface EnumerateDirectoryOptions {
   userdata?: Pointer | null;
@@ -60,11 +58,4 @@ export interface CreateFfiOptions {
   renamePtr: Pointer;
   copyPtr: Pointer;
   spaceRemainingPtr: Pointer;
-}
-
-export interface RawStorageInterface extends FreeAddress, MemoryAddress {
-  /* The version of this interface */
-  version: number;
-
-  $ffi: Library<StorageInterfaceDefinition>;
 }

@@ -1,5 +1,5 @@
 import { ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
-import { Color } from '../color/color';
+import { Color } from '../color';
 import { ByteOffset } from './constant';
 
 export class Palette {

@@ -10,7 +10,6 @@ export class TextEditingCandidatesEvent {
   public $view: DataView;
 
   public $candidatesBuffer: Uint8Array | null;
-  public $candidatesStrings: CString[] | null;
 
   public constructor(data: Pointer | Uint8Array) {
     if (data instanceof Uint8Array) {
@@ -33,7 +32,6 @@ export class TextEditingCandidatesEvent {
     );
 
     this.$candidatesBuffer = null;
-    this.$candidatesStrings = null;
   }
 
   public static allocMemory() {
@@ -99,11 +97,9 @@ export class TextEditingCandidatesEvent {
 
   public set candidates(value: CString[]) {
     this.num_candidates = value.length;
-    this.$candidatesStrings = value;
 
     if (this.num_candidates === 0) {
       this.$view.setBigUint64(ByteOffset.candidates, 0n, true);
-      this.$candidatesStrings = null;
       return;
     }
 
@@ -111,7 +107,7 @@ export class TextEditingCandidatesEvent {
     const view = new DataView(buffer.buffer);
 
     for (let i = 0; i < this.num_candidates; i++) {
-      const stringPtr = this.$candidatesStrings[i]!.ptr;
+      const stringPtr = value[i]!.ptr;
 
       view.setBigUint64(i * 8, BigInt(stringPtr), true);
     }

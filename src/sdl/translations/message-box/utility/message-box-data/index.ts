@@ -106,18 +106,24 @@ export class MessageBoxData {
   }
 
   public set buttons(value: MessageBoxButtonData[]) {
+    this.numbuttons = value.length;
+
+    if (this.numbuttons === 0) {
+      this.$view.setBigUint64(ByteOffset.buttons, 0n, true);
+      return;
+    }
+
     const buffer = new Uint8Array(
-      MessageBoxButtonData.BYTE_SIZE * value.length
+      MessageBoxButtonData.BYTE_SIZE * this.numbuttons
     );
 
-    for (let i = 0; i < value.length; i++) {
+    for (let i = 0; i < this.numbuttons; i++) {
       const offset = i * MessageBoxButtonData.BYTE_SIZE;
 
       buffer.set(value[i]!.$memory, offset);
     }
 
     this.$buttonsBuffer = buffer;
-    this.numbuttons = value.length;
 
     this.$view.setBigUint64(
       ByteOffset.buttons,

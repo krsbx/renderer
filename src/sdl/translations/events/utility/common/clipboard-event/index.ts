@@ -10,7 +10,6 @@ export class ClipboardEvent {
   public $view: DataView;
 
   public $mimeTypesBuffer: Uint8Array | null;
-  public $mimeTypesStrings: CString[] | null;
 
   public constructor(data: Pointer | Uint8Array) {
     if (data instanceof Uint8Array) {
@@ -29,7 +28,6 @@ export class ClipboardEvent {
     );
 
     this.$mimeTypesBuffer = null;
-    this.$mimeTypesStrings = null;
   }
 
   public static allocMemory() {
@@ -100,7 +98,6 @@ export class ClipboardEvent {
 
   public set mime_types(value: CString[]) {
     this.num_mime_types = value.length;
-    this.$mimeTypesStrings = value;
 
     if (this.num_mime_types === 0) {
       this.$view.setBigUint64(ByteOffset.mime_types, 0n, true);
@@ -111,8 +108,8 @@ export class ClipboardEvent {
     const buffer = new Uint8Array(value.length * 8);
     const view = new DataView(buffer.buffer);
 
-    for (let i = 0; i < this.$mimeTypesStrings.length; i++) {
-      const stringPtr = this.$mimeTypesStrings[i]!.ptr;
+    for (let i = 0; i < this.num_mime_types; i++) {
+      const stringPtr = value[i]!.ptr;
 
       view.setBigUint64(i * 8, BigInt(stringPtr), true);
     }

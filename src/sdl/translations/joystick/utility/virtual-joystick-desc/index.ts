@@ -189,11 +189,11 @@ export class VirtualJoystickDesc {
     if (!touchpadsAddr || touchpadsAddr === 0n) return [];
 
     const touchpads: VirtualJoystickTouchpadDesc[] = [];
+    const touchpadsPtr = Number(touchpadsAddr) as Pointer;
 
     for (let i = 0; i < this.ntouchpads; i++) {
-      const offset = BigInt(i) * BigInt(VirtualJoystickTouchpadDesc.BYTE_SIZE);
-      const touchpadAdr = touchpadsAddr + offset;
-      const touchpadPtr = Number(touchpadAdr) as Pointer;
+      const offset = i * VirtualJoystickTouchpadDesc.BYTE_SIZE;
+      const touchpadPtr = (offset + touchpadsPtr) as Pointer;
 
       touchpads.push(new VirtualJoystickTouchpadDesc(touchpadPtr));
     }
@@ -202,18 +202,24 @@ export class VirtualJoystickDesc {
   }
 
   public set touchpads(value: VirtualJoystickTouchpadDesc[]) {
+    this.ntouchpads = value.length;
+
+    if (this.ntouchpads === 0) {
+      this.$view.setBigUint64(ByteOffset.touchpads, 0n, true);
+      return;
+    }
+
     const buffer = new Uint8Array(
-      VirtualJoystickTouchpadDesc.BYTE_SIZE * value.length
+      VirtualJoystickTouchpadDesc.BYTE_SIZE * this.ntouchpads
     );
 
-    for (let i = 0; i < value.length; i++) {
+    for (let i = 0; i < this.ntouchpads; i++) {
       const offset = i * VirtualJoystickTouchpadDesc.BYTE_SIZE;
 
       buffer.set(value[i]!.$memory, offset);
     }
 
     this.$touchpadsBuffer = buffer;
-    this.ntouchpads = value.length;
 
     this.$view.setBigUint64(
       ByteOffset.touchpads,
@@ -230,31 +236,37 @@ export class VirtualJoystickDesc {
     if (!sensorsAddr || sensorsAddr === 0n) return [];
 
     const sensors: VirtualJoystickSensorDesc[] = [];
+    const sensorsPtr = Number(sensorsAddr) as Pointer;
 
     for (let i = 0; i < this.nsensors; i++) {
-      const offset = BigInt(i) * BigInt(VirtualJoystickSensorDesc.BYTE_SIZE);
-      const touchpadAdr = sensorsAddr + offset;
-      const touchpadPtr = Number(touchpadAdr) as Pointer;
+      const offset = i * VirtualJoystickSensorDesc.BYTE_SIZE;
+      const sensorPtr = (offset + sensorsPtr) as Pointer;
 
-      sensors.push(new VirtualJoystickSensorDesc(touchpadPtr));
+      sensors.push(new VirtualJoystickSensorDesc(sensorPtr));
     }
 
     return sensors;
   }
 
   public set sensors(value: VirtualJoystickSensorDesc[]) {
+    this.nsensors = value.length;
+
+    if (this.nsensors === 0) {
+      this.$view.setBigUint64(ByteOffset.sensors, 0n, true);
+      return;
+    }
+
     const buffer = new Uint8Array(
-      VirtualJoystickSensorDesc.BYTE_SIZE * value.length
+      VirtualJoystickSensorDesc.BYTE_SIZE * this.nsensors
     );
 
-    for (let i = 0; i < value.length; i++) {
+    for (let i = 0; i < this.nsensors; i++) {
       const offset = i * VirtualJoystickTouchpadDesc.BYTE_SIZE;
 
       buffer.set(value[i]!.$memory, offset);
     }
 
     this.$sensorsBuffer = buffer;
-    this.nsensors = value.length;
 
     this.$view.setBigUint64(
       ByteOffset.sensors,

@@ -100,6 +100,7 @@ export class TextEditingCandidatesEvent {
 
     if (this.num_candidates === 0) {
       this.$view.setBigUint64(ByteOffset.candidates, 0n, true);
+      this.$candidatesBuffer = null;
       return;
     }
 

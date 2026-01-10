@@ -9,7 +9,7 @@ export class GPUVertexBufferDescription {
   public $memory: Uint8Array;
   public $view: DataView;
 
-  public constructor(data: Uint8Array | Pointer) {
+  public constructor(data: Pointer | Uint8Array) {
     if (data instanceof Uint8Array) {
       this.$memory = data;
       this.$address = ptr(data);

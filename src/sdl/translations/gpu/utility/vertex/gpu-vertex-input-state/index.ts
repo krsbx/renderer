@@ -13,7 +13,7 @@ export class GPUVertexInputState {
   public $vertexBufferDescBuffer: Uint8Array | null = null;
   public $vertexAttributesBuffer: Uint8Array | null = null;
 
-  public constructor(data: Uint8Array | Pointer) {
+  public constructor(data: Pointer | Uint8Array) {
     if (data instanceof Uint8Array) {
       this.$memory = data;
       this.$address = ptr(data);
@@ -72,6 +72,7 @@ export class GPUVertexInputState {
 
     if (this.num_vertex_buffers === 0) {
       this.$view.setBigUint64(ByteOffset.vertex_buffer_descriptions, 0n, true);
+      this.$vertexBufferDescBuffer = null;
       return;
     }
 
@@ -134,6 +135,7 @@ export class GPUVertexInputState {
 
     if (this.num_vertex_attributes === 0) {
       this.$view.setBigUint64(ByteOffset.vertex_attributes, 0n, true);
+      this.$vertexAttributesBuffer = null;
       return;
     }
 

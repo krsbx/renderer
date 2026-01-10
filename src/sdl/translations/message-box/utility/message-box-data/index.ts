@@ -110,6 +110,7 @@ export class MessageBoxData {
 
     if (this.numbuttons === 0) {
       this.$view.setBigUint64(ByteOffset.buttons, 0n, true);
+      this.$buttonsBuffer = null;
       return;
     }
 

@@ -206,6 +206,7 @@ export class VirtualJoystickDesc {
 
     if (this.ntouchpads === 0) {
       this.$view.setBigUint64(ByteOffset.touchpads, 0n, true);
+      this.$touchpadsBuffer = null;
       return;
     }
 
@@ -253,6 +254,7 @@ export class VirtualJoystickDesc {
 
     if (this.nsensors === 0) {
       this.$view.setBigUint64(ByteOffset.sensors, 0n, true);
+      this.$sensorsBuffer = null;
       return;
     }
 

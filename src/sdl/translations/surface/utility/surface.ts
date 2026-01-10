@@ -1,4 +1,6 @@
 import { ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
+import type { PixelFormat } from '../../../ffi/pixels/constant';
+import type { SurfaceFlags } from '../../../ffi/surface/constant';
 import { ByteOffset } from './constant';
 
 export class Surface {
@@ -32,18 +34,18 @@ export class Surface {
   }
 
   public get flags() {
-    return this.$view.getUint32(ByteOffset.flags, true);
+    return this.$view.getUint32(ByteOffset.flags, true) as SurfaceFlags;
   }
 
-  public set flags(value: number) {
+  public set flags(value: SurfaceFlags) {
     this.$view.setUint32(ByteOffset.flags, value, true);
   }
 
   public get format() {
-    return this.$view.getUint32(ByteOffset.format, true);
+    return this.$view.getUint32(ByteOffset.format, true) as PixelFormat;
   }
 
-  public set format(value: number) {
+  public set format(value: PixelFormat) {
     this.$view.setUint32(ByteOffset.format, value, true);
   }
 

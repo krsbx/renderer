@@ -52,12 +52,10 @@ export class IOStreamInterface {
   }
 
   private invoke<T>(offset: number, definition: FFIFunction, args: unknown[]) {
-    const ptr = this.$view.getBigUint64(
-      offset,
-      true
-    ) as unknown as Pointer | null;
+    const rawPtr = this.$view.getBigUint64(offset, true);
+    const ptr = Number(rawPtr) as Pointer;
 
-    if (!ptr || ptr === (0n as unknown as Pointer)) {
+    if (!ptr) {
       throw new Error(
         `IOStreamInterface: Attempted to call null function pointer at offset ${offset}`
       );

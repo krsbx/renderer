@@ -32,9 +32,8 @@ export class Locale {
   }
 
   public get language() {
-    const languagePtr = this.$view.getBigUint64(
-      ByteOffset.language
-    ) as unknown as Pointer;
+    const languageAddr = this.$view.getBigUint64(ByteOffset.language, true);
+    const languagePtr = Number(languageAddr) as Pointer;
 
     return new CString(languagePtr);
   }
@@ -44,9 +43,8 @@ export class Locale {
   }
 
   public get country() {
-    const countryPtr = this.$view.getBigUint64(
-      ByteOffset.country
-    ) as unknown as Pointer;
+    const countryAddr = this.$view.getBigUint64(ByteOffset.country, true);
+    const countryPtr = Number(countryAddr) as Pointer;
 
     return new CString(countryPtr);
   }

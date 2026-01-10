@@ -1,6 +1,6 @@
 import { ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
 import { MessageBoxColorType } from '../../../../ffi/message-box/constant';
-import { MessageBoxColor } from '../message-box-color/message-box-color';
+import { MessageBoxColor } from '../message-box-color';
 
 export class MessageBoxColorScheme {
   public static readonly BYTE_SIZE = 15;

@@ -52,9 +52,8 @@ export class MessageBoxButtonData {
   }
 
   public get text() {
-    const textPtr = this.$view.getBigUint64(
-      ByteOffset.text
-    ) as unknown as Pointer;
+    const textAddr = this.$view.getBigUint64(ByteOffset.text, true);
+    const textPtr = Number(textAddr) as Pointer;
 
     return new CString(textPtr);
   }

@@ -45,10 +45,13 @@ export class InitState {
   }
 
   public get reserved() {
-    return this.$view.getBigUint64(ByteOffset.reserved, true);
+    const reservedAddr = this.$view.getBigUint64(ByteOffset.reserved, true);
+    const reservedPtr = Number(reservedAddr) as Pointer;
+
+    return reservedPtr;
   }
 
-  public set reserved(value: bigint) {
-    this.$view.setBigUint64(ByteOffset.reserved, value, true);
+  public set reserved(value: number) {
+    this.$view.setBigUint64(ByteOffset.reserved, BigInt(value), true);
   }
 }

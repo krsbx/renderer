@@ -1,34 +1,23 @@
-import type {
-  GamepadBindingType,
-  GamepadButton,
-} from '../../../ffi/gamepad/constant';
-import type { FreeAddress, MemoryAddress } from '../../../types/shared';
+import type { GamepadButton } from '../../../ffi/gamepad/constant';
 
 export interface GamepadAxis {
   axis: number;
-  axis_min: number;
-  axis_max: number;
+  min: number;
+  max: number;
 }
 
 export interface GamepadHat {
   hat: number;
-  hat_mask: number;
+  mask: number;
 }
 
 export interface GamepadInput {
   button: GamepadButton;
-  axis: GamepadAxis;
-  hat: GamepadHat;
+  readonly axis: GamepadAxis;
+  readonly hat: GamepadHat;
 }
 
 export interface GamepadOutput {
   button: GamepadButton;
-  axis: GamepadAxis;
-}
-
-export interface RawGamepadBinding extends FreeAddress, MemoryAddress {
-  input_type: GamepadBindingType;
-  input: GamepadInput;
-  output_type: GamepadBindingType;
-  output: GamepadOutput;
+  readonly axis: GamepadAxis;
 }

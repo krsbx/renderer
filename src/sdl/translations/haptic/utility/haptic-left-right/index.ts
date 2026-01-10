@@ -36,7 +36,7 @@ export class HapticLeftRight {
     return this.$view.getUint16(ByteOffset.type, true) as HapticEffectType;
   }
 
-  public set type(value: number) {
+  public set type(value: HapticEffectType) {
     this.$view.setUint16(ByteOffset.type, value, true);
   }
 

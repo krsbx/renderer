@@ -3,8 +3,8 @@ import type { HapticEffectType } from '../../../../ffi/haptic/constant';
 import { HapticDirection } from '../haptic-direction/haptic-direction';
 import { ByteOffset } from './constant';
 
-export class HapticCondition {
-  public static readonly BYTE_SIZE = 72;
+export class HapticCustom {
+  public static readonly BYTE_SIZE = 64;
 
   public $address: Pointer;
   public $memory: Uint8Array;
@@ -17,7 +17,7 @@ export class HapticCondition {
       this.$memory = data;
       this.$address = ptr(data);
     } else {
-      const buffer = toArrayBuffer(data, 0, HapticCondition.BYTE_SIZE);
+      const buffer = toArrayBuffer(data, 0, HapticCustom.BYTE_SIZE);
       this.$memory = new Uint8Array(buffer);
       this.$address = data;
     }
@@ -82,51 +82,84 @@ export class HapticCondition {
     this.$view.setUint16(ByteOffset.interval, value, true);
   }
 
-  public getRight_sat(index: 0 | 1 | 2) {
-    return this.$view.getUint16(ByteOffset.right_sat1 + index * 2, true);
+  public get channels() {
+    return this.$view.getUint8(ByteOffset.channels);
   }
 
-  public setRight_sat(index: 0 | 1 | 2, value: number) {
-    this.$view.setUint16(ByteOffset.right_sat1 + index * 2, value, true);
+  public set channels(value: number) {
+    this.$view.setUint8(ByteOffset.channels, value);
   }
 
-  public getLeft_sat(index: 0 | 1 | 2) {
-    return this.$view.getUint16(ByteOffset.left_sat1 + index * 2, true);
+  public get period() {
+    return this.$view.getUint16(ByteOffset.period, true);
   }
 
-  public setLeft_sat(index: 0 | 1 | 2, value: number) {
-    this.$view.setUint16(ByteOffset.left_sat1 + index * 2, value, true);
+  public set period(value: number) {
+    this.$view.setUint16(ByteOffset.period, value, true);
   }
 
-  public getRight_coeff(index: 0 | 1 | 2) {
-    return this.$view.getInt16(ByteOffset.right_coeff1 + index * 2, true);
+  public get samples() {
+    return this.$view.getUint16(ByteOffset.samples, true);
   }
 
-  public setRight_coeff(index: 0 | 1 | 2, value: number) {
-    this.$view.setInt16(ByteOffset.right_coeff1 + index * 2, value, true);
+  public set samples(value: number) {
+    this.$view.setUint16(ByteOffset.samples, value, true);
   }
 
-  public getLeft_coeff(index: 0 | 1 | 2) {
-    return this.$view.getInt16(ByteOffset.left_coeff1 + index * 2, true);
+  public get data_ptr() {
+    const dataAddr = this.$view.getBigUint64(ByteOffset.data, true);
+    const dataPtr = Number(dataAddr) as Pointer;
+
+    return dataPtr;
   }
 
-  public setLeft_coeff(index: 0 | 1 | 2, value: number) {
-    this.$view.setInt16(ByteOffset.left_coeff1 + index * 2, value, true);
+  public set data_ptr(value: Pointer) {
+    this.$view.setBigUint64(ByteOffset.data, BigInt(value), true);
   }
 
-  public getDeadband(index: 0 | 1 | 2) {
-    return this.$view.getUint16(ByteOffset.deadband1 + index * 2, true);
+  public get data() {
+    const ptr = this.data_ptr;
+
+    if (!ptr) return null;
+
+    const count = this.channels * this.samples;
+
+    if (!count) return null;
+
+    const buffer = toArrayBuffer(ptr, 0, count * 2);
+
+    return new Uint16Array(buffer);
   }
 
-  public setDeadband(index: 0 | 1 | 2, value: number) {
-    this.$view.setUint16(ByteOffset.deadband1 + index * 2, value, true);
+  public get attack_length() {
+    return this.$view.getUint16(ByteOffset.attack_length, true);
   }
 
-  public getCenter(index: 0 | 1 | 2) {
-    return this.$view.getInt16(ByteOffset.center1 + index * 2, true);
+  public set attack_length(value: number) {
+    this.$view.setUint16(ByteOffset.attack_length, value, true);
   }
 
-  public setCenter(index: 0 | 1 | 2, value: number) {
-    this.$view.setInt16(ByteOffset.center1 + index * 2, value, true);
+  public get attack_level() {
+    return this.$view.getUint16(ByteOffset.attack_level, true);
+  }
+
+  public set attack_level(value: number) {
+    this.$view.setUint16(ByteOffset.attack_level, value, true);
+  }
+
+  public get fade_length() {
+    return this.$view.getUint16(ByteOffset.fade_length, true);
+  }
+
+  public set fade_length(value: number) {
+    this.$view.setUint16(ByteOffset.fade_length, value, true);
+  }
+
+  public get fade_level() {
+    return this.$view.getUint16(ByteOffset.fade_level, true);
+  }
+
+  public set fade_level(value: number) {
+    this.$view.setUint16(ByteOffset.fade_level, value, true);
   }
 }

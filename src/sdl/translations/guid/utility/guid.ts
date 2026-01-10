@@ -1,4 +1,5 @@
 import { ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
+import type { NumericRange } from '../../../types/shared';
 
 export class GUID {
   public static readonly BYTE_SIZE = 16;
@@ -34,11 +35,11 @@ export class GUID {
     return this.$memory;
   }
 
-  public getByte(index: number) {
+  public getByte(index: NumericRange<0, 15>) {
     return this.$view.getUint8(index);
   }
 
-  public setByte(index: number, value: number) {
+  public setByte(index: NumericRange<0, 15>, value: number) {
     this.$view.setUint8(index, value);
   }
 

@@ -1,4 +1,6 @@
 import { ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
+import type { HapticDirectionType } from '../../../../ffi/haptic/constant';
+import type { NumericRange } from '../../../../types/shared';
 import { ByteOffset } from './constant';
 
 export class HapticDirection {
@@ -32,18 +34,18 @@ export class HapticDirection {
   }
 
   public get type() {
-    return this.$view.getUint8(ByteOffset.type);
+    return this.$view.getUint8(ByteOffset.type) as HapticDirectionType;
   }
 
-  public set type(value: number) {
+  public set type(value: HapticDirectionType) {
     this.$view.setUint8(ByteOffset.type, value);
   }
 
-  public getDir(index: 0 | 1 | 2) {
-    return this.$view.getInt32(ByteOffset.dir1 + index * 4);
+  public getDir(index: NumericRange<0, 2>) {
+    return this.$view.getInt32(ByteOffset.dir1 + index * 4, true);
   }
 
-  public setDir(index: 0 | 1 | 2, value: number) {
-    this.$view.setInt32(ByteOffset.dir1 + index * 4, value);
+  public setDir(index: NumericRange<0, 2>, value: number) {
+    this.$view.setInt32(ByteOffset.dir1 + index * 4, value, true);
   }
 }

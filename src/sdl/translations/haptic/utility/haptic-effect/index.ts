@@ -1,11 +1,11 @@
 import { ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
 import type { HapticEffectType } from '../../../../ffi/haptic/constant';
-import { HapticCondition } from '../haptic-condition/haptic-condition';
-import { HapticConstant } from '../haptic-constant/haptic-constant';
-import { HapticCustom } from '../haptic-custom/haptic-custom';
-import { HapticLeftRight } from '../haptic-left-right/haptic-left-right';
-import { HapticPeriodic } from '../haptic-periodic/haptic-periodic';
-import { HapticRamp } from '../haptic-ramp/haptic-ramp';
+import { HapticCondition } from '../haptic-condition';
+import { HapticConstant } from '../haptic-constant';
+import { HapticCustom } from '../haptic-custom';
+import { HapticLeftRight } from '../haptic-left-right';
+import { HapticPeriodic } from '../haptic-periodic';
+import { HapticRamp } from '../haptic-ramp';
 
 export class HapticEffect {
   public static readonly BYTE_SIZE = 72;

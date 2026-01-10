@@ -4,6 +4,7 @@ import {
   GamepadButton,
 } from '../../../ffi/gamepad/constant';
 import { ByteOffset } from './constant';
+import type { GamepadInput, GamepadOutput } from './types';
 
 export class GamepadBinding {
   public static readonly BYTE_SIZE = 32;
@@ -12,16 +13,9 @@ export class GamepadBinding {
   public $memory: Uint8Array;
   public $view: DataView;
 
-  public readonly input: {
-    button: GamepadButton;
-    readonly axis: { axis: number; min: number; max: number };
-    readonly hat: { hat: number; mask: number };
-  };
+  public readonly input: GamepadInput;
 
-  public readonly output: {
-    button: GamepadButton;
-    readonly axis: { axis: number; min: number; max: number };
-  };
+  public readonly output: GamepadOutput;
 
   public constructor(data: Pointer | Uint8Array) {
     if (data instanceof Uint8Array) {

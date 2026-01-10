@@ -1,0 +1,65 @@
+import { ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
+import { ByteOffset } from './constant';
+
+export class GPUMultisampleState {
+  public static readonly BYTE_SIZE = 12;
+
+  public $address: Pointer;
+  public $memory: Uint8Array;
+  public $view: DataView;
+
+  public constructor(data: Pointer | Uint8Array) {
+    if (data instanceof Uint8Array) {
+      this.$memory = data;
+      this.$address = ptr(data);
+    } else {
+      const buffer = toArrayBuffer(data, 0, GPUMultisampleState.BYTE_SIZE);
+      this.$memory = new Uint8Array(buffer);
+      this.$address = data;
+    }
+
+    this.$view = new DataView(
+      this.$memory.buffer,
+      this.$memory.byteOffset,
+      this.$memory.byteLength
+    );
+  }
+
+  public static allocMemory() {
+    const buffer = new Uint8Array(this.BYTE_SIZE);
+
+    return buffer;
+  }
+
+  public get sample_count() {
+    return this.$view.getInt32(ByteOffset.sample_count, true);
+  }
+
+  public set sample_count(value: number) {
+    this.$view.setInt32(ByteOffset.sample_count, value, true);
+  }
+
+  public get sample_mask() {
+    return this.$view.getInt32(ByteOffset.sample_mask, true);
+  }
+
+  public set sample_mask(value: number) {
+    this.$view.setInt32(ByteOffset.sample_mask, value, true);
+  }
+
+  public get enable_mask() {
+    return this.$view.getUint8(ByteOffset.enable_mask) === 1;
+  }
+
+  public set enable_mask(value: boolean) {
+    this.$view.setUint8(ByteOffset.enable_mask, value ? 1 : 0);
+  }
+
+  public get enable_alpha_to_coverage() {
+    return this.$view.getUint8(ByteOffset.enable_alpha_to_coverage) === 1;
+  }
+
+  public set enable_alpha_to_coverage(value: boolean) {
+    this.$view.setUint8(ByteOffset.enable_alpha_to_coverage, value ? 1 : 0);
+  }
+}

@@ -1,0 +1,16 @@
+export enum ByteOffset {
+  min_filter = 0,
+  mag_filter = 4,
+  mipmap_mode = 8,
+  address_mode_u = 12,
+  address_mode_v = 16,
+  address_mode_w = 20,
+  mip_lod_bias = 24,
+  max_anisotropy = 28,
+  compare_op = 32,
+  min_lod = 36,
+  max_lod = 40,
+  enable_anisotropy = 44,
+  enable_compare = 45,
+  props = 48,
+}

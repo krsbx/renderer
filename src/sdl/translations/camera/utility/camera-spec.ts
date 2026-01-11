@@ -64,19 +64,19 @@ export class CameraSpec {
     this.$view.setInt32(ByteOffset.height, value, true);
   }
 
-  public get framerate_numerator() {
+  public get framerateNumerator() {
     return this.$view.getInt32(ByteOffset.framerate_numerator, true);
   }
 
-  public set framerate_numerator(value: number) {
+  public set framerateNumerator(value: number) {
     this.$view.setInt32(ByteOffset.framerate_numerator, value, true);
   }
 
-  public get framerate_denominator() {
+  public get framerateDenominator() {
     return this.$view.getInt32(ByteOffset.framerate_denominator, true);
   }
 
-  public set framerate_denominator(value: number) {
+  public set framerateDenominator(value: number) {
     this.$view.setInt32(ByteOffset.framerate_denominator, value, true);
   }
 }

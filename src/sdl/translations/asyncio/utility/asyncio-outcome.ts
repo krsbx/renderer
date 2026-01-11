@@ -63,10 +63,9 @@ export class AsyncIOOutcome {
   }
 
   public get buffer() {
-    const bufferAddr = this.$view.getBigUint64(ByteOffset.buffer, true);
-    const bufferPtr = Number(bufferAddr) as Pointer;
+    const addr = this.$view.getBigUint64(ByteOffset.buffer, true);
 
-    return bufferPtr;
+    return Number(addr) as Pointer;
   }
 
   public set buffer(value: Pointer) {
@@ -81,27 +80,26 @@ export class AsyncIOOutcome {
     this.$view.setBigUint64(ByteOffset.offset, value, true);
   }
 
-  public get bytes_requested() {
+  public get bytesRequested() {
     return this.$view.getBigUint64(ByteOffset.bytes_requested, true);
   }
 
-  public set bytes_requested(value: bigint) {
+  public set bytesRequested(value: bigint) {
     this.$view.setBigUint64(ByteOffset.bytes_requested, value, true);
   }
 
-  public get bytes_transferred() {
+  public get bytesTransferred() {
     return this.$view.getBigUint64(ByteOffset.bytes_transferred, true);
   }
 
-  public set bytes_transferred(value: bigint) {
+  public set bytesTransferred(value: bigint) {
     this.$view.setBigUint64(ByteOffset.bytes_transferred, value, true);
   }
 
   public get userdata() {
-    const userdataAddr = this.$view.getBigUint64(ByteOffset.userdata, true);
-    const userdataPtr = Number(userdataAddr) as Pointer;
+    const addr = this.$view.getBigUint64(ByteOffset.userdata, true);
 
-    return userdataPtr;
+    return Number(addr) as Pointer;
   }
 
   public set userdata(value: Pointer) {

@@ -48,27 +48,27 @@ export class PathInfo {
     this.$view.setBigUint64(ByteOffset.size, value, true);
   }
 
-  public get create_time() {
+  public get createTime() {
     return this.$view.getBigInt64(ByteOffset.create_time, true);
   }
 
-  public set create_time(value: bigint) {
+  public set createTime(value: bigint) {
     this.$view.setBigInt64(ByteOffset.create_time, value, true);
   }
 
-  public get modify_time() {
+  public get modifyTime() {
     return this.$view.getBigInt64(ByteOffset.modify_time, true);
   }
 
-  public set modify_time(value: bigint) {
+  public set modifyTime(value: bigint) {
     this.$view.setBigInt64(ByteOffset.modify_time, value, true);
   }
 
-  public get access_time() {
+  public get accessTime() {
     return this.$view.getBigInt64(ByteOffset.access_time, true);
   }
 
-  public set access_time(value: bigint) {
+  public set accessTime(value: bigint) {
     this.$view.setBigInt64(ByteOffset.access_time, value, true);
   }
 }

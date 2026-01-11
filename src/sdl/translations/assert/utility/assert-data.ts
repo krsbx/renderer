@@ -31,19 +31,19 @@ export class AssertData {
     return buffer;
   }
 
-  public get always_ignore() {
+  public get alwaysIgnore() {
     return this.$view.getUint8(ByteOffset.always_ignore) === 1;
   }
 
-  public set always_ignore(value: boolean) {
+  public set alwaysIgnore(value: boolean) {
     this.$view.setUint8(ByteOffset.always_ignore, value ? 1 : 0);
   }
 
-  public get trigger_count() {
+  public get triggerCount() {
     return this.$view.getUint32(ByteOffset.trigger_count, true);
   }
 
-  public set trigger_count(value: number) {
+  public set triggerCount(value: number) {
     this.$view.setUint32(ByteOffset.trigger_count, value, true);
   }
 
@@ -69,11 +69,11 @@ export class AssertData {
     this.$view.setBigUint64(ByteOffset.filename, BigInt(value.ptr), true);
   }
 
-  public get linenum() {
+  public get lineNum() {
     return this.$view.getInt32(ByteOffset.linenum, true);
   }
 
-  public set linenum(value: number) {
+  public set lineNum(value: number) {
     this.$view.setInt32(ByteOffset.linenum, value, true);
   }
 

@@ -1,10 +1,10 @@
 import { ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
-import { FColor } from '../../../pixels/utility/fcolor/fcolor';
-import { FPoint } from '../../../rect/utility/fpoint/fpoint';
+import { FColor } from '../../../pixels/utility/fcolor';
+import { FPoint } from '../../../rect/utility/fpoint';
 import { ByteOffset } from './constant';
 
 export class Vertex {
-  public static readonly BYTE_SIZE = 24;
+  public static readonly BYTE_SIZE = 32;
 
   public $address: Pointer;
   public $memory: Uint8Array;

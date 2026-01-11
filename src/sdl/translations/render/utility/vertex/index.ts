@@ -1,6 +1,6 @@
 import { ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
-import { FColor } from '../../../pixels/utility/fcolor';
-import { FPoint } from '../../../rect/utility/fpoint';
+import { FColor } from '../../../pixels/utility';
+import { FPoint } from '../../../rect/utility';
 import { ByteOffset } from './constant';
 
 export class Vertex {

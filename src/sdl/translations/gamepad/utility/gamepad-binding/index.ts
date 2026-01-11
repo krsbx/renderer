@@ -2,7 +2,7 @@ import { ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
 import {
   GamepadBindingType,
   GamepadButton,
-} from '../../../ffi/gamepad/constant';
+} from '../../../../ffi/gamepad/constant';
 import { ByteOffset } from './constant';
 import type { GamepadInput, GamepadOutput } from './types';
 

@@ -1,6 +1,6 @@
 import { ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
-import type { PixelFormat } from '../../../ffi/pixels/constant';
-import type { SurfaceFlags } from '../../../ffi/surface/constant';
+import type { PixelFormat } from '../../../../ffi/pixels/constant';
+import type { SurfaceFlags } from '../../../../ffi/surface/constant';
 import { ByteOffset } from './constant';
 
 export class Surface {

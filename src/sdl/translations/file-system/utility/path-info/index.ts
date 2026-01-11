@@ -1,5 +1,5 @@
 import { ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
-import type { PathType } from '../../../ffi/file-system/constant';
+import type { PathType } from '../../../../ffi/file-system/constant';
 import { ByteOffset } from './constant';
 
 export class PathInfo {

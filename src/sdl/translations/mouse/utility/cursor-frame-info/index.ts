@@ -1,5 +1,5 @@
 import { ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
-import { Surface } from '../../surface/utility/surface';
+import { Surface } from '../../../surface/utility';
 import { ByteOffset } from './constant';
 
 export class CursorFrameInfo {

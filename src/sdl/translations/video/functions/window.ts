@@ -8,9 +8,9 @@ import type {
 } from '../../../ffi/video/constant';
 import type { Vector2, WidthHeight } from '../../../types/shared';
 import { convertStringToFfi } from '../../../utility/common';
-import { Rect } from '../../rect/utility/rect';
-import { Surface } from '../../surface/utility/surface';
-import { DisplayMode } from '../utility/display-mode';
+import { Rect } from '../../rect/utility';
+import { Surface } from '../../surface/utility';
+import { DisplayMode } from '../utility';
 
 export function getDisplayForWindow(this: BaseSDL, window: Pointer) {
   return this.symbols.SDL_GetDisplayForWindow(window);

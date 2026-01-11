@@ -64,7 +64,7 @@ export class Event {
   public readonly kdevice: KeyboardDeviceEvent;
   public readonly key: KeyboardEvent;
   public readonly edit: TextEditingEvent;
-  public readonly edit_candidates: TextEditingCandidatesEvent;
+  public readonly editCandidates: TextEditingCandidatesEvent;
   public readonly text: TextInputEvent;
   public readonly mdevice: MouseDeviceEvent;
   public readonly motion: MouseMotionEvent;
@@ -119,7 +119,7 @@ export class Event {
     this.kdevice = new KeyboardDeviceEvent(this.$memory);
     this.key = new KeyboardEvent(this.$memory);
     this.edit = new TextEditingEvent(this.$memory);
-    this.edit_candidates = new TextEditingCandidatesEvent(this.$memory);
+    this.editCandidates = new TextEditingCandidatesEvent(this.$memory);
     this.text = new TextInputEvent(this.$memory);
     this.mdevice = new MouseDeviceEvent(this.$memory);
     this.motion = new MouseMotionEvent(this.$memory);

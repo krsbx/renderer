@@ -1,5 +1,5 @@
 import { ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
-import type { Colorspace, PixelFormat } from '../../../ffi/pixels/constant';
+import type { Colorspace, PixelFormat } from '../../../../ffi/pixels/constant';
 import { ByteOffset } from './constant';
 
 export class CameraSpec {

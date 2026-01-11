@@ -1,5 +1,5 @@
 import { ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
-import { AtomicInt } from '../../atomic/utility/atomic-int';
+import { AtomicInt } from '../../../atomic/utility';
 import { ByteOffset } from './constant';
 
 export class InitState {

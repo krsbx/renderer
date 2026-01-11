@@ -1,5 +1,5 @@
 import { ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
-import type { AudioFormat } from '../../../ffi/audio/constant';
+import type { AudioFormat } from '../../../../ffi/audio/constant';
 import { ByteOffset } from './constant';
 
 export class AudioSpec {

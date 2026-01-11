@@ -2,7 +2,7 @@ import { ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
 import type {
   AsyncIOResult,
   AsyncIOTaskType,
-} from '../../../ffi/asyncio/constant';
+} from '../../../../ffi/asyncio/constant';
 import { ByteOffset } from './constant';
 
 export class AsyncIOOutcome {

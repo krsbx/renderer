@@ -1,5 +1,5 @@
 import { ptr, read, toArrayBuffer, type Pointer } from 'bun:ffi';
-import { GPUTextureSamplerBinding } from '../../../gpu/utility/texture';
+import { GPUTextureSamplerBinding } from '../../../gpu/utility';
 import { ByteOffset } from './constant';
 
 export class GPURenderStateCreateInfo {

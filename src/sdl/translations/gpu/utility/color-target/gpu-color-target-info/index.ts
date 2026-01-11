@@ -1,6 +1,6 @@
 import { ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
 import type { GPULoadOp, GPUStoreOp } from '../../../../../ffi/gpu/constant';
-import { FColor } from '../../../../pixels/utility/fcolor';
+import { FColor } from '../../../../pixels/utility';
 import { ByteOffset } from './constant';
 
 export class GPUColorTargetInfo {

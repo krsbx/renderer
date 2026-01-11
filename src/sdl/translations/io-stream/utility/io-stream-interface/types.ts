@@ -1,7 +1,5 @@
-import { type Library, type Pointer } from 'bun:ffi';
-import type { IOWhence } from '../../../ffi/io-stream/constant';
-import type { FreeAddress, MemoryAddress } from '../../../types/shared';
-import type { IOStreamInterfaceDefinition } from './definition';
+import { type Pointer } from 'bun:ffi';
+import type { IOWhence } from '../../../../ffi/io-stream/constant';
 
 export interface SeekOptions {
   userdata?: Pointer | null;
@@ -19,12 +17,6 @@ export interface WriteOptions {
   userdata?: Pointer | null;
   ptr: Pointer;
   size: number;
-}
-
-export interface RawIOStreamInterface extends FreeAddress, MemoryAddress {
-  version: number;
-
-  $ffi: Library<IOStreamInterfaceDefinition>;
 }
 
 export interface CreateFfiOptions {

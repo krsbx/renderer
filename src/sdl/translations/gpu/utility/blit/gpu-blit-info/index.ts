@@ -1,7 +1,7 @@
 import { ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
 import type { GPUFilter, GPULoadOp } from '../../../../../ffi/gpu/constant';
 import type { FlipMode } from '../../../../../ffi/surface/constant';
-import { FColor } from '../../../../pixels/utility/fcolor';
+import { FColor } from '../../../../pixels/utility';
 import { GPUBlitRegion } from '../gpu-blit-region';
 import { ByteOffset } from './constant';
 

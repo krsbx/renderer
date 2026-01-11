@@ -56,7 +56,7 @@ export class TouchFingerEvent {
     this.$view.setBigUint64(ByteOffset.timestamp, value, true);
   }
 
-  public get touchID() {
+  public get touchId() {
     return this.$view.getBigUint64(ByteOffset.touchID, true);
   }
 
@@ -64,7 +64,7 @@ export class TouchFingerEvent {
     this.$view.setBigUint64(ByteOffset.touchID, value, true);
   }
 
-  public get fingerID() {
+  public get fingerId() {
     return this.$view.getBigUint64(ByteOffset.fingerID, true);
   }
 
@@ -112,7 +112,7 @@ export class TouchFingerEvent {
     this.$view.setFloat32(ByteOffset.pressure, value, true);
   }
 
-  public get windowID() {
+  public get windowId() {
     return this.$view.getUint32(ByteOffset.windowID, true);
   }
 

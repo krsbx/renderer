@@ -43,7 +43,7 @@ export class MessageBoxButtonData {
     this.$view.setUint32(ByteOffset.flags, value, true);
   }
 
-  public get buttonID() {
+  public get buttonId() {
     return this.$view.getInt32(ByteOffset.buttonID, true);
   }
 

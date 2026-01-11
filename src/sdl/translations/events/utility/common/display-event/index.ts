@@ -56,7 +56,7 @@ export class DisplayEvent {
     this.$view.setBigUint64(ByteOffset.timestamp, value, true);
   }
 
-  public get displayID() {
+  public get displayId() {
     return this.$view.getUint32(ByteOffset.displayID, true);
   }
 

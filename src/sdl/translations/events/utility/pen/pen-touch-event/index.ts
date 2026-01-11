@@ -57,7 +57,7 @@ export class PenTouchEvent {
     this.$view.setBigUint64(ByteOffset.timestamp, value, true);
   }
 
-  public get windowID() {
+  public get windowId() {
     return this.$view.getUint32(ByteOffset.windowID, true);
   }
 

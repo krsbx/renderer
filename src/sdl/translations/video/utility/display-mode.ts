@@ -31,7 +31,7 @@ export class DisplayMode {
     return buffer;
   }
 
-  public get displayID() {
+  public get displayId() {
     return this.$view.getInt32(ByteOffset.displayID, true);
   }
 

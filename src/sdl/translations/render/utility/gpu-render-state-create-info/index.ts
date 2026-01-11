@@ -34,26 +34,26 @@ export class GPURenderStateCreateInfo {
     this.$storageBufferBuffer = null;
   }
 
-  public get fragment_shader() {
+  public get fragmentShader() {
     const addr = this.$view.getBigUint64(ByteOffset.fragment_shader, true);
 
     return Number(addr) as Pointer;
   }
 
-  public set fragment_shader(value: Pointer) {
+  public set fragmentShader(value: Pointer) {
     this.$view.setBigUint64(ByteOffset.fragment_shader, BigInt(value), true);
   }
 
-  public get num_sampler_bindings() {
+  public get samplerBindingCount() {
     return this.$view.getInt32(ByteOffset.num_sampler_bindings, true);
   }
 
-  public set num_sampler_bindings(value: number) {
+  public set samplerBindingCount(value: number) {
     this.$view.setInt32(ByteOffset.num_sampler_bindings, value, true);
   }
 
-  public get sampler_bindings() {
-    const numSamplers = this.num_sampler_bindings;
+  public get samplerBindings() {
+    const numSamplers = this.samplerBindingCount;
     const samplerBindingsAddr = this.$view.getBigUint64(
       ByteOffset.sampler_bindings,
       true
@@ -75,20 +75,20 @@ export class GPURenderStateCreateInfo {
     return bindings;
   }
 
-  public set sampler_bindings(value: GPUTextureSamplerBinding[]) {
-    this.num_sampler_bindings = value.length;
+  public set samplerBindings(value: GPUTextureSamplerBinding[]) {
+    this.samplerBindingCount = value.length;
 
-    if (this.num_sampler_bindings === 0) {
+    if (this.samplerBindingCount === 0) {
       this.$view.setBigUint64(ByteOffset.sampler_bindings, 0n, true);
       this.$samplerBindingBuffer = null;
       return;
     }
 
     const buffer = new Uint8Array(
-      GPUTextureSamplerBinding.BYTE_SIZE * this.num_sampler_bindings
+      GPUTextureSamplerBinding.BYTE_SIZE * this.samplerBindingCount
     );
 
-    for (let i = 0; i < this.num_sampler_bindings; i++) {
+    for (let i = 0; i < this.samplerBindingCount; i++) {
       const offset = i * GPUTextureSamplerBinding.BYTE_SIZE;
 
       buffer.set(value[i]!.$memory, offset);
@@ -103,16 +103,16 @@ export class GPURenderStateCreateInfo {
     );
   }
 
-  public get num_storage_textures() {
+  public get storageTextureCount() {
     return this.$view.getInt32(ByteOffset.num_storage_textures, true);
   }
 
-  public set num_storage_textures(value: number) {
+  public set storageTextureCount(value: number) {
     this.$view.setInt32(ByteOffset.num_storage_textures, value, true);
   }
 
-  public get storage_textures() {
-    const numTextures = this.num_storage_textures;
+  public get storageTextures() {
+    const numTextures = this.storageTextureCount;
     const addr = this.$view.getBigUint64(ByteOffset.storage_textures, true);
 
     if (!numTextures || !addr || addr === 0n) return [];
@@ -129,19 +129,19 @@ export class GPURenderStateCreateInfo {
     return textures;
   }
 
-  public set storage_textures(value: Pointer[]) {
-    this.num_storage_textures = value.length;
+  public set storageTextures(value: Pointer[]) {
+    this.storageTextureCount = value.length;
 
-    if (this.num_storage_textures === 0) {
+    if (this.storageTextureCount === 0) {
       this.$view.setBigUint64(ByteOffset.storage_textures, 0n, true);
       this.$storageTextureBuffer = null;
       return;
     }
 
-    const buffer = new Uint8Array(this.num_storage_textures * 8);
+    const buffer = new Uint8Array(this.storageTextureCount * 8);
     const view = new DataView(buffer.buffer);
 
-    for (let i = 0; i < this.num_storage_textures; i++) {
+    for (let i = 0; i < this.storageTextureCount; i++) {
       const addr = value[i]!;
 
       view.setBigUint64(i * 8, BigInt(addr), true);
@@ -156,16 +156,16 @@ export class GPURenderStateCreateInfo {
     );
   }
 
-  public get num_storage_buffers() {
+  public get storageBufferCount() {
     return this.$view.getInt32(ByteOffset.num_storage_buffers, true);
   }
 
-  public set num_storage_buffers(value: number) {
+  public set storageBufferCount(value: number) {
     this.$view.setInt32(ByteOffset.num_storage_buffers, value, true);
   }
 
-  public get storage_buffers() {
-    const numBuffers = this.num_storage_buffers;
+  public get storageBuffers() {
+    const numBuffers = this.storageBufferCount;
     const addr = this.$view.getBigUint64(ByteOffset.storage_buffers, true);
 
     if (!numBuffers || !addr || addr === 0n) return [];
@@ -182,19 +182,19 @@ export class GPURenderStateCreateInfo {
     return buffers;
   }
 
-  public set storage_buffers(value: Pointer[]) {
-    this.num_storage_buffers = value.length;
+  public set storageBuffers(value: Pointer[]) {
+    this.storageBufferCount = value.length;
 
-    if (this.num_storage_buffers === 0) {
+    if (this.storageBufferCount === 0) {
       this.$view.setBigUint64(ByteOffset.storage_buffers, 0n, true);
       this.$storageBufferBuffer = null;
       return;
     }
 
-    const buffer = new Uint8Array(this.num_storage_buffers * 8);
+    const buffer = new Uint8Array(this.storageBufferCount * 8);
     const view = new DataView(buffer.buffer);
 
-    for (let i = 0; i < this.num_storage_buffers; i++) {
+    for (let i = 0; i < this.storageBufferCount; i++) {
       const addr = value[i]!;
 
       view.setBigUint64(i * 8, BigInt(addr), true);

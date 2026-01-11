@@ -4,7 +4,7 @@ export interface EnumerateDirectoryOptions {
   userdata?: Pointer | null;
   path: CString;
   callback: JSCallback;
-  callback_userdata?: Pointer | null;
+  callbackUserdata?: Pointer | null;
 }
 
 export interface InfoOptions {

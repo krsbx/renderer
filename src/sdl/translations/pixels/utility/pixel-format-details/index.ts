@@ -39,115 +39,115 @@ export class PixelFormatDetails {
     this.$view.setUint32(ByteOffset.format, value, true);
   }
 
-  public get bits_per_pixel() {
+  public get bitsPerPixel() {
     return this.$view.getUint8(ByteOffset.bits_per_pixel);
   }
 
-  public set bits_per_pixel(value: number) {
+  public set bitsPerPixel(value: number) {
     this.$view.setUint8(ByteOffset.bits_per_pixel, value);
   }
 
-  public get bytes_per_pixel() {
+  public get bytesPerPixel() {
     return this.$view.getUint8(ByteOffset.bytes_per_pixel);
   }
 
-  public set bytes_per_pixel(value: number) {
+  public set bytesPerPixel(value: number) {
     this.$view.setUint8(ByteOffset.bytes_per_pixel, value);
   }
 
-  public get Rmask() {
+  public get rMask() {
     return this.$view.getUint32(ByteOffset.Rmask, true);
   }
 
-  public set Rmask(value: number) {
+  public set rMask(value: number) {
     this.$view.setUint32(ByteOffset.Rmask, value, true);
   }
 
-  public get Gmask() {
+  public get gMask() {
     return this.$view.getUint32(ByteOffset.Gmask, true);
   }
 
-  public set Gmask(value: number) {
+  public set gMask(value: number) {
     this.$view.setUint32(ByteOffset.Gmask, value, true);
   }
 
-  public get Bmask() {
+  public get bMask() {
     return this.$view.getUint32(ByteOffset.Bmask, true);
   }
 
-  public set Bmask(value: number) {
+  public set bMask(value: number) {
     this.$view.setUint32(ByteOffset.Bmask, value, true);
   }
 
-  public get Amask() {
+  public get aMask() {
     return this.$view.getUint32(ByteOffset.Amask, true);
   }
 
-  public set Amask(value: number) {
+  public set aMask(value: number) {
     this.$view.setUint32(ByteOffset.Amask, value, true);
   }
 
-  public get Rbits() {
+  public get rBits() {
     return this.$view.getUint8(ByteOffset.Rbits);
   }
 
-  public set Rbits(value: number) {
+  public set rBits(value: number) {
     this.$view.setUint8(ByteOffset.Rbits, value);
   }
 
-  public get Gbits() {
+  public get gBits() {
     return this.$view.getUint8(ByteOffset.Gbits);
   }
 
-  public set Gbits(value: number) {
+  public set gBits(value: number) {
     this.$view.setUint8(ByteOffset.Gbits, value);
   }
 
-  public get Bbits() {
+  public get bBits() {
     return this.$view.getUint8(ByteOffset.Bbits);
   }
 
-  public set Bbits(value: number) {
+  public set bBits(value: number) {
     this.$view.setUint8(ByteOffset.Bbits, value);
   }
 
-  public get Abits() {
+  public get aBits() {
     return this.$view.getUint8(ByteOffset.Abits);
   }
 
-  public set Abits(value: number) {
+  public set aBits(value: number) {
     this.$view.setUint8(ByteOffset.Abits, value);
   }
 
-  public get Rshift() {
+  public get rShift() {
     return this.$view.getUint8(ByteOffset.Rshift);
   }
 
-  public set Rshift(value: number) {
+  public set rShift(value: number) {
     this.$view.setUint8(ByteOffset.Rshift, value);
   }
 
-  public get Gshift() {
+  public get gShift() {
     return this.$view.getUint8(ByteOffset.Gshift);
   }
 
-  public set Gshift(value: number) {
+  public set gShift(value: number) {
     this.$view.setUint8(ByteOffset.Gshift, value);
   }
 
-  public get Bshift() {
+  public get bShift() {
     return this.$view.getUint8(ByteOffset.Bshift);
   }
 
-  public set Bshift(value: number) {
+  public set bShift(value: number) {
     this.$view.setUint8(ByteOffset.Bshift, value);
   }
 
-  public get Ashift() {
+  public get aShift() {
     return this.$view.getUint8(ByteOffset.Ashift);
   }
 
-  public set Ashift(value: number) {
+  public set aShift(value: number) {
     this.$view.setUint8(ByteOffset.Ashift, value);
   }
 }

@@ -12,7 +12,7 @@ export class Vertex {
 
   public readonly position: FPoint;
   public readonly color: FColor;
-  public readonly tex_coord: FPoint;
+  public readonly texCoord: FPoint;
 
   public constructor(data: Pointer | Uint8Array) {
     if (data instanceof Uint8Array) {
@@ -42,7 +42,7 @@ export class Vertex {
         FColor.BYTE_SIZE + ByteOffset.color
       )
     );
-    this.tex_coord = new FPoint(
+    this.texCoord = new FPoint(
       this.$memory.subarray(
         ByteOffset.tex_coord,
         FPoint.BYTE_SIZE + ByteOffset.tex_coord

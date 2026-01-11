@@ -27,7 +27,7 @@ export class Palette {
       this.$memory.byteLength
     );
 
-    this.colors = Array.from({ length: this.ncolors }, (_, i) => {
+    this.colors = Array.from({ length: this.colorCount }, (_, i) => {
       const start = i * Color.BYTE_SIZE;
       const end = start + Color.BYTE_SIZE;
 
@@ -41,11 +41,11 @@ export class Palette {
     return buffer;
   }
 
-  public get ncolors() {
+  public get colorCount() {
     return this.$view.getInt32(ByteOffset.ncolors, true);
   }
 
-  public set ncolors(value: number) {
+  public set colorCount(value: number) {
     this.$view.setInt32(ByteOffset.ncolors, value, true);
   }
 

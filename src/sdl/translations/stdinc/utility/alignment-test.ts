@@ -40,10 +40,9 @@ export class AlignmentTest {
   }
 
   public get b() {
-    const bAddr = this.$view.getBigUint64(ByteOffset.b, true);
-    const bPtr = Number(bAddr) as Pointer;
+    const addr = this.$view.getBigUint64(ByteOffset.b, true);
 
-    return bPtr;
+    return Number(addr) as Pointer;
   }
 
   public set b(value: Pointer) {

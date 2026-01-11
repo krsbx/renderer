@@ -87,19 +87,19 @@ export class DateTime {
     this.$view.setInt32(ByteOffset.nanosecond, value, true);
   }
 
-  public get day_of_week() {
+  public get dayOfWeek() {
     return this.$view.getInt32(ByteOffset.day_of_week, true);
   }
 
-  public set day_of_week(value: number) {
+  public set dayOfWeek(value: number) {
     this.$view.setInt32(ByteOffset.day_of_week, value, true);
   }
 
-  public get utc_offset() {
+  public get utcOffset() {
     return this.$view.getInt32(ByteOffset.utc_offset, true);
   }
 
-  public set utc_offset(value: number) {
+  public set utcOffset(value: number) {
     this.$view.setInt32(ByteOffset.utc_offset, value, true);
   }
 }

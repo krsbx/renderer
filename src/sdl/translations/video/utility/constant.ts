@@ -3,8 +3,8 @@ export enum ByteOffset {
   format = 4,
   w = 8,
   h = 12,
-  pixelDensity = 16,
-  refreshRate = 20,
-  refreshRateNumerator = 24,
-  refreshRateDenominator = 28,
+  pixel_density = 16,
+  refresh_rate = 20,
+  refresh_rate_numerator = 24,
+  refresh_rate_denominator = 28,
 }

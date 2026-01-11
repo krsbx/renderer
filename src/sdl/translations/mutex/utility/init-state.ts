@@ -27,7 +27,12 @@ export class InitState {
       this.$memory.byteLength
     );
 
-    this.status = new AtomicInt(this.$address);
+    this.status = new AtomicInt(
+      this.$memory.subarray(
+        ByteOffset.status,
+        ByteOffset.status + AtomicInt.BYTE_SIZE
+      )
+    );
   }
 
   public static allocMemory() {
@@ -45,13 +50,12 @@ export class InitState {
   }
 
   public get reserved() {
-    const reservedAddr = this.$view.getBigUint64(ByteOffset.reserved, true);
-    const reservedPtr = Number(reservedAddr) as Pointer;
+    const addr = this.$view.getBigUint64(ByteOffset.reserved, true);
 
-    return reservedPtr;
+    return Number(addr) as Pointer;
   }
 
-  public set reserved(value: number) {
+  public set reserved(value: Pointer) {
     this.$view.setBigUint64(ByteOffset.reserved, BigInt(value), true);
   }
 }

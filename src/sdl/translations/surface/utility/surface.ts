@@ -74,11 +74,13 @@ export class Surface {
   }
 
   public get pixels() {
-    return this.$view.getBigUint64(ByteOffset.pixels, true);
+    const addr = this.$view.getBigUint64(ByteOffset.pixels, true);
+
+    return Number(addr) as Pointer;
   }
 
-  public set pixels(value: bigint) {
-    this.$view.setBigUint64(ByteOffset.pitch, value, true);
+  public set pixels(value: Pointer) {
+    this.$view.setBigUint64(ByteOffset.pitch, BigInt(value), true);
   }
 
   public get refcount() {

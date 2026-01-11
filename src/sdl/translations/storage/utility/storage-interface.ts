@@ -113,7 +113,7 @@ export class StorageInterface {
         options.userdata ?? null,
         options.path.ptr,
         options.callback.ptr,
-        options.callback_userdata ?? null,
+        options.callbackUserdata ?? null,
       ]
     );
 

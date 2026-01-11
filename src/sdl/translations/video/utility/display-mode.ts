@@ -64,34 +64,34 @@ export class DisplayMode {
   }
 
   public get pixelDensity() {
-    return this.$view.getInt32(ByteOffset.pixelDensity, true);
+    return this.$view.getInt32(ByteOffset.pixel_density, true);
   }
 
   public set pixelDensity(value: number) {
-    this.$view.setInt32(ByteOffset.pixelDensity, value, true);
+    this.$view.setInt32(ByteOffset.pixel_density, value, true);
   }
 
   public get refreshRate() {
-    return this.$view.getInt32(ByteOffset.refreshRate, true);
+    return this.$view.getInt32(ByteOffset.refresh_rate, true);
   }
 
   public set refreshRate(value: number) {
-    this.$view.setInt32(ByteOffset.refreshRate, value, true);
+    this.$view.setInt32(ByteOffset.refresh_rate, value, true);
   }
 
   public get refreshRateNumerator() {
-    return this.$view.getInt32(ByteOffset.refreshRateNumerator, true);
+    return this.$view.getInt32(ByteOffset.refresh_rate_numerator, true);
   }
 
   public set refreshRateNumerator(value: number) {
-    this.$view.setInt32(ByteOffset.refreshRateNumerator, value, true);
+    this.$view.setInt32(ByteOffset.refresh_rate_numerator, value, true);
   }
 
   public get refreshRateDenominator() {
-    return this.$view.getInt32(ByteOffset.refreshRateDenominator, true);
+    return this.$view.getInt32(ByteOffset.refresh_rate_denominator, true);
   }
 
   public set refreshRateDenominator(value: number) {
-    this.$view.setInt32(ByteOffset.refreshRateDenominator, value, true);
+    this.$view.setInt32(ByteOffset.refresh_rate_denominator, value, true);
   }
 }

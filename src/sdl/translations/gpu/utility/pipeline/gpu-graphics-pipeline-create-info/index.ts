@@ -12,11 +12,11 @@ export class GPUGraphicsPipelineCreateInfo {
   public $memory: Uint8Array;
   public $view: DataView;
 
-  public readonly vertex_input_state: GPUVertexInputState;
-  public readonly rasterizer_state: GPURasterizerState;
-  public readonly multisample_state: GPUMultisampleState;
-  public readonly depth_stencil_state: GPUDepthStencilState;
-  public readonly target_info: GPUGraphicsPipelineTargetInfo;
+  public readonly vertexInputState: GPUVertexInputState;
+  public readonly rasterizerState: GPURasterizerState;
+  public readonly multisampleState: GPUMultisampleState;
+  public readonly depthStencilState: GPUDepthStencilState;
+  public readonly targetInfo: GPUGraphicsPipelineTargetInfo;
 
   public constructor(data: Pointer | Uint8Array) {
     if (data instanceof Uint8Array) {
@@ -38,31 +38,31 @@ export class GPUGraphicsPipelineCreateInfo {
       this.$memory.byteLength
     );
 
-    this.vertex_input_state = new GPUVertexInputState(
+    this.vertexInputState = new GPUVertexInputState(
       this.$memory.subarray(
         ByteOffset.vertex_input_state,
         GPUVertexInputState.BYTE_SIZE + ByteOffset.vertex_input_state
       )
     );
-    this.rasterizer_state = new GPURasterizerState(
+    this.rasterizerState = new GPURasterizerState(
       this.$memory.subarray(
         ByteOffset.rasterizer_state,
         GPURasterizerState.BYTE_SIZE + ByteOffset.rasterizer_state
       )
     );
-    this.multisample_state = new GPUMultisampleState(
+    this.multisampleState = new GPUMultisampleState(
       this.$memory.subarray(
         ByteOffset.multisample_state,
         GPUMultisampleState.BYTE_SIZE + ByteOffset.multisample_state
       )
     );
-    this.depth_stencil_state = new GPUDepthStencilState(
+    this.depthStencilState = new GPUDepthStencilState(
       this.$memory.subarray(
         ByteOffset.depth_stencil_state,
         GPUDepthStencilState.BYTE_SIZE + ByteOffset.depth_stencil_state
       )
     );
-    this.target_info = new GPUGraphicsPipelineTargetInfo(
+    this.targetInfo = new GPUGraphicsPipelineTargetInfo(
       this.$memory.subarray(
         ByteOffset.target_info,
         GPUGraphicsPipelineTargetInfo.BYTE_SIZE + ByteOffset.target_info
@@ -70,31 +70,31 @@ export class GPUGraphicsPipelineCreateInfo {
     );
   }
 
-  public get vertex_shader() {
+  public get vertexShader() {
     const addr = this.$view.getBigUint64(ByteOffset.vertex_shader, true);
 
     return Number(addr) as Pointer;
   }
 
-  public set vertex_shader(value: Pointer) {
+  public set vertexShader(value: Pointer) {
     this.$view.setBigUint64(ByteOffset.vertex_shader, BigInt(value), true);
   }
 
-  public get fragment_shader() {
+  public get fragmentShader() {
     const addr = this.$view.getBigUint64(ByteOffset.fragment_shader, true);
 
     return Number(addr) as Pointer;
   }
 
-  public set fragment_shader(value: Pointer) {
+  public set fragmentShader(value: Pointer) {
     this.$view.setBigUint64(ByteOffset.fragment_shader, BigInt(value), true);
   }
 
-  public get primitive_type() {
+  public get primitiveType() {
     return this.$view.getInt32(ByteOffset.primitive_type, true);
   }
 
-  public set primitive_type(value: number) {
+  public set primitiveType(value: number) {
     this.$view.setInt32(ByteOffset.primitive_type, value, true);
   }
 

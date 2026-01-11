@@ -77,27 +77,27 @@ export class GPUTextureCreateInfo {
     this.$view.setUint32(ByteOffset.height, value, true);
   }
 
-  public get layer_count_or_depth() {
+  public get layerCountOrDepth() {
     return this.$view.getUint32(ByteOffset.layer_count_or_depth, true);
   }
 
-  public set layer_count_or_depth(value: number) {
+  public set layerCountOrDepth(value: number) {
     this.$view.setUint32(ByteOffset.layer_count_or_depth, value, true);
   }
 
-  public get num_levels() {
+  public get levelCount() {
     return this.$view.getUint32(ByteOffset.num_levels, true);
   }
 
-  public set num_levels(value: number) {
+  public set levelCount(value: number) {
     this.$view.setUint32(ByteOffset.num_levels, value, true);
   }
 
-  public get sample_count() {
+  public get sampleCount() {
     return this.$view.getInt32(ByteOffset.sample_count, true) as GPUSampleCount;
   }
 
-  public set sample_count(value: GPUSampleCount) {
+  public set sampleCount(value: GPUSampleCount) {
     this.$view.setInt32(ByteOffset.sample_count, value, true);
   }
 

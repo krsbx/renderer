@@ -63,19 +63,19 @@ export class GPUViewport {
     this.$view.setFloat32(ByteOffset.h, value, true);
   }
 
-  public get min_depth() {
+  public get minDepth() {
     return this.$view.getFloat32(ByteOffset.min_depth, true);
   }
 
-  public set min_depth(value: number) {
+  public set minDepth(value: number) {
     this.$view.setFloat32(ByteOffset.min_depth, value, true);
   }
 
-  public get max_depth() {
+  public get maxDepth() {
     return this.$view.getFloat32(ByteOffset.max_depth, true);
   }
 
-  public set max_depth(value: number) {
+  public set maxDepth(value: number) {
     this.$view.setFloat32(ByteOffset.max_depth, value, true);
   }
 }

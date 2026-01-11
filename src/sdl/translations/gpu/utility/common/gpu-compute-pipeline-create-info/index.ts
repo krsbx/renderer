@@ -36,11 +36,11 @@ export class GPUComputePipelineCreateInfo {
     return buffer;
   }
 
-  public get code_size() {
+  public get codeSize() {
     return this.$view.getBigUint64(ByteOffset.code_size, true);
   }
 
-  public set code_size(value: bigint) {
+  public set codeSize(value: bigint) {
     this.$view.setBigUint64(ByteOffset.code_size, value, true);
   }
 
@@ -71,38 +71,38 @@ export class GPUComputePipelineCreateInfo {
     this.$view.setUint32(ByteOffset.format, value, true);
   }
 
-  public get num_samplers() {
+  public get samplerCount() {
     return this.$view.getUint32(ByteOffset.num_samplers, true);
   }
 
-  public set num_samplers(value: number) {
+  public set samplerCount(value: number) {
     this.$view.setUint32(ByteOffset.num_samplers, value, true);
   }
 
-  public get num_readonly_storage_textures() {
+  public get readonlyStorageTextureCount() {
     return this.$view.getUint32(ByteOffset.num_readonly_storage_textures, true);
   }
 
-  public set num_readonly_storage_textures(value: number) {
+  public set readonlyStorageTextureCount(value: number) {
     this.$view.setUint32(ByteOffset.num_readonly_storage_textures, value, true);
   }
 
-  public get num_readonly_storage_buffers() {
+  public get readonlyStorageBufferCount() {
     return this.$view.getUint32(ByteOffset.num_readonly_storage_buffers, true);
   }
 
-  public set num_readonly_storage_buffers(value: number) {
+  public set readonlyStorageBufferCount(value: number) {
     this.$view.setUint32(ByteOffset.num_readonly_storage_buffers, value, true);
   }
 
-  public get num_readwrite_storage_textures() {
+  public get readwriteStorageTextureCount() {
     return this.$view.getUint32(
       ByteOffset.num_readwrite_storage_textures,
       true
     );
   }
 
-  public set num_readwrite_storage_textures(value: number) {
+  public set readwriteStorageTextureCount(value: number) {
     this.$view.setUint32(
       ByteOffset.num_readwrite_storage_textures,
       value,
@@ -110,43 +110,43 @@ export class GPUComputePipelineCreateInfo {
     );
   }
 
-  public get num_readwrite_storage_buffers() {
+  public get readwriteStorageBufferCount() {
     return this.$view.getUint32(ByteOffset.num_readwrite_storage_buffers, true);
   }
 
-  public set num_readwrite_storage_buffers(value: number) {
+  public set readwriteStorageBufferCount(value: number) {
     this.$view.setUint32(ByteOffset.num_readwrite_storage_buffers, value, true);
   }
 
-  public get num_uniform_buffers() {
+  public get uniformBufferCount() {
     return this.$view.getUint32(ByteOffset.num_uniform_buffers, true);
   }
 
-  public set num_uniform_buffers(value: number) {
+  public set uniformBufferCount(value: number) {
     this.$view.setUint32(ByteOffset.num_uniform_buffers, value, true);
   }
 
-  public get threadcount_x() {
+  public get threadcountX() {
     return this.$view.getUint32(ByteOffset.threadcount_x, true);
   }
 
-  public set threadcount_x(value: number) {
+  public set threadcountX(value: number) {
     this.$view.setUint32(ByteOffset.threadcount_x, value, true);
   }
 
-  public get threadcount_y() {
+  public get threadcountY() {
     return this.$view.getUint32(ByteOffset.threadcount_y, true);
   }
 
-  public set threadcount_y(value: number) {
+  public set threadcountY(value: number) {
     this.$view.setUint32(ByteOffset.threadcount_y, value, true);
   }
 
-  public get threadcount_z() {
+  public get threadcountZ() {
     return this.$view.getUint32(ByteOffset.threadcount_z, true);
   }
 
-  public set threadcount_z(value: number) {
+  public set threadcountZ(value: number) {
     this.$view.setUint32(ByteOffset.threadcount_z, value, true);
   }
 

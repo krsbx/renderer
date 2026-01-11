@@ -41,15 +41,15 @@ export class GPUGraphicsPipelineTargetInfo {
     return buffer;
   }
 
-  public get color_target_descriptions() {
-    const numColorTargets = this.num_color_targets;
+  public get colorTargetDescriptions() {
+    const colorTargetsCount = this.colorTargetsCount;
     const colorTargetDescriptionsAddr = this.$view.getBigUint64(
       ByteOffset.color_target_descriptions,
       true
     );
 
     if (
-      !numColorTargets ||
+      !colorTargetsCount ||
       !colorTargetDescriptionsAddr ||
       colorTargetDescriptionsAddr === 0n
     )
@@ -60,7 +60,7 @@ export class GPUGraphicsPipelineTargetInfo {
       colorTargetDescriptionsAddr
     ) as Pointer;
 
-    for (let i = 0; i < numColorTargets; i++) {
+    for (let i = 0; i < colorTargetsCount; i++) {
       const offset = i * GPUColorTargetDescription.BYTE_SIZE;
       const colorTargetDescriptionPtr = (colorTargetDescriptionsPtr +
         offset) as Pointer;
@@ -73,20 +73,20 @@ export class GPUGraphicsPipelineTargetInfo {
     return colorTargetDescriptions;
   }
 
-  public set color_target_descriptions(value: GPUColorTargetDescription[]) {
-    this.num_color_targets = value.length;
+  public set colorTargetDescriptions(value: GPUColorTargetDescription[]) {
+    this.colorTargetsCount = value.length;
 
-    if (this.num_color_targets === 0) {
+    if (this.colorTargetsCount === 0) {
       this.$view.setBigUint64(ByteOffset.color_target_descriptions, 0n, true);
       this.$colorTargetDescBuffer = null;
       return;
     }
 
     const buffer = new Uint8Array(
-      GPUColorTargetDescription.BYTE_SIZE * this.num_color_targets
+      GPUColorTargetDescription.BYTE_SIZE * this.colorTargetsCount
     );
 
-    for (let i = 0; i < this.num_color_targets; i++) {
+    for (let i = 0; i < this.colorTargetsCount; i++) {
       const offset = i * GPUColorTargetDescription.BYTE_SIZE;
 
       buffer.set(value[i]!.$memory, offset);
@@ -101,30 +101,30 @@ export class GPUGraphicsPipelineTargetInfo {
     );
   }
 
-  public get num_color_targets() {
+  public get colorTargetsCount() {
     return this.$view.getUint32(ByteOffset.num_color_targets, true);
   }
 
-  public set num_color_targets(value: number) {
+  public set colorTargetsCount(value: number) {
     this.$view.setUint32(ByteOffset.num_color_targets, value, true);
   }
 
-  public get depth_stencil_format() {
+  public get depthStencilFormat() {
     return this.$view.getInt32(
       ByteOffset.depth_stencil_format,
       true
     ) as GPUTextureFormat;
   }
 
-  public set depth_stencil_format(value: GPUTextureFormat) {
+  public set depthStencilFormat(value: GPUTextureFormat) {
     this.$view.setInt32(ByteOffset.depth_stencil_format, value, true);
   }
 
-  public get has_depth_stencil_target() {
+  public get hasDepthStencilTarget() {
     return this.$view.getUint8(ByteOffset.has_depth_stencil_target) === 1;
   }
 
-  public set has_depth_stencil_target(value: boolean) {
+  public set hasDepthStencilTarget(value: boolean) {
     this.$view.setUint8(ByteOffset.has_depth_stencil_target, value ? 1 : 0);
   }
 }

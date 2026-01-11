@@ -38,15 +38,15 @@ export class GPUVertexInputState {
     return buffer;
   }
 
-  public get vertex_buffer_descriptions() {
-    const num_vertex_buffers = this.num_vertex_buffers;
+  public get vertexBufferDescriptions() {
+    const vertexBufferCount = this.vertexBufferCount;
     const vertexBufferDescAddr = this.$view.getBigUint64(
       ByteOffset.vertex_buffer_descriptions,
       true
     );
 
     if (
-      !num_vertex_buffers ||
+      !vertexBufferCount ||
       !vertexBufferDescAddr ||
       vertexBufferDescAddr === 0n
     )
@@ -55,7 +55,7 @@ export class GPUVertexInputState {
     const vertexBufferDesc: GPUVertexBufferDescription[] = [];
     const vertexBufferDescPtr = Number(vertexBufferDescAddr) as Pointer;
 
-    for (let i = 0; i < num_vertex_buffers; i++) {
+    for (let i = 0; i < vertexBufferCount; i++) {
       const offset = i * GPUVertexBufferDescription.BYTE_SIZE;
       const vertexPtr = (vertexBufferDescPtr + offset) as Pointer;
 
@@ -67,20 +67,20 @@ export class GPUVertexInputState {
     return vertexBufferDesc;
   }
 
-  public set vertex_buffer_descriptions(value: GPUVertexBufferDescription[]) {
-    this.num_vertex_buffers = value.length;
+  public set vertexBufferDescriptions(value: GPUVertexBufferDescription[]) {
+    this.vertexBufferCount = value.length;
 
-    if (this.num_vertex_buffers === 0) {
+    if (this.vertexBufferCount === 0) {
       this.$view.setBigUint64(ByteOffset.vertex_buffer_descriptions, 0n, true);
       this.$vertexBufferDescBuffer = null;
       return;
     }
 
     const buffer = new Uint8Array(
-      GPUVertexBufferDescription.BYTE_SIZE * this.num_vertex_buffers
+      GPUVertexBufferDescription.BYTE_SIZE * this.vertexBufferCount
     );
 
-    for (let i = 0; i < this.num_vertex_buffers; i++) {
+    for (let i = 0; i < this.vertexBufferCount; i++) {
       const offset = i * GPUVertexBufferDescription.BYTE_SIZE;
 
       buffer.set(value[i]!.$memory, offset);
@@ -95,23 +95,23 @@ export class GPUVertexInputState {
     );
   }
 
-  public get num_vertex_buffers() {
+  public get vertexBufferCount() {
     return this.$view.getUint32(ByteOffset.num_vertex_buffers, true);
   }
 
-  public set num_vertex_buffers(value: number) {
+  public set vertexBufferCount(value: number) {
     this.$view.setUint32(ByteOffset.num_vertex_buffers, value, true);
   }
 
-  public get vertex_attributes() {
-    const num_vertex_attributes = this.num_vertex_attributes;
+  public get vertexAttributes() {
+    const vertexAttributeCount = this.vertexAttributeCount;
     const vertexAttributesAddr = this.$view.getBigUint64(
       ByteOffset.vertex_attributes,
       true
     );
 
     if (
-      !num_vertex_attributes ||
+      !vertexAttributeCount ||
       !vertexAttributesAddr ||
       vertexAttributesAddr === 0n
     )
@@ -120,7 +120,7 @@ export class GPUVertexInputState {
     const vertexAttributes: GPUVertexAttribute[] = [];
     const vertexAttributesPtr = Number(vertexAttributesAddr) as Pointer;
 
-    for (let i = 0; i < num_vertex_attributes; i++) {
+    for (let i = 0; i < vertexAttributeCount; i++) {
       const offset = i * GPUVertexAttribute.BYTE_SIZE;
       const vertexPtr = (vertexAttributesPtr + offset) as Pointer;
 
@@ -130,20 +130,20 @@ export class GPUVertexInputState {
     return vertexAttributes;
   }
 
-  public set vertex_attributes(value: GPUVertexAttribute[]) {
-    this.num_vertex_attributes = value.length;
+  public set vertexAttributes(value: GPUVertexAttribute[]) {
+    this.vertexAttributeCount = value.length;
 
-    if (this.num_vertex_attributes === 0) {
+    if (this.vertexAttributeCount === 0) {
       this.$view.setBigUint64(ByteOffset.vertex_attributes, 0n, true);
       this.$vertexAttributesBuffer = null;
       return;
     }
 
     const buffer = new Uint8Array(
-      GPUVertexAttribute.BYTE_SIZE * this.num_vertex_attributes
+      GPUVertexAttribute.BYTE_SIZE * this.vertexAttributeCount
     );
 
-    for (let i = 0; i < this.num_vertex_attributes; i++) {
+    for (let i = 0; i < this.vertexAttributeCount; i++) {
       const offset = i * GPUVertexAttribute.BYTE_SIZE;
 
       buffer.set(value[i]!.$memory, offset);
@@ -158,11 +158,11 @@ export class GPUVertexInputState {
     );
   }
 
-  public get num_vertex_attributes() {
+  public get vertexAttributeCount() {
     return this.$view.getUint32(ByteOffset.num_vertex_attributes, true);
   }
 
-  public set num_vertex_attributes(value: number) {
+  public set vertexAttributeCount(value: number) {
     this.$view.setUint32(ByteOffset.num_vertex_attributes, value, true);
   }
 }

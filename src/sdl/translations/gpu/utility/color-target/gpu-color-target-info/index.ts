@@ -10,7 +10,7 @@ export class GPUColorTargetInfo {
   public $memory: Uint8Array;
   public $view: DataView;
 
-  public readonly clear_color: FColor;
+  public readonly clearColor: FColor;
 
   public constructor(data: Pointer | Uint8Array) {
     if (data instanceof Uint8Array) {
@@ -27,7 +27,7 @@ export class GPUColorTargetInfo {
       this.$memory.byteOffset,
       this.$memory.byteLength
     );
-    this.clear_color = new FColor(
+    this.clearColor = new FColor(
       this.$memory.subarray(
         ByteOffset.clear_color,
         ByteOffset.clear_color + FColor.BYTE_SIZE
@@ -51,61 +51,61 @@ export class GPUColorTargetInfo {
     this.$view.setBigUint64(ByteOffset.texture, BigInt(value), true);
   }
 
-  public get mip_level() {
+  public get mipLevel() {
     return this.$view.getUint32(ByteOffset.mip_level, true);
   }
 
-  public set mip_level(value: number) {
+  public set mipLevel(value: number) {
     this.$view.setUint32(ByteOffset.mip_level, value, true);
   }
 
-  public get layer_or_depth_plane() {
+  public get layerOrDepthPlane() {
     return this.$view.getUint32(ByteOffset.layer_or_depth_plane, true);
   }
 
-  public set layer_or_depth_plane(value: number) {
+  public set layerOrDepthPlane(value: number) {
     this.$view.setUint32(ByteOffset.layer_or_depth_plane, value, true);
   }
 
-  public get load_op() {
+  public get loadOp() {
     return this.$view.getInt32(ByteOffset.load_op, true) as GPULoadOp;
   }
 
-  public set load_op(value: GPULoadOp) {
+  public set loadOp(value: GPULoadOp) {
     this.$view.setInt32(ByteOffset.load_op, value, true);
   }
 
-  public get store_op() {
+  public get storeOp() {
     return this.$view.getInt32(ByteOffset.store_op, true) as GPUStoreOp;
   }
 
-  public set store_op(value: GPUStoreOp) {
+  public set storeOp(value: GPUStoreOp) {
     this.$view.setInt32(ByteOffset.store_op, value, true);
   }
 
-  public get resolve_texture() {
+  public get resolveTexture() {
     const addr = this.$view.getBigUint64(ByteOffset.resolve_texture, true);
 
     return Number(addr) as Pointer;
   }
 
-  public set resolve_texture(value: Pointer) {
+  public set resolveTexture(value: Pointer) {
     this.$view.setBigUint64(ByteOffset.resolve_texture, BigInt(value), true);
   }
 
-  public get resolve_mip_level() {
+  public get resolveMipLevel() {
     return this.$view.getUint32(ByteOffset.resolve_mip_level, true);
   }
 
-  public set resolve_mip_level(value: number) {
+  public set resolveMipLevel(value: number) {
     this.$view.setUint32(ByteOffset.resolve_mip_level, value, true);
   }
 
-  public get resolve_layer() {
+  public get resolveLayer() {
     return this.$view.getUint32(ByteOffset.resolve_layer, true);
   }
 
-  public set resolve_layer(value: number) {
+  public set resolveLayer(value: number) {
     this.$view.setUint32(ByteOffset.resolve_layer, value, true);
   }
 
@@ -117,11 +117,11 @@ export class GPUColorTargetInfo {
     this.$view.setUint8(ByteOffset.cycle, value ? 1 : 0);
   }
 
-  public get cycle_resolve_texture() {
+  public get cycleResolveTexture() {
     return this.$view.getUint8(ByteOffset.cycle_resolve_texture) === 1;
   }
 
-  public set cycle_resolve_texture(value: boolean) {
+  public set cycleResolveTexture(value: boolean) {
     this.$view.setUint8(ByteOffset.cycle_resolve_texture, value ? 1 : 0);
   }
 }

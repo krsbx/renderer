@@ -14,7 +14,7 @@ export class GPUBlitInfo {
 
   public readonly source: GPUBlitRegion;
   public readonly destination: GPUBlitRegion;
-  public readonly clear_color: FColor;
+  public readonly clearColor: FColor;
 
   public constructor(data: Pointer | Uint8Array) {
     if (data instanceof Uint8Array) {
@@ -44,7 +44,7 @@ export class GPUBlitInfo {
         ByteOffset.destination + GPUBlitRegion.BYTE_SIZE
       )
     );
-    this.clear_color = new FColor(
+    this.clearColor = new FColor(
       this.$memory.subarray(
         ByteOffset.clear_color,
         ByteOffset.clear_color + FColor.BYTE_SIZE
@@ -58,19 +58,19 @@ export class GPUBlitInfo {
     return buffer;
   }
 
-  public get load_op() {
+  public get loadOp() {
     return this.$view.getInt32(ByteOffset.load_op, true) as GPULoadOp;
   }
 
-  public set load_op(value: GPULoadOp) {
+  public set loadOp(value: GPULoadOp) {
     this.$view.setInt32(ByteOffset.load_op, value, true);
   }
 
-  public get flip_mode() {
+  public get flipMode() {
     return this.$view.getInt32(ByteOffset.flip_mode, true) as FlipMode;
   }
 
-  public set flip_mode(value: FlipMode) {
+  public set flipMode(value: FlipMode) {
     this.$view.setInt32(ByteOffset.flip_mode, value, true);
   }
 

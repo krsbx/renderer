@@ -35,11 +35,11 @@ export class GPUShaderCreateInfo {
     return buffer;
   }
 
-  public get code_size() {
+  public get codeSize() {
     return this.$view.getBigUint64(ByteOffset.code_size, true);
   }
 
-  public set code_size(value: bigint) {
+  public set codeSize(value: bigint) {
     this.$view.setBigUint64(ByteOffset.code_size, value, true);
   }
 
@@ -78,35 +78,35 @@ export class GPUShaderCreateInfo {
     this.$view.setInt32(ByteOffset.stage, value, true);
   }
 
-  public get num_samplers() {
+  public get samplerCount() {
     return this.$view.getUint32(ByteOffset.num_samplers, true);
   }
 
-  public set num_samplers(value: number) {
+  public set samplerCount(value: number) {
     this.$view.setUint32(ByteOffset.num_samplers, value, true);
   }
 
-  public get num_storage_textures() {
+  public get storageTextureCount() {
     return this.$view.getUint32(ByteOffset.num_storage_textures, true);
   }
 
-  public set num_storage_textures(value: number) {
+  public set storageTextureCount(value: number) {
     this.$view.setUint32(ByteOffset.num_storage_textures, value, true);
   }
 
-  public get num_storage_buffers() {
+  public get storageBufferCount() {
     return this.$view.getUint32(ByteOffset.num_storage_buffers, true);
   }
 
-  public set num_storage_buffers(value: number) {
+  public set storageBufferCount(value: number) {
     this.$view.setUint32(ByteOffset.num_storage_buffers, value, true);
   }
 
-  public get num_uniform_buffers() {
+  public get uniformBufferCount() {
     return this.$view.getUint32(ByteOffset.num_uniform_buffers, true);
   }
 
-  public set num_uniform_buffers(value: number) {
+  public set uniformBufferCount(value: number) {
     this.$view.setUint32(ByteOffset.num_uniform_buffers, value, true);
   }
 

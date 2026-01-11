@@ -46,43 +46,43 @@ export class GPUDepthStencilTargetInfo {
     this.$view.setBigUint64(ByteOffset.texture, BigInt(value), true);
   }
 
-  public get clear_depth() {
+  public get clearDepth() {
     return this.$view.getFloat32(ByteOffset.clear_depth, true);
   }
 
-  public set clear_depth(value: number) {
+  public set clearDepth(value: number) {
     this.$view.setFloat32(ByteOffset.clear_depth, value, true);
   }
 
-  public get load_op() {
+  public get loadOp() {
     return this.$view.getInt32(ByteOffset.load_op, true) as GPULoadOp;
   }
 
-  public set load_op(value: GPULoadOp) {
+  public set loadOp(value: GPULoadOp) {
     this.$view.setInt32(ByteOffset.load_op, value, true);
   }
 
-  public get store_op() {
+  public get storeOp() {
     return this.$view.getInt32(ByteOffset.store_op, true) as GPUStoreOp;
   }
 
-  public set store_op(value: GPUStoreOp) {
+  public set storeOp(value: GPUStoreOp) {
     this.$view.setInt32(ByteOffset.store_op, value, true);
   }
 
-  public get stencil_load_op() {
+  public get stencilLoadOp() {
     return this.$view.getInt32(ByteOffset.stencil_load_op, true) as GPULoadOp;
   }
 
-  public set stencil_load_op(value: GPULoadOp) {
+  public set stencilLoadOp(value: GPULoadOp) {
     this.$view.setInt32(ByteOffset.stencil_load_op, value, true);
   }
 
-  public get stencil_store_op() {
+  public get stencilStoreOp() {
     return this.$view.getInt32(ByteOffset.stencil_store_op, true) as GPUStoreOp;
   }
 
-  public set stencil_store_op(value: GPUStoreOp) {
+  public set stencilStoreOp(value: GPUStoreOp) {
     this.$view.setInt32(ByteOffset.stencil_store_op, value, true);
   }
 
@@ -94,19 +94,19 @@ export class GPUDepthStencilTargetInfo {
     this.$view.setUint8(ByteOffset.cycle, value ? 1 : 0);
   }
 
-  public get clear_stencil() {
+  public get clearStencil() {
     return this.$view.getUint8(ByteOffset.clear_stencil);
   }
 
-  public set clear_stencil(value: number) {
+  public set clearStencil(value: number) {
     this.$view.setUint8(ByteOffset.clear_stencil, value);
   }
 
-  public get mip_level() {
+  public get mipLevel() {
     return this.$view.getUint8(ByteOffset.mip_level);
   }
 
-  public set mip_level(value: number) {
+  public set mipLevel(value: number) {
     this.$view.setUint8(ByteOffset.mip_level, value);
   }
 

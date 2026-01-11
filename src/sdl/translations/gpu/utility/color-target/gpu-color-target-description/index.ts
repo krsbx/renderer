@@ -10,7 +10,7 @@ export class GPUColorTargetDescription {
   public $memory: Uint8Array;
   public $view: DataView;
 
-  public readonly blend_state: GPUColorTargetBlendState;
+  public readonly blendState: GPUColorTargetBlendState;
 
   public constructor(data: Pointer | Uint8Array) {
     if (data instanceof Uint8Array) {
@@ -32,7 +32,7 @@ export class GPUColorTargetDescription {
       this.$memory.byteLength
     );
 
-    this.blend_state = new GPUColorTargetBlendState(
+    this.blendState = new GPUColorTargetBlendState(
       this.$memory.subarray(
         ByteOffset.blend_state,
         ByteOffset.blend_state + GPUColorTargetBlendState.BYTE_SIZE

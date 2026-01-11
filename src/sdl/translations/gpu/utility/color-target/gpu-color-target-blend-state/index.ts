@@ -31,75 +31,75 @@ export class GPUColorTargetBlendState {
     return buffer;
   }
 
-  public get src_color_blendfactor() {
+  public get srcColorBlendFactor() {
     return this.$view.getInt32(ByteOffset.src_color_blendfactor, true);
   }
 
-  public set src_color_blendfactor(value: number) {
+  public set srcColorBlendFactor(value: number) {
     this.$view.setInt32(ByteOffset.src_color_blendfactor, value, true);
   }
 
-  public get dst_color_blendfactor() {
+  public get dstColorBlendFactor() {
     return this.$view.getInt32(ByteOffset.dst_color_blendfactor, true);
   }
 
-  public set dst_color_blendfactor(value: number) {
+  public set dstColorBlendFactor(value: number) {
     this.$view.setInt32(ByteOffset.dst_color_blendfactor, value, true);
   }
 
-  public get color_blend_op() {
+  public get colorBlendOp() {
     return this.$view.getInt32(ByteOffset.color_blend_op, true);
   }
 
-  public set color_blend_op(value: number) {
+  public set colorBlendOp(value: number) {
     this.$view.setInt32(ByteOffset.color_blend_op, value, true);
   }
 
-  public get src_alpha_blendfactor() {
+  public get srcAlphaBlendFactor() {
     return this.$view.getInt32(ByteOffset.src_alpha_blendfactor, true);
   }
 
-  public set src_alpha_blendfactor(value: number) {
+  public set srcAlphaBlendFactor(value: number) {
     this.$view.setInt32(ByteOffset.src_alpha_blendfactor, value, true);
   }
 
-  public get dst_alpha_blendfactor() {
+  public get dstAlphaBlendFactor() {
     return this.$view.getInt32(ByteOffset.dst_alpha_blendfactor, true);
   }
 
-  public set dst_alpha_blendfactor(value: number) {
+  public set dstAlphaBlendFactor(value: number) {
     this.$view.setInt32(ByteOffset.dst_alpha_blendfactor, value, true);
   }
 
-  public get alpha_blend_op() {
+  public get alphaBlendOp() {
     return this.$view.getInt32(ByteOffset.alpha_blend_op, true);
   }
 
-  public set alpha_blend_op(value: number) {
+  public set alphaBlendOp(value: number) {
     this.$view.setInt32(ByteOffset.alpha_blend_op, value, true);
   }
 
-  public get color_write_mask() {
+  public get colorWriteMask() {
     return this.$view.getInt32(ByteOffset.color_write_mask, true);
   }
 
-  public set color_write_mask(value: number) {
+  public set colorWriteMask(value: number) {
     this.$view.setInt32(ByteOffset.color_write_mask, value, true);
   }
 
-  public get enable_blend() {
+  public get enableBlend() {
     return this.$view.getUint8(ByteOffset.enable_blend) === 1;
   }
 
-  public set enable_blend(value: boolean) {
+  public set enableBlend(value: boolean) {
     this.$view.setUint8(ByteOffset.enable_blend, value ? 1 : 0);
   }
 
-  public get enable_color_write_mask() {
+  public get enableColorWriteMask() {
     return this.$view.getUint8(ByteOffset.enable_color_write_mask) === 1;
   }
 
-  public set enable_color_write_mask(value: boolean) {
+  public set enableColorWriteMask(value: boolean) {
     this.$view.setUint8(ByteOffset.enable_color_write_mask, value ? 1 : 0);
   }
 }

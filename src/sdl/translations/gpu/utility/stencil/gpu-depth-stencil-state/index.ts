@@ -10,8 +10,8 @@ export class GPUDepthStencilState {
   public $memory: Uint8Array;
   public $view: DataView;
 
-  public readonly back_stencil_state: GPUStencilOpState;
-  public readonly front_stencil_state: GPUStencilOpState;
+  public readonly backStencilState: GPUStencilOpState;
+  public readonly frontStencilState: GPUStencilOpState;
 
   public constructor(data: Pointer | Uint8Array) {
     if (data instanceof Uint8Array) {
@@ -29,13 +29,13 @@ export class GPUDepthStencilState {
       this.$memory.byteLength
     );
 
-    this.back_stencil_state = new GPUStencilOpState(
+    this.backStencilState = new GPUStencilOpState(
       this.$memory.subarray(
         ByteOffset.back_stencil_state,
         ByteOffset.back_stencil_state + GPUStencilOpState.BYTE_SIZE
       )
     );
-    this.front_stencil_state = new GPUStencilOpState(
+    this.frontStencilState = new GPUStencilOpState(
       this.$memory.subarray(
         ByteOffset.front_stencil_state,
         ByteOffset.front_stencil_state + GPUStencilOpState.BYTE_SIZE
@@ -49,51 +49,51 @@ export class GPUDepthStencilState {
     return buffer;
   }
 
-  public get compare_op() {
+  public get compareOp() {
     return this.$view.getInt32(ByteOffset.compare_op, true) as GPUCompareOp;
   }
 
-  public set compare_op(value: GPUCompareOp) {
+  public set compareOp(value: GPUCompareOp) {
     this.$view.setInt32(ByteOffset.compare_op, value, true);
   }
 
-  public get compare_mask() {
+  public get compareMask() {
     return this.$view.getUint8(ByteOffset.compare_mask);
   }
 
-  public set compare_mask(value: number) {
+  public set compareMask(value: number) {
     this.$view.setUint8(ByteOffset.compare_mask, value);
   }
 
-  public get write_mask() {
+  public get writeMask() {
     return this.$view.getUint8(ByteOffset.write_mask);
   }
 
-  public set write_mask(value: number) {
+  public set writeMask(value: number) {
     this.$view.setUint8(ByteOffset.write_mask, value);
   }
 
-  public get enable_depth_test() {
+  public get enableDepthTest() {
     return this.$view.getUint8(ByteOffset.enable_depth_test) === 1;
   }
 
-  public set enable_depth_test(value: boolean) {
+  public set enableDepthTest(value: boolean) {
     this.$view.setUint8(ByteOffset.enable_depth_test, value ? 1 : 0);
   }
 
-  public get enable_depth_write() {
+  public get enableDepthWrite() {
     return this.$view.getUint8(ByteOffset.enable_depth_write) === 1;
   }
 
-  public set enable_depth_write(value: boolean) {
+  public set enableDepthWrite(value: boolean) {
     this.$view.setUint8(ByteOffset.enable_depth_write, value ? 1 : 0);
   }
 
-  public get enable_stencil_test() {
+  public get enableStencilTest() {
     return this.$view.getUint8(ByteOffset.enable_stencil_test) === 1;
   }
 
-  public set enable_stencil_test(value: boolean) {
+  public set enableStencilTest(value: boolean) {
     this.$view.setUint8(ByteOffset.enable_stencil_test, value ? 1 : 0);
   }
 }

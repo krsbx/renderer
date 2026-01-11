@@ -36,67 +36,67 @@ export class GPURasterizerState {
     return buffer;
   }
 
-  public get fill_mode() {
+  public get fillMode() {
     return this.$view.getInt32(ByteOffset.fill_mode, true) as GPUFillMode;
   }
 
-  public set fill_mode(value: GPUFillMode) {
+  public set fillMode(value: GPUFillMode) {
     this.$view.setInt32(ByteOffset.fill_mode, value, true);
   }
 
-  public get cull_mode() {
+  public get cullMode() {
     return this.$view.getInt32(ByteOffset.cull_mode, true) as GPUCullMode;
   }
 
-  public set cull_mode(value: GPUCullMode) {
+  public set cullMode(value: GPUCullMode) {
     this.$view.setInt32(ByteOffset.cull_mode, value, true);
   }
 
-  public get front_face() {
+  public get frontFace() {
     return this.$view.getInt32(ByteOffset.front_face, true) as GPUFrontFace;
   }
 
-  public set front_face(value: GPUFrontFace) {
+  public set frontFace(value: GPUFrontFace) {
     this.$view.setInt32(ByteOffset.front_face, value, true);
   }
 
-  public get depth_bias_constant_factor() {
+  public get depthBiasConstantFactor() {
     return this.$view.getFloat32(ByteOffset.depth_bias_constant_factor, true);
   }
 
-  public set depth_bias_constant_factor(value: number) {
+  public set depthBiasConstantFactor(value: number) {
     this.$view.setFloat32(ByteOffset.depth_bias_constant_factor, value, true);
   }
 
-  public get depth_bias_clamp() {
+  public get depthBiasClamp() {
     return this.$view.getFloat32(ByteOffset.depth_bias_clamp, true);
   }
 
-  public set depth_bias_clamp(value: number) {
+  public set depthBiasClamp(value: number) {
     this.$view.setFloat32(ByteOffset.depth_bias_clamp, value, true);
   }
 
-  public get depth_bias_slope_factor() {
+  public get depthBiasSlopeFactor() {
     return this.$view.getFloat32(ByteOffset.depth_bias_slope_factor, true);
   }
 
-  public set depth_bias_slope_factor(value: number) {
+  public set depthBiasSlopeFactor(value: number) {
     this.$view.setFloat32(ByteOffset.depth_bias_slope_factor, value, true);
   }
 
-  public get enable_depth_bias() {
+  public get enableDepthBias() {
     return this.$view.getUint8(ByteOffset.enable_depth_bias) === 1;
   }
 
-  public set enable_depth_bias(value: boolean) {
+  public set enableDepthBias(value: boolean) {
     this.$view.setUint8(ByteOffset.enable_depth_bias, value ? 1 : 0);
   }
 
-  public get enable_depth_clip() {
+  public get enableDepthClip() {
     return this.$view.getUint8(ByteOffset.enable_depth_clip) === 1;
   }
 
-  public set enable_depth_clip(value: boolean) {
+  public set enableDepthClip(value: boolean) {
     this.$view.setUint8(ByteOffset.enable_depth_clip, value ? 1 : 0);
   }
 }

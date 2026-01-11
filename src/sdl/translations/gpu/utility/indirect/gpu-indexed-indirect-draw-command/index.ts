@@ -35,43 +35,43 @@ export class GPUIndexedIndirectDrawCommand {
     return buffer;
   }
 
-  public get num_indices() {
+  public get indicesCount() {
     return this.$view.getUint32(ByteOffset.num_indices, true);
   }
 
-  public set num_indices(value: number) {
+  public set indicesCount(value: number) {
     this.$view.setUint32(ByteOffset.num_indices, value, true);
   }
 
-  public get num_instances() {
+  public get instanceCount() {
     return this.$view.getUint32(ByteOffset.num_instances, true);
   }
 
-  public set num_instances(value: number) {
+  public set instanceCount(value: number) {
     this.$view.setUint32(ByteOffset.num_instances, value, true);
   }
 
-  public get first_index() {
+  public get firstIndex() {
     return this.$view.getUint32(ByteOffset.first_index, true);
   }
 
-  public set first_index(value: number) {
+  public set firstIndex(value: number) {
     this.$view.setUint32(ByteOffset.first_index, value, true);
   }
 
-  public get vertex_offset() {
+  public get vertexOffset() {
     return this.$view.getInt32(ByteOffset.vertex_offset, true);
   }
 
-  public set vertex_offset(value: number) {
+  public set vertexOffset(value: number) {
     this.$view.setInt32(ByteOffset.vertex_offset, value, true);
   }
 
-  public get first_instance() {
+  public get firstInstance() {
     return this.$view.getUint32(ByteOffset.first_instance, true);
   }
 
-  public set first_instance(value: number) {
+  public set firstInstance(value: number) {
     this.$view.setUint32(ByteOffset.first_instance, value, true);
   }
 }

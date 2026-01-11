@@ -52,22 +52,22 @@ export class GPUVertexBufferDescription {
     this.$view.setUint32(ByteOffset.pitch, value, true);
   }
 
-  public get input_rate() {
+  public get inputRate() {
     return this.$view.getUint32(
       ByteOffset.input_rate,
       true
     ) as GPUVertexInputRate;
   }
 
-  public set input_rate(value: GPUVertexInputRate) {
+  public set inputRate(value: GPUVertexInputRate) {
     this.$view.setUint32(ByteOffset.input_rate, value, true);
   }
 
-  public get instance_step_rate() {
+  public get instanceStepRate() {
     return this.$view.getUint32(ByteOffset.instance_step_rate, true);
   }
 
-  public set instance_step_rate(value: number) {
+  public set instanceStepRate(value: number) {
     this.$view.setUint32(ByteOffset.instance_step_rate, value, true);
   }
 }

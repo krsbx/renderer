@@ -31,35 +31,35 @@ export class GPUMultisampleState {
     return buffer;
   }
 
-  public get sample_count() {
+  public get sampleCount() {
     return this.$view.getInt32(ByteOffset.sample_count, true);
   }
 
-  public set sample_count(value: number) {
+  public set sampleCount(value: number) {
     this.$view.setInt32(ByteOffset.sample_count, value, true);
   }
 
-  public get sample_mask() {
+  public get sampleMask() {
     return this.$view.getInt32(ByteOffset.sample_mask, true);
   }
 
-  public set sample_mask(value: number) {
+  public set sampleMask(value: number) {
     this.$view.setInt32(ByteOffset.sample_mask, value, true);
   }
 
-  public get enable_mask() {
+  public get enableMask() {
     return this.$view.getUint8(ByteOffset.enable_mask) === 1;
   }
 
-  public set enable_mask(value: boolean) {
+  public set enableMask(value: boolean) {
     this.$view.setUint8(ByteOffset.enable_mask, value ? 1 : 0);
   }
 
-  public get enable_alpha_to_coverage() {
+  public get enableAlphaToCoverage() {
     return this.$view.getUint8(ByteOffset.enable_alpha_to_coverage) === 1;
   }
 
-  public set enable_alpha_to_coverage(value: boolean) {
+  public set enableAlphaToCoverage(value: boolean) {
     this.$view.setUint8(ByteOffset.enable_alpha_to_coverage, value ? 1 : 0);
   }
 }

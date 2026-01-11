@@ -35,13 +35,13 @@ export class GPUTransferBufferLocation {
     return buffer;
   }
 
-  public get transfer_buffer() {
+  public get transferBuffer() {
     const addr = this.$view.getBigUint64(ByteOffset.transfer_buffer, true);
 
     return Number(addr) as Pointer;
   }
 
-  public set transfer_buffer(value: Pointer) {
+  public set transferBuffer(value: Pointer) {
     this.$view.setBigUint64(ByteOffset.transfer_buffer, BigInt(value), true);
   }
 

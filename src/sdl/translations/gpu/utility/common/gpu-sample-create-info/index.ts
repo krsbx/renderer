@@ -32,107 +32,107 @@ export class GPUSamplerCreateInfo {
     return buffer;
   }
 
-  public get min_filter() {
+  public get minFilter() {
     return this.$view.getInt32(ByteOffset.min_filter, true);
   }
 
-  public set min_filter(value: number) {
+  public set minFilter(value: number) {
     this.$view.setInt32(ByteOffset.min_filter, value, true);
   }
 
-  public get mag_filter() {
+  public get magFilter() {
     return this.$view.getInt32(ByteOffset.mag_filter, true);
   }
 
-  public set mag_filter(value: number) {
+  public set magFilter(value: number) {
     this.$view.setInt32(ByteOffset.mag_filter, value, true);
   }
 
-  public get mipmap_mode() {
+  public get mipmapMode() {
     return this.$view.getInt32(ByteOffset.mipmap_mode, true);
   }
 
-  public set mipmap_mode(value: number) {
+  public set mipmapMode(value: number) {
     this.$view.setInt32(ByteOffset.mipmap_mode, value, true);
   }
 
-  public get address_mode_u() {
+  public get addressModeU() {
     return this.$view.getInt32(ByteOffset.address_mode_u, true);
   }
 
-  public set address_mode_u(value: number) {
+  public set addressModeU(value: number) {
     this.$view.setInt32(ByteOffset.address_mode_u, value, true);
   }
 
-  public get address_mode_v() {
+  public get addressModeV() {
     return this.$view.getInt32(ByteOffset.address_mode_v, true);
   }
 
-  public set address_mode_v(value: number) {
+  public set addressModeV(value: number) {
     this.$view.setInt32(ByteOffset.address_mode_v, value, true);
   }
 
-  public get address_mode_w() {
+  public get addressModeW() {
     return this.$view.getInt32(ByteOffset.address_mode_w, true);
   }
 
-  public set address_mode_w(value: number) {
+  public set addressModeW(value: number) {
     this.$view.setInt32(ByteOffset.address_mode_w, value, true);
   }
 
-  public get mip_lod_bias() {
+  public get mipLodBias() {
     return this.$view.getFloat32(ByteOffset.mip_lod_bias, true);
   }
 
-  public set mip_lod_bias(value: number) {
+  public set mipLodBias(value: number) {
     this.$view.setFloat32(ByteOffset.mip_lod_bias, value, true);
   }
 
-  public get max_anisotropy() {
+  public get maxAnisotropy() {
     return this.$view.getFloat32(ByteOffset.max_anisotropy, true);
   }
 
-  public set max_anisotropy(value: number) {
+  public set maxAnisotropy(value: number) {
     this.$view.setFloat32(ByteOffset.max_anisotropy, value, true);
   }
 
-  public get compare_op() {
+  public get compareOp() {
     return this.$view.getInt32(ByteOffset.compare_op, true) as GPUCompareOp;
   }
 
-  public set compare_op(value: GPUCompareOp) {
+  public set compareOp(value: GPUCompareOp) {
     this.$view.setInt32(ByteOffset.compare_op, value, true);
   }
 
-  public get min_lod() {
+  public get minLod() {
     return this.$view.getFloat32(ByteOffset.min_lod, true);
   }
 
-  public set min_lod(value: number) {
+  public set minLod(value: number) {
     this.$view.setFloat32(ByteOffset.min_lod, value, true);
   }
 
-  public get max_lod() {
+  public get maxLod() {
     return this.$view.getFloat32(ByteOffset.max_lod, true);
   }
 
-  public set max_lod(value: number) {
+  public set maxLod(value: number) {
     this.$view.setFloat32(ByteOffset.max_lod, value, true);
   }
 
-  public get enable_anisotropy() {
+  public get enableAnisotropy() {
     return this.$view.getUint8(ByteOffset.enable_anisotropy) === 1;
   }
 
-  public set enable_anisotropy(value: boolean) {
+  public set enableAnisotropy(value: boolean) {
     this.$view.setUint8(ByteOffset.enable_anisotropy, value ? 1 : 0);
   }
 
-  public get enable_compare() {
+  public get enableCompare() {
     return this.$view.getUint8(ByteOffset.enable_compare) === 1;
   }
 
-  public set enable_compare(value: boolean) {
+  public set enableCompare(value: boolean) {
     this.$view.setUint8(ByteOffset.enable_compare, value ? 1 : 0);
   }
 

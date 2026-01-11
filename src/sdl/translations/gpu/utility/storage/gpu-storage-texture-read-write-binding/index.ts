@@ -45,11 +45,11 @@ export class GPUStorageTextureReadWriteBinding {
     this.$view.setBigUint64(ByteOffset.texture, BigInt(value), true);
   }
 
-  public get mip_level() {
+  public get mipLevel() {
     return this.$view.getUint32(ByteOffset.mip_level, true);
   }
 
-  public set mip_level(value: number) {
+  public set mipLevel(value: number) {
     this.$view.setUint32(ByteOffset.mip_level, value, true);
   }
 

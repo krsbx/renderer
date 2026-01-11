@@ -40,11 +40,11 @@ export class GPUVertexAttribute {
     this.$view.setUint32(ByteOffset.location, value, true);
   }
 
-  public get buffer_slot() {
+  public get bufferSlot() {
     return this.$view.getUint32(ByteOffset.buffer_slot, true);
   }
 
-  public set buffer_slot(value: number) {
+  public set bufferSlot(value: number) {
     this.$view.setUint32(ByteOffset.buffer_slot, value, true);
   }
 

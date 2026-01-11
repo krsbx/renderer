@@ -90,83 +90,83 @@ export class VirtualJoystickDesc {
     this.$view.setUint16(ByteOffset.type, value, true);
   }
 
-  public get vendor_id() {
+  public get vendorId() {
     return this.$view.getUint16(ByteOffset.vendor_id, true);
   }
 
-  public set vendor_id(value: number) {
+  public set vendorId(value: number) {
     this.$view.setUint16(ByteOffset.vendor_id, value, true);
   }
 
-  public get product_id() {
+  public get productId() {
     return this.$view.getUint16(ByteOffset.product_id, true);
   }
 
-  public set product_id(value: number) {
+  public set productId(value: number) {
     this.$view.setUint16(ByteOffset.product_id, value, true);
   }
 
-  public get naxes() {
+  public get axesCount() {
     return this.$view.getUint16(ByteOffset.naxes, true);
   }
 
-  public set naxes(value: number) {
+  public set axesCount(value: number) {
     this.$view.setUint16(ByteOffset.naxes, value, true);
   }
 
-  public get nbuttons() {
+  public get buttonCount() {
     return this.$view.getUint16(ByteOffset.nbuttons, true);
   }
 
-  public set nbuttons(value: number) {
+  public set buttonCount(value: number) {
     this.$view.setUint16(ByteOffset.nbuttons, value, true);
   }
 
-  public get nballs() {
+  public get ballCount() {
     return this.$view.getUint16(ByteOffset.nballs, true);
   }
 
-  public set nballs(value: number) {
+  public set ballCount(value: number) {
     this.$view.setUint16(ByteOffset.nballs, value, true);
   }
 
-  public get nhats() {
+  public get hatCount() {
     return this.$view.getUint16(ByteOffset.nhats, true);
   }
 
-  public set nhats(value: number) {
+  public set hatCount(value: number) {
     this.$view.setUint16(ByteOffset.nhats, value, true);
   }
 
-  public get ntouchpads() {
+  public get touchpadCount() {
     return this.$view.getUint16(ByteOffset.ntouchpads, true);
   }
 
-  public set ntouchpads(value: number) {
+  public set touchpadCount(value: number) {
     this.$view.setUint16(ByteOffset.ntouchpads, value, true);
   }
 
-  public get nsensors() {
+  public get sensorCount() {
     return this.$view.getUint16(ByteOffset.nsensors, true);
   }
 
-  public set nsensors(value: number) {
+  public set sensorCount(value: number) {
     this.$view.setUint16(ByteOffset.nsensors, value, true);
   }
 
-  public get button_mask() {
+  public get buttonMask() {
     return this.$view.getUint32(ByteOffset.button_mask, true);
   }
 
-  public set button_mask(value: number) {
+  public set buttonMask(value: number) {
     this.$view.setUint32(ByteOffset.button_mask, value, true);
   }
 
-  public get axis_mask() {
+  public get axisMask() {
     return this.$view.getUint32(ByteOffset.axis_mask, true);
   }
 
-  public set axis_mask(value: number) {
+  public set axisMask(value: number) {
     this.$view.setUint32(ByteOffset.axis_mask, value, true);
   }
 
@@ -182,7 +182,7 @@ export class VirtualJoystickDesc {
   }
 
   public get touchpads() {
-    if (!this.ntouchpads) return [];
+    if (!this.touchpadCount) return [];
 
     const touchpadsAddr = this.$view.getBigUint64(ByteOffset.touchpads, true);
 
@@ -191,7 +191,7 @@ export class VirtualJoystickDesc {
     const touchpads: VirtualJoystickTouchpadDesc[] = [];
     const touchpadsPtr = Number(touchpadsAddr) as Pointer;
 
-    for (let i = 0; i < this.ntouchpads; i++) {
+    for (let i = 0; i < this.touchpadCount; i++) {
       const offset = i * VirtualJoystickTouchpadDesc.BYTE_SIZE;
       const touchpadPtr = (offset + touchpadsPtr) as Pointer;
 
@@ -202,19 +202,19 @@ export class VirtualJoystickDesc {
   }
 
   public set touchpads(value: VirtualJoystickTouchpadDesc[]) {
-    this.ntouchpads = value.length;
+    this.touchpadCount = value.length;
 
-    if (this.ntouchpads === 0) {
+    if (this.touchpadCount === 0) {
       this.$view.setBigUint64(ByteOffset.touchpads, 0n, true);
       this.$touchpadsBuffer = null;
       return;
     }
 
     const buffer = new Uint8Array(
-      VirtualJoystickTouchpadDesc.BYTE_SIZE * this.ntouchpads
+      VirtualJoystickTouchpadDesc.BYTE_SIZE * this.touchpadCount
     );
 
-    for (let i = 0; i < this.ntouchpads; i++) {
+    for (let i = 0; i < this.touchpadCount; i++) {
       const offset = i * VirtualJoystickTouchpadDesc.BYTE_SIZE;
 
       buffer.set(value[i]!.$memory, offset);
@@ -230,7 +230,7 @@ export class VirtualJoystickDesc {
   }
 
   public get sensors() {
-    if (!this.nsensors) return [];
+    if (!this.sensorCount) return [];
 
     const sensorsAddr = this.$view.getBigUint64(ByteOffset.sensors, true);
 
@@ -239,7 +239,7 @@ export class VirtualJoystickDesc {
     const sensors: VirtualJoystickSensorDesc[] = [];
     const sensorsPtr = Number(sensorsAddr) as Pointer;
 
-    for (let i = 0; i < this.nsensors; i++) {
+    for (let i = 0; i < this.sensorCount; i++) {
       const offset = i * VirtualJoystickSensorDesc.BYTE_SIZE;
       const sensorPtr = (offset + sensorsPtr) as Pointer;
 
@@ -250,20 +250,20 @@ export class VirtualJoystickDesc {
   }
 
   public set sensors(value: VirtualJoystickSensorDesc[]) {
-    this.nsensors = value.length;
+    this.sensorCount = value.length;
 
-    if (this.nsensors === 0) {
+    if (this.sensorCount === 0) {
       this.$view.setBigUint64(ByteOffset.sensors, 0n, true);
       this.$sensorsBuffer = null;
       return;
     }
 
     const buffer = new Uint8Array(
-      VirtualJoystickSensorDesc.BYTE_SIZE * this.nsensors
+      VirtualJoystickSensorDesc.BYTE_SIZE * this.sensorCount
     );
 
-    for (let i = 0; i < this.nsensors; i++) {
-      const offset = i * VirtualJoystickTouchpadDesc.BYTE_SIZE;
+    for (let i = 0; i < this.sensorCount; i++) {
+      const offset = i * VirtualJoystickSensorDesc.BYTE_SIZE;
 
       buffer.set(value[i]!.$memory, offset);
     }
@@ -277,9 +277,19 @@ export class VirtualJoystickDesc {
     );
   }
 
-  public update(userData?: Pointer | null) {
+  public get userdata() {
+    const addr = this.$view.getBigUint64(ByteOffset.userdata, true);
+
+    return Number(addr) as Pointer;
+  }
+
+  public set userdata(value: Pointer) {
+    this.$view.setBigUint64(ByteOffset.userdata, BigInt(value), true);
+  }
+
+  public update(userdata?: Pointer | null) {
     this.invoke(ByteOffset.update, VirtualJoystickDescDefinition.Update, [
-      userData ?? null,
+      userdata ?? null,
     ]);
   }
 
@@ -287,13 +297,13 @@ export class VirtualJoystickDesc {
     this.invoke(
       ByteOffset.setPlayerIndex,
       VirtualJoystickDescDefinition.SetPlayerIndex,
-      [optinos.userData ?? null, optinos.player_index]
+      [optinos.userdata ?? null, optinos.player_index]
     );
   }
 
   public rumble(options: RumbleOptions) {
     this.invoke(ByteOffset.rumble, VirtualJoystickDescDefinition.Rumble, [
-      options.userData ?? null,
+      options.userdata ?? null,
       options.low_frequency_rumble,
       options.high_frequency_rumble,
     ]);
@@ -303,13 +313,13 @@ export class VirtualJoystickDesc {
     this.invoke(
       ByteOffset.rumbleTriggers,
       VirtualJoystickDescDefinition.RumbleTriggers,
-      [options.userData ?? null, options.left_rumble, options.right_rumble]
+      [options.userdata ?? null, options.left_rumble, options.right_rumble]
     );
   }
 
   public setLed(options: SetLEDOptions) {
     this.invoke(ByteOffset.setLED, VirtualJoystickDescDefinition.SetLED, [
-      options.userData ?? null,
+      options.userdata ?? null,
       options.r,
       options.g,
       options.b,
@@ -320,13 +330,13 @@ export class VirtualJoystickDesc {
     this.invoke(
       ByteOffset.setSensorsEnabled,
       VirtualJoystickDescDefinition.SetSensorsEnabled,
-      [options.userData ?? null, options.enabled]
+      [options.userdata ?? null, options.enabled]
     );
   }
 
-  public cleanup(userData?: Pointer | null) {
+  public cleanup(userdata?: Pointer | null) {
     this.invoke(ByteOffset.cleanup, VirtualJoystickDescDefinition.Cleanup, [
-      userData ?? null,
+      userdata ?? null,
     ]);
   }
 }

@@ -27,7 +27,12 @@ export class CursorFrameInfo {
       this.$memory.byteLength
     );
 
-    this.surface = new Surface(this.$address);
+    this.surface = new Surface(
+      this.$memory.subarray(
+        ByteOffset.surface,
+        ByteOffset.surface + Surface.BYTE_SIZE
+      )
+    );
   }
 
   public static allocMemory() {

@@ -46,20 +46,18 @@ export class MessageBoxData {
   }
 
   public get window() {
-    const windowAddr = this.$view.getBigUint64(ByteOffset.window, true);
+    const addr = this.$view.getBigUint64(ByteOffset.window, true);
 
-    if (!windowAddr || windowAddr === 0n) return null;
+    if (!addr || addr === 0n) return null;
 
-    const windowPtr = Number(windowAddr) as Pointer;
-
-    return windowPtr;
+    return Number(addr) as Pointer;
   }
 
   public get title() {
-    const titleAddr = this.$view.getBigUint64(ByteOffset.title, true);
-    const titlePtr = Number(titleAddr) as Pointer;
+    const addr = this.$view.getBigUint64(ByteOffset.title, true);
+    const ptr = Number(addr) as Pointer;
 
-    return new CString(titlePtr);
+    return new CString(ptr);
   }
 
   public set title(value: CString) {
@@ -67,26 +65,26 @@ export class MessageBoxData {
   }
 
   public get message() {
-    const messageAddr = this.$view.getBigUint64(ByteOffset.message, true);
-    const messagePtr = Number(messageAddr) as Pointer;
+    const addr = this.$view.getBigUint64(ByteOffset.message, true);
+    const ptr = Number(addr) as Pointer;
 
-    return new CString(messagePtr);
+    return new CString(ptr);
   }
 
   public set message(value: CString) {
     this.$view.setBigUint64(ByteOffset.message, BigInt(value.ptr), true);
   }
 
-  public get numbuttons() {
+  public get buttonCount() {
     return this.$view.getInt32(ByteOffset.numbuttons, true);
   }
 
-  public set numbuttons(value: number) {
+  public set buttonCount(value: number) {
     this.$view.setInt32(ByteOffset.numbuttons, value, true);
   }
 
   public get buttons() {
-    if (!this.numbuttons) return [];
+    if (!this.buttonCount) return [];
 
     const buttonsAddr = this.$view.getBigUint64(ByteOffset.buttons, true);
 
@@ -94,7 +92,7 @@ export class MessageBoxData {
 
     const buttons: MessageBoxButtonData[] = [];
 
-    for (let i = 0; i < this.numbuttons; i++) {
+    for (let i = 0; i < this.buttonCount; i++) {
       const offset = BigInt(i) * BigInt(MessageBoxButtonData.BYTE_SIZE);
       const touchpadAdr = buttonsAddr + offset;
       const touchpadPtr = Number(touchpadAdr) as Pointer;
@@ -106,19 +104,19 @@ export class MessageBoxData {
   }
 
   public set buttons(value: MessageBoxButtonData[]) {
-    this.numbuttons = value.length;
+    this.buttonCount = value.length;
 
-    if (this.numbuttons === 0) {
+    if (this.buttonCount === 0) {
       this.$view.setBigUint64(ByteOffset.buttons, 0n, true);
       this.$buttonsBuffer = null;
       return;
     }
 
     const buffer = new Uint8Array(
-      MessageBoxButtonData.BYTE_SIZE * this.numbuttons
+      MessageBoxButtonData.BYTE_SIZE * this.buttonCount
     );
 
-    for (let i = 0; i < this.numbuttons; i++) {
+    for (let i = 0; i < this.buttonCount; i++) {
       const offset = i * MessageBoxButtonData.BYTE_SIZE;
 
       buffer.set(value[i]!.$memory, offset);

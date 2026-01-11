@@ -35,11 +35,11 @@ export class VirtualJoystickTouchpadDesc {
     return buffer;
   }
 
-  public get nfingers() {
+  public get fingerCount() {
     return this.$view.getInt16(ByteOffset.nfingers, true);
   }
 
-  public set nfingers(value: number) {
+  public set fingerCount(value: number) {
     this.$view.setInt16(ByteOffset.nfingers, value, true);
   }
 }

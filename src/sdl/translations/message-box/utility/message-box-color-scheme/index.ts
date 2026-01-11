@@ -12,9 +12,9 @@ export class MessageBoxColorScheme {
   public readonly colors: [
     background: MessageBoxColor,
     text: MessageBoxColor,
-    button_border: MessageBoxColor,
-    button_background: MessageBoxColor,
-    button_selected: MessageBoxColor,
+    buttonBorder: MessageBoxColor,
+    buttonBackground: MessageBoxColor,
+    buttonSelected: MessageBoxColor,
   ];
 
   public constructor(data: Pointer | Uint8Array) {
@@ -55,15 +55,15 @@ export class MessageBoxColorScheme {
     return this.colors[1];
   }
 
-  public get button_border() {
+  public get buttonBorder() {
     return this.colors[2];
   }
 
-  public get button_bg() {
+  public get buttonBackground() {
     return this.colors[3];
   }
 
-  public get button_selected() {
+  public get buttonSelected() {
     return this.colors[4];
   }
 }

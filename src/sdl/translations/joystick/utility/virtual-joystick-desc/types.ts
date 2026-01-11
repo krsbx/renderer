@@ -12,36 +12,36 @@ export interface CreateFfiOptions {
 }
 
 export interface SetPlayerIndexOptions {
-  userData?: Pointer | null;
+  userdata?: Pointer | null;
   player_index: number;
 }
 
 export interface RumbleOptions {
-  userData?: Pointer | null;
+  userdata?: Pointer | null;
   low_frequency_rumble: number;
   high_frequency_rumble: number;
 }
 
 export interface RumbleTriggersOptions {
-  userData?: Pointer | null;
+  userdata?: Pointer | null;
   left_rumble: number;
   right_rumble: number;
 }
 
 export interface SetLEDOptions {
-  userData?: Pointer | null;
+  userdata?: Pointer | null;
   r: number;
   g: number;
   b: number;
 }
 
 export interface SendEffectOptions {
-  userData?: Pointer | null;
+  userdata?: Pointer | null;
   data: Pointer;
   size: number;
 }
 
 export interface SetSensorsEnabledOptions {
-  userData?: Pointer | null;
+  userdata?: Pointer | null;
   enabled: boolean;
 }

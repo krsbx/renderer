@@ -14,6 +14,7 @@ export enum ByteOffset {
   name = 40,
   touchpads = 48,
   sensors = 56,
+  userdata = 64,
   update = 72,
   setPlayerIndex = 80,
   rumble = 88,

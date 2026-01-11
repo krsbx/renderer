@@ -76,11 +76,11 @@ export class IOStreamInterface {
     return result as T;
   }
 
-  public size(userData?: Pointer | null) {
+  public size(userdata?: Pointer | null) {
     return this.invoke<number>(
       ByteOffset.size,
       IOStreamInterfaceDefinition.size,
-      [userData ?? null]
+      [userdata ?? null]
     );
   }
 
@@ -88,7 +88,7 @@ export class IOStreamInterface {
     return this.invoke<number>(
       ByteOffset.seek,
       IOStreamInterfaceDefinition.seek,
-      [options.userData ?? null, options.offset, options.whence]
+      [options.userdata ?? null, options.offset, options.whence]
     );
   }
 
@@ -99,7 +99,7 @@ export class IOStreamInterface {
       ByteOffset.read,
       IOStreamInterfaceDefinition.read,
       [
-        options.userData ?? null,
+        options.userdata ?? null,
         options.ptr,
         BigInt(options.size),
         ptr(statusBuf),
@@ -119,7 +119,7 @@ export class IOStreamInterface {
       ByteOffset.write,
       IOStreamInterfaceDefinition.write,
       [
-        options.userData ?? null,
+        options.userdata ?? null,
         options.ptr,
         BigInt(options.size),
         ptr(statusBuf),
@@ -132,13 +132,13 @@ export class IOStreamInterface {
     };
   }
 
-  public flush(userData?: Pointer | null) {
+  public flush(userdata?: Pointer | null) {
     const statusBuf = new Uint32Array(1);
 
     const result = this.invoke<boolean>(
       ByteOffset.flush,
       IOStreamInterfaceDefinition.flush,
-      [userData ?? null, ptr(statusBuf)]
+      [userdata ?? null, ptr(statusBuf)]
     );
 
     return {
@@ -147,11 +147,11 @@ export class IOStreamInterface {
     };
   }
 
-  public close(userData?: Pointer | null) {
+  public close(userdata?: Pointer | null) {
     return this.invoke<boolean>(
       ByteOffset.close,
       IOStreamInterfaceDefinition.close,
-      [userData ?? null]
+      [userdata ?? null]
     );
   }
 }

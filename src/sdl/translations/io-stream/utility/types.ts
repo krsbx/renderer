@@ -4,19 +4,19 @@ import type { FreeAddress, MemoryAddress } from '../../../types/shared';
 import type { IOStreamInterfaceDefinition } from './definition';
 
 export interface SeekOptions {
-  userData?: Pointer | null;
+  userdata?: Pointer | null;
   offset: bigint;
   whence: IOWhence;
 }
 
 export interface ReadOptions {
-  userData?: Pointer | null;
+  userdata?: Pointer | null;
   ptr: Pointer;
   size: number;
 }
 
 export interface WriteOptions {
-  userData?: Pointer | null;
+  userdata?: Pointer | null;
   ptr: Pointer;
   size: number;
 }

@@ -1,6 +1,5 @@
 import { ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
 import type { HapticDirectionType } from '../../../../ffi/haptic/constant';
-import type { NumericRange } from '../../../../types/shared';
 import { ByteOffset } from './constant';
 
 export class HapticDirection {
@@ -9,6 +8,8 @@ export class HapticDirection {
   public $address: Pointer;
   public $memory: Uint8Array;
   public $view: DataView;
+
+  private $dir: [number, number, number] | null;
 
   public constructor(data: Pointer | Uint8Array) {
     if (data instanceof Uint8Array) {
@@ -25,6 +26,8 @@ export class HapticDirection {
       this.$memory.byteOffset,
       this.$memory.byteLength
     );
+
+    this.$dir = null;
   }
 
   public static allocMemory() {
@@ -41,11 +44,42 @@ export class HapticDirection {
     this.$view.setUint8(ByteOffset.type, value);
   }
 
-  public getDir(index: NumericRange<0, 2>) {
-    return this.$view.getInt32(ByteOffset.dir1 + index * 4, true);
-  }
+  public get dir() {
+    if (this.$dir) return this.$dir;
 
-  public setDir(index: NumericRange<0, 2>, value: number) {
-    this.$view.setInt32(ByteOffset.dir1 + index * 4, value, true);
+    const length = 3;
+
+    this.$dir = new Proxy(new Array(length), {
+      get: (target, prop) => {
+        const index = Number(prop);
+
+        if (Number.isNaN(index)) {
+          // Allow access to standard array methods (map, forEach, etc)
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const val = (target as any)[prop];
+
+          return typeof val === 'function' ? val.bind(target) : val;
+        }
+
+        if (index < 0 || index >= length) {
+          throw new RangeError(`Index out of range: ${index}`);
+        }
+
+        return this.$view.getInt32(ByteOffset.dir1 + index * 4, true);
+      },
+      set: (_, prop, value) => {
+        const index = Number(prop);
+
+        if (Number.isNaN(index) || index < 0 || index >= length) {
+          return false;
+        }
+
+        this.$view.setInt32(ByteOffset.dir1 + index * 4, value, true);
+
+        return true;
+      },
+    }) as never;
+
+    return this.$dir;
   }
 }

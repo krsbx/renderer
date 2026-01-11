@@ -19,7 +19,7 @@ export class HapticEffect {
   public readonly condition: HapticCondition;
   public readonly ramp: HapticRamp;
   public readonly custom: HapticCustom;
-  public readonly leftright: HapticLeftRight;
+  public readonly leftRight: HapticLeftRight;
 
   public constructor(data: Pointer | Uint8Array) {
     if (data instanceof Uint8Array) {
@@ -42,7 +42,7 @@ export class HapticEffect {
     this.condition = new HapticCondition(this.$memory);
     this.ramp = new HapticRamp(this.$memory);
     this.custom = new HapticCustom(this.$memory);
-    this.leftright = new HapticLeftRight(this.$memory);
+    this.leftRight = new HapticLeftRight(this.$memory);
   }
 
   public static allocMemory() {

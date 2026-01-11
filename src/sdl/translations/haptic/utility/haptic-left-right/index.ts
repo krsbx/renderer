@@ -48,19 +48,19 @@ export class HapticLeftRight {
     this.$view.setUint32(ByteOffset.length, value, true);
   }
 
-  public get large_magnitude() {
+  public get largeMagnitude() {
     return this.$view.getUint16(ByteOffset.large_magnitude, true);
   }
 
-  public set large_magnitude(value: number) {
+  public set largeMagnitude(value: number) {
     this.$view.setUint16(ByteOffset.large_magnitude, value, true);
   }
 
-  public get small_magnitude() {
+  public get smallMagnitude() {
     return this.$view.getUint16(ByteOffset.small_magnitude, true);
   }
 
-  public set small_magnitude(value: number) {
+  public set smallMagnitude(value: number) {
     this.$view.setUint16(ByteOffset.small_magnitude, value, true);
   }
 }

@@ -123,25 +123,25 @@ export class GamepadBinding {
     return buffer;
   }
 
-  public get input_type() {
+  public get inputType() {
     return this.$view.getInt32(
       ByteOffset.input_type,
       true
     ) as GamepadBindingType;
   }
 
-  public set input_type(value: GamepadBindingType) {
+  public set inputType(value: GamepadBindingType) {
     this.$view.setInt32(ByteOffset.input_type, value, true);
   }
 
-  public get output_type() {
+  public get outputType() {
     return this.$view.getInt32(
       ByteOffset.output_type,
       true
     ) as GamepadBindingType;
   }
 
-  public set output_type(value: GamepadBindingType) {
+  public set outputType(value: GamepadBindingType) {
     this.$view.setInt32(ByteOffset.output_type, value, true);
   }
 }

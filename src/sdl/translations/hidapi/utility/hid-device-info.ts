@@ -44,23 +44,23 @@ export class HIDDeviceInfo {
     this.$view.setBigUint64(ByteOffset.path, BigInt(value.ptr), true);
   }
 
-  public get vendor_id() {
+  public get vendorId() {
     return this.$view.getUint16(ByteOffset.vendor_id, true);
   }
 
-  public set vendor_id(value: number) {
+  public set vendorId(value: number) {
     this.$view.setUint16(ByteOffset.vendor_id, value, true);
   }
 
-  public get product_id() {
+  public get productId() {
     return this.$view.getUint16(ByteOffset.product_id, true);
   }
 
-  public set product_id(value: number) {
+  public set productId(value: number) {
     this.$view.setUint16(ByteOffset.product_id, value, true);
   }
 
-  public get serial_number() {
+  public get serialNumber() {
     const serialNumberAddr = this.$view.getBigUint64(
       ByteOffset.serial_number,
       true
@@ -70,19 +70,19 @@ export class HIDDeviceInfo {
     return new CWideString(serialNumberPtr);
   }
 
-  public set serial_number(value: CWideString) {
+  public set serialNumber(value: CWideString) {
     this.$view.setBigUint64(ByteOffset.serial_number, BigInt(value.ptr), true);
   }
 
-  public get release_number() {
+  public get releaseNumber() {
     return this.$view.getUint16(ByteOffset.release_number, true);
   }
 
-  public set release_number(value: number) {
+  public set releaseNumber(value: number) {
     this.$view.setUint16(ByteOffset.serial_number, value, true);
   }
 
-  public get manufacturer_string() {
+  public get manufacturerString() {
     const manufacturerStringAddr = this.$view.getBigUint64(
       ByteOffset.manufacturer_string,
       true
@@ -92,7 +92,7 @@ export class HIDDeviceInfo {
     return new CWideString(manufacturerStringPtr);
   }
 
-  public set manufacturer_string(value: CWideString) {
+  public set manufacturerString(value: CWideString) {
     this.$view.setBigUint64(
       ByteOffset.manufacturer_string,
       BigInt(value.ptr),
@@ -100,7 +100,7 @@ export class HIDDeviceInfo {
     );
   }
 
-  public get product_string() {
+  public get productString() {
     const productStringAddr = this.$view.getBigUint64(
       ByteOffset.product_string,
       true
@@ -110,15 +110,15 @@ export class HIDDeviceInfo {
     return new CWideString(productStringPtr);
   }
 
-  public set product_string(value: CWideString) {
+  public set productString(value: CWideString) {
     this.$view.setBigUint64(ByteOffset.product_string, BigInt(value.ptr), true);
   }
 
-  public get usage_page() {
+  public get usagePage() {
     return this.$view.getUint16(ByteOffset.usage_page, true);
   }
 
-  public set usage_page(value: number) {
+  public set usagePage(value: number) {
     this.$view.setUint16(ByteOffset.usage_page, value, true);
   }
 
@@ -130,43 +130,43 @@ export class HIDDeviceInfo {
     this.$view.setUint16(ByteOffset.usage, value, true);
   }
 
-  public get interface_number() {
+  public get interfaceNumber() {
     return this.$view.getInt32(ByteOffset.interface_number, true);
   }
 
-  public set interface_number(value: number) {
+  public set interfaceNumber(value: number) {
     this.$view.setInt32(ByteOffset.interface_number, value, true);
   }
 
-  public get interface_class() {
+  public get interfaceClass() {
     return this.$view.getInt32(ByteOffset.interface_class, true);
   }
 
-  public set interface_class(value: number) {
+  public set interfaceClass(value: number) {
     this.$view.setInt32(ByteOffset.interface_class, value, true);
   }
 
-  public get interface_subclass() {
+  public get interfaceSubclass() {
     return this.$view.getInt32(ByteOffset.interface_subclass, true);
   }
 
-  public set interface_subclass(value: number) {
+  public set interfaceSubclass(value: number) {
     this.$view.setInt32(ByteOffset.interface_subclass, value, true);
   }
 
-  public get interface_protocol() {
+  public get interfaceProtocol() {
     return this.$view.getInt32(ByteOffset.interface_protocol, true);
   }
 
-  public set interface_protocol(value: number) {
+  public set interfaceProtocol(value: number) {
     this.$view.setInt32(ByteOffset.interface_protocol, value, true);
   }
 
-  public get bus_type() {
+  public get busType() {
     return this.$view.getInt32(ByteOffset.bus_type, true) as HIDBusType;
   }
 
-  public set bus_type(value: HIDBusType) {
+  public set busType(value: HIDBusType) {
     this.$view.setInt32(ByteOffset.bus_type, value, true);
   }
 

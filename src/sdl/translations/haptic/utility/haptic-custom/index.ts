@@ -1,6 +1,6 @@
 import { ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
 import type { HapticEffectType } from '../../../../ffi/haptic/constant';
-import { HapticDirection } from '../haptic-direction/haptic-direction';
+import { HapticDirection } from '../haptic-direction';
 import { ByteOffset } from './constant';
 
 export class HapticCustom {
@@ -131,35 +131,35 @@ export class HapticCustom {
     return new Uint16Array(buffer);
   }
 
-  public get attack_length() {
+  public get attackLength() {
     return this.$view.getUint16(ByteOffset.attack_length, true);
   }
 
-  public set attack_length(value: number) {
+  public set attackLength(value: number) {
     this.$view.setUint16(ByteOffset.attack_length, value, true);
   }
 
-  public get attack_level() {
+  public get attackLevel() {
     return this.$view.getUint16(ByteOffset.attack_level, true);
   }
 
-  public set attack_level(value: number) {
+  public set attackLevel(value: number) {
     this.$view.setUint16(ByteOffset.attack_level, value, true);
   }
 
-  public get fade_length() {
+  public get fadeLength() {
     return this.$view.getUint16(ByteOffset.fade_length, true);
   }
 
-  public set fade_length(value: number) {
+  public set fadeLength(value: number) {
     this.$view.setUint16(ByteOffset.fade_length, value, true);
   }
 
-  public get fade_level() {
+  public get fadeLevel() {
     return this.$view.getUint16(ByteOffset.fade_level, true);
   }
 
-  public set fade_level(value: number) {
+  public set fadeLevel(value: number) {
     this.$view.setUint16(ByteOffset.fade_level, value, true);
   }
 }

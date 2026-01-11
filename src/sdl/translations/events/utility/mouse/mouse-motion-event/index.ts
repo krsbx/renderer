@@ -97,19 +97,19 @@ export class MouseMotionEvent {
     this.$view.setFloat32(ByteOffset.y, value, true);
   }
 
-  public get xrel() {
+  public get xRel() {
     return this.$view.getFloat32(ByteOffset.xrel, true);
   }
 
-  public set xrel(value: number) {
+  public set xRel(value: number) {
     this.$view.setFloat32(ByteOffset.xrel, value, true);
   }
 
-  public get yrel() {
+  public get yRel() {
     return this.$view.getFloat32(ByteOffset.yrel, true);
   }
 
-  public set yrel(value: number) {
+  public set yRel(value: number) {
     this.$view.setFloat32(ByteOffset.yrel, value, true);
   }
 }

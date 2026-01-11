@@ -73,11 +73,11 @@ export class PenButtonEvent {
     this.$view.setUint32(ByteOffset.which, value, true);
   }
 
-  public get pen_state() {
+  public get penState() {
     return this.$view.getUint32(ByteOffset.pen_state, true) as PenInputFlags;
   }
 
-  public set pen_state(value: PenInputFlags) {
+  public set penState(value: PenInputFlags) {
     this.$view.setUint32(ByteOffset.pen_state, value, true);
   }
 

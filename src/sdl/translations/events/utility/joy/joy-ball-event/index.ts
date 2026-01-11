@@ -72,19 +72,19 @@ export class JoyBallEvent {
     this.$view.setUint8(ByteOffset.ball, value);
   }
 
-  public get xrel() {
+  public get xRel() {
     return this.$view.getInt16(ByteOffset.xrel, true);
   }
 
-  public set xrel(value: number) {
+  public set xRel(value: number) {
     this.$view.setInt16(ByteOffset.xrel, value, true);
   }
 
-  public get yrel() {
+  public get yRel() {
     return this.$view.getInt16(ByteOffset.yrel, true);
   }
 
-  public set yrel(value: number) {
+  public set yRel(value: number) {
     this.$view.setInt16(ByteOffset.yrel, value, true);
   }
 }

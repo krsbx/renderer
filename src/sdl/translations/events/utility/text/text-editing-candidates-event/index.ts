@@ -76,15 +76,15 @@ export class TextEditingCandidatesEvent {
   }
 
   public get candidates() {
-    const num_candidates = this.num_candidates;
+    const candidateCount = this.candidateCount;
     const candidatesAddr = this.$view.getBigUint64(ByteOffset.candidates, true);
 
-    if (!num_candidates || !candidatesAddr || candidatesAddr === 0n) return [];
+    if (!candidateCount || !candidatesAddr || candidatesAddr === 0n) return [];
 
     const candidates: CString[] = [];
     const candidatesPtr = Number(candidatesAddr) as Pointer;
 
-    for (let i = 0; i < num_candidates; i++) {
+    for (let i = 0; i < candidateCount; i++) {
       const stringPtr = read.ptr(candidatesPtr, i * 8) as Pointer | null;
 
       if (!stringPtr) continue;
@@ -96,9 +96,9 @@ export class TextEditingCandidatesEvent {
   }
 
   public set candidates(value: CString[]) {
-    this.num_candidates = value.length;
+    this.candidateCount = value.length;
 
-    if (this.num_candidates === 0) {
+    if (this.candidateCount === 0) {
       this.$view.setBigUint64(ByteOffset.candidates, 0n, true);
       this.$candidatesBuffer = null;
       return;
@@ -107,7 +107,7 @@ export class TextEditingCandidatesEvent {
     const buffer = new Uint8Array(value.length * 8);
     const view = new DataView(buffer.buffer);
 
-    for (let i = 0; i < this.num_candidates; i++) {
+    for (let i = 0; i < this.candidateCount; i++) {
       const stringPtr = value[i]!.ptr;
 
       view.setBigUint64(i * 8, BigInt(stringPtr), true);
@@ -122,19 +122,19 @@ export class TextEditingCandidatesEvent {
     );
   }
 
-  public get num_candidates() {
+  public get candidateCount() {
     return this.$view.getInt32(ByteOffset.num_candidates, true);
   }
 
-  public set num_candidates(value: number) {
+  public set candidateCount(value: number) {
     this.$view.setInt32(ByteOffset.num_candidates, value, true);
   }
 
-  public get selected_candidate() {
+  public get selectedCandidate() {
     return this.$view.getInt32(ByteOffset.selected_candidate, true);
   }
 
-  public set selected_candidate(value: number) {
+  public set selectedCandidate(value: number) {
     this.$view.setInt32(ByteOffset.selected_candidate, value, true);
   }
 

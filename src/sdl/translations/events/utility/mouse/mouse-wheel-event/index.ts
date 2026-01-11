@@ -100,35 +100,35 @@ export class MouseWheelEvent {
     this.$view.setInt32(ByteOffset.direction, value, true);
   }
 
-  public get mouse_x() {
+  public get mouseX() {
     return this.$view.getFloat32(ByteOffset.mouse_x, true);
   }
 
-  public set mouse_x(value: number) {
+  public set mouseX(value: number) {
     this.$view.setFloat32(ByteOffset.mouse_x, value, true);
   }
 
-  public get mouse_y() {
+  public get mouseY() {
     return this.$view.getFloat32(ByteOffset.mouse_y, true);
   }
 
-  public set mouse_y(value: number) {
+  public set mouseY(value: number) {
     this.$view.setFloat32(ByteOffset.mouse_y, value, true);
   }
 
-  public get integer_x() {
+  public get integerX() {
     return this.$view.getInt32(ByteOffset.integer_x, true);
   }
 
-  public set integer_x(value: number) {
+  public set integerX(value: number) {
     this.$view.setInt32(ByteOffset.integer_x, value, true);
   }
 
-  public get integer_y() {
+  public get integerY() {
     return this.$view.getInt32(ByteOffset.integer_y, true);
   }
 
-  public set integer_y(value: number) {
+  public set integerY(value: number) {
     this.$view.setInt32(ByteOffset.integer_y, value, true);
   }
 }

@@ -73,18 +73,22 @@ export class UserEvent {
   }
 
   public get data1() {
-    return this.$view.getBigUint64(ByteOffset.data1, true);
+    const addr = this.$view.getBigUint64(ByteOffset.data1, true);
+
+    return Number(addr) as Pointer;
   }
 
-  public set data1(value: bigint) {
-    this.$view.setBigUint64(ByteOffset.data1, value, true);
+  public set data1(value: Pointer) {
+    this.$view.setBigUint64(ByteOffset.data1, BigInt(value), true);
   }
 
   public get data2() {
-    return this.$view.getBigUint64(ByteOffset.data2, true);
+    const addr = this.$view.getBigUint64(ByteOffset.data2, true);
+
+    return Number(addr) as Pointer;
   }
 
-  public set data2(value: bigint) {
-    this.$view.setBigUint64(ByteOffset.data2, value, true);
+  public set data2(value: Pointer) {
+    this.$view.setBigUint64(ByteOffset.data2, BigInt(value), true);
   }
 }

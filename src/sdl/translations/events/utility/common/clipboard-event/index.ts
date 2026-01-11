@@ -68,24 +68,24 @@ export class ClipboardEvent {
     this.$view.setUint8(ByteOffset.owner, value ? 1 : 0);
   }
 
-  public get num_mime_types() {
+  public get mimeTypesCount() {
     return this.$view.getInt32(ByteOffset.num_mime_types, true);
   }
 
-  public set num_mime_types(value: number) {
+  public set mimeTypesCount(value: number) {
     this.$view.setInt32(ByteOffset.num_mime_types, value, true);
   }
 
-  public get mime_types() {
-    const num_mime_types = this.num_mime_types;
+  public get mimeTypes() {
+    const mimeTypesCount = this.mimeTypesCount;
     const mimeTypesAddr = this.$view.getBigUint64(ByteOffset.mime_types, true);
 
-    if (!num_mime_types || !mimeTypesAddr || mimeTypesAddr === 0n) return [];
+    if (!mimeTypesCount || !mimeTypesAddr || mimeTypesAddr === 0n) return [];
 
     const mimeTypes: CString[] = [];
     const mimeTypesPtr = Number(mimeTypesAddr) as Pointer;
 
-    for (let i = 0; i < num_mime_types; i++) {
+    for (let i = 0; i < mimeTypesCount; i++) {
       const stringPtr = read.ptr(mimeTypesPtr, i * 8) as Pointer | null;
 
       if (!stringPtr) continue;
@@ -96,10 +96,10 @@ export class ClipboardEvent {
     return mimeTypes;
   }
 
-  public set mime_types(value: CString[]) {
-    this.num_mime_types = value.length;
+  public set mimeTypes(value: CString[]) {
+    this.mimeTypesCount = value.length;
 
-    if (this.num_mime_types === 0) {
+    if (this.mimeTypesCount === 0) {
       this.$view.setBigUint64(ByteOffset.mime_types, 0n, true);
       this.$mimeTypesBuffer = null;
       return;
@@ -108,7 +108,7 @@ export class ClipboardEvent {
     const buffer = new Uint8Array(value.length * 8);
     const view = new DataView(buffer.buffer);
 
-    for (let i = 0; i < this.num_mime_types; i++) {
+    for (let i = 0; i < this.mimeTypesCount; i++) {
       const stringPtr = value[i]!.ptr;
 
       view.setBigUint64(i * 8, BigInt(stringPtr), true);

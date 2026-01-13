@@ -119,7 +119,7 @@ export const AudioDefinition = {
   // SDL_PropertiesID SDL_GetAudioStreamProperties(SDL_AudioStream *stream);                                                                                          // Get the properties associated with an audio stream.
   SDL_GetAudioStreamProperties: {
     args: [FFIType.ptr],
-    returns: FFIType.ptr,
+    returns: FFIType.u32,
   },
   // bool SDL_GetAudioStreamFormat(SDL_AudioStream *stream, SDL_AudioSpec *src_spec, SDL_AudioSpec *dst_spec);                                                        // Query the current format of an audio stream.
   SDL_GetAudioStreamFormat: {

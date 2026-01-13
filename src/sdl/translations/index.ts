@@ -1,3 +1,5 @@
+import * as atomic from './atomic';
+import * as audio from './audio';
 import * as error from './error';
 import * as hints from './hints';
 import * as init from './init';
@@ -7,6 +9,8 @@ import * as version from './version';
 import * as video from './video';
 
 export const Translations = {
+  ...audio,
+  ...atomic,
   ...error,
   ...hints,
   ...init,

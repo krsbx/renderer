@@ -1,25 +1,27 @@
-export enum LogCategory {
-  APPLICATION = 0,
-  ERROR = 1,
-  ASSERT = 2,
-  SYSTEM = 3,
-  AUDIO = 4,
-  VIDEO = 5,
-  RENDER = 6,
-  INPUT = 7,
-  TEST = 8,
-  GPU = 9,
+import type { Brand } from '../../types/shared';
+
+const RawLogCategory = {
+  APPLICATION: 0,
+  ERROR: 1,
+  ASSERT: 2,
+  SYSTEM: 3,
+  AUDIO: 4,
+  VIDEO: 5,
+  RENDER: 6,
+  INPUT: 7,
+  TEST: 8,
+  GPU: 9,
 
   /* Reserved for future SDL library use */
-  RESERVED2 = 10,
-  RESERVED3 = 11,
-  RESERVED4 = 12,
-  RESERVED5 = 13,
-  RESERVED6 = 14,
-  RESERVED7 = 15,
-  RESERVED8 = 16,
-  RESERVED9 = 17,
-  RESERVED10 = 18,
+  RESERVED2: 10,
+  RESERVED3: 11,
+  RESERVED4: 12,
+  RESERVED5: 13,
+  RESERVED6: 14,
+  RESERVED7: 15,
+  RESERVED8: 16,
+  RESERVED9: 17,
+  RESERVED10: 18,
 
   /* Beyond this point is reserved for application use, e.g.
        enum {
@@ -29,17 +31,29 @@ export enum LogCategory {
            ...
        };
      */
-  CUSTOM = 19,
-}
+  CUSTOM: 19,
+} as const;
 
-export enum LogPriority {
-  INVALID = 0,
-  TRACE = 1,
-  VERBOSE = 2,
-  DEBUG = 3,
-  INFO = 4,
-  WARN = 5,
-  ERROR = 6,
-  CRITICAL = 7,
-  COUNT = 8,
-}
+export const LogCategory = RawLogCategory as Readonly<
+  Record<keyof typeof RawLogCategory, Brand<number, 'LogCategory'>>
+>;
+
+export type LogCategory = (typeof LogCategory)[keyof typeof LogCategory];
+
+const RawLogPriority = {
+  INVALID: 0,
+  TRACE: 1,
+  VERBOSE: 2,
+  DEBUG: 3,
+  INFO: 4,
+  WARN: 5,
+  ERROR: 6,
+  CRITICAL: 7,
+  COUNT: 8,
+} as const;
+
+export const LogPriority = RawLogPriority as Readonly<
+  Record<keyof typeof RawLogPriority, Brand<number, 'LogPriority'>>
+>;
+
+export type LogPriority = (typeof LogPriority)[keyof typeof LogPriority];

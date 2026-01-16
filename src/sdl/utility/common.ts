@@ -48,3 +48,8 @@ export function toCStringBuffer(value: string) {
 
   return buffer;
 }
+
+export function combineBitwise<T>(...values: T[]): T {
+  // @ts-expect-error Combine bitwise
+  return values.reduce((acc, value) => acc | value, 0 as T);
+}

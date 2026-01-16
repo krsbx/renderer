@@ -1,11 +1,26 @@
-export enum AsyncIOTaskType {
-  READ = 0 /**< A read operation. */,
-  WRITE = 1 /**< A write operation. */,
-  CLOSE = 2 /**< A close operation. */,
-}
+import type { Brand } from '../../types/shared';
 
-export enum AsyncIOResult {
-  COMPLETE = 0,
-  FAILURE = 1,
-  CANCELED = 2,
-}
+const RawAsyncIOTaskType = {
+  READ: 0,
+  WRITE: 1,
+  CLOSE: 2,
+} as const;
+
+export const AsyncIOTaskType = RawAsyncIOTaskType as Readonly<
+  Record<keyof typeof RawAsyncIOTaskType, Brand<number, 'AsyncIOTaskType'>>
+>;
+
+export type AsyncIOTaskType =
+  (typeof AsyncIOTaskType)[keyof typeof AsyncIOTaskType];
+
+const RawAsyncIOResult = {
+  COMPLETE: 0,
+  FAILURE: 1,
+  CANCELED: 2,
+} as const;
+
+export const AsyncIOResult = RawAsyncIOResult as Readonly<
+  Record<keyof typeof RawAsyncIOResult, Brand<number, 'AsyncIOResult'>>
+>;
+
+export type AsyncIOResult = (typeof AsyncIOResult)[keyof typeof AsyncIOResult];

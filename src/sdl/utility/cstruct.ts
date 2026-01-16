@@ -1,6 +1,14 @@
-import { type Pointer, ptr, read, toArrayBuffer } from 'bun:ffi';
+import { type Pointer, ptr, read } from 'bun:ffi';
 
 type ReadType = keyof typeof read;
+
+type CStructOptions =
+  | {
+      length: number;
+    }
+  | {
+      address: Pointer;
+    };
 
 export class CStruct {
   public static readonly BYTE_SIZE = {
@@ -18,27 +26,24 @@ export class CStruct {
     ptr: 8,
   } as const;
 
-  public $memory: Uint8Array;
+  private $memory: Uint8Array | null;
   public $address: Pointer;
-  public $view: DataView;
+  public $view: DataView | null;
 
-  public constructor(length: number);
-  public constructor(length: number, data: Pointer);
-  public constructor(length: number, data: Pointer | null = null) {
-    if (data) {
-      const buffer = toArrayBuffer(data, 0, length);
-      this.$memory = new Uint8Array(buffer);
-      this.$address = data;
+  public constructor(options: CStructOptions) {
+    if ('address' in options) {
+      this.$memory = null;
+      this.$address = options.address;
+      this.$view = null;
     } else {
-      this.$memory = new Uint8Array(length);
+      this.$memory = new Uint8Array(options.length);
       this.$address = ptr(this.$memory);
+      this.$view = new DataView(
+        this.$memory.buffer,
+        this.$memory.byteOffset,
+        this.$memory.byteLength
+      );
     }
-
-    this.$view = new DataView(
-      this.$memory.buffer,
-      this.$memory.byteOffset,
-      this.$memory.byteLength
-    );
   }
 
   public getValue(
@@ -56,38 +61,62 @@ export class CStruct {
   public getValue(offset: number, type: ReadType) {
     switch (type) {
       case 'u8':
-        return this.$view.getUint8(offset);
+        return this.$view
+          ? this.$view.getUint8(offset)
+          : read.u8(this.$address, offset);
 
       case 'i8':
-        return this.$view.getInt8(offset);
+        return this.$view
+          ? this.$view.getInt8(offset)
+          : read.i8(this.$address, offset);
 
       case 'u16':
-        return this.$view.getUint16(offset, true);
+        return this.$view
+          ? this.$view.getUint16(offset, true)
+          : read.u16(this.$address, offset);
 
       case 'i16':
-        return this.$view.getInt16(offset, true);
+        return this.$view
+          ? this.$view.getInt16(offset, true)
+          : read.i16(this.$address, offset);
 
       case 'u32':
-        return this.$view.getUint32(offset, true);
+        return this.$view
+          ? this.$view.getUint32(offset, true)
+          : read.u32(this.$address, offset);
 
       case 'i32':
-        return this.$view.getInt32(offset, true);
+        return this.$view
+          ? this.$view.getInt32(offset, true)
+          : read.i32(this.$address, offset);
 
       case 'f32':
-        return this.$view.getFloat32(offset, true);
+        return this.$view
+          ? this.$view.getFloat32(offset, true)
+          : read.f32(this.$address, offset);
 
       case 'u64':
-        return this.$view.getBigUint64(offset, true);
+        return this.$view
+          ? this.$view.getBigUint64(offset, true)
+          : read.u64(this.$address, offset);
 
       case 'i64':
-        return this.$view.getBigInt64(offset, true);
+        return this.$view
+          ? this.$view.getBigInt64(offset, true)
+          : read.i64(this.$address, offset);
 
       case 'f64':
-        return this.$view.getFloat64(offset, true);
+        return this.$view
+          ? this.$view.getFloat64(offset, true)
+          : read.f64(this.$address, offset);
 
       case 'intptr':
-      case 'ptr':
-        return Number(this.$view.getBigInt64(offset, true)) as Pointer;
+      case 'ptr': {
+        if (this.$view)
+          return Number(this.$view.getBigInt64(offset, true)) as Pointer;
+
+        return read.ptr(this.$address, offset);
+      }
 
       default:
         throw new Error(`Unsupported type: ${type}`);
@@ -110,6 +139,10 @@ export class CStruct {
     type: Extract<ReadType, 'intptr' | 'ptr'>
   ): this;
   public setValue(offset: number, value: never, type: ReadType) {
+    if (!this.$view) {
+      throw new Error('Cannot write to a read-only struct');
+    }
+
     switch (type) {
       case 'u8':
         this.$view.setUint8(offset, value);

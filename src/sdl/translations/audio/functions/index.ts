@@ -1,4 +1,4 @@
-import { CString, read, type Pointer } from 'bun:ffi';
+import { CString, type Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
 import { CStruct } from '../../../utility/cstruct';
 import { AudioBuffer, AudioSpec } from '../utility';
@@ -16,14 +16,14 @@ export function getCurrentAudioDriver(this: SDL) {
 }
 
 export function getAudioPlaybackDevices(this: SDL) {
-  const struct = new CStruct(CStruct.BYTE_SIZE.i32);
+  const struct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
   const listPtr = this.symbols.SDL_GetAudioPlaybackDevices(struct.$address);
 
   if (!listPtr) return [];
 
   const count = struct.getValue(0, 'i32');
-  const list = new CStruct(count * CStruct.BYTE_SIZE.u32, listPtr);
+  const list = new CStruct({ address: listPtr });
   const devices: number[] = [];
 
   for (let i = 0; i < count; i++) {
@@ -38,14 +38,14 @@ export function getAudioPlaybackDevices(this: SDL) {
 }
 
 export function getAudioRecordingDevices(this: SDL) {
-  const struct = new CStruct(CStruct.BYTE_SIZE.i32);
+  const struct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
   const listPtr = this.symbols.SDL_GetAudioRecordingDevices(struct.$address);
 
   if (!listPtr) return [];
 
   const count = struct.getValue(0, 'i32');
-  const list = new CStruct(count * CStruct.BYTE_SIZE.u32, listPtr);
+  const list = new CStruct({ address: listPtr });
   const devices: number[] = [];
 
   for (let i = 0; i < count; i++) {
@@ -83,7 +83,7 @@ export function getAudioDeviceFormat(
     specPtr = specInstance.$address;
   }
 
-  const sampleFrames = new CStruct(CStruct.BYTE_SIZE.i32);
+  const sampleFrames = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
   const success = this.symbols.SDL_GetAudioDeviceFormat(
     options.deviceId,
@@ -100,7 +100,7 @@ export function getAudioDeviceFormat(
 }
 
 export function getAudioDeviceChannelMap(this: SDL, deviceId: number) {
-  const struct = new CStruct(CStruct.BYTE_SIZE.i32);
+  const struct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
   const listPtr = this.symbols.SDL_GetAudioDeviceChannelMap(
     deviceId,
@@ -111,7 +111,7 @@ export function getAudioDeviceChannelMap(this: SDL, deviceId: number) {
 
   const count = struct.getValue(0, 'i32');
 
-  const list = new CStruct(count * CStruct.BYTE_SIZE.i32, listPtr);
+  const list = new CStruct({ address: listPtr });
   const channels: number[] = [];
 
   for (let i = 0; i < count; i++) {
@@ -348,7 +348,7 @@ export function setAudioStreamGain(
 }
 
 export function getAudioStreamInputChannelMap(this: SDL, stream: Pointer) {
-  const struct = new CStruct(CStruct.BYTE_SIZE.i32);
+  const struct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
   const listPtr = this.symbols.SDL_GetAudioStreamInputChannelMap(
     stream,
     struct.$address
@@ -357,10 +357,13 @@ export function getAudioStreamInputChannelMap(this: SDL, stream: Pointer) {
   if (!listPtr) return [];
 
   const count = struct.getValue(0, 'i32');
+  const list = new CStruct({ address: listPtr });
   const channels: number[] = [];
 
   for (let i = 0; i < count; i++) {
-    channels.push(read.i32(listPtr, i * CStruct.BYTE_SIZE.i32));
+    const channel = list.getValue(i * CStruct.BYTE_SIZE.i32, 'i32');
+
+    channels.push(channel);
   }
 
   this.symbols.SDL_free(listPtr);
@@ -369,7 +372,7 @@ export function getAudioStreamInputChannelMap(this: SDL, stream: Pointer) {
 }
 
 export function getAudioStreamOutputChannelMap(this: SDL, stream: Pointer) {
-  const struct = new CStruct(CStruct.BYTE_SIZE.i32);
+  const struct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
   const listPtr = this.symbols.SDL_GetAudioStreamOutputChannelMap(
     stream,
     struct.$address
@@ -378,10 +381,13 @@ export function getAudioStreamOutputChannelMap(this: SDL, stream: Pointer) {
   if (!listPtr) return [];
 
   const count = struct.getValue(0, 'i32');
+  const list = new CStruct({ address: listPtr });
   const channels: number[] = [];
 
   for (let i = 0; i < count; i++) {
-    channels.push(read.i32(listPtr, i * CStruct.BYTE_SIZE.i32));
+    const channel = list.getValue(i * CStruct.BYTE_SIZE.i32, 'i32');
+
+    channels.push(channel);
   }
 
   this.symbols.SDL_free(listPtr);
@@ -591,8 +597,8 @@ export function loadWAV_IO(
     specAddr = specInstance.$address;
   }
 
-  const audioBuf = new CStruct(CStruct.BYTE_SIZE.ptr);
-  const audioLen = new CStruct(CStruct.BYTE_SIZE.u32);
+  const audioBuf = new CStruct({ length: CStruct.BYTE_SIZE.ptr });
+  const audioLen = new CStruct({ length: CStruct.BYTE_SIZE.u32 });
 
   const success = this.symbols.SDL_LoadWAV_IO(
     options.src,
@@ -631,8 +637,8 @@ export function loadWAV(
     specAddr = specInstance.$address;
   }
 
-  const audioBuf = new CStruct(CStruct.BYTE_SIZE.ptr);
-  const audioLen = new CStruct(CStruct.BYTE_SIZE.u32);
+  const audioBuf = new CStruct({ length: CStruct.BYTE_SIZE.ptr });
+  const audioLen = new CStruct({ length: CStruct.BYTE_SIZE.u32 });
 
   const success = this.symbols.SDL_LoadWAV(
     options.path.ptr,
@@ -688,8 +694,8 @@ export function convertAudioSamples(
       ? options.dstSpec.$address
       : options.dstSpec;
 
-  const dstData = new CStruct(CStruct.BYTE_SIZE.ptr);
-  const dstLen = new CStruct(CStruct.BYTE_SIZE.i32);
+  const dstData = new CStruct({ length: CStruct.BYTE_SIZE.ptr });
+  const dstLen = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
   const success = this.symbols.SDL_ConvertAudioSamples(
     srcSpecAddr,

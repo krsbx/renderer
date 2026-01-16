@@ -1,10 +1,10 @@
 import { CString, type Pointer } from 'bun:ffi';
-import type { BaseSDL } from '../../..';
+import type { SDL } from '../../..';
 import type { AssertState } from '../../../ffi/assert/constant';
 import { AssertData } from '../utility';
 
 export function reportAssertion(
-  this: BaseSDL,
+  this: SDL,
   options: {
     data: AssertData;
     func: CString;
@@ -23,7 +23,7 @@ export function reportAssertion(
 }
 
 export function setAssertionHandler(
-  this: BaseSDL,
+  this: SDL,
   options: {
     handler: Pointer;
     userdata: Pointer;
@@ -32,15 +32,15 @@ export function setAssertionHandler(
   this.symbols.SDL_SetAssertionHandler(options.handler, options.userdata);
 }
 
-export function getDefaultAssertionHandler(this: BaseSDL) {
+export function getDefaultAssertionHandler(this: SDL) {
   return this.symbols.SDL_GetDefaultAssertionHandler();
 }
 
-export function getAssertionHandler(this: BaseSDL, puserdata: Pointer) {
+export function getAssertionHandler(this: SDL, puserdata: Pointer) {
   return this.symbols.SDL_GetAssertionHandler(puserdata);
 }
 
-export function getAssertionReport(this: BaseSDL) {
+export function getAssertionReport(this: SDL) {
   const result = this.symbols.SDL_GetAssertionReport();
 
   if (!result) return null;
@@ -48,6 +48,6 @@ export function getAssertionReport(this: BaseSDL) {
   return new AssertData(result);
 }
 
-export function resetAssertionReport(this: BaseSDL) {
+export function resetAssertionReport(this: SDL) {
   this.symbols.SDL_ResetAssertionReport();
 }

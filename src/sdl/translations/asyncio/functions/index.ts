@@ -1,20 +1,20 @@
 import { CString, type Pointer } from 'bun:ffi';
-import type { BaseSDL } from '../../..';
+import type { SDL } from '../../..';
 import { AsyncIOOutcome } from '../utility';
 
 export function asyncIOFromFile(
-  this: BaseSDL,
+  this: SDL,
   options: { file: CString; mode: CString }
 ) {
   return this.symbols.SDL_AsyncIOFromFile(options.file.ptr, options.mode.ptr);
 }
 
-export function getAsyncIOSize(this: BaseSDL, asyncio: Pointer) {
+export function getAsyncIOSize(this: SDL, asyncio: Pointer) {
   return this.symbols.SDL_GetAsyncIOSize(asyncio);
 }
 
 export function readAsyncIO(
-  this: BaseSDL,
+  this: SDL,
   options: {
     asyncio: Pointer;
     ptr: Pointer;
@@ -35,7 +35,7 @@ export function readAsyncIO(
 }
 
 export function writeAsyncIO(
-  this: BaseSDL,
+  this: SDL,
   options: {
     asyncio: Pointer;
     ptr: Pointer;
@@ -56,7 +56,7 @@ export function writeAsyncIO(
 }
 
 export function closeAsyncIO(
-  this: BaseSDL,
+  this: SDL,
   options: {
     asyncio: Pointer;
     flush: boolean;
@@ -72,16 +72,16 @@ export function closeAsyncIO(
   );
 }
 
-export function createAsyncIOQueue(this: BaseSDL) {
+export function createAsyncIOQueue(this: SDL) {
   return this.symbols.SDL_CreateAsyncIOQueue();
 }
 
-export function destroyAsyncIOQueue(this: BaseSDL, queue: Pointer) {
+export function destroyAsyncIOQueue(this: SDL, queue: Pointer) {
   return this.symbols.SDL_DestroyAsyncIOQueue(queue);
 }
 
 export function getAsyncIOResult(
-  this: BaseSDL,
+  this: SDL,
   options: {
     queue: Pointer;
     outcome?: AsyncIOOutcome | Pointer | null;
@@ -108,7 +108,7 @@ export function getAsyncIOResult(
 }
 
 export function waitAsyncIOResult(
-  this: BaseSDL,
+  this: SDL,
   options: {
     queue: Pointer;
     outcome: AsyncIOOutcome | Pointer;
@@ -127,12 +127,12 @@ export function waitAsyncIOResult(
   );
 }
 
-export function signalAsyncIOQueue(this: BaseSDL, queue: Pointer) {
+export function signalAsyncIOQueue(this: SDL, queue: Pointer) {
   this.symbols.SDL_SignalAsyncIOQueue(queue);
 }
 
 export function loadFileAsync(
-  this: BaseSDL,
+  this: SDL,
   options: {
     file: CString;
     queue: Pointer;

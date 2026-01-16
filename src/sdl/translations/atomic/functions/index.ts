@@ -1,35 +1,35 @@
 import type { Pointer } from 'bun:ffi';
-import type { BaseSDL } from '../../..';
+import type { SDL } from '../../..';
 import { AtomicInt, AtomicU32, SpinLock } from '../utility';
 
-export function tryLockSpinlock(this: BaseSDL, lock: SpinLock | Pointer) {
+export function tryLockSpinlock(this: SDL, lock: SpinLock | Pointer) {
   const addr = lock instanceof SpinLock ? lock.$address : lock;
 
   return this.symbols.SDL_TryLockSpinlock(addr);
 }
 
-export function lockSpinlock(this: BaseSDL, lock: SpinLock | Pointer) {
+export function lockSpinlock(this: SDL, lock: SpinLock | Pointer) {
   const addr = lock instanceof SpinLock ? lock.$address : lock;
 
   this.symbols.SDL_LockSpinlock(addr);
 }
 
-export function unlockSpinlock(this: BaseSDL, lock: SpinLock | Pointer) {
+export function unlockSpinlock(this: SDL, lock: SpinLock | Pointer) {
   const addr = lock instanceof SpinLock ? lock.$address : lock;
 
   this.symbols.SDL_UnlockSpinlock(addr);
 }
 
-export function memoryBarrierReleaseFunction(this: BaseSDL) {
+export function memoryBarrierReleaseFunction(this: SDL) {
   this.symbols.SDL_MemoryBarrierReleaseFunction();
 }
 
-export function memoryBarrierAcquireFunction(this: BaseSDL) {
+export function memoryBarrierAcquireFunction(this: SDL) {
   this.symbols.SDL_MemoryBarrierAcquireFunction();
 }
 
 export function compareAndSwapAtomicInt(
-  this: BaseSDL,
+  this: SDL,
   options: {
     a: AtomicInt | Pointer;
     oldval: number;
@@ -46,7 +46,7 @@ export function compareAndSwapAtomicInt(
 }
 
 export function setAtomicInt(
-  this: BaseSDL,
+  this: SDL,
   options: {
     a: AtomicInt | Pointer;
     v: number;
@@ -57,14 +57,14 @@ export function setAtomicInt(
   return this.symbols.SDL_SetAtomicInt(addr, options.v);
 }
 
-export function getAtomicInt(this: BaseSDL, a: AtomicInt | Pointer) {
+export function getAtomicInt(this: SDL, a: AtomicInt | Pointer) {
   const addr = a instanceof AtomicInt ? a.$address : a;
 
   return this.symbols.SDL_GetAtomicInt(addr);
 }
 
 export function addAtomicInt(
-  this: BaseSDL,
+  this: SDL,
   options: {
     a: AtomicInt | Pointer;
     v: number;
@@ -75,14 +75,14 @@ export function addAtomicInt(
   return this.symbols.SDL_AddAtomicInt(addr, options.v);
 }
 
-export function atomicIncRef(this: BaseSDL, a: AtomicInt | Pointer) {
+export function atomicIncRef(this: SDL, a: AtomicInt | Pointer) {
   addAtomicInt.call(this, {
     a,
     v: 1,
   });
 }
 
-export function atomicDecRef(this: BaseSDL, a: AtomicInt | Pointer) {
+export function atomicDecRef(this: SDL, a: AtomicInt | Pointer) {
   return (
     addAtomicInt.call(this, {
       a,
@@ -92,7 +92,7 @@ export function atomicDecRef(this: BaseSDL, a: AtomicInt | Pointer) {
 }
 
 export function compareAndSwapAtomicU32(
-  this: BaseSDL,
+  this: SDL,
   options: {
     a: AtomicU32 | Pointer;
     oldval: number;
@@ -109,7 +109,7 @@ export function compareAndSwapAtomicU32(
 }
 
 export function setAtomicU32(
-  this: BaseSDL,
+  this: SDL,
   options: {
     a: AtomicU32 | Pointer;
     v: number;
@@ -120,14 +120,14 @@ export function setAtomicU32(
   return this.symbols.SDL_SetAtomicU32(addr, options.v);
 }
 
-export function getAtomicU32(this: BaseSDL, a: AtomicU32 | Pointer) {
+export function getAtomicU32(this: SDL, a: AtomicU32 | Pointer) {
   const addr = a instanceof AtomicU32 ? a.$address : a;
 
   return this.symbols.SDL_GetAtomicU32(addr);
 }
 
 export function addAtomicU32(
-  this: BaseSDL,
+  this: SDL,
   options: {
     a: AtomicU32 | Pointer;
     v: number;
@@ -139,7 +139,7 @@ export function addAtomicU32(
 }
 
 export function compareAndSwapAtomicPointer(
-  this: BaseSDL,
+  this: SDL,
   a: Pointer,
   oldval: Pointer,
   newval: Pointer
@@ -147,10 +147,10 @@ export function compareAndSwapAtomicPointer(
   return this.symbols.SDL_CompareAndSwapAtomicPointer(a, oldval, newval);
 }
 
-export function setAtomicPointer(this: BaseSDL, a: Pointer, v: Pointer) {
+export function setAtomicPointer(this: SDL, a: Pointer, v: Pointer) {
   return this.symbols.SDL_SetAtomicPointer(a, v);
 }
 
-export function getAtomicPointer(this: BaseSDL, a: Pointer) {
+export function getAtomicPointer(this: SDL, a: Pointer) {
   return this.symbols.SDL_GetAtomicPointer(a);
 }

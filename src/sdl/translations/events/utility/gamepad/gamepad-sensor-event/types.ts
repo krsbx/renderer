@@ -1,3 +1,3 @@
 import type { EventType } from '../../../../../ffi/events/constant';
 
-export type GamepadSensorEventType = EventType.GAMEPAD_SENSOR_UPDATE;
+export type GamepadSensorEventType = typeof EventType.GAMEPAD_SENSOR_UPDATE;

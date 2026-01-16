@@ -1,6 +1,8 @@
-export enum ByteOffset {
-  slot = 0,
-  pitch = 4,
-  input_rate = 8,
-  instance_step_rate = 12,
-}
+export const ByteOffset = {
+  slot: 0,
+  pitch: 4,
+  input_rate: 8,
+  instance_step_rate: 12,
+} as const;
+
+export type ByteOffset = (typeof ByteOffset)[keyof typeof ByteOffset];

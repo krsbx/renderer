@@ -1,12 +1,14 @@
-export enum ByteOffset {
-  type = 0,
-  reserved = 4,
-  timestamp = 8,
-  windowID = 16,
-  which = 20,
-  state = 24,
-  x = 28,
-  y = 32,
-  xrel = 36,
-  yrel = 40,
-}
+export const ByteOffset = {
+  type: 0,
+  reserved: 4,
+  timestamp: 8,
+  windowID: 16,
+  which: 20,
+  state: 24,
+  x: 28,
+  y: 32,
+  xrel: 36,
+  yrel: 40,
+} as const;
+
+export type ByteOffset = (typeof ByteOffset)[keyof typeof ByteOffset];

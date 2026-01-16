@@ -1,3 +1,5 @@
 import type { EventType } from '../../../../../ffi/events/constant';
 
-export type PenTouchEventType = EventType.PEN_DOWN | EventType.PEN_UP;
+export type PenTouchEventType =
+  | typeof EventType.PEN_DOWN
+  | typeof EventType.PEN_UP;

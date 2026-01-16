@@ -1,3 +1,5 @@
 import type { EventType } from '../../../../../ffi/events/constant';
 
-export type KeyboardEventType = EventType.KEY_DOWN | EventType.KEY_UP;
+export type KeyboardEventType =
+  | typeof EventType.KEY_DOWN
+  | typeof EventType.KEY_UP;

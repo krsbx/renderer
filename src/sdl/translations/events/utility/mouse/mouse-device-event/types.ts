@@ -1,5 +1,5 @@
 import type { EventType } from '../../../../../ffi/events/constant';
 
 export type MouseDeviceEventType =
-  | EventType.MOUSE_ADDED
-  | EventType.MOUSE_REMOVED;
+  | typeof EventType.MOUSE_ADDED
+  | typeof EventType.MOUSE_REMOVED;

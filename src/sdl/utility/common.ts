@@ -1,4 +1,4 @@
-import { ptr } from 'bun:ffi';
+import { CString, ptr } from 'bun:ffi';
 import { IS_WINDOWS, WIDE_STRING_CHAR_SIZE } from './constant';
 
 export const IS_BIG_ENDIAN =
@@ -52,4 +52,15 @@ export function toCStringBuffer(value: string) {
 export function combineBitwise<T>(...values: T[]): T {
   // @ts-expect-error Combine bitwise
   return values.reduce((acc, value) => acc | value, 0 as T);
+}
+
+export function cloneCString(value: string | CString) {
+  const finalValue = typeof value === 'string' ? value : value.toString();
+  const buffer = toCStringBuffer(finalValue);
+  const address = ptr(buffer);
+
+  const clone = new CString(address);
+  (clone as CString & { $buffer: Uint8Array }).$buffer = buffer;
+
+  return clone;
 }

@@ -1,8 +1,12 @@
-import { type Pointer, ptr, read } from 'bun:ffi';
+import { type Pointer, ptr, read, toArrayBuffer } from 'bun:ffi';
 
 type ReadType = keyof typeof read;
 
 type CStructOptions =
+  | {
+      length: number;
+      address: Pointer;
+    }
   | {
       length: number;
     }
@@ -26,23 +30,32 @@ export class CStruct {
     ptr: 8,
   } as const;
 
-  private $memory: Uint8Array | null;
+  public $memory: Uint8Array | null;
   public $address: Pointer;
   public $view: DataView | null;
 
   public constructor(options: CStructOptions) {
-    if ('address' in options) {
+    if ('address' in options && 'length' in options) {
+      const buffer = toArrayBuffer(options.address, 0, options.length);
+      this.$memory = new Uint8Array(buffer);
+      this.$address = options.address;
+    } else if ('length' in options) {
+      this.$memory = new Uint8Array(options.length);
+      this.$address = ptr(this.$memory);
+    } else {
       this.$memory = null;
       this.$address = options.address;
       this.$view = null;
-    } else {
-      this.$memory = new Uint8Array(options.length);
-      this.$address = ptr(this.$memory);
+    }
+
+    if (this.$memory) {
       this.$view = new DataView(
         this.$memory.buffer,
         this.$memory.byteOffset,
         this.$memory.byteLength
       );
+    } else {
+      this.$view = null;
     }
   }
 
@@ -135,7 +148,7 @@ export class CStruct {
   ): this;
   public setValue(
     offset: number,
-    value: bigint,
+    value: number,
     type: Extract<ReadType, 'intptr' | 'ptr'>
   ): this;
   public setValue(offset: number, value: never, type: ReadType) {
@@ -194,5 +207,20 @@ export class CStruct {
     }
 
     return this;
+  }
+
+  public clone() {
+    if (!this.$memory) {
+      throw new Error('Cannot clone a read-only struct');
+    }
+
+    const struct = new CStruct({
+      length: this.$memory.byteLength,
+    });
+
+    struct.$memory = this.$memory.slice();
+    struct.$address = ptr(struct.$memory);
+
+    return struct as CStruct & { $memory: Uint8Array };
   }
 }

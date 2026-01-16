@@ -3,7 +3,7 @@ import type { BaseSDL } from '..';
 import type { InitFlags } from '../ffi/init/constant';
 import { convertStringToFfi } from '../utility/common';
 
-export function initTranslations(this: BaseSDL, flags: InitFlags) {
+export function init(this: BaseSDL, flags: InitFlags) {
   return this.symbols.SDL_Init(flags);
 }
 

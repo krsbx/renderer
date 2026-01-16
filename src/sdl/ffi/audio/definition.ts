@@ -254,12 +254,12 @@ export const AudioDefinition = {
   },
   // SDL_AudioStream * SDL_OpenAudioDeviceStream(SDL_AudioDeviceID devid, const SDL_AudioSpec *spec, SDL_AudioStreamCallback callback, void *userdata);               // Convenience function for straightforward audio init for the common case.
   SDL_OpenAudioDeviceStream: {
-    args: [FFIType.i32, FFIType.ptr, FFIType.ptr, FFIType.ptr],
+    args: [FFIType.u32, FFIType.ptr, FFIType.ptr, FFIType.ptr],
     returns: FFIType.ptr,
   },
   // bool SDL_SetAudioPostmixCallback(SDL_AudioDeviceID devid, SDL_AudioPostmixCallback callback, void *userdata);                                                    // Set a callback that fires when data is about to be fed to an audio device.
   SDL_SetAudioPostmixCallback: {
-    args: [FFIType.i32, FFIType.ptr, FFIType.ptr],
+    args: [FFIType.u32, FFIType.ptr, FFIType.ptr],
     returns: FFIType.bool,
   },
   // bool SDL_LoadWAV_IO(SDL_IOStream *src, bool closeio, SDL_AudioSpec *spec, Uint8 **audio_buf, Uint32 *audio_len);                                                 // Load the audio data of a WAVE file into memory.

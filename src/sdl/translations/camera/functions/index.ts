@@ -61,7 +61,9 @@ export function getCameraSupportedFormats(this: SDL, cameraId: number) {
 
     if (!formatPtr) continue;
 
-    const format = new CameraSpec(formatPtr);
+    const sdlFormat = new CameraSpec(formatPtr);
+    // Clone the format so it become a snapshot
+    const format = new CameraSpec(sdlFormat.$memory.slice());
 
     formats.push(format);
   }

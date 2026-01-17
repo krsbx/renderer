@@ -4,7 +4,7 @@ export const SensorDefinition = {
   // SDL_SensorID * SDL_GetSensors(int *count);                                // Get a list of currently connected sensors.
   SDL_GetSensors: {
     args: [FFIType.ptr],
-    returns: FFIType.u32,
+    returns: FFIType.ptr,
   },
   // const char * SDL_GetSensorNameForID(SDL_SensorID instance_id);            // Get the implementation dependent name of a sensor.
   SDL_GetSensorNameForID: {

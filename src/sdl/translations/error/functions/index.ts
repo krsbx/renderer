@@ -1,8 +1,8 @@
 import type { CString } from 'bun:ffi';
 import type { SDL } from '../../..';
 
-export function setError(this: SDL, messages: CString[]) {
-  return this.symbols.SDL_SetError(...messages.map((msg) => msg.ptr));
+export function setError(this: SDL, fmt: CString) {
+  return this.symbols.SDL_SetError(fmt.ptr);
 }
 
 export function setErrorV(this: SDL) {

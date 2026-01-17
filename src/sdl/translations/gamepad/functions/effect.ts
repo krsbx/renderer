@@ -57,7 +57,7 @@ export function sendGamepadEffect(
   this: SDL,
   options: {
     gamepad: Pointer;
-    data: Pointer | CStruct | Uint8Array;
+    data: CStruct | Pointer | Uint8Array;
     size: number;
   }
 ) {

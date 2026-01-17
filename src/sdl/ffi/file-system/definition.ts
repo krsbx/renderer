@@ -9,7 +9,7 @@ export const FileSystemDefinition = {
   // char * SDL_GetPrefPath(const char *org, const char *app);                                                // Get the user-and-app-specific path where files can be written.
   SDL_GetPrefPath: {
     args: [FFIType.cstring, FFIType.cstring],
-    returns: FFIType.cstring,
+    returns: FFIType.ptr,
   },
   // const char * SDL_GetUserFolder(SDL_Folder folder);                                                       // Finds the most suitable user folder for a specific purpose.
   SDL_GetUserFolder: {
@@ -54,6 +54,6 @@ export const FileSystemDefinition = {
   // char * SDL_GetCurrentDirectory(void);                                                                    // Get what the system believes is the "current working directory."
   SDL_GetCurrentDirectory: {
     args: [],
-    returns: FFIType.cstring,
+    returns: FFIType.ptr,
   },
 } satisfies Record<string, FFIFunction>;

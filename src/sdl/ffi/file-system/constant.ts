@@ -46,3 +46,13 @@ export const EnumerationResult = RawEnumerationResult as Readonly<
 
 export type EnumerationResult =
   (typeof EnumerationResult)[keyof typeof EnumerationResult];
+
+const RawGlobFlags = {
+  CASEINSENSITIVE: 1 << 0,
+} as const;
+
+export const GlobFlags = RawGlobFlags as Readonly<
+  Record<keyof typeof RawGlobFlags, Brand<number, 'GlobFlags'>>
+>;
+
+export type GlobFlags = (typeof GlobFlags)[keyof typeof GlobFlags];

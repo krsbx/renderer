@@ -1,6 +1,5 @@
 import { CString, type JSCallback, type Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
-import { cloneCString } from '../../../utility/common';
 import { CStruct } from '../../../utility/cstruct';
 
 export function setClipboardText(this: SDL, text: CString) {
@@ -8,10 +7,13 @@ export function setClipboardText(this: SDL, text: CString) {
 }
 
 export function getClipboardText(this: SDL) {
-  const sdlText = this.symbols.SDL_GetClipboardText();
-  const text = cloneCString(sdlText);
+  const ptr = this.symbols.SDL_GetClipboardText();
 
-  this.symbols.SDL_free(sdlText);
+  if (!ptr) return null;
+
+  const text = new CString(ptr);
+
+  this.symbols.SDL_free(ptr);
 
   return text;
 }
@@ -25,10 +27,13 @@ export function setPrimarySelectionText(this: SDL, text: CString) {
 }
 
 export function getPrimarySelectionText(this: SDL) {
-  const sdlText = this.symbols.SDL_GetPrimarySelectionText();
-  const text = cloneCString(sdlText);
+  const ptr = this.symbols.SDL_GetPrimarySelectionText();
 
-  this.symbols.SDL_free(sdlText);
+  if (!ptr) return null;
+
+  const text = new CString(ptr);
+
+  this.symbols.SDL_free(ptr);
 
   return text;
 }
@@ -115,7 +120,7 @@ export function getClipboardMimeTypes(this: SDL) {
 
     if (!mimeTypePtr) continue;
 
-    const mimeType = cloneCString(new CString(mimeTypePtr));
+    const mimeType = new CString(mimeTypePtr);
 
     mimeTypes.push(mimeType);
   }

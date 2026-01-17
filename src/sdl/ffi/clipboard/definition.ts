@@ -9,7 +9,7 @@ export const ClipboardDefinition = {
   // char * SDL_GetClipboardText(void);                                                                                                                                    // Get UTF-8 text from the clipboard.
   SDL_GetClipboardText: {
     args: [],
-    returns: FFIType.cstring,
+    returns: FFIType.ptr,
   },
   // bool SDL_HasClipboardText(void);                                                                                                                                      // Query whether the clipboard exists and contains a non-empty text string.
   SDL_HasClipboardText: {
@@ -24,7 +24,7 @@ export const ClipboardDefinition = {
   // char * SDL_GetPrimarySelectionText(void);                                                                                                                             // Get UTF-8 text from the primary selection.
   SDL_GetPrimarySelectionText: {
     args: [],
-    returns: FFIType.cstring,
+    returns: FFIType.ptr,
   },
   // bool SDL_HasPrimarySelectionText(void);                                                                                                                               // Query whether the primary selection exists and contains a non-empty text string.
   SDL_HasPrimarySelectionText: {

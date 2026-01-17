@@ -59,7 +59,7 @@ export const GamepadButton = RawGamepadButton as Readonly<
 
 export type GamepadButton = (typeof GamepadButton)[keyof typeof GamepadButton];
 
-const RawGamepadLabel = {
+const RawGamepadButtonLabel = {
   UNKNOWN: 0,
   A: 1,
   B: 2,
@@ -71,11 +71,15 @@ const RawGamepadLabel = {
   TRIANGLE: 8,
 } as const;
 
-export const GamepadLabel = RawGamepadLabel as Readonly<
-  Record<keyof typeof RawGamepadLabel, Brand<number, 'GamepadLabel'>>
+export const GamepadButtonLabel = RawGamepadButtonLabel as Readonly<
+  Record<
+    keyof typeof RawGamepadButtonLabel,
+    Brand<number, 'GamepadButtonLabel'>
+  >
 >;
 
-export type GamepadLabel = (typeof GamepadLabel)[keyof typeof GamepadLabel];
+export type GamepadButtonLabel =
+  (typeof GamepadButtonLabel)[keyof typeof GamepadButtonLabel];
 
 const RawGamepadAxis = {
   INVALID: -1,

@@ -284,12 +284,12 @@ export const GamepadDefinition = {
   // SDL_GamepadButtonLabel SDL_GetGamepadButtonLabelForType(SDL_GamepadType type, SDL_GamepadButton button);                             // Get the label of a button on a gamepad.
   SDL_GetGamepadButtonLabelForType: {
     args: [FFIType.i32, FFIType.i32],
-    returns: FFIType.ptr,
+    returns: FFIType.i32,
   },
   // SDL_GamepadButtonLabel SDL_GetGamepadButtonLabel(SDL_Gamepad *gamepad, SDL_GamepadButton button);                                    // Get the label of a button on a gamepad.
   SDL_GetGamepadButtonLabel: {
     args: [FFIType.ptr, FFIType.i32],
-    returns: FFIType.ptr,
+    returns: FFIType.i32,
   },
   // int SDL_GetNumGamepadTouchpads(SDL_Gamepad *gamepad);                                                                                // Get the number of touchpads on a gamepad.
   SDL_GetNumGamepadTouchpads: {
@@ -367,11 +367,11 @@ export const GamepadDefinition = {
   // const char * SDL_GetGamepadAppleSFSymbolsNameForButton(SDL_Gamepad *gamepad, SDL_GamepadButton button);                              // Return the sfSymbolsName for a given button on a gamepad on Apple platforms.
   SDL_GetGamepadAppleSFSymbolsNameForButton: {
     args: [FFIType.ptr, FFIType.i32],
-    returns: FFIType.ptr,
+    returns: FFIType.cstring,
   },
   // const char * SDL_GetGamepadAppleSFSymbolsNameForAxis(SDL_Gamepad *gamepad, SDL_GamepadAxis axis);                                    // Return the sfSymbolsName for a given axis on a gamepad on Apple platforms.
   SDL_GetGamepadAppleSFSymbolsNameForAxis: {
     args: [FFIType.ptr, FFIType.i32],
-    returns: FFIType.ptr,
+    returns: FFIType.cstring,
   },
 } satisfies Record<string, FFIFunction>;

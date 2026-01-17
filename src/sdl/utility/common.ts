@@ -64,3 +64,22 @@ export function cloneCString(value: string | CString) {
 
   return clone;
 }
+
+export function cloneCWideString(value: string | CString) {
+  const finalValue = typeof value === 'string' ? value : value.toString();
+  const buffer = toCWideStringBuffer(finalValue);
+  const address = ptr(buffer);
+
+  const clone = new CString(address);
+  (clone as CString & { $buffer: Uint8Array }).$buffer = buffer;
+
+  return clone;
+}
+
+export function stringToCString(value: string) {
+  return cloneCString(value);
+}
+
+export function stringToCWideString(value: string) {
+  return cloneCWideString(value);
+}

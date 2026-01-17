@@ -1,18 +1,17 @@
-import { JSCallback, type Pointer } from 'bun:ffi';
-import type { BaseSDL } from '..';
-import type { PropertyType } from '../ffi/properties/constant';
-import { convertStringToFfi } from '../utility/common';
+import type { CString, JSCallback, Pointer } from 'bun:ffi';
+import type { SDL } from '../../..';
+import type { PropertyType } from '../../../ffi/properties/constant';
 
-export function getGlobalProperties(this: BaseSDL) {
+export function getGlobalProperties(this: SDL) {
   return this.symbols.SDL_GetGlobalProperties();
 }
 
-export function createProerties(this: BaseSDL) {
+export function createProerties(this: SDL) {
   return this.symbols.SDL_CreateProperties();
 }
 
 export function copyProperties(
-  this: BaseSDL,
+  this: SDL,
   options: {
     src: number;
     dest: number;
@@ -21,237 +20,228 @@ export function copyProperties(
   return this.symbols.SDL_CopyProperties(options.src, options.dest);
 }
 
-export function lockProperties(this: BaseSDL, props: number) {
+export function lockProperties(this: SDL, props: number) {
   return this.symbols.SDL_LockProperties(props);
 }
 
-export function unlockProperties(this: BaseSDL, props: number) {
+export function unlockProperties(this: SDL, props: number) {
   return this.symbols.SDL_UnlockProperties(props);
 }
 
 export function setPointerPropertyWithCleanup(
-  this: BaseSDL,
+  this: SDL,
   options: {
     props: number;
-    name: string;
+    name: CString;
     value?: Pointer | null;
     cleanup: JSCallback;
-    userData?: Pointer | null;
+    userdata?: Pointer | null;
   }
 ) {
   return this.symbols.SDL_SetPointerPropertyWithCleanup(
     options.props,
-    convertStringToFfi(options.name).reference,
+    options.name.ptr,
     options.value ?? null,
     options.cleanup.ptr,
-    options.userData ?? null
+    options.userdata ?? null
   );
 }
 
 export function setPointerProperty(
-  this: BaseSDL,
+  this: SDL,
   options: {
     props: number;
-    name: string;
+    name: CString;
     value?: Pointer | null;
   }
 ) {
   return this.symbols.SDL_SetPointerProperty(
     options.props,
-    convertStringToFfi(options.name).reference,
+    options.name.ptr,
     options.value ?? null
   );
 }
 
 export function setStringProperty(
-  this: BaseSDL,
+  this: SDL,
   options: {
     props: number;
-    name: string;
-    value: string;
+    name: CString;
+    value: CString;
   }
 ) {
   return this.symbols.SDL_SetStringProperty(
     options.props,
-    convertStringToFfi(options.name).reference,
-    convertStringToFfi(options.value).reference
+    options.name.ptr,
+    options.value.ptr
   );
 }
 
 export function setNumberProperty(
-  this: BaseSDL,
+  this: SDL,
   options: {
     props: number;
-    name: string;
+    name: CString;
     value: number;
   }
 ) {
   return this.symbols.SDL_SetNumberProperty(
     options.props,
-    convertStringToFfi(options.name).reference,
+    options.name.ptr,
     options.value
   );
 }
 
 export function setFloatProperty(
-  this: BaseSDL,
+  this: SDL,
   options: {
     props: number;
-    name: string;
+    name: CString;
     value: number;
   }
 ) {
   return this.symbols.SDL_SetFloatProperty(
     options.props,
-    convertStringToFfi(options.name).reference,
+    options.name.ptr,
     options.value
   );
 }
 
 export function setBooleanProperty(
-  this: BaseSDL,
+  this: SDL,
   options: {
     props: number;
-    name: string;
+    name: CString;
     value: boolean;
   }
 ) {
   return this.symbols.SDL_SetBooleanProperty(
     options.props,
-    convertStringToFfi(options.name).reference,
+    options.name.ptr,
     options.value
   );
 }
 
 export function hasProperty(
-  this: BaseSDL,
+  this: SDL,
   options: {
     props: number;
-    name: string;
+    name: CString;
   }
 ) {
-  return this.symbols.SDL_HasProperty(
-    options.props,
-    convertStringToFfi(options.name).reference
-  );
+  return this.symbols.SDL_HasProperty(options.props, options.name.ptr);
 }
 
 export function getPropertyType(
-  this: BaseSDL,
+  this: SDL,
   options: {
     props: number;
-    name: string;
+    name: CString;
   }
 ) {
   return this.symbols.SDL_GetPropertyType(
     options.props,
-    convertStringToFfi(options.name).reference
+    options.name.ptr
   ) as PropertyType;
 }
 
 export function getPointerProperty(
-  this: BaseSDL,
+  this: SDL,
   options: {
     props: number;
-    name: string;
+    name: CString;
   }
 ) {
-  return this.symbols.SDL_GetPointerProperty(
-    options.props,
-    convertStringToFfi(options.name).reference
-  );
+  return this.symbols.SDL_GetPointerProperty(options.props, options.name.ptr);
 }
 
 export function getStringProperty(
-  this: BaseSDL,
+  this: SDL,
   options: {
     props: number;
-    name: string;
-    defaultValue: string;
+    name: CString;
+    defaultValue: CString;
   }
 ) {
   return this.symbols.SDL_GetStringProperty(
     options.props,
-    convertStringToFfi(options.name).reference,
-    convertStringToFfi(options.defaultValue).reference
+    options.name.ptr,
+    options.defaultValue.ptr
   );
 }
 
 export function getNumberProperty(
-  this: BaseSDL,
+  this: SDL,
   options: {
     props: number;
-    name: string;
+    name: CString;
     defaultValue: number;
   }
 ) {
   return this.symbols.SDL_GetNumberProperty(
     options.props,
-    convertStringToFfi(options.name).reference,
+    options.name.ptr,
     options.defaultValue
   );
 }
 
 export function getFloatProperty(
-  this: BaseSDL,
+  this: SDL,
   options: {
     props: number;
-    name: string;
+    name: CString;
     defaultValue: number;
   }
 ) {
   return this.symbols.SDL_GetFloatProperty(
     options.props,
-    convertStringToFfi(options.name).reference,
+    options.name.ptr,
     options.defaultValue
   );
 }
 
 export function getBooleanProperty(
-  this: BaseSDL,
+  this: SDL,
   options: {
     props: number;
-    name: string;
+    name: CString;
     defaultValue: boolean;
   }
 ) {
   return this.symbols.SDL_GetBooleanProperty(
     options.props,
-    convertStringToFfi(options.name).reference,
+    options.name.ptr,
     options.defaultValue
   );
 }
 
 export function clearProperties(
-  this: BaseSDL,
+  this: SDL,
   options: {
     props: number;
-    name: string;
+    name: CString;
   }
 ) {
-  return this.symbols.SDL_ClearProperty(
-    options.props,
-    convertStringToFfi(options.name).reference
-  );
+  return this.symbols.SDL_ClearProperty(options.props, options.name.ptr);
 }
 
 export function enumerateProperties(
-  this: BaseSDL,
+  this: SDL,
   options: {
     props: number;
     callback: JSCallback;
-    userData?: Pointer | null;
+    userdata?: Pointer | null;
   }
 ) {
   return this.symbols.SDL_EnumerateProperties(
     options.props,
     options.callback.ptr,
-    options.userData ?? null
+    options.userdata ?? null
   );
 }
 
 export function destroyProperties(
-  this: BaseSDL,
+  this: SDL,
   options: {
     props: number;
   }

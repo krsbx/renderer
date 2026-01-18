@@ -30,12 +30,15 @@ import * as rect from './rect';
 import * as sensor from './sensor';
 import * as sharedObject from './shared-object';
 import * as storage from './storage';
+import * as system from './system';
 import * as thread from './thread';
 import * as time from './time';
 import * as timer from './timer';
 import * as touch from './touch';
+import * as tray from './tray';
 import * as version from './version';
 import * as video from './video';
+import * as vulkan from './vulkan';
 
 export const Translations = {
   ...assert,
@@ -70,12 +73,15 @@ export const Translations = {
   ...sensor,
   ...sharedObject,
   ...storage,
+  ...system,
   ...thread,
   ...time,
   ...timer,
   ...touch,
+  ...tray,
   ...version,
   ...video,
+  ...vulkan,
 };
 
 export type Translations = typeof Translations;

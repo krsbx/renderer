@@ -1,25 +1,26 @@
-import { JSCallback, type Pointer } from 'bun:ffi';
+import type { CString, JSCallback, Pointer } from 'bun:ffi';
 import type { BaseSDL } from '../../..';
 import type { GLAttr } from '../../../ffi/video/constant';
-import { convertStringToFfi } from '../../../utility/common';
-import { Surface } from '../../surface/utility';
+import { CStruct } from '../../../utility/cstruct';
 
-export function glLoadLibrary(this: BaseSDL, path: string) {
-  return this.symbols.SDL_GL_LoadLibrary(convertStringToFfi(path).reference);
+export function glLoadLibrary(this: BaseSDL, path: CString) {
+  return this.symbols.SDL_GL_LoadLibrary(path.ptr);
 }
 
-export function glGetProcAddress(this: BaseSDL, proc: string) {
-  return this.symbols.SDL_GL_GetProcAddress(convertStringToFfi(proc).reference);
+export function glGetProcAddress(this: BaseSDL, proc: CString) {
+  return this.symbols.SDL_GL_GetProcAddress(proc.ptr);
+}
+
+export function eglGetProcAddress(this: BaseSDL, proc: CString) {
+  return this.symbols.SDL_EGL_GetProcAddress(proc.ptr);
 }
 
 export function glUnloadLibrary(this: BaseSDL) {
   return this.symbols.SDL_GL_UnloadLibrary();
 }
 
-export function glExtensionSupported(this: BaseSDL, extension: string) {
-  return this.symbols.SDL_GL_ExtensionSupported(
-    convertStringToFfi(extension).reference
-  );
+export function glExtensionSupported(this: BaseSDL, extension: CString) {
+  return this.symbols.SDL_GL_ExtensionSupported(extension.ptr);
 }
 
 export function glResetAttributes(this: BaseSDL) {
@@ -37,7 +38,11 @@ export function glSetAttribute(
 }
 
 export function glGetAttribute(this: BaseSDL, attr: GLAttr) {
-  return this.symbols.SDL_GL_GetAttribute(attr);
+  const valueStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
+
+  const success = this.symbols.SDL_GL_GetAttribute(attr, valueStruct.$address);
+
+  return success ? valueStruct.getValue(0, 'i32') : null;
 }
 
 export function glCreateContext(this: BaseSDL, window: Pointer) {
@@ -66,12 +71,12 @@ export function eglGetCurrentDisplay(this: BaseSDL) {
   return this.symbols.SDL_EGL_GetCurrentDisplay();
 }
 
+export function eglGetCurrentConfig(this: BaseSDL) {
+  return this.symbols.SDL_EGL_GetCurrentConfig();
+}
+
 export function eglGetWindowSurface(this: BaseSDL, window: Pointer) {
-  const result = this.symbols.SDL_EGL_GetWindowSurface(window);
-
-  if (!result) return null;
-
-  return new Surface(result);
+  return this.symbols.SDL_EGL_GetWindowSurface(window);
 }
 
 export function eglSetAttributeCallbacks(
@@ -96,7 +101,11 @@ export function glSetSwapInterval(this: BaseSDL, interval: number) {
 }
 
 export function glGetSwapInterval(this: BaseSDL) {
-  return this.symbols.SDL_GL_GetSwapInterval();
+  const intervalStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
+
+  const success = this.symbols.SDL_GL_GetSwapInterval(intervalStruct.$address);
+
+  return success ? intervalStruct.getValue(0, 'i32') : null;
 }
 
 export function glSwapWindow(this: BaseSDL, window: Pointer) {

@@ -1,143 +1,133 @@
-import { ptr, read, type Pointer } from 'bun:ffi';
-import type { BaseSDL } from '../../..';
+import type { Pointer } from 'bun:ffi';
+import type { SDL } from '../../..';
 import type {
   DisplayOrientation,
   SystemTheme,
 } from '../../../ffi/video/constant';
-import type {
-  FreeAddress,
-  MemoryAddress,
-  Vector2,
-} from '../../../types/shared';
-import { Rect } from '../../rect/utility';
+import { CStruct } from '../../../utility/cstruct';
+import { Point, Rect } from '../../rect/utility';
 import { DisplayMode } from '../utility';
 
-export function getNumVideoDrivers(this: BaseSDL) {
+export function getNumVideoDrivers(this: SDL) {
   return this.symbols.SDL_GetNumVideoDrivers();
 }
 
-export function getVideoDriver(this: BaseSDL, index: number) {
+export function getVideoDriver(this: SDL, index: number) {
   return this.symbols.SDL_GetVideoDriver(index);
 }
 
-export function getCurrentVideoDriver(this: BaseSDL) {
+export function getCurrentVideoDriver(this: SDL) {
   return this.symbols.SDL_GetCurrentVideoDriver();
 }
 
-export function getSystemTheme(this: BaseSDL) {
+export function getSystemTheme(this: SDL) {
   return this.symbols.SDL_GetSystemTheme() as SystemTheme;
 }
 
-export function getDisplays(this: BaseSDL) {
-  const countBuf = new Int32Array(1);
+export function getDisplays(this: SDL) {
+  const countStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
-  const listPtr = this.symbols.SDL_GetDisplays(ptr(countBuf));
+  const listPtr = this.symbols.SDL_GetDisplays(countStruct.$address);
 
-  const count = countBuf[0] || 0n;
-  const result: number[] = [];
+  if (!listPtr) return [];
 
-  if (count !== 0n && count > 0) {
-    for (let i = 0; i < count; i++) {
-      if (!listPtr) continue;
+  const count = countStruct.getValue(0, 'i32');
+  const list = new CStruct({ address: listPtr });
+  const displayIds: number[] = [];
 
-      const displayID = read.u32(listPtr, i * 4);
+  for (let i = 0; i < count; i++) {
+    const displayId = list.getValue(i * CStruct.BYTE_SIZE.i32, 'u32');
 
-      result.push(displayID);
-    }
+    displayIds.push(displayId);
   }
 
   this.symbols.SDL_free(listPtr);
 
-  return result;
+  return displayIds;
 }
 
-export function getPrimaryDisplay(this: BaseSDL) {
+export function getPrimaryDisplay(this: SDL) {
   return this.symbols.SDL_GetPrimaryDisplay();
 }
 
-export function getDisplayProperties(this: BaseSDL, displayID: number) {
+export function getDisplayProperties(this: SDL, displayID: number) {
   return this.symbols.SDL_GetDisplayProperties(displayID);
 }
 
-export function getDisplayName(this: BaseSDL, displayID: number) {
+export function getDisplayName(this: SDL, displayID: number) {
   return this.symbols.SDL_GetDisplayName(displayID);
 }
 
-export function getDisplayBounds(this: BaseSDL, displayID: number) {
-  const rect = Rect.allocMemory();
+export function getDisplayBounds(this: SDL, displayID: number) {
+  const rect = new Rect(Rect.allocMemory());
 
-  const success = this.symbols.SDL_GetDisplayBounds(displayID, ptr(rect));
-
-  if (!success) return null;
-
-  return new Rect(rect);
-}
-
-export function getDisplayUsableBounds(this: BaseSDL, displayID: number) {
-  const rect = Rect.allocMemory();
-
-  const success = this.symbols.SDL_GetDisplayUsableBounds(displayID, ptr(rect));
+  const success = this.symbols.SDL_GetDisplayBounds(displayID, rect.$address);
 
   if (!success) return null;
 
-  return new Rect(rect);
+  return rect;
 }
 
-export function getNaturalDisplayOrientation(this: BaseSDL, displayID: number) {
+export function getDisplayUsableBounds(this: SDL, displayID: number) {
+  const rect = new Rect(Rect.allocMemory());
+
+  const success = this.symbols.SDL_GetDisplayUsableBounds(
+    displayID,
+    rect.$address
+  );
+
+  if (!success) return null;
+
+  return rect;
+}
+
+export function getNaturalDisplayOrientation(this: SDL, displayID: number) {
   return this.symbols.SDL_GetNaturalDisplayOrientation(
     displayID
   ) as DisplayOrientation;
 }
 
-export function getCurrentDisplayOrientation(this: BaseSDL, displayID: number) {
+export function getCurrentDisplayOrientation(this: SDL, displayID: number) {
   return this.symbols.SDL_GetCurrentDisplayOrientation(
     displayID
   ) as DisplayOrientation;
 }
 
-export function getDisplayContentScale(this: BaseSDL, displayID: number) {
+export function getDisplayContentScale(this: SDL, displayID: number) {
   return this.symbols.SDL_GetDisplayContentScale(displayID);
 }
 
-export function getFullscreenDisplayModes(this: BaseSDL, displayID: number) {
-  const countBuf = new Int32Array(1);
+export function getFullscreenDisplayModes(this: SDL, displayID: number) {
+  const countStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
   const listPtr = this.symbols.SDL_GetFullscreenDisplayModes(
     displayID,
-    ptr(countBuf)
+    countStruct.$address
   );
 
-  const count = countBuf[0] || 0n;
-  const results: {
-    modes: DisplayMode[];
-  } & FreeAddress &
-    MemoryAddress = {
-    address: listPtr,
-    free: () => {
-      this.symbols.SDL_free(listPtr);
-    },
-    modes: [],
-  };
+  if (!listPtr) return null;
 
-  if (!listPtr) return results;
+  const count = countStruct.getValue(0, 'i32');
+  const list = new CStruct({ address: listPtr });
+  const modes: DisplayMode[] = [];
 
-  if (count !== 0n && count > 0) {
-    for (let i = 0; i < count; i++) {
-      const modePtr = read.ptr(listPtr, i * 8) as Pointer;
+  for (let i = 0; i < count; i++) {
+    const modePtr = list.getValue(i * CStruct.BYTE_SIZE.ptr, 'ptr');
 
-      if (!modePtr) continue;
+    if (!modePtr) continue;
 
-      const mode = new DisplayMode(modePtr);
+    const mode = new DisplayMode(modePtr);
 
-      results.modes.push(mode);
-    }
+    modes.push(mode);
   }
 
-  return results;
+  this.symbols.SDL_free(listPtr);
+
+  return modes;
 }
 
 export function getClosestFullscreenDisplayMode(
-  this: BaseSDL,
+  this: SDL,
   options: {
     displayID: number;
     w: number;
@@ -149,7 +139,7 @@ export function getClosestFullscreenDisplayMode(
     include_high_density_modes?: boolean;
   }
 ) {
-  const closestBuf = DisplayMode.allocMemory();
+  const displayMode = new DisplayMode(DisplayMode.allocMemory());
 
   const success = this.symbols.SDL_GetClosestFullscreenDisplayMode(
     options.displayID,
@@ -157,15 +147,15 @@ export function getClosestFullscreenDisplayMode(
     options.h,
     options.refreshRate,
     options.include_high_density_modes || true,
-    ptr(closestBuf)
+    displayMode.$address
   );
 
   if (!success) return null;
 
-  return new DisplayMode(closestBuf);
+  return displayMode;
 }
 
-export function getDesktopDisplayMode(this: BaseSDL, displayID: number) {
+export function getDesktopDisplayMode(this: SDL, displayID: number) {
   const result = this.symbols.SDL_GetDesktopDisplayMode(displayID);
 
   if (!result) return null;
@@ -173,7 +163,7 @@ export function getDesktopDisplayMode(this: BaseSDL, displayID: number) {
   return new DisplayMode(result);
 }
 
-export function getCurrentDisplayMode(this: BaseSDL, displayID: number) {
+export function getCurrentDisplayMode(this: SDL, displayID: number) {
   const result = this.symbols.SDL_GetCurrentDisplayMode(displayID);
 
   if (!result) return null;
@@ -181,14 +171,14 @@ export function getCurrentDisplayMode(this: BaseSDL, displayID: number) {
   return new DisplayMode(result);
 }
 
-export function getDisplayForPoint(this: BaseSDL, point: Vector2) {
-  const pointBuf = new Int32Array([point.x, point.y]);
+export function getDisplayForPoint(this: SDL, point: Point | Pointer) {
+  const pointPtr = point instanceof Point ? point.$address : point;
 
-  return this.symbols.SDL_GetDisplayForPoint(ptr(pointBuf));
+  return this.symbols.SDL_GetDisplayForPoint(pointPtr);
 }
 
-export function getDisplayForRect(this: BaseSDL, rect: Rect) {
-  const rectBuf = new Int32Array([rect.x, rect.y, rect.w, rect.h]);
+export function getDisplayForRect(this: SDL, rect: Rect | Pointer) {
+  const rectPtr = rect instanceof Rect ? rect.$address : rect;
 
-  return this.symbols.SDL_GetDisplayForRect(ptr(rectBuf));
+  return this.symbols.SDL_GetDisplayForRect(rectPtr);
 }

@@ -1,12 +1,12 @@
-import type { BaseSDL } from '../../..';
+import type { SDL } from '../../..';
 
-export function screenSaverEnabled(this: BaseSDL) {
+export function screenSaverEnabled(this: SDL) {
   return this.symbols.SDL_ScreenSaverEnabled();
 }
 
-export function enableScreenSaver(this: BaseSDL) {
+export function enableScreenSaver(this: SDL) {
   return this.symbols.SDL_EnableScreenSaver();
 }
-export function disableScreenSaver(this: BaseSDL) {
+export function disableScreenSaver(this: SDL) {
   return this.symbols.SDL_DisableScreenSaver();
 }

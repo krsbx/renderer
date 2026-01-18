@@ -85,21 +85,21 @@ export class StorageInterface {
     return result as T;
   }
 
-  public close(userData?: Pointer | null) {
+  public close(userdata?: Pointer | null) {
     const success = this.invoke<boolean>(
       ByteOffset.close,
       StorageInterfaceDefinition.close,
-      [userData ?? null]
+      [userdata ?? null]
     );
 
     return success;
   }
 
-  public ready(userData?: Pointer | null) {
+  public ready(userdata?: Pointer | null) {
     const success = this.invoke<boolean>(
       ByteOffset.ready,
       StorageInterfaceDefinition.ready,
-      [userData ?? null]
+      [userdata ?? null]
     );
 
     return success;
@@ -121,17 +121,15 @@ export class StorageInterface {
   }
 
   public info(options: InfoOptions) {
-    const infoMemory = PathInfo.allocMemory();
+    const info = new PathInfo(PathInfo.allocMemory());
 
     const success = this.invoke<boolean>(
       ByteOffset.info,
       StorageInterfaceDefinition.info,
-      [options.userdata ?? null, options.path.ptr, infoMemory]
+      [options.userdata ?? null, options.path.ptr, info.$address]
     );
 
     if (!success) return null;
-
-    const info = new PathInfo(infoMemory);
 
     return info;
   }

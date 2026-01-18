@@ -16,6 +16,7 @@ import * as haptic from './haptic';
 import * as hints from './hints/functions';
 import * as init from './init/functions';
 import * as ioStream from './io-stream';
+import * as joystick from './joystick';
 import * as keyboard from './keyboard';
 import * as locale from './locale';
 import * as log from './log/functions';
@@ -60,6 +61,7 @@ export const Translations = {
   ...hints,
   ...init,
   ...ioStream,
+  ...joystick,
   ...keyboard,
   ...locale,
   ...log,

@@ -2,61 +2,61 @@ import { ptr, type Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
 import { CStruct } from '../../../utility/cstruct';
 
-export function rumbleGamepad(
+export function rumbleJoystick(
   this: SDL,
   options: {
-    gamepad: Pointer;
+    joystick: Pointer;
     lowFrequencyRumble: number;
     highFrequencyRumble: number;
     durationMs: number;
   }
 ) {
-  return this.symbols.SDL_RumbleGamepad(
-    options.gamepad,
+  return this.symbols.SDL_RumbleJoystick(
+    options.joystick,
     options.lowFrequencyRumble,
     options.highFrequencyRumble,
     options.durationMs
   );
 }
 
-export function rumbleGamepadTriggers(
+export function rumbleJoystickTriggers(
   this: SDL,
   options: {
-    gamepad: Pointer;
+    joystick: Pointer;
     leftRumble: number;
     rightRumble: number;
     durationMs: number;
   }
 ) {
-  return this.symbols.SDL_RumbleGamepadTriggers(
-    options.gamepad,
+  return this.symbols.SDL_RumbleJoystickTriggers(
+    options.joystick,
     options.leftRumble,
     options.rightRumble,
     options.durationMs
   );
 }
 
-export function setGamepadLED(
+export function setJoystickLED(
   this: SDL,
   options: {
-    gamepad: Pointer;
+    joystick: Pointer;
     red: number;
     green: number;
     blue: number;
   }
 ) {
-  return this.symbols.SDL_SetGamepadLED(
-    options.gamepad,
+  return this.symbols.SDL_SetJoystickLED(
+    options.joystick,
     options.red,
     options.green,
     options.blue
   );
 }
 
-export function sendGamepadEffect(
+export function sendJoystickEffect(
   this: SDL,
   options: {
-    gamepad: Pointer;
+    joystick: Pointer;
     data: CStruct | Pointer | Uint8Array;
     size: number;
   }
@@ -68,8 +68,8 @@ export function sendGamepadEffect(
         ? ptr(options.data)
         : options.data;
 
-  return this.symbols.SDL_SendGamepadEffect(
-    options.gamepad,
+  return this.symbols.SDL_SendJoystickEffect(
+    options.joystick,
     dataPtr,
     options.size
   );

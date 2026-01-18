@@ -132,7 +132,7 @@ export const JoystickDefinition = {
   // SDL_PropertiesID SDL_GetJoystickProperties(SDL_Joystick *joystick);                                                                               // Get the properties associated with a joystick.
   SDL_GetJoystickProperties: {
     args: [FFIType.ptr],
-    returns: FFIType.ptr,
+    returns: FFIType.u32,
   },
   // const char * SDL_GetJoystickName(SDL_Joystick *joystick);                                                                                         // Get the implementation dependent name of a joystick.
   SDL_GetJoystickName: {

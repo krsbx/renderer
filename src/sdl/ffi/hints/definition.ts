@@ -19,7 +19,7 @@ export const HintsDefinition = {
   // void SDL_ResetHints(void);                                                                     // Reset all hints to the default values.
   SDL_ResetHints: {
     args: [],
-    returns: FFIType.bool,
+    returns: FFIType.void,
   },
   // const char * SDL_GetHint(const char *name);                                                    // Get the value of a hint.
   SDL_GetHint: {

@@ -6,7 +6,6 @@ import type {
   ProgressState,
   WindowFlags,
 } from '../../../ffi/video/constant';
-import type { Vector2, WidthHeight } from '../../../types/shared';
 import { CStruct } from '../../../utility/cstruct';
 import { Rect } from '../../rect/utility';
 import { Surface } from '../../surface/utility';
@@ -101,8 +100,10 @@ export function getWindows(this: SDL) {
 
 export function createWindow(
   this: SDL,
-  options: WidthHeight & {
+  options: {
     title: CString;
+    w: number;
+    h: number;
     flags: WindowFlags;
   }
 ) {
@@ -116,11 +117,14 @@ export function createWindow(
 
 export function createPopupWindow(
   this: SDL,
-  options: WidthHeight &
-    Vector2 & {
-      parent: Pointer;
-      flags: WindowFlags;
-    }
+  options: {
+    parent: Pointer;
+    x: number;
+    y: number;
+    w: number;
+    h: number;
+    flags: WindowFlags;
+  }
 ) {
   return this.symbols.SDL_CreatePopupWindow(
     options.parent,
@@ -182,8 +186,10 @@ export function setWindowIcon(
 
 export function setWindowPosition(
   this: SDL,
-  options: Vector2 & {
+  options: {
     window: Pointer;
+    x: number;
+    y: number;
   }
 ) {
   return this.symbols.SDL_SetWindowPosition(
@@ -213,8 +219,10 @@ export function getWindowPosition(this: SDL, window: Pointer) {
 
 export function setWindowSize(
   this: SDL,
-  options: WidthHeight & {
+  options: {
     window: Pointer;
+    w: number;
+    h: number;
   }
 ) {
   return this.symbols.SDL_SetWindowSize(options.window, options.w, options.h);
@@ -358,8 +366,10 @@ export function getWindowMinimumSize(this: SDL, window: Pointer) {
 
 export function setWindowMaximumSize(
   this: SDL,
-  options: WidthHeight & {
+  options: {
     window: Pointer;
+    w: number;
+    h: number;
   }
 ) {
   return this.symbols.SDL_SetWindowMaximumSize(
@@ -584,7 +594,9 @@ export function setWindowMouseRect(
 }
 
 export function getWindowMouseRect(this: SDL, window: Pointer) {
-  return this.symbols.SDL_GetWindowMouseRect(window);
+  const rect = this.symbols.SDL_GetWindowMouseRect(window);
+
+  return rect ? new Rect(rect) : null;
 }
 
 export function setWindowOpacity(

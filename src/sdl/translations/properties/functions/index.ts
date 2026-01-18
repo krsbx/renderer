@@ -6,7 +6,7 @@ export function getGlobalProperties(this: SDL) {
   return this.symbols.SDL_GetGlobalProperties();
 }
 
-export function createProerties(this: SDL) {
+export function createProperties(this: SDL) {
   return this.symbols.SDL_CreateProperties();
 }
 
@@ -150,9 +150,14 @@ export function getPointerProperty(
   options: {
     props: number;
     name: CString;
+    defaultValue?: Pointer | null;
   }
 ) {
-  return this.symbols.SDL_GetPointerProperty(options.props, options.name.ptr);
+  return this.symbols.SDL_GetPointerProperty(
+    options.props,
+    options.name.ptr,
+    options.defaultValue ?? null
+  );
 }
 
 export function getStringProperty(

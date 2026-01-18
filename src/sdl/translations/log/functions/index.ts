@@ -1,9 +1,10 @@
 import type { CString, JSCallback, Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
 import type { LogPriority } from '../../../ffi/log/constant';
+import { CStruct } from '../../../utility/cstruct';
 
 export function setLogPriorities(this: SDL, priority: LogPriority) {
-  this.symbols.SDL_SetLogPriority(priority);
+  this.symbols.SDL_SetLogPriorities(priority);
 }
 
 export function setLogPriority(
@@ -81,27 +82,29 @@ export function getDefaultLogOutputFunction(this: SDL) {
   return this.symbols.SDL_GetDefaultLogOutputFunction();
 }
 
-export function getLogOutputFunction(
-  this: SDL,
-  options: {
-    callback: JSCallback;
-    userdata?: Pointer | null;
-  }
-) {
-  return this.symbols.SDL_GetLogOutputFunction(
-    options.callback.ptr,
-    options.userdata ?? null
+export function getLogOutputFunction(this: SDL) {
+  const callbackStruct = new CStruct({ length: CStruct.BYTE_SIZE.ptr });
+  const userdataStruct = new CStruct({ length: CStruct.BYTE_SIZE.ptr });
+
+  this.symbols.SDL_GetLogOutputFunction(
+    callbackStruct.$address,
+    userdataStruct.$address
   );
+
+  return {
+    callback: Number(callbackStruct.getValue(0, 'ptr')) as Pointer,
+    userdata: Number(userdataStruct.getValue(0, 'ptr')) as Pointer,
+  };
 }
 
-export function logSetOutputFunction(
+export function setLogOutputFunction(
   this: SDL,
   options: {
     callback: JSCallback;
     userdata?: Pointer | null;
   }
 ) {
-  return this.symbols.SDL_SetLogOutputFunction(
+  this.symbols.SDL_SetLogOutputFunction(
     options.callback.ptr,
     options.userdata ?? null
   );

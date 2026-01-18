@@ -235,7 +235,7 @@ export function globStorageDirectory(
     options.storage,
     options.path.ptr,
     options.pattern?.ptr ?? null,
-    options.flags ?? null,
+    options.flags ?? 0,
     countStruct.$address
   );
 

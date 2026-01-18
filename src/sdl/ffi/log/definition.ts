@@ -84,11 +84,11 @@ export const LogDefinition = {
   // void SDL_GetLogOutputFunction(SDL_LogOutputFunction *callback, void **userdata);            // Get the current log output function.
   SDL_GetLogOutputFunction: {
     args: [FFIType.ptr, FFIType.ptr],
-    returns: FFIType.ptr,
+    returns: FFIType.void,
   },
   // void SDL_SetLogOutputFunction(SDL_LogOutputFunction callback, void *userdata);              // Replace the default log output function with one of your own.
   SDL_SetLogOutputFunction: {
-    args: [FFIType.function, FFIType.ptr],
-    returns: FFIType.ptr,
+    args: [FFIType.ptr, FFIType.ptr],
+    returns: FFIType.void,
   },
 } satisfies Record<string, FFIFunction>;

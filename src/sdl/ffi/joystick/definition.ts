@@ -202,7 +202,7 @@ export const JoystickDefinition = {
   // SDL_JoystickID SDL_GetJoystickID(SDL_Joystick *joystick);                                                                                         // Get the instance ID of an opened joystick.
   SDL_GetJoystickID: {
     args: [FFIType.ptr],
-    returns: FFIType.i32,
+    returns: FFIType.u32,
   },
   // int SDL_GetNumJoystickAxes(SDL_Joystick *joystick);                                                                                               // Get the number of general axis controls on a joystick.
   SDL_GetNumJoystickAxes: {

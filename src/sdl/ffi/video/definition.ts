@@ -397,7 +397,7 @@ export const VideoDefinition = {
   // const SDL_Rect * SDL_GetWindowMouseRect(SDL_Window *window);                                                                                                                                          // Get the mouse confinement rectangle of a window.
   SDL_GetWindowMouseRect: {
     args: [FFIType.ptr],
-    returns: FFIType.bool,
+    returns: FFIType.ptr,
   },
   // bool SDL_SetWindowOpacity(SDL_Window *window, float opacity);                                                                                                                                         // Set the opacity for a window.
   SDL_SetWindowOpacity: {
@@ -412,12 +412,12 @@ export const VideoDefinition = {
   // bool SDL_SetWindowParent(SDL_Window *window, SDL_Window *parent);                                                                                                                                     // Set the window as a child of a parent window.
   SDL_SetWindowParent: {
     args: [FFIType.ptr, FFIType.ptr],
-    returns: FFIType.ptr,
+    returns: FFIType.bool,
   },
   // bool SDL_SetWindowModal(SDL_Window *window, bool modal);                                                                                                                                              // Toggle the state of the window as modal.
   SDL_SetWindowModal: {
     args: [FFIType.ptr, FFIType.bool],
-    returns: FFIType.ptr,
+    returns: FFIType.bool,
   },
   // bool SDL_SetWindowFocusable(SDL_Window *window, bool focusable);                                                                                                                                      // Set whether the window may have input focus.
   SDL_SetWindowFocusable: {

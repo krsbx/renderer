@@ -69,6 +69,6 @@ export function setAppMetadataProperty(
   );
 }
 
-export function getAppMetdataProperty(this: SDL, name: CString) {
+export function getAppMetadataProperty(this: SDL, name: CString) {
   return this.symbols.SDL_GetAppMetadataProperty(name.ptr);
 }

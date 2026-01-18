@@ -32,7 +32,7 @@ export function resetHint(this: SDL, name: CString) {
 }
 
 export function resetHints(this: SDL) {
-  return this.symbols.SDL_ResetHints();
+  this.symbols.SDL_ResetHints();
 }
 
 export function getHint(this: SDL, name: CString) {

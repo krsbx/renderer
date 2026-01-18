@@ -38,7 +38,7 @@ export const GamepadDefinition = {
   },
   // bool SDL_SetGamepadMapping(SDL_JoystickID instance_id, const char *mapping);                                                         // Set the current mapping of a joystick or gamepad.
   SDL_SetGamepadMapping: {
-    args: [FFIType.i32, FFIType.cstring],
+    args: [FFIType.u32, FFIType.cstring],
     returns: FFIType.bool,
   },
   // bool SDL_HasGamepad(void);                                                                                                           // Return whether a gamepad is currently connected.

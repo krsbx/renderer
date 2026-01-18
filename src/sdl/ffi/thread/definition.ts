@@ -21,12 +21,12 @@ export const ThreadDefinition = {
   // SDL_ThreadID SDL_GetCurrentThreadID(void);                                                // Get the thread identifier for the current thread.
   SDL_GetCurrentThreadID: {
     args: [],
-    returns: FFIType.u32,
+    returns: FFIType.u64,
   },
   // SDL_ThreadID SDL_GetThreadID(SDL_Thread *thread);                                         // Get the thread identifier for the specified thread.
   SDL_GetThreadID: {
     args: [FFIType.ptr],
-    returns: FFIType.u32,
+    returns: FFIType.u64,
   },
   // bool SDL_SetCurrentThreadPriority(SDL_ThreadPriority priority);                           // Set the priority for the current thread.
   SDL_SetCurrentThreadPriority: {

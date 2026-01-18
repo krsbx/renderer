@@ -32,6 +32,7 @@ import * as sensor from './sensor';
 import * as sharedObject from './shared-object';
 import * as stdInc from './std-inc';
 import * as storage from './storage';
+import * as surface from './surface';
 import * as system from './system';
 import * as thread from './thread';
 import * as time from './time';
@@ -77,6 +78,7 @@ export const Translations = {
   ...sharedObject,
   ...stdInc,
   ...storage,
+  ...surface,
   ...system,
   ...thread,
   ...time,

@@ -29,6 +29,7 @@ import * as process from './process';
 import * as rect from './rect';
 import * as sensor from './sensor';
 import * as sharedObject from './shared-object';
+import * as stdInc from './std-inc';
 import * as storage from './storage';
 import * as system from './system';
 import * as thread from './thread';
@@ -72,6 +73,7 @@ export const Translations = {
   ...rect,
   ...sensor,
   ...sharedObject,
+  ...stdInc,
   ...storage,
   ...system,
   ...thread,

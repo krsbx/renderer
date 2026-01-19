@@ -31,6 +31,7 @@ import * as power from './power';
 import * as process from './process';
 import * as properties from './properties';
 import * as rect from './rect';
+import * as render from './render';
 import * as sensor from './sensor';
 import * as sharedObject from './shared-object';
 import * as stdInc from './std-inc';
@@ -80,6 +81,7 @@ export const Translations = {
   ...process,
   ...properties,
   ...rect,
+  ...render,
   ...sensor,
   ...sharedObject,
   ...stdInc,

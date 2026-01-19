@@ -17,7 +17,7 @@ export const RenderDefinition = {
       FFIType.cstring,
       FFIType.i32,
       FFIType.i32,
-      FFIType.i32,
+      FFIType.u64,
       FFIType.ptr,
       FFIType.ptr,
     ],

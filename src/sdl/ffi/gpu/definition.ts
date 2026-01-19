@@ -378,12 +378,12 @@ export const GPUDefinition = {
   },
   // bool SDL_WindowSupportsGPUSwapchainComposition(SDL_GPUDevice *device, SDL_Window *window, SDL_GPUSwapchainComposition swapchain_composition);                                                                                                                                                             // Determines whether a swapchain composition is supported by the window.
   SDL_WindowSupportsGPUSwapchainComposition: {
-    args: [FFIType.ptr, FFIType.ptr, FFIType.ptr],
+    args: [FFIType.ptr, FFIType.ptr, FFIType.i32],
     returns: FFIType.bool,
   },
   // bool SDL_WindowSupportsGPUPresentMode(SDL_GPUDevice *device, SDL_Window *window, SDL_GPUPresentMode present_mode);                                                                                                                                                                                        // Determines whether a presentation mode is supported by the window.
   SDL_WindowSupportsGPUPresentMode: {
-    args: [FFIType.ptr, FFIType.ptr, FFIType.ptr],
+    args: [FFIType.ptr, FFIType.ptr, FFIType.i32],
     returns: FFIType.bool,
   },
   // bool SDL_ClaimWindowForGPUDevice(SDL_GPUDevice *device, SDL_Window *window);                                                                                                                                                                                                                              // Claims a window, creating a swapchain structure for it.
@@ -398,7 +398,7 @@ export const GPUDefinition = {
   },
   // bool SDL_SetGPUSwapchainParameters(SDL_GPUDevice *device, SDL_Window *window, SDL_GPUSwapchainComposition swapchain_composition, SDL_GPUPresentMode present_mode);                                                                                                                                        // Changes the swapchain parameters for the given claimed window.
   SDL_SetGPUSwapchainParameters: {
-    args: [FFIType.ptr, FFIType.ptr, FFIType.ptr, FFIType.ptr],
+    args: [FFIType.ptr, FFIType.ptr, FFIType.i32, FFIType.i32],
     returns: FFIType.bool,
   },
   // bool SDL_SetGPUAllowedFramesInFlight(SDL_GPUDevice *device, Uint32 allowed_frames_in_flight);                                                                                                                                                                                                             // Configures the maximum allowed number of frames in flight.

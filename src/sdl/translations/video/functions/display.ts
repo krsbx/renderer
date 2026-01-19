@@ -146,7 +146,7 @@ export function getClosestFullscreenDisplayMode(
     options.w,
     options.h,
     options.refreshRate,
-    options.include_high_density_modes || true,
+    options.include_high_density_modes ?? true,
     displayMode.$address
   );
 

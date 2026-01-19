@@ -11,6 +11,7 @@ import * as error from './error';
 import * as events from './events';
 import * as fileSystem from './file-system';
 import * as gamepad from './gamepad';
+import * as gpu from './gpu';
 import * as guid from './guid';
 import * as haptic from './haptic';
 import * as hints from './hints/functions';
@@ -26,7 +27,9 @@ import * as misc from './misc';
 import * as mouse from './mouse';
 import * as mutex from './mutex';
 import * as pixels from './pixels';
+import * as power from './power';
 import * as process from './process';
+import * as properties from './properties';
 import * as rect from './rect';
 import * as sensor from './sensor';
 import * as sharedObject from './shared-object';
@@ -57,6 +60,7 @@ export const Translations = {
   ...events,
   ...fileSystem,
   ...gamepad,
+  ...gpu,
   ...guid,
   ...haptic,
   ...hints,
@@ -72,7 +76,9 @@ export const Translations = {
   ...mouse,
   ...mutex,
   ...pixels,
+  ...power,
   ...process,
+  ...properties,
   ...rect,
   ...sensor,
   ...sharedObject,

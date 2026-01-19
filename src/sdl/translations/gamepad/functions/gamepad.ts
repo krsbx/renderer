@@ -247,14 +247,6 @@ export function getGamepadStringForType(this: SDL, type: GamepadType) {
   return this.symbols.SDL_GetGamepadStringForType(type);
 }
 
-export function getGamepadAxisFromString(this: SDL, str: CString) {
-  return this.symbols.SDL_GetGamepadAxisFromString(str.ptr) as GamepadAxis;
-}
-
-export function getGamepadStringForAxis(this: SDL, axis: GamepadAxis) {
-  return this.symbols.SDL_GetGamepadStringForAxis(axis);
-}
-
 export function closeGamepad(this: SDL, gamepad: Pointer) {
   this.symbols.SDL_CloseGamepad(gamepad);
 }

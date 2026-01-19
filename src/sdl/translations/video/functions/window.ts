@@ -11,10 +11,6 @@ import { Rect } from '../../rect/utility';
 import { Surface } from '../../surface/utility';
 import { DisplayMode } from '../utility';
 
-export function getDisplayForWindow(this: SDL, window: Pointer) {
-  return this.symbols.SDL_GetDisplayForWindow(window);
-}
-
 export function getWindowPixelDensity(this: SDL, window: Pointer) {
   return this.symbols.SDL_GetWindowPixelDensity(window);
 }

@@ -182,3 +182,7 @@ export function getDisplayForRect(this: SDL, rect: Rect | Pointer) {
 
   return this.symbols.SDL_GetDisplayForRect(rectPtr);
 }
+
+export function getDisplayForWindow(this: SDL, window: Pointer) {
+  return this.symbols.SDL_GetDisplayForWindow(window);
+}

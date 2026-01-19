@@ -7,6 +7,7 @@ import {
   type Pointer,
 } from 'bun:ffi';
 import type { IOStatus } from '../../../../ffi/io-stream/constant';
+import { CStruct } from '../../../../utility/cstruct';
 import { ByteOffset } from './constant';
 import { IOStreamInterfaceDefinition } from './definition';
 import type { ReadOptions, SeekOptions, WriteOptions } from './types';
@@ -93,7 +94,7 @@ export class IOStreamInterface {
   }
 
   public read(options: ReadOptions) {
-    const statusBuf = new Uint32Array(1);
+    const statusStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
     const result = this.invoke<bigint>(
       ByteOffset.read,
@@ -102,18 +103,18 @@ export class IOStreamInterface {
         options.userdata ?? null,
         options.ptr,
         BigInt(options.size),
-        ptr(statusBuf),
+        statusStruct.$address,
       ]
     );
 
     return {
       result,
-      status: statusBuf[0] as IOStatus,
+      status: statusStruct.getValue(0, 'i32') as IOStatus,
     };
   }
 
   public write(options: WriteOptions) {
-    const statusBuf = new Uint32Array(1);
+    const statusStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
     const result = this.invoke<bigint>(
       ByteOffset.write,
@@ -122,28 +123,28 @@ export class IOStreamInterface {
         options.userdata ?? null,
         options.ptr,
         BigInt(options.size),
-        ptr(statusBuf),
+        statusStruct.$address,
       ]
     );
 
     return {
       result,
-      status: statusBuf[0] as IOStatus,
+      status: statusStruct.getValue(0, 'i32') as IOStatus,
     };
   }
 
   public flush(userdata?: Pointer | null) {
-    const statusBuf = new Uint32Array(1);
+    const statusStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
     const result = this.invoke<boolean>(
       ByteOffset.flush,
       IOStreamInterfaceDefinition.flush,
-      [userdata ?? null, ptr(statusBuf)]
+      [userdata ?? null, statusStruct.$address]
     );
 
     return {
       result: result,
-      status: statusBuf[0] as IOStatus,
+      status: statusStruct.getValue(0, 'i32') as IOStatus,
     };
   }
 

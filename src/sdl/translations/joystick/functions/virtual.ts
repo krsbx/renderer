@@ -112,14 +112,14 @@ export function sendJoystickVirtualSensorData(
     joystick: Pointer;
     type: SensorType;
     sensorTimestamp: bigint;
-    data: CStruct | Float32Array | Pointer;
+    data: CStruct | Uint8Array | Pointer;
     numValues: number;
   }
 ) {
   const dataPtr =
     options.data instanceof CStruct
       ? options.data.$address
-      : options.data instanceof Float32Array
+      : options.data instanceof Uint8Array
         ? ptr(options.data)
         : options.data;
 

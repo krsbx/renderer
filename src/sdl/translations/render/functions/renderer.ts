@@ -1,13 +1,14 @@
-import type { CString, Pointer } from 'bun:ffi';
+import type { Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
 import type { WindowFlags } from '../../../ffi/video/constant';
+import { getStructAddress, stringToCString } from '../../../utility/common';
 import { CStruct } from '../../../utility/cstruct';
 import { Surface } from '../../surface/utility';
 
 export function createWindowAndRenderer(
   this: SDL,
   options: {
-    title: CString;
+    title: string;
     width: number;
     height: number;
     windowFlags: WindowFlags;
@@ -17,7 +18,7 @@ export function createWindowAndRenderer(
   const rendererStruct = new CStruct({ length: CStruct.BYTE_SIZE.ptr });
 
   const success = this.symbols.SDL_CreateWindowAndRenderer(
-    options.title.ptr,
+    stringToCString(options.title).ptr,
     options.width,
     options.height,
     options.windowFlags,
@@ -37,12 +38,12 @@ export function createRenderer(
   this: SDL,
   options: {
     window: Pointer;
-    name?: CString | null;
+    name?: string | null;
   }
 ) {
   return this.symbols.SDL_CreateRenderer(
     options.window,
-    options.name?.ptr ?? null
+    options.name ? stringToCString(options.name).ptr : null
   );
 }
 
@@ -65,9 +66,7 @@ export function getGPURendererDevice(this: SDL, renderer: Pointer) {
 }
 
 export function createSoftwareRenderer(this: SDL, surface: Surface | Pointer) {
-  const surfacePtr = surface instanceof Surface ? surface.$address : surface;
-
-  return this.symbols.SDL_CreateSoftwareRenderer(surfacePtr);
+  return this.symbols.SDL_CreateSoftwareRenderer(getStructAddress(surface));
 }
 
 export function getRenderer(this: SDL, window: Pointer) {

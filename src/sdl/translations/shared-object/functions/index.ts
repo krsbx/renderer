@@ -1,21 +1,22 @@
-import type { CString, Pointer } from 'bun:ffi';
+import type { Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
+import { stringToCString } from '../../../utility/common';
 
-export function loadObject(this: SDL, sofile: CString) {
-  return this.symbols.SDL_LoadObject(sofile.ptr) as Pointer | null;
+export function loadObject(this: SDL, sofile: string) {
+  return this.symbols.SDL_LoadObject(stringToCString(sofile).ptr);
 }
 
 export function loadFunction(
   this: SDL,
   options: {
     handle: Pointer;
-    name: CString;
+    name: string;
   }
 ) {
   return this.symbols.SDL_LoadFunction(
     options.handle,
-    options.name.ptr
-  ) as Pointer | null;
+    stringToCString(options.name).ptr
+  );
 }
 
 export function unloadObject(this: SDL, handle: Pointer) {

@@ -1,5 +1,6 @@
 import type { Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
+import { getStructAddress } from '../../../utility/common';
 import { CStruct } from '../../../utility/cstruct';
 import { Surface } from '../utility';
 
@@ -12,31 +13,24 @@ export function addSurfaceAlternateImage(
     image: Surface | Pointer;
   }
 ) {
-  const surfacePtr =
-    options.surface instanceof Surface
-      ? options.surface.$address
-      : options.surface;
-  const imagePtr =
-    options.image instanceof Surface ? options.image.$address : options.image;
-
-  return this.symbols.SDL_AddSurfaceAlternateImage(surfacePtr, imagePtr);
+  return this.symbols.SDL_AddSurfaceAlternateImage(
+    getStructAddress(options.surface),
+    getStructAddress(options.image)
+  );
 }
 
 export function surfaceHasAlternateImages(
   this: SDL,
   surface: Surface | Pointer
 ) {
-  const surfacePtr = surface instanceof Surface ? surface.$address : surface;
-
-  return this.symbols.SDL_SurfaceHasAlternateImages(surfacePtr);
+  return this.symbols.SDL_SurfaceHasAlternateImages(getStructAddress(surface));
 }
 
 export function getSurfaceImages(this: SDL, surface: Surface | Pointer) {
-  const surfacePtr = surface instanceof Surface ? surface.$address : surface;
   const countStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
   const listPtr = this.symbols.SDL_GetSurfaceImages(
-    surfacePtr,
+    getStructAddress(surface),
     countStruct.$address
   );
 
@@ -67,7 +61,5 @@ export function removeSurfaceAlternateImages(
   this: SDL,
   surface: Surface | Pointer
 ) {
-  const surfacePtr = surface instanceof Surface ? surface.$address : surface;
-
-  this.symbols.SDL_RemoveSurfaceAlternateImages(surfacePtr);
+  this.symbols.SDL_RemoveSurfaceAlternateImages(getStructAddress(surface));
 }

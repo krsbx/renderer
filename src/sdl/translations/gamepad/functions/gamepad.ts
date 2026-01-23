@@ -7,6 +7,7 @@ import {
 } from '../../../ffi/gamepad/constant';
 import type { JoystickConnectionState } from '../../../ffi/joystick/constant';
 import type { PowerState } from '../../../ffi/power/constant';
+import { stringToCString } from '../../../utility/common';
 import { CStruct } from '../../../utility/cstruct';
 import { GUID } from '../../guid/utility';
 import { GamepadBinding } from '../utility';
@@ -90,7 +91,7 @@ export function getGamepadMappingForID(this: SDL, instanceId: number) {
 
   this.symbols.SDL_free(ptr);
 
-  return mapping;
+  return mapping.toString();
 }
 
 export function openGamepad(this: SDL, instanceId: number) {
@@ -239,8 +240,10 @@ export function updateGamepads(this: SDL) {
   this.symbols.SDL_UpdateGamepads();
 }
 
-export function getGamepadTypeFromString(this: SDL, str: CString) {
-  return this.symbols.SDL_GetGamepadTypeFromString(str.ptr) as GamepadType;
+export function getGamepadTypeFromString(this: SDL, str: string) {
+  return this.symbols.SDL_GetGamepadTypeFromString(
+    stringToCString(str).ptr
+  ) as GamepadType;
 }
 
 export function getGamepadStringForType(this: SDL, type: GamepadType) {

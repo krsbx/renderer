@@ -4,6 +4,7 @@ import type {
   DisplayOrientation,
   SystemTheme,
 } from '../../../ffi/video/constant';
+import { getStructAddress } from '../../../utility/common';
 import { CStruct } from '../../../utility/cstruct';
 import { Point, Rect } from '../../rect/utility';
 import { DisplayMode } from '../utility';
@@ -172,15 +173,11 @@ export function getCurrentDisplayMode(this: SDL, displayID: number) {
 }
 
 export function getDisplayForPoint(this: SDL, point: Point | Pointer) {
-  const pointPtr = point instanceof Point ? point.$address : point;
-
-  return this.symbols.SDL_GetDisplayForPoint(pointPtr);
+  return this.symbols.SDL_GetDisplayForPoint(getStructAddress(point));
 }
 
 export function getDisplayForRect(this: SDL, rect: Rect | Pointer) {
-  const rectPtr = rect instanceof Rect ? rect.$address : rect;
-
-  return this.symbols.SDL_GetDisplayForRect(rectPtr);
+  return this.symbols.SDL_GetDisplayForRect(getStructAddress(rect));
 }
 
 export function getDisplayForWindow(this: SDL, window: Pointer) {

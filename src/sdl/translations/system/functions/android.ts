@@ -1,5 +1,6 @@
-import { CString, type JSCallback, type Pointer } from 'bun:ffi';
+import { type JSCallback, type Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
+import { stringToCString } from '../../../utility/common';
 
 export function getAndroidJNIEnv(this: SDL) {
   return this.symbols.SDL_GetAndroidJNIEnv();
@@ -44,13 +45,13 @@ export function getAndroidCachePath(this: SDL) {
 export function requestAndroidPermission(
   this: SDL,
   options: {
-    permission: CString;
+    permission: string;
     callback: JSCallback;
     userdata?: Pointer | null;
   }
 ) {
   return this.symbols.SDL_RequestAndroidPermission(
-    options.permission.ptr,
+    stringToCString(options.permission).ptr,
     options.callback.ptr,
     options.userdata ?? null
   );
@@ -59,7 +60,7 @@ export function requestAndroidPermission(
 export function showAndroidToast(
   this: SDL,
   options: {
-    message: CString;
+    message: string;
     duration: number;
     gravity: number;
     xoffset: number;
@@ -67,7 +68,7 @@ export function showAndroidToast(
   }
 ) {
   return this.symbols.SDL_ShowAndroidToast(
-    options.message.ptr,
+    stringToCString(options.message).ptr,
     options.duration,
     options.gravity,
     options.xoffset,

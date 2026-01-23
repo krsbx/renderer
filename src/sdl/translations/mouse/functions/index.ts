@@ -1,9 +1,13 @@
-import { ptr, type JSCallback, type Pointer } from 'bun:ffi';
+import { type JSCallback, type Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
 import type {
   MouseButtonFlags,
   SystemCursor,
 } from '../../../ffi/mouse/constant';
+import {
+  getStructAddress,
+  getStructMemoryAddress,
+} from '../../../utility/common';
 import { CStruct } from '../../../utility/cstruct';
 import { Surface } from '../../surface/utility';
 import { CursorFrameInfo } from '../utility';
@@ -156,14 +160,9 @@ export function createCursor(
     hotY: number;
   }
 ) {
-  const dataPtr =
-    options.data instanceof Uint8Array ? ptr(options.data) : options.data;
-  const maskPtr =
-    options.mask instanceof Uint8Array ? ptr(options.mask) : options.mask;
-
   return this.symbols.SDL_CreateCursor(
-    dataPtr,
-    maskPtr,
+    getStructMemoryAddress(options.data),
+    getStructMemoryAddress(options.mask),
     options.w,
     options.h,
     options.hotX,
@@ -179,13 +178,8 @@ export function createColorCursor(
     hotY: number;
   }
 ) {
-  const surfacePtr =
-    options.surface instanceof Surface
-      ? options.surface.$address
-      : options.surface;
-
   return this.symbols.SDL_CreateColorCursor(
-    surfacePtr,
+    getStructAddress(options.surface),
     options.hotX,
     options.hotY
   );
@@ -200,13 +194,8 @@ export function createAnimatedCursor(
     hotY: number;
   }
 ) {
-  const framesPtr =
-    options.frames instanceof CursorFrameInfo
-      ? options.frames.$address
-      : options.frames;
-
   return this.symbols.SDL_CreateAnimatedCursor(
-    framesPtr,
+    getStructAddress(options.frames),
     options.frameCount,
     options.hotX,
     options.hotY

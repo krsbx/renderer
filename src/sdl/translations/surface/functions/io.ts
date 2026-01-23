@@ -1,5 +1,6 @@
-import type { CString, Pointer } from 'bun:ffi';
+import type { Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
+import { getStructAddress, stringToCString } from '../../../utility/common';
 import { Surface } from '../utility';
 
 // Load Surface (BMP or PNG)
@@ -18,8 +19,8 @@ export function loadSurfaceIO(
   return new Surface(surface);
 }
 
-export function loadSurface(this: SDL, file: CString) {
-  const surface = this.symbols.SDL_LoadSurface(file.ptr);
+export function loadSurface(this: SDL, file: string) {
+  const surface = this.symbols.SDL_LoadSurface(stringToCString(file).ptr);
 
   if (!surface) return null;
 
@@ -42,8 +43,8 @@ export function loadBMPIO(
   return new Surface(surface);
 }
 
-export function loadBMP(this: SDL, file: CString) {
-  const surface = this.symbols.SDL_LoadBMP(file.ptr);
+export function loadBMP(this: SDL, file: string) {
+  const surface = this.symbols.SDL_LoadBMP(stringToCString(file).ptr);
 
   if (!surface) return null;
 
@@ -60,27 +61,24 @@ export function saveBMPIO(
     closeio: boolean;
   }
 ) {
-  const surfacePtr =
-    options.surface instanceof Surface
-      ? options.surface.$address
-      : options.surface;
-
-  return this.symbols.SDL_SaveBMP_IO(surfacePtr, options.dst, options.closeio);
+  return this.symbols.SDL_SaveBMP_IO(
+    getStructAddress(options.surface),
+    options.dst,
+    options.closeio
+  );
 }
 
 export function saveBMP(
   this: SDL,
   options: {
     surface: Surface | Pointer;
-    file: CString;
+    file: string;
   }
 ) {
-  const surfacePtr =
-    options.surface instanceof Surface
-      ? options.surface.$address
-      : options.surface;
-
-  return this.symbols.SDL_SaveBMP(surfacePtr, options.file.ptr);
+  return this.symbols.SDL_SaveBMP(
+    getStructAddress(options.surface),
+    stringToCString(options.file).ptr
+  );
 }
 
 // Load PNG
@@ -99,8 +97,8 @@ export function loadPNGIO(
   return new Surface(surface);
 }
 
-export function loadPNG(this: SDL, file: CString) {
-  const surface = this.symbols.SDL_LoadPNG(file.ptr);
+export function loadPNG(this: SDL, file: string) {
+  const surface = this.symbols.SDL_LoadPNG(stringToCString(file).ptr);
 
   if (!surface) return null;
 
@@ -117,25 +115,22 @@ export function savePNGIO(
     closeio: boolean;
   }
 ) {
-  const surfacePtr =
-    options.surface instanceof Surface
-      ? options.surface.$address
-      : options.surface;
-
-  return this.symbols.SDL_SavePNG_IO(surfacePtr, options.dst, options.closeio);
+  return this.symbols.SDL_SavePNG_IO(
+    getStructAddress(options.surface),
+    options.dst,
+    options.closeio
+  );
 }
 
 export function savePNG(
   this: SDL,
   options: {
     surface: Surface | Pointer;
-    file: CString;
+    file: string;
   }
 ) {
-  const surfacePtr =
-    options.surface instanceof Surface
-      ? options.surface.$address
-      : options.surface;
-
-  return this.symbols.SDL_SavePNG(surfacePtr, options.file.ptr);
+  return this.symbols.SDL_SavePNG(
+    getStructAddress(options.surface),
+    stringToCString(options.file).ptr
+  );
 }

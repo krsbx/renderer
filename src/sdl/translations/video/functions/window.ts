@@ -1,4 +1,4 @@
-import type { CString, JSCallback, Pointer } from 'bun:ffi';
+import type { JSCallback, Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
 import type { PixelFormat } from '../../../ffi/pixels/constant';
 import type {
@@ -6,6 +6,7 @@ import type {
   ProgressState,
   WindowFlags,
 } from '../../../ffi/video/constant';
+import { getStructAddress, stringToCString } from '../../../utility/common';
 import { CStruct } from '../../../utility/cstruct';
 import { Rect } from '../../rect/utility';
 import { Surface } from '../../surface/utility';
@@ -26,10 +27,10 @@ export function setWindowFullscreenMode(
     mode: DisplayMode | Pointer;
   }
 ) {
-  const modePtr =
-    options.mode instanceof DisplayMode ? options.mode.$address : options.mode;
-
-  return this.symbols.SDL_SetWindowFullscreenMode(options.window, modePtr);
+  return this.symbols.SDL_SetWindowFullscreenMode(
+    options.window,
+    getStructAddress(options.mode)
+  );
 }
 
 export function getWindowFullscreenMode(this: SDL, window: Pointer) {
@@ -97,14 +98,14 @@ export function getWindows(this: SDL) {
 export function createWindow(
   this: SDL,
   options: {
-    title: CString;
+    title: string;
     w: number;
     h: number;
     flags: WindowFlags;
   }
 ) {
   return this.symbols.SDL_CreateWindow(
-    options.title.ptr,
+    stringToCString(options.title).ptr,
     options.w,
     options.h,
     options.flags
@@ -160,10 +161,13 @@ export function setWindowTitle(
   this: SDL,
   options: {
     window: Pointer;
-    title: CString;
+    title: string;
   }
 ) {
-  return this.symbols.SDL_SetWindowTitle(options.window, options.title.ptr);
+  return this.symbols.SDL_SetWindowTitle(
+    options.window,
+    stringToCString(options.title).ptr
+  );
 }
 
 export function getWindowTitle(this: SDL, window: Pointer) {
@@ -364,14 +368,14 @@ export function setWindowMaximumSize(
   this: SDL,
   options: {
     window: Pointer;
-    w: number;
-    h: number;
+    maxW: number;
+    maxH: number;
   }
 ) {
   return this.symbols.SDL_SetWindowMaximumSize(
     options.window,
-    options.w,
-    options.h
+    options.maxW,
+    options.maxH
   );
 }
 
@@ -676,10 +680,10 @@ export function setWindowShape(
     shape: Surface | Pointer;
   }
 ) {
-  const shapePtr =
-    options.shape instanceof Surface ? options.shape.$address : options.shape;
-
-  return this.symbols.SDL_SetWindowShape(options.window, shapePtr);
+  return this.symbols.SDL_SetWindowShape(
+    options.window,
+    getStructAddress(options.shape)
+  );
 }
 
 export function flashWindow(

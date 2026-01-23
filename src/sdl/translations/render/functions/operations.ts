@@ -1,5 +1,6 @@
 import type { Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
+import { getStructAddress } from '../../../utility/common';
 import { Rect } from '../../rect/utility';
 import { Surface } from '../../surface/utility';
 
@@ -12,12 +13,9 @@ export function renderReadPixels(
     rect?: Rect | Pointer | null;
   }
 ) {
-  const rectPtr =
-    options.rect instanceof Rect ? options.rect.$address : options.rect;
-
   const surfacePtr = this.symbols.SDL_RenderReadPixels(
     options.renderer,
-    rectPtr ?? null
+    options.rect ? getStructAddress(options.rect) : null
   );
 
   if (!surfacePtr) return null;

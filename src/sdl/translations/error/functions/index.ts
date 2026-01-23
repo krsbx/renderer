@@ -1,8 +1,8 @@
-import type { CString } from 'bun:ffi';
 import type { SDL } from '../../..';
+import { stringToCString } from '../../../utility/common';
 
-export function setError(this: SDL, fmt: CString) {
-  return this.symbols.SDL_SetError(fmt.ptr);
+export function setError(this: SDL, fmt: string) {
+  return this.symbols.SDL_SetError(stringToCString(fmt).ptr);
 }
 
 export function setErrorV(this: SDL) {

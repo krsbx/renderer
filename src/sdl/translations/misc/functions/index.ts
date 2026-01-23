@@ -1,6 +1,6 @@
-import type { CString } from 'bun:ffi';
 import type { SDL } from '../../..';
+import { stringToCString } from '../../../utility/common';
 
-export function openURL(this: SDL, url: CString) {
-  return this.symbols.SDL_OpenURL(url.ptr);
+export function openURL(this: SDL, url: string) {
+  return this.symbols.SDL_OpenURL(stringToCString(url).ptr);
 }

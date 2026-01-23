@@ -1,5 +1,6 @@
-import { CString, type Pointer } from 'bun:ffi';
+import { type Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
+import { getStructAddress, stringToCString } from '../../../utility/common';
 import { CStruct } from '../../../utility/cstruct';
 import { AudioBuffer, AudioSpec } from '../utility';
 
@@ -132,10 +133,10 @@ export function openAudioDevice(
     spec: AudioSpec | Pointer;
   }
 ) {
-  const addr =
-    options.spec instanceof AudioSpec ? options.spec.$address : options.spec;
-
-  return this.symbols.SDL_OpenAudioDevice(options.deviceId, addr);
+  return this.symbols.SDL_OpenAudioDevice(
+    options.deviceId,
+    getStructAddress(options.spec)
+  );
 }
 
 export function isAudioDevicePhysical(this: SDL, deviceId: number) {
@@ -226,17 +227,10 @@ export function createAudioStream(
     dstSpec: AudioSpec | Pointer;
   }
 ) {
-  const srcAddr =
-    options.srcSpec instanceof AudioSpec
-      ? options.srcSpec.$address
-      : options.srcSpec;
-
-  const dstAddr =
-    options.dstSpec instanceof AudioSpec
-      ? options.dstSpec.$address
-      : options.dstSpec;
-
-  return this.symbols.SDL_CreateAudioStream(srcAddr, dstAddr);
+  return this.symbols.SDL_CreateAudioStream(
+    getStructAddress(options.srcSpec),
+    getStructAddress(options.dstSpec)
+  );
 }
 
 export function getAudioStreamProperties(this: SDL, stream: Pointer) {
@@ -299,20 +293,10 @@ export function setAudioStreamFormat(
     dstSpec?: AudioSpec | Pointer | null;
   }
 ) {
-  const srcAddr =
-    options.srcSpec instanceof AudioSpec
-      ? options.srcSpec.$address
-      : options.srcSpec;
-
-  const dstAddr =
-    options.dstSpec instanceof AudioSpec
-      ? options.dstSpec.$address
-      : options.dstSpec;
-
   return this.symbols.SDL_SetAudioStreamFormat(
     options.stream,
-    srcAddr ?? null,
-    dstAddr ?? null
+    options.srcSpec ? getStructAddress(options.srcSpec) : null,
+    options.dstSpec ? getStructAddress(options.dstSpec) : null
   );
 }
 
@@ -558,12 +542,9 @@ export function openAudioDeviceStream(
     userdata: Pointer | null;
   }
 ) {
-  const specAddr =
-    options.spec instanceof AudioSpec ? options.spec.$address : options.spec;
-
   return this.symbols.SDL_OpenAudioDeviceStream(
     options.deviceId,
-    specAddr,
+    options.spec ? getStructAddress(options.spec) : null,
     options.callback,
     options.userdata ?? null
   );
@@ -620,7 +601,7 @@ export function loadWAV_IO(
 export function loadWAV(
   this: SDL,
   options: {
-    path: CString;
+    path: string;
     spec?: AudioSpec | Pointer | null;
   }
 ) {
@@ -641,7 +622,7 @@ export function loadWAV(
   const audioLen = new CStruct({ length: CStruct.BYTE_SIZE.u32 });
 
   const success = this.symbols.SDL_LoadWAV(
-    options.path.ptr,
+    stringToCString(options.path).ptr,
     specAddr,
     audioBuf.$address,
     audioLen.$address
@@ -685,14 +666,8 @@ export function convertAudioSamples(
     dstSpec: AudioSpec | Pointer;
   }
 ) {
-  const srcSpecAddr =
-    options.srcSpec instanceof AudioSpec
-      ? options.srcSpec.$address
-      : options.srcSpec;
-  const dstSpecAddr =
-    options.dstSpec instanceof AudioSpec
-      ? options.dstSpec.$address
-      : options.dstSpec;
+  const srcSpecAddr = getStructAddress(options.srcSpec);
+  const dstSpecAddr = getStructAddress(options.dstSpec);
 
   const dstData = new CStruct({ length: CStruct.BYTE_SIZE.ptr });
   const dstLen = new CStruct({ length: CStruct.BYTE_SIZE.i32 });

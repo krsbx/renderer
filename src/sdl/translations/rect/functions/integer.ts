@@ -1,5 +1,6 @@
 import type { Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
+import { getStructAddress } from '../../../utility/common';
 import { CStruct } from '../../../utility/cstruct';
 import { Point, Rect } from '../utility';
 
@@ -10,10 +11,10 @@ export function hasRectIntersection(
     b: Rect | Pointer;
   }
 ) {
-  const aPtr = options.a instanceof Rect ? options.a.$address : options.a;
-  const bPtr = options.b instanceof Rect ? options.b.$address : options.b;
-
-  return this.symbols.SDL_HasRectIntersection(aPtr, bPtr);
+  return this.symbols.SDL_HasRectIntersection(
+    getStructAddress(options.a),
+    getStructAddress(options.b)
+  );
 }
 
 export function getRectIntersection(
@@ -23,13 +24,11 @@ export function getRectIntersection(
     b: Rect | Pointer;
   }
 ) {
-  const aPtr = options.a instanceof Rect ? options.a.$address : options.a;
-  const bPtr = options.b instanceof Rect ? options.b.$address : options.b;
   const result = new Rect(Rect.allocMemory());
 
   const success = this.symbols.SDL_GetRectIntersection(
-    aPtr,
-    bPtr,
+    getStructAddress(options.a),
+    getStructAddress(options.b),
     result.$address
   );
 
@@ -45,11 +44,13 @@ export function getRectUnion(
     b: Rect | Pointer;
   }
 ) {
-  const aPtr = options.a instanceof Rect ? options.a.$address : options.a;
-  const bPtr = options.b instanceof Rect ? options.b.$address : options.b;
   const result = new Rect(Rect.allocMemory());
 
-  const success = this.symbols.SDL_GetRectUnion(aPtr, bPtr, result.$address);
+  const success = this.symbols.SDL_GetRectUnion(
+    getStructAddress(options.a),
+    getStructAddress(options.b),
+    result.$address
+  );
 
   if (!success) return null;
 
@@ -64,19 +65,12 @@ export function getRectEnclosingPoints(
     clip?: Rect | Pointer | null;
   }
 ) {
-  const pointsPtr =
-    options.points instanceof Point ? options.points.$address : options.points;
-  const clipPtr = options.clip
-    ? options.clip instanceof Rect
-      ? options.clip.$address
-      : options.clip
-    : null;
   const result = new Rect(Rect.allocMemory());
 
   const success = this.symbols.SDL_GetRectEnclosingPoints(
-    pointsPtr,
+    getStructAddress(options.points),
     options.count,
-    clipPtr,
+    options.clip ? getStructAddress(options.clip) : null,
     result.$address
   );
 
@@ -95,9 +89,6 @@ export function getRectAndLineIntersection(
     y2: number;
   }
 ) {
-  const rectPtr =
-    options.rect instanceof Rect ? options.rect.$address : options.rect;
-
   const x1Struct = new CStruct({
     length: CStruct.BYTE_SIZE.i32,
   }).setValue(0, options.x1, 'i32');
@@ -115,7 +106,7 @@ export function getRectAndLineIntersection(
   }).setValue(0, options.y2, 'i32');
 
   const success = this.symbols.SDL_GetRectAndLineIntersection(
-    rectPtr,
+    getStructAddress(options.rect),
     x1Struct.$address,
     y1Struct.$address,
     x2Struct.$address,

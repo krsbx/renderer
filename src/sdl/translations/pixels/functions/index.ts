@@ -1,6 +1,7 @@
 import type { Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
 import type { PixelFormat } from '../../../ffi/pixels/constant';
+import { getStructAddress } from '../../../utility/common';
 import { CStruct } from '../../../utility/cstruct';
 import { Color, Palette, PixelFormatDetails } from '../utility';
 
@@ -55,7 +56,7 @@ export function getPixelFormatForMasks(
 }
 
 export function getPixelFormatDetails(this: SDL, format: PixelFormat) {
-  const ptr = this.symbols.SDL_GetPixelFormatDetails(format) as Pointer | null;
+  const ptr = this.symbols.SDL_GetPixelFormatDetails(format);
 
   if (!ptr) return null;
 
@@ -63,7 +64,7 @@ export function getPixelFormatDetails(this: SDL, format: PixelFormat) {
 }
 
 export function createPalette(this: SDL, ncolors: number) {
-  const ptr = this.symbols.SDL_CreatePalette(ncolors) as Pointer | null;
+  const ptr = this.symbols.SDL_CreatePalette(ncolors);
 
   if (!ptr) return null;
 
@@ -79,25 +80,16 @@ export function setPaletteColors(
     ncolors: number;
   }
 ) {
-  const palettePtr =
-    options.palette instanceof Palette
-      ? options.palette.$address
-      : options.palette;
-  const colorsPtr =
-    options.colors instanceof Color ? options.colors.$address : options.colors;
-
   return this.symbols.SDL_SetPaletteColors(
-    palettePtr,
-    colorsPtr,
+    getStructAddress(options.palette),
+    getStructAddress(options.colors),
     options.firstcolor,
     options.ncolors
   );
 }
 
 export function destroyPalette(this: SDL, palette: Palette | Pointer) {
-  const palettePtr = palette instanceof Palette ? palette.$address : palette;
-
-  this.symbols.SDL_DestroyPalette(palettePtr);
+  this.symbols.SDL_DestroyPalette(getStructAddress(palette));
 }
 
 export function mapRGB(
@@ -110,19 +102,9 @@ export function mapRGB(
     b: number;
   }
 ) {
-  const formatPtr =
-    options.format instanceof PixelFormatDetails
-      ? options.format.$address
-      : options.format;
-  const palettePtr = options.palette
-    ? options.palette instanceof Palette
-      ? options.palette.$address
-      : options.palette
-    : null;
-
   return this.symbols.SDL_MapRGB(
-    formatPtr,
-    palettePtr,
+    getStructAddress(options.format),
+    options.palette ? getStructAddress(options.palette) : null,
     options.r,
     options.g,
     options.b
@@ -140,19 +122,9 @@ export function mapRGBA(
     a: number;
   }
 ) {
-  const formatPtr =
-    options.format instanceof PixelFormatDetails
-      ? options.format.$address
-      : options.format;
-  const palettePtr = options.palette
-    ? options.palette instanceof Palette
-      ? options.palette.$address
-      : options.palette
-    : null;
-
   return this.symbols.SDL_MapRGBA(
-    formatPtr,
-    palettePtr,
+    getStructAddress(options.format),
+    options.palette ? getStructAddress(options.palette) : null,
     options.r,
     options.g,
     options.b,
@@ -168,24 +140,14 @@ export function getRGB(
     palette?: Palette | Pointer | null;
   }
 ) {
-  const formatPtr =
-    options.format instanceof PixelFormatDetails
-      ? options.format.$address
-      : options.format;
-  const palettePtr = options.palette
-    ? options.palette instanceof Palette
-      ? options.palette.$address
-      : options.palette
-    : null;
-
   const rStruct = new CStruct({ length: CStruct.BYTE_SIZE.u8 });
   const gStruct = new CStruct({ length: CStruct.BYTE_SIZE.u8 });
   const bStruct = new CStruct({ length: CStruct.BYTE_SIZE.u8 });
 
   this.symbols.SDL_GetRGB(
     options.pixel,
-    formatPtr,
-    palettePtr,
+    getStructAddress(options.format),
+    options.palette ? getStructAddress(options.palette) : null,
     rStruct.$address,
     gStruct.$address,
     bStruct.$address
@@ -206,16 +168,6 @@ export function getRGBA(
     palette?: Palette | Pointer | null;
   }
 ) {
-  const formatPtr =
-    options.format instanceof PixelFormatDetails
-      ? options.format.$address
-      : options.format;
-  const palettePtr = options.palette
-    ? options.palette instanceof Palette
-      ? options.palette.$address
-      : options.palette
-    : null;
-
   const rStruct = new CStruct({ length: CStruct.BYTE_SIZE.u8 });
   const gStruct = new CStruct({ length: CStruct.BYTE_SIZE.u8 });
   const bStruct = new CStruct({ length: CStruct.BYTE_SIZE.u8 });
@@ -223,8 +175,8 @@ export function getRGBA(
 
   this.symbols.SDL_GetRGBA(
     options.pixel,
-    formatPtr,
-    palettePtr,
+    getStructAddress(options.format),
+    options.palette ? getStructAddress(options.palette) : null,
     rStruct.$address,
     gStruct.$address,
     bStruct.$address,

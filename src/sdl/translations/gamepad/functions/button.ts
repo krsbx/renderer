@@ -1,13 +1,16 @@
-import { CString, type Pointer } from 'bun:ffi';
+import { type Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
 import {
   GamepadButtonLabel,
   type GamepadButton,
   type GamepadType,
 } from '../../../ffi/gamepad/constant';
+import { stringToCString } from '../../../utility/common';
 
-export function getGamepadButtonFromString(this: SDL, str: CString) {
-  return this.symbols.SDL_GetGamepadButtonFromString(str.ptr) as GamepadButton;
+export function getGamepadButtonFromString(this: SDL, str: string) {
+  return this.symbols.SDL_GetGamepadButtonFromString(
+    stringToCString(str).ptr
+  ) as GamepadButton;
 }
 
 export function getGamepadStringForButton(this: SDL, button: GamepadButton) {

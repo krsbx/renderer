@@ -2,6 +2,7 @@ import type { Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
 import type { Colorspace, PixelFormat } from '../../../ffi/pixels/constant';
 import type { FlipMode, ScaleMode } from '../../../ffi/surface/constant';
+import { getStructAddress } from '../../../utility/common';
 import { Palette } from '../../pixels/utility';
 import { Surface } from '../utility';
 
@@ -14,12 +15,10 @@ export function flipSurface(
     flip: FlipMode;
   }
 ) {
-  const surfacePtr =
-    options.surface instanceof Surface
-      ? options.surface.$address
-      : options.surface;
-
-  return this.symbols.SDL_FlipSurface(surfacePtr, options.flip);
+  return this.symbols.SDL_FlipSurface(
+    getStructAddress(options.surface),
+    options.flip
+  );
 }
 
 // Rotate
@@ -31,12 +30,10 @@ export function rotateSurface(
     angle: number;
   }
 ) {
-  const surfacePtr =
-    options.surface instanceof Surface
-      ? options.surface.$address
-      : options.surface;
-
-  const surface = this.symbols.SDL_RotateSurface(surfacePtr, options.angle);
+  const surface = this.symbols.SDL_RotateSurface(
+    getStructAddress(options.surface),
+    options.angle
+  );
 
   if (!surface) return null;
 
@@ -46,9 +43,9 @@ export function rotateSurface(
 // Duplicate
 
 export function duplicateSurface(this: SDL, surface: Surface | Pointer) {
-  const surfacePtr = surface instanceof Surface ? surface.$address : surface;
-
-  const newSurfacePtr = this.symbols.SDL_DuplicateSurface(surfacePtr);
+  const newSurfacePtr = this.symbols.SDL_DuplicateSurface(
+    getStructAddress(surface)
+  );
 
   if (!newSurfacePtr) return null;
 
@@ -66,13 +63,8 @@ export function scaleSurface(
     scaleMode: ScaleMode;
   }
 ) {
-  const surfacePtr =
-    options.surface instanceof Surface
-      ? options.surface.$address
-      : options.surface;
-
   const surface = this.symbols.SDL_ScaleSurface(
-    surfacePtr,
+    getStructAddress(options.surface),
     options.width,
     options.height,
     options.scaleMode
@@ -92,12 +84,10 @@ export function convertSurface(
     format: PixelFormat;
   }
 ) {
-  const surfacePtr =
-    options.surface instanceof Surface
-      ? options.surface.$address
-      : options.surface;
-
-  const surface = this.symbols.SDL_ConvertSurface(surfacePtr, options.format);
+  const surface = this.symbols.SDL_ConvertSurface(
+    getStructAddress(options.surface),
+    options.format
+  );
 
   if (!surface) return null;
 
@@ -114,19 +104,10 @@ export function convertSurfaceAndColorspace(
     props?: number;
   }
 ) {
-  const surfacePtr =
-    options.surface instanceof Surface
-      ? options.surface.$address
-      : options.surface;
-  const palettePtr =
-    options.palette instanceof Palette
-      ? options.palette.$address
-      : options.palette;
-
   const surface = this.symbols.SDL_ConvertSurfaceAndColorspace(
-    surfacePtr,
+    getStructAddress(options.surface),
     options.format,
-    palettePtr ?? null,
+    options.palette ? getStructAddress(options.palette) : null,
     options.colorspace,
     options.props ?? 0
   );

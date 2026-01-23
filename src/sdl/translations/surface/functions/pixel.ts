@@ -1,6 +1,10 @@
-import { ptr, type Pointer } from 'bun:ffi';
+import { type Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
 import type { Colorspace, PixelFormat } from '../../../ffi/pixels/constant';
+import {
+  getStructAddress,
+  getStructMemoryAddress,
+} from '../../../utility/common';
 import { CStruct } from '../../../utility/cstruct';
 import { Rect } from '../../rect/utility';
 import { Surface } from '../utility';
@@ -20,19 +24,14 @@ export function convertPixels(
     dstPitch: number;
   }
 ) {
-  const srcPtr =
-    options.src instanceof Uint8Array ? ptr(options.src) : options.src;
-  const dstPtr =
-    options.dst instanceof Uint8Array ? ptr(options.dst) : options.dst;
-
   return this.symbols.SDL_ConvertPixels(
     options.width,
     options.height,
     options.srcFormat,
-    srcPtr,
+    getStructMemoryAddress(options.src),
     options.srcPitch,
     options.dstFormat,
-    dstPtr,
+    getStructMemoryAddress(options.dst),
     options.dstPitch
   );
 }
@@ -54,23 +53,18 @@ export function convertPixelsAndColorspace(
     dstPitch: number;
   }
 ) {
-  const srcPtr =
-    options.src instanceof Uint8Array ? ptr(options.src) : options.src;
-  const dstPtr =
-    options.dst instanceof Uint8Array ? ptr(options.dst) : options.dst;
-
   return this.symbols.SDL_ConvertPixelsAndColorspace(
     options.width,
     options.height,
     options.srcFormat,
     options.srcColorspace,
     options.srcProperties ?? 0,
-    srcPtr,
+    getStructMemoryAddress(options.src),
     options.srcPitch,
     options.dstFormat,
     options.dstColorspace,
     options.dstProperties ?? 0,
-    dstPtr,
+    getStructMemoryAddress(options.dst),
     options.dstPitch
   );
 }
@@ -91,19 +85,14 @@ export function premultiplyAlpha(
     linear: boolean;
   }
 ) {
-  const srcPtr =
-    options.src instanceof Uint8Array ? ptr(options.src) : options.src;
-  const dstPtr =
-    options.dst instanceof Uint8Array ? ptr(options.dst) : options.dst;
-
   return this.symbols.SDL_PremultiplyAlpha(
     options.width,
     options.height,
     options.srcFormat,
-    srcPtr,
+    getStructMemoryAddress(options.src),
     options.srcPitch,
     options.dstFormat,
-    dstPtr,
+    getStructMemoryAddress(options.dst),
     options.dstPitch,
     options.linear
   );
@@ -116,12 +105,10 @@ export function premultiplySurfaceAlpha(
     linear: boolean;
   }
 ) {
-  const surfacePtr =
-    options.surface instanceof Surface
-      ? options.surface.$address
-      : options.surface;
-
-  return this.symbols.SDL_PremultiplySurfaceAlpha(surfacePtr, options.linear);
+  return this.symbols.SDL_PremultiplySurfaceAlpha(
+    getStructAddress(options.surface),
+    options.linear
+  );
 }
 
 // Fill
@@ -136,13 +123,8 @@ export function clearSurface(
     a: number;
   }
 ) {
-  const surfacePtr =
-    options.surface instanceof Surface
-      ? options.surface.$address
-      : options.surface;
-
   return this.symbols.SDL_ClearSurface(
-    surfacePtr,
+    getStructAddress(options.surface),
     options.r,
     options.g,
     options.b,
@@ -158,14 +140,9 @@ export function fillSurfaceRect(
     color: number;
   }
 ) {
-  const dstPtr =
-    options.dst instanceof Surface ? options.dst.$address : options.dst;
-  const rectPtr =
-    options.rect instanceof Rect ? options.rect.$address : options.rect;
-
   return this.symbols.SDL_FillSurfaceRect(
-    dstPtr,
-    rectPtr ?? null,
+    getStructAddress(options.dst),
+    options.rect ? getStructAddress(options.rect) : null,
     options.color
   );
 }
@@ -183,9 +160,6 @@ export function fillSurfaceRects(
     length: Rect.BYTE_SIZE * options.rects.length,
   });
 
-  const dstPtr =
-    options.dst instanceof Surface ? options.dst.$address : options.dst;
-
   for (let i = 0; i < options.rects.length; i++) {
     const offset = i * Rect.BYTE_SIZE;
     const rect = options.rects[i];
@@ -199,7 +173,7 @@ export function fillSurfaceRects(
   }
 
   return this.symbols.SDL_FillSurfaceRects(
-    dstPtr,
+    getStructAddress(options.dst),
     rectsStruct.$address,
     options.count,
     options.color
@@ -217,13 +191,8 @@ export function mapSurfaceRGB(
     b: number;
   }
 ) {
-  const surfacePtr =
-    options.surface instanceof Surface
-      ? options.surface.$address
-      : options.surface;
-
   return this.symbols.SDL_MapSurfaceRGB(
-    surfacePtr,
+    getStructAddress(options.surface),
     options.r,
     options.g,
     options.b
@@ -240,13 +209,8 @@ export function mapSurfaceRGBA(
     a: number;
   }
 ) {
-  const surfacePtr =
-    options.surface instanceof Surface
-      ? options.surface.$address
-      : options.surface;
-
   return this.symbols.SDL_MapSurfaceRGBA(
-    surfacePtr,
+    getStructAddress(options.surface),
     options.r,
     options.g,
     options.b,
@@ -264,17 +228,13 @@ export function readSurfacePixel(
     y: number;
   }
 ) {
-  const surfacePtr =
-    options.surface instanceof Surface
-      ? options.surface.$address
-      : options.surface;
   const rStruct = new CStruct({ length: CStruct.BYTE_SIZE.u8 });
   const gStruct = new CStruct({ length: CStruct.BYTE_SIZE.u8 });
   const bStruct = new CStruct({ length: CStruct.BYTE_SIZE.u8 });
   const aStruct = new CStruct({ length: CStruct.BYTE_SIZE.u8 });
 
   const success = this.symbols.SDL_ReadSurfacePixel(
-    surfacePtr,
+    getStructAddress(options.surface),
     options.x,
     options.y,
     rStruct.$address,
@@ -301,17 +261,13 @@ export function readSurfacePixelFloat(
     y: number;
   }
 ) {
-  const surfacePtr =
-    options.surface instanceof Surface
-      ? options.surface.$address
-      : options.surface;
   const rStruct = new CStruct({ length: CStruct.BYTE_SIZE.f32 });
   const gStruct = new CStruct({ length: CStruct.BYTE_SIZE.f32 });
   const bStruct = new CStruct({ length: CStruct.BYTE_SIZE.f32 });
   const aStruct = new CStruct({ length: CStruct.BYTE_SIZE.f32 });
 
   const success = this.symbols.SDL_ReadSurfacePixelFloat(
-    surfacePtr,
+    getStructAddress(options.surface),
     options.x,
     options.y,
     rStruct.$address,
@@ -344,13 +300,8 @@ export function writeSurfacePixel(
     a: number;
   }
 ) {
-  const surfacePtr =
-    options.surface instanceof Surface
-      ? options.surface.$address
-      : options.surface;
-
   return this.symbols.SDL_WriteSurfacePixel(
-    surfacePtr,
+    getStructAddress(options.surface),
     options.x,
     options.y,
     options.r,
@@ -372,13 +323,8 @@ export function writeSurfacePixelFloat(
     a: number;
   }
 ) {
-  const surfacePtr =
-    options.surface instanceof Surface
-      ? options.surface.$address
-      : options.surface;
-
   return this.symbols.SDL_WriteSurfacePixelFloat(
-    surfacePtr,
+    getStructAddress(options.surface),
     options.x,
     options.y,
     options.r,

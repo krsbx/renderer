@@ -1,5 +1,6 @@
 import type { Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
+import { getStructAddress } from '../../../utility/common';
 import { InitState } from '../utility';
 
 export function createMutex(this: SDL) {
@@ -126,15 +127,11 @@ export function waitConditionTimeout(
 }
 
 export function shouldInit(this: SDL, state: InitState | Pointer) {
-  const statePtr = state instanceof InitState ? state.$address : state;
-
-  return this.symbols.SDL_ShouldInit(statePtr);
+  return this.symbols.SDL_ShouldInit(getStructAddress(state));
 }
 
 export function shouldQuit(this: SDL, state: InitState | Pointer) {
-  const statePtr = state instanceof InitState ? state.$address : state;
-
-  return this.symbols.SDL_ShouldQuit(statePtr);
+  return this.symbols.SDL_ShouldQuit(getStructAddress(state));
 }
 
 export function setInitialized(
@@ -144,8 +141,8 @@ export function setInitialized(
     initialized: boolean;
   }
 ) {
-  const statePtr =
-    options.state instanceof InitState ? options.state.$address : options.state;
-
-  this.symbols.SDL_SetInitialized(statePtr, options.initialized);
+  this.symbols.SDL_SetInitialized(
+    getStructAddress(options.state),
+    options.initialized
+  );
 }

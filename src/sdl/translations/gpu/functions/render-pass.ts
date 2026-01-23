@@ -1,6 +1,7 @@
 import type { Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
 import type { GPUIndexElementSize } from '../../../ffi/gpu/constant';
+import { getStructAddress } from '../../../utility/common';
 import { FColor } from '../../pixels/utility';
 import { Rect } from '../../rect/utility';
 import {
@@ -22,20 +23,13 @@ export function beginGPURenderPass(
     depthStencilTargetInfo?: GPUDepthStencilTargetInfo | Pointer | null;
   }
 ) {
-  const colorTargetInfosPtr =
-    options.colorTargetInfos instanceof GPUColorTargetInfo
-      ? options.colorTargetInfos.$address
-      : options.colorTargetInfos;
-  const depthStencilTargetInfoPtr =
-    options.depthStencilTargetInfo instanceof GPUDepthStencilTargetInfo
-      ? options.depthStencilTargetInfo.$address
-      : options.depthStencilTargetInfo;
-
   return this.symbols.SDL_BeginGPURenderPass(
     options.commandBuffer,
-    colorTargetInfosPtr,
+    getStructAddress(options.colorTargetInfos),
     options.numColorTargets,
-    depthStencilTargetInfoPtr ?? null
+    options.depthStencilTargetInfo
+      ? getStructAddress(options.depthStencilTargetInfo)
+      : null
   );
 }
 
@@ -59,12 +53,10 @@ export function setGPUViewport(
     viewport: GPUViewport | Pointer;
   }
 ) {
-  const viewportPtr =
-    options.viewport instanceof GPUViewport
-      ? options.viewport.$address
-      : options.viewport;
-
-  this.symbols.SDL_SetGPUViewport(options.renderPass, viewportPtr);
+  this.symbols.SDL_SetGPUViewport(
+    options.renderPass,
+    getStructAddress(options.viewport)
+  );
 }
 
 export function setGPUScissor(
@@ -74,12 +66,10 @@ export function setGPUScissor(
     scissor: Rect | Pointer;
   }
 ) {
-  const scissorPtr =
-    options.scissor instanceof Rect
-      ? options.scissor.$address
-      : options.scissor;
-
-  this.symbols.SDL_SetGPUScissor(options.renderPass, scissorPtr);
+  this.symbols.SDL_SetGPUScissor(
+    options.renderPass,
+    getStructAddress(options.scissor)
+  );
 }
 
 export function setGPUBlendConstants(
@@ -89,12 +79,10 @@ export function setGPUBlendConstants(
     blendConstants: FColor | Pointer;
   }
 ) {
-  const blendConstantsPtr =
-    options.blendConstants instanceof FColor
-      ? options.blendConstants.$address
-      : options.blendConstants;
-
-  this.symbols.SDL_SetGPUBlendConstants(options.renderPass, blendConstantsPtr);
+  this.symbols.SDL_SetGPUBlendConstants(
+    options.renderPass,
+    getStructAddress(options.blendConstants)
+  );
 }
 
 export function setGPUStencilReference(
@@ -121,15 +109,10 @@ export function bindGPUVertexBuffers(
     numBindings: number;
   }
 ) {
-  const bindingsPtr =
-    options.bindings instanceof GPUBufferBinding
-      ? options.bindings.$address
-      : options.bindings;
-
   this.symbols.SDL_BindGPUVertexBuffers(
     options.renderPass,
     options.firstSlot,
-    bindingsPtr,
+    getStructAddress(options.bindings),
     options.numBindings
   );
 }
@@ -142,14 +125,9 @@ export function bindGPUIndexBuffer(
     indexElementSize: GPUIndexElementSize;
   }
 ) {
-  const bindingPtr =
-    options.binding instanceof GPUBufferBinding
-      ? options.binding.$address
-      : options.binding;
-
   this.symbols.SDL_BindGPUIndexBuffer(
     options.renderPass,
-    bindingPtr,
+    getStructAddress(options.binding),
     options.indexElementSize
   );
 }
@@ -165,15 +143,10 @@ export function bindGPUVertexSamplers(
     numBindings: number;
   }
 ) {
-  const textureSamplerBindingsPtr =
-    options.textureSamplerBindings instanceof GPUTextureSamplerBinding
-      ? options.textureSamplerBindings.$address
-      : options.textureSamplerBindings;
-
   this.symbols.SDL_BindGPUVertexSamplers(
     options.renderPass,
     options.firstSlot,
-    textureSamplerBindingsPtr,
+    getStructAddress(options.textureSamplerBindings),
     options.numBindings
   );
 }
@@ -223,15 +196,10 @@ export function bindGPUFragmentSamplers(
     numBindings: number;
   }
 ) {
-  const textureSamplerBindingsPtr =
-    options.textureSamplerBindings instanceof GPUTextureSamplerBinding
-      ? options.textureSamplerBindings.$address
-      : options.textureSamplerBindings;
-
   this.symbols.SDL_BindGPUFragmentSamplers(
     options.renderPass,
     options.firstSlot,
-    textureSamplerBindingsPtr,
+    getStructAddress(options.textureSamplerBindings),
     options.numBindings
   );
 }

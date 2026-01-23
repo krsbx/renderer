@@ -1,5 +1,9 @@
-import { ptr, type Pointer } from 'bun:ffi';
+import { type Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
+import {
+  getStructAddress,
+  getStructMemoryAddress,
+} from '../../../utility/common';
 import { CStruct } from '../../../utility/cstruct';
 import { HapticEffect } from '../utility';
 
@@ -88,12 +92,10 @@ export function hapticEffectSupported(
     effect: HapticEffect | Pointer;
   }
 ) {
-  const effectPtr =
-    options.effect instanceof HapticEffect
-      ? options.effect.$address
-      : options.effect;
-
-  return this.symbols.SDL_HapticEffectSupported(options.haptic, effectPtr);
+  return this.symbols.SDL_HapticEffectSupported(
+    options.haptic,
+    getStructAddress(options.effect)
+  );
 }
 
 export function createHapticEffect(
@@ -103,12 +105,10 @@ export function createHapticEffect(
     effect: HapticEffect | Pointer;
   }
 ) {
-  const effectPtr =
-    options.effect instanceof HapticEffect
-      ? options.effect.$address
-      : options.effect;
-
-  return this.symbols.SDL_CreateHapticEffect(options.haptic, effectPtr);
+  return this.symbols.SDL_CreateHapticEffect(
+    options.haptic,
+    getStructAddress(options.effect)
+  );
 }
 
 export function updateHapticEffect(
@@ -119,17 +119,10 @@ export function updateHapticEffect(
     data: HapticEffect | Pointer | Uint8Array;
   }
 ) {
-  const dataPtr =
-    options.data instanceof HapticEffect
-      ? options.data.$address
-      : options.data instanceof Uint8Array
-        ? ptr(options.data)
-        : options.data;
-
   return this.symbols.SDL_UpdateHapticEffect(
     options.haptic,
     options.effect,
-    dataPtr
+    getStructMemoryAddress(options.data)
   );
 }
 

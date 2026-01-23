@@ -1,8 +1,9 @@
 import type { Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
 import type { ScaleMode } from '../../../ffi/surface/constant';
-import { Rect } from '../../rect/utility';
+import { getStructAddress } from '../../../utility/common';
 import { Surface } from '../utility';
+import { Rect } from '../../rect/utility';
 
 export function blitSurface(
   this: SDL,
@@ -13,24 +14,11 @@ export function blitSurface(
     dstrect?: Rect | Pointer | null;
   }
 ) {
-  const srcPtr =
-    options.src instanceof Surface ? options.src.$address : options.src;
-  const srcrectPtr =
-    options.srcrect instanceof Rect
-      ? options.srcrect.$address
-      : options.srcrect;
-  const dstPtr =
-    options.dst instanceof Surface ? options.dst.$address : options.dst;
-  const dstrectPtr =
-    options.dstrect instanceof Rect
-      ? options.dstrect.$address
-      : options.dstrect;
-
   return this.symbols.SDL_BlitSurface(
-    srcPtr,
-    srcrectPtr ?? null,
-    dstPtr,
-    dstrectPtr ?? null
+    getStructAddress(options.src),
+    options.srcrect ? getStructAddress(options.srcrect) : null,
+    getStructAddress(options.dst),
+    options.dstrect ? getStructAddress(options.dstrect) : null
   );
 }
 
@@ -43,24 +31,11 @@ export function blitSurfaceUnchecked(
     dstrect?: Rect | Pointer | null;
   }
 ) {
-  const srcPtr =
-    options.src instanceof Surface ? options.src.$address : options.src;
-  const srcrectPtr =
-    options.srcrect instanceof Rect
-      ? options.srcrect.$address
-      : options.srcrect;
-  const dstPtr =
-    options.dst instanceof Surface ? options.dst.$address : options.dst;
-  const dstrectPtr =
-    options.dstrect instanceof Rect
-      ? options.dstrect.$address
-      : options.dstrect;
-
   return this.symbols.SDL_BlitSurfaceUnchecked(
-    srcPtr,
-    srcrectPtr ?? null,
-    dstPtr,
-    dstrectPtr ?? null
+    getStructAddress(options.src),
+    options.srcrect ? getStructAddress(options.srcrect) : null,
+    getStructAddress(options.dst),
+    options.dstrect ? getStructAddress(options.dstrect) : null
   );
 }
 
@@ -74,24 +49,11 @@ export function blitSurfaceScaled(
     scaleMode: ScaleMode;
   }
 ) {
-  const srcPtr =
-    options.src instanceof Surface ? options.src.$address : options.src;
-  const srcrectPtr =
-    options.srcrect instanceof Rect
-      ? options.srcrect.$address
-      : options.srcrect;
-  const dstPtr =
-    options.dst instanceof Surface ? options.dst.$address : options.dst;
-  const dstrectPtr =
-    options.dstrect instanceof Rect
-      ? options.dstrect.$address
-      : options.dstrect;
-
   return this.symbols.SDL_BlitSurfaceScaled(
-    srcPtr,
-    srcrectPtr ?? null,
-    dstPtr,
-    dstrectPtr ?? null,
+    getStructAddress(options.src),
+    options.srcrect ? getStructAddress(options.srcrect) : null,
+    getStructAddress(options.dst),
+    options.dstrect ? getStructAddress(options.dstrect) : null,
     options.scaleMode
   );
 }
@@ -106,24 +68,11 @@ export function blitSurfaceUncheckedScaled(
     scaleMode: ScaleMode;
   }
 ) {
-  const srcPtr =
-    options.src instanceof Surface ? options.src.$address : options.src;
-  const srcrectPtr =
-    options.srcrect instanceof Rect
-      ? options.srcrect.$address
-      : options.srcrect;
-  const dstPtr =
-    options.dst instanceof Surface ? options.dst.$address : options.dst;
-  const dstrectPtr =
-    options.dstrect instanceof Rect
-      ? options.dstrect.$address
-      : options.dstrect;
-
   return this.symbols.SDL_BlitSurfaceUncheckedScaled(
-    srcPtr,
-    srcrectPtr ?? null,
-    dstPtr,
-    dstrectPtr ?? null,
+    getStructAddress(options.src),
+    options.srcrect ? getStructAddress(options.srcrect) : null,
+    getStructAddress(options.dst),
+    options.dstrect ? getStructAddress(options.dstrect) : null,
     options.scaleMode
   );
 }
@@ -138,24 +87,11 @@ export function stretchSurface(
     scaleMode: ScaleMode;
   }
 ) {
-  const srcPtr =
-    options.src instanceof Surface ? options.src.$address : options.src;
-  const srcrectPtr =
-    options.srcrect instanceof Rect
-      ? options.srcrect.$address
-      : options.srcrect;
-  const dstPtr =
-    options.dst instanceof Surface ? options.dst.$address : options.dst;
-  const dstrectPtr =
-    options.dstrect instanceof Rect
-      ? options.dstrect.$address
-      : options.dstrect;
-
   return this.symbols.SDL_StretchSurface(
-    srcPtr,
-    srcrectPtr ?? null,
-    dstPtr,
-    dstrectPtr ?? null,
+    getStructAddress(options.src),
+    options.srcrect ? getStructAddress(options.srcrect) : null,
+    getStructAddress(options.dst),
+    options.dstrect ? getStructAddress(options.dstrect) : null,
     options.scaleMode
   );
 }
@@ -169,24 +105,11 @@ export function blitSurfaceTiled(
     dstrect?: Rect | Pointer | null;
   }
 ) {
-  const srcPtr =
-    options.src instanceof Surface ? options.src.$address : options.src;
-  const srcrectPtr =
-    options.srcrect instanceof Rect
-      ? options.srcrect.$address
-      : options.srcrect;
-  const dstPtr =
-    options.dst instanceof Surface ? options.dst.$address : options.dst;
-  const dstrectPtr =
-    options.dstrect instanceof Rect
-      ? options.dstrect.$address
-      : options.dstrect;
-
   return this.symbols.SDL_BlitSurfaceTiled(
-    srcPtr,
-    srcrectPtr ?? null,
-    dstPtr,
-    dstrectPtr ?? null
+    getStructAddress(options.src),
+    options.srcrect ? getStructAddress(options.srcrect) : null,
+    getStructAddress(options.dst),
+    options.dstrect ? getStructAddress(options.dstrect) : null
   );
 }
 
@@ -201,26 +124,13 @@ export function blitSurfaceTiledWithScale(
     dstrect?: Rect | Pointer | null;
   }
 ) {
-  const srcPtr =
-    options.src instanceof Surface ? options.src.$address : options.src;
-  const srcrectPtr =
-    options.srcrect instanceof Rect
-      ? options.srcrect.$address
-      : options.srcrect;
-  const dstPtr =
-    options.dst instanceof Surface ? options.dst.$address : options.dst;
-  const dstrectPtr =
-    options.dstrect instanceof Rect
-      ? options.dstrect.$address
-      : options.dstrect;
-
   return this.symbols.SDL_BlitSurfaceTiledWithScale(
-    srcPtr,
-    srcrectPtr ?? null,
+    getStructAddress(options.src),
+    options.srcrect ? getStructAddress(options.srcrect) : null,
     options.scale,
     options.scaleMode,
-    dstPtr,
-    dstrectPtr ?? null
+    getStructAddress(options.dst),
+    options.dstrect ? getStructAddress(options.dstrect) : null
   );
 }
 
@@ -239,29 +149,16 @@ export function blitSurface9Grid(
     dstrect?: Rect | Pointer | null;
   }
 ) {
-  const srcPtr =
-    options.src instanceof Surface ? options.src.$address : options.src;
-  const srcrectPtr =
-    options.srcrect instanceof Rect
-      ? options.srcrect.$address
-      : options.srcrect;
-  const dstPtr =
-    options.dst instanceof Surface ? options.dst.$address : options.dst;
-  const dstrectPtr =
-    options.dstrect instanceof Rect
-      ? options.dstrect.$address
-      : options.dstrect;
-
   return this.symbols.SDL_BlitSurface9Grid(
-    srcPtr,
-    srcrectPtr ?? null,
+    getStructAddress(options.src),
+    options.srcrect ? getStructAddress(options.srcrect) : null,
     options.leftWidth,
     options.rightWidth,
     options.topHeight,
     options.bottomHeight,
     options.scale,
     options.scaleMode,
-    dstPtr,
-    dstrectPtr ?? null
+    getStructAddress(options.dst),
+    options.dstrect ? getStructAddress(options.dstrect) : null
   );
 }

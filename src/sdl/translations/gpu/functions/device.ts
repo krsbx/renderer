@@ -1,6 +1,7 @@
-import type { CString, Pointer } from 'bun:ffi';
+import type { Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
 import type { GPUShaderFormat } from '../../../ffi/gpu/constant';
+import { stringToCString } from '../../../utility/common';
 
 // Support Check
 
@@ -8,12 +9,12 @@ export function gpuSupportsShaderFormats(
   this: SDL,
   options: {
     formatFlags: GPUShaderFormat;
-    name?: CString | null;
+    name?: string | null;
   }
 ) {
   return this.symbols.SDL_GPUSupportsShaderFormats(
     options.formatFlags,
-    options.name?.ptr ?? null
+    options.name ? stringToCString(options.name).ptr : null
   );
 }
 
@@ -31,13 +32,13 @@ export function createGPUDevice(
      * @default false
      */
     debugMode?: boolean;
-    name?: CString | null;
+    name?: string | null;
   }
 ) {
   return this.symbols.SDL_CreateGPUDevice(
     options.formatFlags,
     options.debugMode ?? false,
-    options.name?.ptr ?? null
+    options.name ? stringToCString(options.name).ptr : null
   );
 }
 

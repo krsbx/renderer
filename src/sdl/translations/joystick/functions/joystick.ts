@@ -5,6 +5,7 @@ import type {
   JoystickType,
 } from '../../../ffi/joystick/constant';
 import type { PowerState } from '../../../ffi/power/constant';
+import { getStructAddress } from '../../../utility/common';
 import { CStruct } from '../../../utility/cstruct';
 import { GUID } from '../../guid/utility';
 
@@ -164,15 +165,13 @@ export function getJoystickType(this: SDL, joystick: Pointer) {
 }
 
 export function getJoystickGUIDInfo(this: SDL, guid: GUID | Pointer) {
-  const guidPtr = guid instanceof GUID ? guid.$address : guid;
-
   const vendorStruct = new CStruct({ length: CStruct.BYTE_SIZE.u16 });
   const productStruct = new CStruct({ length: CStruct.BYTE_SIZE.u16 });
   const versionStruct = new CStruct({ length: CStruct.BYTE_SIZE.u16 });
   const crc16Struct = new CStruct({ length: CStruct.BYTE_SIZE.u16 });
 
   this.symbols.SDL_GetJoystickGUIDInfo(
-    guidPtr,
+    getStructAddress(guid),
     vendorStruct.$address,
     productStruct.$address,
     versionStruct.$address,

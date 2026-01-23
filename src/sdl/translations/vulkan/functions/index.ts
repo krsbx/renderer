@@ -1,9 +1,10 @@
 import { CString, type Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
+import { stringToCString } from '../../../utility/common';
 import { CStruct } from '../../../utility/cstruct';
 
-export function vulkanLoadLibrary(this: SDL, path: CString) {
-  return this.symbols.SDL_Vulkan_LoadLibrary(path.ptr);
+export function vulkanLoadLibrary(this: SDL, path: string) {
+  return this.symbols.SDL_Vulkan_LoadLibrary(stringToCString(path).ptr);
 }
 
 export function vulkanGetVkGetInstanceProcAddr(this: SDL) {
@@ -25,14 +26,14 @@ export function vulkanGetInstanceExtensions(this: SDL) {
 
   const count = countStruct.getValue(0, 'u32');
   const list = new CStruct({ address: listPtr });
-  const extensions: CString[] = [];
+  const extensions: string[] = [];
 
   for (let i = 0; i < count; i++) {
     const extensionPtr = list.getValue(i * CStruct.BYTE_SIZE.ptr, 'ptr');
 
     if (!extensionPtr) continue;
 
-    extensions.push(new CString(extensionPtr));
+    extensions.push(new CString(extensionPtr).toString());
   }
 
   return extensions;

@@ -1,6 +1,7 @@
 import type { Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
 import type { BlendMode } from '../../../ffi/blend-mode/constant';
+import { getStructAddress } from '../../../utility/common';
 import { CStruct } from '../../../utility/cstruct';
 import { Rect } from '../../rect/utility';
 import { Surface } from '../utility';
@@ -14,18 +15,14 @@ export function setSurfaceRLE(
     enabled: boolean;
   }
 ) {
-  const surfacePtr =
-    options.surface instanceof Surface
-      ? options.surface.$address
-      : options.surface;
-
-  return this.symbols.SDL_SetSurfaceRLE(surfacePtr, options.enabled);
+  return this.symbols.SDL_SetSurfaceRLE(
+    getStructAddress(options.surface),
+    options.enabled
+  );
 }
 
 export function surfaceHasRLE(this: SDL, surface: Surface | Pointer) {
-  const surfacePtr = surface instanceof Surface ? surface.$address : surface;
-
-  return this.symbols.SDL_SurfaceHasRLE(surfacePtr);
+  return this.symbols.SDL_SurfaceHasRLE(getStructAddress(surface));
 }
 
 // Color Key
@@ -38,30 +35,22 @@ export function setSurfaceColorKey(
     key: number;
   }
 ) {
-  const surfacePtr =
-    options.surface instanceof Surface
-      ? options.surface.$address
-      : options.surface;
-
   return this.symbols.SDL_SetSurfaceColorKey(
-    surfacePtr,
+    getStructAddress(options.surface),
     options.enabled,
     options.key
   );
 }
 
 export function surfaceHasColorKey(this: SDL, surface: Surface | Pointer) {
-  const surfacePtr = surface instanceof Surface ? surface.$address : surface;
-
-  return this.symbols.SDL_SurfaceHasColorKey(surfacePtr);
+  return this.symbols.SDL_SurfaceHasColorKey(getStructAddress(surface));
 }
 
 export function getSurfaceColorKey(this: SDL, surface: Surface | Pointer) {
-  const surfacePtr = surface instanceof Surface ? surface.$address : surface;
   const keyStruct = new CStruct({ length: CStruct.BYTE_SIZE.u32 });
 
   const success = this.symbols.SDL_GetSurfaceColorKey(
-    surfacePtr,
+    getStructAddress(surface),
     keyStruct.$address
   );
 
@@ -81,13 +70,8 @@ export function setSurfaceColorMod(
     b: number;
   }
 ) {
-  const surfacePtr =
-    options.surface instanceof Surface
-      ? options.surface.$address
-      : options.surface;
-
   return this.symbols.SDL_SetSurfaceColorMod(
-    surfacePtr,
+    getStructAddress(options.surface),
     options.r,
     options.g,
     options.b
@@ -95,14 +79,12 @@ export function setSurfaceColorMod(
 }
 
 export function getSurfaceColorMod(this: SDL, surface: Surface | Pointer) {
-  const surfacePtr = surface instanceof Surface ? surface.$address : surface;
-
   const rStruct = new CStruct({ length: CStruct.BYTE_SIZE.u8 });
   const gStruct = new CStruct({ length: CStruct.BYTE_SIZE.u8 });
   const bStruct = new CStruct({ length: CStruct.BYTE_SIZE.u8 });
 
   const success = this.symbols.SDL_GetSurfaceColorMod(
-    surfacePtr,
+    getStructAddress(surface),
     rStruct.$address,
     gStruct.$address,
     bStruct.$address
@@ -126,20 +108,17 @@ export function setSurfaceAlphaMod(
     alpha: number;
   }
 ) {
-  const surfacePtr =
-    options.surface instanceof Surface
-      ? options.surface.$address
-      : options.surface;
-
-  return this.symbols.SDL_SetSurfaceAlphaMod(surfacePtr, options.alpha);
+  return this.symbols.SDL_SetSurfaceAlphaMod(
+    getStructAddress(options.surface),
+    options.alpha
+  );
 }
 
 export function getSurfaceAlphaMod(this: SDL, surface: Surface | Pointer) {
   const alphaStruct = new CStruct({ length: CStruct.BYTE_SIZE.u8 });
-  const surfacePtr = surface instanceof Surface ? surface.$address : surface;
 
   const success = this.symbols.SDL_GetSurfaceAlphaMod(
-    surfacePtr,
+    getStructAddress(surface),
     alphaStruct.$address
   );
 
@@ -157,20 +136,17 @@ export function setSurfaceBlendMode(
     blendMode: BlendMode;
   }
 ) {
-  const surfacePtr =
-    options.surface instanceof Surface
-      ? options.surface.$address
-      : options.surface;
-
-  return this.symbols.SDL_SetSurfaceBlendMode(surfacePtr, options.blendMode);
+  return this.symbols.SDL_SetSurfaceBlendMode(
+    getStructAddress(options.surface),
+    options.blendMode
+  );
 }
 
 export function getSurfaceBlendMode(this: SDL, surface: Surface | Pointer) {
   const blendModeStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
-  const surfacePtr = surface instanceof Surface ? surface.$address : surface;
 
   const success = this.symbols.SDL_GetSurfaceBlendMode(
-    surfacePtr,
+    getStructAddress(surface),
     blendModeStruct.$address
   );
 
@@ -188,24 +164,17 @@ export function setSurfaceClipRect(
     rect?: Rect | Pointer | null;
   }
 ) {
-  const surfacePtr =
-    options.surface instanceof Surface
-      ? options.surface.$address
-      : options.surface;
-  const rectPtr =
-    options.rect instanceof Rect
-      ? options.rect.$address
-      : (options.rect ?? null);
-
-  return this.symbols.SDL_SetSurfaceClipRect(surfacePtr, rectPtr);
+  return this.symbols.SDL_SetSurfaceClipRect(
+    getStructAddress(options.surface),
+    options.rect ? getStructAddress(options.rect) : null
+  );
 }
 
 export function getSurfaceClipRect(this: SDL, surface: Surface | Pointer) {
-  const surfacePtr = surface instanceof Surface ? surface.$address : surface;
   const rect = new Rect(Rect.allocMemory());
 
   const success = this.symbols.SDL_GetSurfaceClipRect(
-    surfacePtr,
+    getStructAddress(surface),
     rect.$address
   );
 

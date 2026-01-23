@@ -1,5 +1,6 @@
-import { ptr, type Pointer } from 'bun:ffi';
+import { type Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
+import { getStructMemoryAddress } from '../../../utility/common';
 
 export function writeIO(
   this: SDL,
@@ -9,10 +10,11 @@ export function writeIO(
     size: number;
   }
 ) {
-  const srcPtr =
-    options.ptr instanceof Uint8Array ? ptr(options.ptr) : options.ptr;
-
-  return this.symbols.SDL_WriteIO(options.context, srcPtr, options.size);
+  return this.symbols.SDL_WriteIO(
+    options.context,
+    getStructMemoryAddress(options.ptr),
+    options.size
+  );
 }
 
 export function writeU8(

@@ -1,6 +1,7 @@
 import type { Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
 import type { DateFormat, TimeFormat } from '../../../ffi/time/constant';
+import { getStructAddress } from '../../../utility/common';
 import { CStruct } from '../../../utility/cstruct';
 import { DateTime } from '../utility';
 
@@ -52,10 +53,12 @@ export function timeToDateTime(
 }
 
 export function dateTimeToTime(this: SDL, dt: DateTime | Pointer) {
-  const dtPtr = dt instanceof DateTime ? dt.$address : dt;
   const ticksStruct = new CStruct({ length: CStruct.BYTE_SIZE.i64 });
 
-  const success = this.symbols.SDL_DateTimeToTime(dtPtr, ticksStruct.$address);
+  const success = this.symbols.SDL_DateTimeToTime(
+    getStructAddress(dt),
+    ticksStruct.$address
+  );
 
   if (!success) return null;
 

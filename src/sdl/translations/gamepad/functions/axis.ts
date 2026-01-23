@@ -1,9 +1,12 @@
-import type { CString, Pointer } from 'bun:ffi';
+import type { Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
 import type { GamepadAxis } from '../../../ffi/gamepad/constant';
+import { stringToCString } from '../../../utility/common';
 
-export function getGamepadAxisFromString(this: SDL, str: CString) {
-  return this.symbols.SDL_GetGamepadAxisFromString(str.ptr) as GamepadAxis;
+export function getGamepadAxisFromString(this: SDL, str: string) {
+  return this.symbols.SDL_GetGamepadAxisFromString(
+    stringToCString(str).ptr
+  ) as GamepadAxis;
 }
 
 export function getGamepadStringForAxis(this: SDL, axis: GamepadAxis) {

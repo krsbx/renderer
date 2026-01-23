@@ -1,5 +1,6 @@
 import type { Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
+import { getStructAddress } from '../../../utility/common';
 import {
   GPUBufferLocation,
   GPUBufferRegion,
@@ -60,19 +61,10 @@ export function uploadToGPUTexture(
     cycle?: boolean;
   }
 ) {
-  const sourcePtr =
-    options.source instanceof GPUTextureTransferInfo
-      ? options.source.$address
-      : options.source;
-  const destinationPtr =
-    options.destination instanceof GPUTextureRegion
-      ? options.destination.$address
-      : options.destination;
-
   this.symbols.SDL_UploadToGPUTexture(
     options.copyPass,
-    sourcePtr,
-    destinationPtr,
+    getStructAddress(options.source),
+    getStructAddress(options.destination),
     options.cycle ?? false
   );
 }
@@ -89,19 +81,10 @@ export function uploadToGPUBuffer(
     cycle?: boolean;
   }
 ) {
-  const sourcePtr =
-    options.source instanceof GPUTransferBufferLocation
-      ? options.source.$address
-      : options.source;
-  const destinationPtr =
-    options.destination instanceof GPUBufferRegion
-      ? options.destination.$address
-      : options.destination;
-
   this.symbols.SDL_UploadToGPUBuffer(
     options.copyPass,
-    sourcePtr,
-    destinationPtr,
+    getStructAddress(options.source),
+    getStructAddress(options.destination),
     options.cycle ?? false
   );
 }
@@ -121,19 +104,10 @@ export function copyGPUTextureToTexture(
     cycle?: boolean;
   }
 ) {
-  const sourcePtr =
-    options.source instanceof GPUTextureLocation
-      ? options.source.$address
-      : options.source;
-  const destinationPtr =
-    options.destination instanceof GPUTextureLocation
-      ? options.destination.$address
-      : options.destination;
-
   this.symbols.SDL_CopyGPUTextureToTexture(
     options.copyPass,
-    sourcePtr,
-    destinationPtr,
+    getStructAddress(options.source),
+    getStructAddress(options.destination),
     options.w,
     options.h,
     options.d,
@@ -154,19 +128,10 @@ export function copyGPUBufferToBuffer(
     cycle?: boolean;
   }
 ) {
-  const sourcePtr =
-    options.source instanceof GPUBufferLocation
-      ? options.source.$address
-      : options.source;
-  const destinationPtr =
-    options.destination instanceof GPUBufferLocation
-      ? options.destination.$address
-      : options.destination;
-
   this.symbols.SDL_CopyGPUBufferToBuffer(
     options.copyPass,
-    sourcePtr,
-    destinationPtr,
+    getStructAddress(options.source),
+    getStructAddress(options.destination),
     options.size,
     options.cycle ?? false
   );
@@ -180,19 +145,10 @@ export function downloadFromGPUTexture(
     destination: GPUTextureTransferInfo | Pointer;
   }
 ) {
-  const sourcePtr =
-    options.source instanceof GPUTextureRegion
-      ? options.source.$address
-      : options.source;
-  const destinationPtr =
-    options.destination instanceof GPUTextureTransferInfo
-      ? options.destination.$address
-      : options.destination;
-
   this.symbols.SDL_DownloadFromGPUTexture(
     options.copyPass,
-    sourcePtr,
-    destinationPtr
+    getStructAddress(options.source),
+    getStructAddress(options.destination)
   );
 }
 
@@ -204,19 +160,10 @@ export function downloadFromGPUBuffer(
     destination: GPUTransferBufferLocation | Pointer;
   }
 ) {
-  const sourcePtr =
-    options.source instanceof GPUBufferRegion
-      ? options.source.$address
-      : options.source;
-  const destinationPtr =
-    options.destination instanceof GPUTransferBufferLocation
-      ? options.destination.$address
-      : options.destination;
-
   this.symbols.SDL_DownloadFromGPUBuffer(
     options.copyPass,
-    sourcePtr,
-    destinationPtr
+    getStructAddress(options.source),
+    getStructAddress(options.destination)
   );
 }
 

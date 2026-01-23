@@ -1,5 +1,9 @@
-import { ptr, type Pointer } from 'bun:ffi';
+import { type Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
+import {
+  getStructAddress,
+  getStructMemoryAddress,
+} from '../../../utility/common';
 import { CStruct } from '../../../utility/cstruct';
 import { GPURenderStateCreateInfo } from '../utility';
 
@@ -10,12 +14,10 @@ export function createGPURenderState(
     createInfo: GPURenderStateCreateInfo | Pointer;
   }
 ) {
-  const createInfoPtr =
-    options.createInfo instanceof GPURenderStateCreateInfo
-      ? options.createInfo.$address
-      : options.createInfo;
-
-  return this.symbols.SDL_CreateGPURenderState(options.renderer, createInfoPtr);
+  return this.symbols.SDL_CreateGPURenderState(
+    options.renderer,
+    getStructAddress(options.createInfo)
+  );
 }
 
 export function setGPURenderStateFragmentUniforms(
@@ -27,17 +29,10 @@ export function setGPURenderStateFragmentUniforms(
     length: number;
   }
 ) {
-  const dataPtr =
-    options.data instanceof CStruct
-      ? options.data.$address
-      : options.data instanceof Uint8Array
-        ? ptr(options.data)
-        : options.data;
-
   return this.symbols.SDL_SetGPURenderStateFragmentUniforms(
     options.state,
     options.slotIndex,
-    dataPtr,
+    getStructMemoryAddress(options.data),
     options.length
   );
 }

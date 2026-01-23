@@ -1,6 +1,7 @@
 import { CString, type JSCallback, type Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
 import type { Folder, GlobFlags } from '../../../ffi/file-system/constant';
+import { stringToCString } from '../../../utility/common';
 import { CStruct } from '../../../utility/cstruct';
 import { PathInfo } from '../utility';
 
@@ -11,11 +12,14 @@ export function getBasePath(this: SDL) {
 export function getPrefPath(
   this: SDL,
   options: {
-    org: CString;
-    app: CString;
+    org: string;
+    app: string;
   }
 ) {
-  const ptr = this.symbols.SDL_GetPrefPath(options.org.ptr, options.app.ptr);
+  const ptr = this.symbols.SDL_GetPrefPath(
+    stringToCString(options.org).ptr,
+    stringToCString(options.app).ptr
+  );
 
   if (!ptr) return null;
 
@@ -23,60 +27,66 @@ export function getPrefPath(
 
   this.symbols.SDL_free(ptr);
 
-  return path;
+  return path.toString();
 }
 
 export function getUserFolder(this: SDL, folder: Folder) {
-  return this.symbols.SDL_GetUserFolder(folder);
+  return this.symbols.SDL_GetUserFolder(folder).toString();
 }
 
-export function createDirectory(this: SDL, path: CString) {
-  return this.symbols.SDL_CreateDirectory(path.ptr);
+export function createDirectory(this: SDL, path: string) {
+  return this.symbols.SDL_CreateDirectory(stringToCString(path).ptr);
 }
 
 export function enumerateDirectory(
   this: SDL,
   options: {
-    path: CString;
+    path: string;
     callback: JSCallback;
     userdata?: Pointer | null;
   }
 ) {
   return this.symbols.SDL_EnumerateDirectory(
-    options.path.ptr,
+    stringToCString(options.path).ptr,
     options.callback.ptr,
     options.userdata ?? null
   );
 }
 
-export function removePath(this: SDL, path: CString) {
-  return this.symbols.SDL_RemovePath(path.ptr);
+export function removePath(this: SDL, path: string) {
+  return this.symbols.SDL_RemovePath(stringToCString(path).ptr);
 }
 
 export function renamePath(
   this: SDL,
   options: {
-    oldPath: CString;
-    newPath: CString;
+    oldPath: string;
+    newPath: string;
   }
 ) {
-  return this.symbols.SDL_RenamePath(options.oldPath.ptr, options.newPath.ptr);
+  return this.symbols.SDL_RenamePath(
+    stringToCString(options.oldPath).ptr,
+    stringToCString(options.newPath).ptr
+  );
 }
 
 export function copyFile(
   this: SDL,
   options: {
-    oldPath: CString;
-    newPath: CString;
+    oldPath: string;
+    newPath: string;
   }
 ) {
-  return this.symbols.SDL_CopyFile(options.oldPath.ptr, options.newPath.ptr);
+  return this.symbols.SDL_CopyFile(
+    stringToCString(options.oldPath).ptr,
+    stringToCString(options.newPath).ptr
+  );
 }
 
 export function getPathInfo(
   this: SDL,
   options: {
-    path: CString;
+    path: string;
     info?: PathInfo | Pointer | null;
   }
 ) {
@@ -93,7 +103,10 @@ export function getPathInfo(
     infoPtr = infoInstance.$address;
   }
 
-  const success = this.symbols.SDL_GetPathInfo(options.path.ptr, infoPtr);
+  const success = this.symbols.SDL_GetPathInfo(
+    stringToCString(options.path).ptr,
+    infoPtr
+  );
 
   if (!success) return null;
 
@@ -103,16 +116,16 @@ export function getPathInfo(
 export function globDirectory(
   this: SDL,
   options: {
-    path: CString;
-    pattern?: CString | null;
+    path: string;
+    pattern?: string | null;
     flags?: GlobFlags;
   }
 ) {
   const countStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
   const listPtr = this.symbols.SDL_GlobDirectory(
-    options.path.ptr,
-    options.pattern?.ptr ?? null,
+    stringToCString(options.path).ptr,
+    options.pattern ? stringToCString(options.pattern).ptr : null,
     options.flags ?? 0,
     countStruct.$address
   );
@@ -121,14 +134,14 @@ export function globDirectory(
 
   const count = countStruct.getValue(0, 'i32');
   const list = new CStruct({ address: listPtr });
-  const paths: CString[] = [];
+  const paths: string[] = [];
 
   for (let i = 0; i < count; i++) {
     const pathPtr = list.getValue(i * CStruct.BYTE_SIZE.ptr, 'ptr');
 
     if (!pathPtr) continue;
 
-    paths.push(new CString(pathPtr));
+    paths.push(new CString(pathPtr).toString());
   }
 
   this.symbols.SDL_free(listPtr);
@@ -145,5 +158,5 @@ export function getCurrentDirectory(this: SDL) {
 
   this.symbols.SDL_free(ptr);
 
-  return result;
+  return result.toString();
 }

@@ -1,16 +1,24 @@
-import { CString, ptr, type Pointer } from 'bun:ffi';
+import { type Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
 import { type IOStatus, type IOWhence } from '../../../ffi/io-stream/constant';
+import {
+  getStructAddress,
+  getStructMemoryAddress,
+  stringToCString,
+} from '../../../utility/common';
 import { IOStreamInterface } from '../utility';
 
 export function ioFromFile(
   this: SDL,
   options: {
-    file: CString;
-    mode: CString;
+    file: string;
+    mode: string;
   }
 ) {
-  return this.symbols.SDL_IOFromFile(options.file.ptr, options.mode.ptr);
+  return this.symbols.SDL_IOFromFile(
+    stringToCString(options.file).ptr,
+    stringToCString(options.mode).ptr
+  );
 }
 
 export function ioFromMem(
@@ -20,10 +28,10 @@ export function ioFromMem(
     size: number;
   }
 ) {
-  const memPtr =
-    options.mem instanceof Uint8Array ? ptr(options.mem) : options.mem;
-
-  return this.symbols.SDL_IOFromMem(memPtr, options.size);
+  return this.symbols.SDL_IOFromMem(
+    getStructMemoryAddress(options.mem),
+    options.size
+  );
 }
 
 export function ioFromConstMem(
@@ -33,10 +41,10 @@ export function ioFromConstMem(
     size: number;
   }
 ) {
-  const memPtr =
-    options.mem instanceof Uint8Array ? ptr(options.mem) : options.mem;
-
-  return this.symbols.SDL_IOFromConstMem(memPtr, options.size);
+  return this.symbols.SDL_IOFromConstMem(
+    getStructMemoryAddress(options.mem),
+    options.size
+  );
 }
 
 export function ioFromDynamicMem(this: SDL) {
@@ -50,12 +58,10 @@ export function openIO(
     userdata?: Pointer | null;
   }
 ) {
-  const ifacePtr =
-    options.iface instanceof IOStreamInterface
-      ? options.iface.$address
-      : options.iface;
-
-  return this.symbols.SDL_OpenIO(ifacePtr, options.userdata ?? null);
+  return this.symbols.SDL_OpenIO(
+    getStructAddress(options.iface),
+    options.userdata ?? null
+  );
 }
 
 export function closeIO(this: SDL, context: Pointer) {

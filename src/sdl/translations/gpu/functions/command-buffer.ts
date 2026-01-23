@@ -1,5 +1,6 @@
-import { ptr, type Pointer } from 'bun:ffi';
+import { type Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
+import { getStructMemoryAddress } from '../../../utility/common';
 import { CStruct } from '../../../utility/cstruct';
 
 export function acquireGPUCommandBuffer(this: SDL, device: Pointer) {
@@ -15,17 +16,10 @@ export function pushGPUVertexUniformData(
     length: number;
   }
 ) {
-  const dataPtr =
-    options.data instanceof CStruct
-      ? options.data.$address
-      : options.data instanceof Uint8Array
-        ? ptr(options.data)
-        : options.data;
-
   this.symbols.SDL_PushGPUVertexUniformData(
     options.commandBuffer,
     options.slotIndex,
-    dataPtr,
+    getStructMemoryAddress(options.data),
     options.length
   );
 }
@@ -39,17 +33,10 @@ export function pushGPUFragmentUniformData(
     length: number;
   }
 ) {
-  const dataPtr =
-    options.data instanceof CStruct
-      ? options.data.$address
-      : options.data instanceof Uint8Array
-        ? ptr(options.data)
-        : options.data;
-
   this.symbols.SDL_PushGPUFragmentUniformData(
     options.commandBuffer,
     options.slotIndex,
-    dataPtr,
+    getStructMemoryAddress(options.data),
     options.length
   );
 }
@@ -63,17 +50,10 @@ export function pushGPUComputeUniformData(
     length: number;
   }
 ) {
-  const dataPtr =
-    options.data instanceof CStruct
-      ? options.data.$address
-      : options.data instanceof Uint8Array
-        ? ptr(options.data)
-        : options.data;
-
   this.symbols.SDL_PushGPUComputeUniformData(
     options.commandBuffer,
     options.slotIndex,
-    dataPtr,
+    getStructMemoryAddress(options.data),
     options.length
   );
 }

@@ -1,6 +1,7 @@
-import type { CString, JSCallback, Pointer } from 'bun:ffi';
+import type { JSCallback, Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
 import type { InitFlags } from '../../../ffi/init/constant';
+import { stringToCString } from '../../../utility/common';
 
 export function init(this: SDL, flags: InitFlags) {
   return this.symbols.SDL_Init(flags);
@@ -44,31 +45,33 @@ export function runOnMainThread(
 export function setAppMetadata(
   this: SDL,
   options: {
-    name: CString;
-    version: CString;
-    identifier: CString;
+    name: string;
+    version: string;
+    identifier: string;
   }
 ) {
   return this.symbols.SDL_SetAppMetadata(
-    options.name.ptr,
-    options.version.ptr,
-    options.identifier.ptr
+    stringToCString(options.name).ptr,
+    stringToCString(options.version).ptr,
+    stringToCString(options.identifier).ptr
   );
 }
 
 export function setAppMetadataProperty(
   this: SDL,
   options: {
-    name: CString;
-    value: CString;
+    name: string;
+    value: string;
   }
 ) {
   return this.symbols.SDL_SetAppMetadataProperty(
-    options.name.ptr,
-    options.value.ptr
+    stringToCString(options.name).ptr,
+    stringToCString(options.value).ptr
   );
 }
 
-export function getAppMetadataProperty(this: SDL, name: CString) {
-  return this.symbols.SDL_GetAppMetadataProperty(name.ptr);
+export function getAppMetadataProperty(this: SDL, name: string) {
+  return this.symbols
+    .SDL_GetAppMetadataProperty(stringToCString(name).ptr)
+    .toString();
 }

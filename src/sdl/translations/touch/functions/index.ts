@@ -1,4 +1,3 @@
-import { type Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
 import type { TouchDeviceType } from '../../../ffi/touch/constant';
 import { CStruct } from '../../../utility/cstruct';
@@ -40,7 +39,7 @@ export function getTouchFingers(this: SDL, touchId: bigint) {
   const listPtr = this.symbols.SDL_GetTouchFingers(
     touchId,
     countStruct.$address
-  ) as Pointer | null;
+  );
 
   if (!listPtr) return null;
 

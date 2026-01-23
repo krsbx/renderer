@@ -1,9 +1,13 @@
-import { ptr, type Pointer } from 'bun:ffi';
+import { type Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
 import type { BlendMode } from '../../../ffi/blend-mode/constant';
 import type { PixelFormat } from '../../../ffi/pixels/constant';
 import type { TextureAccess } from '../../../ffi/render/constant';
 import type { ScaleMode } from '../../../ffi/surface/constant';
+import {
+  getStructAddress,
+  getStructMemoryAddress,
+} from '../../../utility/common';
 import { CStruct } from '../../../utility/cstruct';
 import { Palette } from '../../pixels/utility';
 import { Rect } from '../../rect/utility';
@@ -35,14 +39,9 @@ export function createTextureFromSurface(
     surface: Surface | Pointer;
   }
 ) {
-  const surfacePtr =
-    options.surface instanceof Surface
-      ? options.surface.$address
-      : options.surface;
-
   return this.symbols.SDL_CreateTextureFromSurface(
     options.renderer,
-    surfacePtr
+    getStructAddress(options.surface)
   );
 }
 
@@ -92,12 +91,10 @@ export function setTexturePalette(
     palette: Palette | Pointer;
   }
 ) {
-  const palettePtr =
-    options.palette instanceof Palette
-      ? options.palette.$address
-      : options.palette;
-
-  return this.symbols.SDL_SetTexturePalette(options.texture, palettePtr);
+  return this.symbols.SDL_SetTexturePalette(
+    options.texture,
+    getStructAddress(options.palette)
+  );
 }
 
 export function getTexturePalette(this: SDL, texture: Pointer) {
@@ -294,19 +291,10 @@ export function updateTexture(
     pitch: number;
   }
 ) {
-  const rectPtr =
-    options.rect instanceof Rect ? options.rect.$address : options.rect;
-  const pixelsPtr =
-    options.pixels instanceof CStruct
-      ? options.pixels.$address
-      : options.pixels instanceof Uint8Array
-        ? ptr(options.pixels)
-        : options.pixels;
-
   return this.symbols.SDL_UpdateTexture(
     options.texture,
-    rectPtr ?? null,
-    pixelsPtr,
+    options.rect ? getStructAddress(options.rect) : null,
+    getStructMemoryAddress(options.pixels),
     options.pitch
   );
 }
@@ -324,35 +312,14 @@ export function updateYUVTexture(
     vPitch: number;
   }
 ) {
-  const rectPtr =
-    options.rect instanceof Rect ? options.rect.$address : options.rect;
-  const yPlanePtr =
-    options.yPlane instanceof CStruct
-      ? options.yPlane.$address
-      : options.yPlane instanceof Uint8Array
-        ? ptr(options.yPlane)
-        : options.yPlane;
-  const uPlanePtr =
-    options.uPlane instanceof CStruct
-      ? options.uPlane.$address
-      : options.uPlane instanceof Uint8Array
-        ? ptr(options.uPlane)
-        : options.uPlane;
-  const vPlanePtr =
-    options.vPlane instanceof CStruct
-      ? options.vPlane.$address
-      : options.vPlane instanceof Uint8Array
-        ? ptr(options.vPlane)
-        : options.vPlane;
-
   return this.symbols.SDL_UpdateYUVTexture(
     options.texture,
-    rectPtr ?? null,
-    yPlanePtr,
+    options.rect ? getStructAddress(options.rect) : null,
+    getStructMemoryAddress(options.yPlane),
     options.yPitch,
-    uPlanePtr,
+    getStructMemoryAddress(options.uPlane),
     options.uPitch,
-    vPlanePtr,
+    getStructMemoryAddress(options.vPlane),
     options.vPitch
   );
 }
@@ -368,27 +335,12 @@ export function updateNVTexture(
     uvPitch: number;
   }
 ) {
-  const rectPtr =
-    options.rect instanceof Rect ? options.rect.$address : options.rect;
-  const yPlanePtr =
-    options.yPlane instanceof CStruct
-      ? options.yPlane.$address
-      : options.yPlane instanceof Uint8Array
-        ? ptr(options.yPlane)
-        : options.yPlane;
-  const uvPlanePtr =
-    options.uvPlane instanceof CStruct
-      ? options.uvPlane.$address
-      : options.uvPlane instanceof Uint8Array
-        ? ptr(options.uvPlane)
-        : options.uvPlane;
-
   return this.symbols.SDL_UpdateNVTexture(
     options.texture,
-    rectPtr ?? null,
-    yPlanePtr,
+    options.rect ? getStructAddress(options.rect) : null,
+    getStructMemoryAddress(options.yPlane),
     options.yPitch,
-    uvPlanePtr,
+    getStructMemoryAddress(options.uvPlane),
     options.uvPitch
   );
 }
@@ -400,14 +352,12 @@ export function lockTexture(
     rect?: Rect | Pointer | null;
   }
 ) {
-  const rectPtr =
-    options.rect instanceof Rect ? options.rect.$address : options.rect;
   const pixelsStruct = new CStruct({ length: CStruct.BYTE_SIZE.ptr });
   const pitchStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
   const success = this.symbols.SDL_LockTexture(
     options.texture,
-    rectPtr ?? null,
+    options.rect ? getStructAddress(options.rect) : null,
     pixelsStruct.$address,
     pitchStruct.$address
   );
@@ -427,13 +377,11 @@ export function lockTextureToSurface(
     rect?: Rect | Pointer | null;
   }
 ) {
-  const rectPtr =
-    options.rect instanceof Rect ? options.rect.$address : options.rect;
   const surfaceStruct = new CStruct({ length: CStruct.BYTE_SIZE.ptr });
 
   const success = this.symbols.SDL_LockTextureToSurface(
     options.texture,
-    rectPtr ?? null,
+    options.rect ? getStructAddress(options.rect) : null,
     surfaceStruct.$address
   );
 

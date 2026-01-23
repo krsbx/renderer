@@ -1,6 +1,7 @@
 import { CString, type JSCallback, type Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
 import { type EventAction, type EventType } from '../../../ffi/events/constant';
+import { getStructAddress } from '../../../utility/common';
 import { CStruct } from '../../../utility/cstruct';
 import { Event } from '../utility';
 
@@ -18,11 +19,8 @@ export function peepEvents(
     maxType: EventType;
   }
 ) {
-  const eventsPtr =
-    options.events instanceof Event ? options.events.$address : options.events;
-
   return this.symbols.SDL_PeepEvents(
-    eventsPtr,
+    getStructAddress(options.events),
     options.numevents,
     options.action,
     options.minType,
@@ -131,9 +129,7 @@ export function waitEventTimeout(
 }
 
 export function pushEvent(this: SDL, event: Event | Pointer) {
-  const eventPtr = event instanceof Event ? event.$address : event;
-
-  return this.symbols.SDL_PushEvent(eventPtr);
+  return this.symbols.SDL_PushEvent(getStructAddress(event));
 }
 
 export function setEventFilter(
@@ -218,26 +214,22 @@ export function registerEvents(this: SDL, numevents: number) {
 }
 
 export function getWindowFromEvent(this: SDL, event: Event | Pointer) {
-  const eventPtr = event instanceof Event ? event.$address : event;
-
-  return this.symbols.SDL_GetWindowFromEvent(eventPtr);
+  return this.symbols.SDL_GetWindowFromEvent(getStructAddress(event));
 }
 
 export function getEventDescription(this: SDL, event: Event | Pointer) {
-  const eventPtr = event instanceof Event ? event.$address : event;
-
   // SDL_GetEventDescription returns the length needed
   // First call with null to get size, then allocate and call again
   const buflen = 256; // Reasonable default buffer size
   const buffer = new CStruct({ length: buflen });
 
   const length = this.symbols.SDL_GetEventDescription(
-    eventPtr,
+    getStructAddress(event),
     buffer.$address,
     buflen
   );
 
   if (length <= 0) return null;
 
-  return new CString(buffer.$address);
+  return new CString(buffer.$address).toString();
 }

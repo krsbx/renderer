@@ -1,6 +1,7 @@
-import type { CString, Pointer } from 'bun:ffi';
+import type { Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
 import type { ScaleMode } from '../../../ffi/surface/constant';
+import { stringToCString } from '../../../utility/common';
 import { CStruct } from '../../../utility/cstruct';
 
 // Debug Text
@@ -11,14 +12,14 @@ export function renderDebugText(
     renderer: Pointer;
     x: number;
     y: number;
-    str: CString;
+    str: string;
   }
 ) {
   return this.symbols.SDL_RenderDebugText(
     options.renderer,
     options.x,
     options.y,
-    options.str.ptr
+    stringToCString(options.str).ptr
   );
 }
 
@@ -28,14 +29,14 @@ export function renderDebugTextFormat(
     renderer: Pointer;
     x: number;
     y: number;
-    fmt: CString;
+    fmt: string;
   }
 ) {
   return this.symbols.SDL_RenderDebugTextFormat(
     options.renderer,
     options.x,
     options.y,
-    options.fmt.ptr
+    stringToCString(options.fmt).ptr
   );
 }
 

@@ -1,6 +1,7 @@
-import { ptr, type Pointer } from 'bun:ffi';
+import { type Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
 import type { TextureAddressMode } from '../../../ffi/render/constant';
+import { getStructMemoryAddress } from '../../../utility/common';
 import { CStruct } from '../../../utility/cstruct';
 import { FColor } from '../../pixels/utility';
 import { Vertex } from '../utility';
@@ -38,12 +39,6 @@ export function renderGeometry(
     verticesStruct.setValue(offset + 28, vertex.texCoord.y, 'f32');
   }
 
-  const indicesPtr =
-    options.indices instanceof CStruct
-      ? options.indices.$address
-      : options.indices instanceof Uint8Array
-        ? ptr(options.indices)
-        : options.indices;
   const numIndices = options.numIndices
     ? options.numIndices
     : options.indices instanceof CStruct
@@ -57,7 +52,7 @@ export function renderGeometry(
     options.texture ?? null,
     verticesStruct.$address,
     options.vertices.length,
-    indicesPtr ?? null,
+    options.indices ? getStructMemoryAddress(options.indices) : null,
     numIndices
   );
 }
@@ -79,42 +74,17 @@ export function renderGeometryRaw(
     sizeIndices: number;
   }
 ) {
-  const xyPtr =
-    options.xy instanceof CStruct
-      ? options.xy.$address
-      : options.xy instanceof Uint8Array
-        ? ptr(options.xy)
-        : options.xy;
-  const colorPtr =
-    options.color instanceof FColor
-      ? options.color.$address
-      : options.color instanceof Uint8Array
-        ? ptr(options.color)
-        : options.color;
-  const uvPtr =
-    options.uv instanceof CStruct
-      ? options.uv.$address
-      : options.uv instanceof Uint8Array
-        ? ptr(options.uv)
-        : options.uv;
-  const indicesPtr =
-    options.indices instanceof CStruct
-      ? options.indices.$address
-      : options.indices instanceof Uint8Array
-        ? ptr(options.indices)
-        : options.indices;
-
   return this.symbols.SDL_RenderGeometryRaw(
     options.renderer,
     options.texture ?? null,
-    xyPtr,
+    getStructMemoryAddress(options.xy),
     options.xyStride,
-    colorPtr,
+    getStructMemoryAddress(options.color),
     options.colorStride,
-    uvPtr,
+    getStructMemoryAddress(options.uv),
     options.uvStride,
     options.numVertices,
-    indicesPtr ?? null,
+    options.indices ? getStructMemoryAddress(options.indices) : null,
     options.numIndices,
     options.sizeIndices
   );

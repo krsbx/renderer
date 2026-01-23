@@ -1,26 +1,27 @@
-import type { CString, JSCallback, Pointer } from 'bun:ffi';
+import type { JSCallback, Pointer } from 'bun:ffi';
 import type { BaseSDL } from '../../..';
 import type { GLAttr } from '../../../ffi/video/constant';
+import { stringToCString } from '../../../utility/common';
 import { CStruct } from '../../../utility/cstruct';
 
-export function glLoadLibrary(this: BaseSDL, path: CString) {
-  return this.symbols.SDL_GL_LoadLibrary(path.ptr);
+export function glLoadLibrary(this: BaseSDL, path: string) {
+  return this.symbols.SDL_GL_LoadLibrary(stringToCString(path).ptr);
 }
 
-export function glGetProcAddress(this: BaseSDL, proc: CString) {
-  return this.symbols.SDL_GL_GetProcAddress(proc.ptr);
+export function glGetProcAddress(this: BaseSDL, proc: string) {
+  return this.symbols.SDL_GL_GetProcAddress(stringToCString(proc).ptr);
 }
 
-export function eglGetProcAddress(this: BaseSDL, proc: CString) {
-  return this.symbols.SDL_EGL_GetProcAddress(proc.ptr);
+export function eglGetProcAddress(this: BaseSDL, proc: string) {
+  return this.symbols.SDL_EGL_GetProcAddress(stringToCString(proc).ptr);
 }
 
 export function glUnloadLibrary(this: BaseSDL) {
   return this.symbols.SDL_GL_UnloadLibrary();
 }
 
-export function glExtensionSupported(this: BaseSDL, extension: CString) {
-  return this.symbols.SDL_GL_ExtensionSupported(extension.ptr);
+export function glExtensionSupported(this: BaseSDL, extension: string) {
+  return this.symbols.SDL_GL_ExtensionSupported(stringToCString(extension).ptr);
 }
 
 export function glResetAttributes(this: BaseSDL) {

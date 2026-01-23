@@ -1,6 +1,7 @@
-import { CString, type JSCallback, type Pointer } from 'bun:ffi';
+import { type JSCallback, type Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
 import type { TrayEntryFlags } from '../../../ffi/tray/constant';
+import { getStructAddress, stringToCString } from '../../../utility/common';
 import { CStruct } from '../../../utility/cstruct';
 import { Surface } from '../../surface/utility';
 
@@ -8,15 +9,13 @@ export function createTray(
   this: SDL,
   options: {
     icon: Surface | Pointer | null;
-    tooltip: CString;
+    tooltip: string;
   }
 ) {
-  const iconPtr =
-    options.icon instanceof Surface
-      ? options.icon.$address
-      : (options.icon ?? null);
-
-  return this.symbols.SDL_CreateTray(iconPtr, options.tooltip.ptr);
+  return this.symbols.SDL_CreateTray(
+    options.icon ? getStructAddress(options.icon) : null,
+    stringToCString(options.tooltip).ptr
+  );
 }
 
 export function setTrayIcon(
@@ -26,22 +25,23 @@ export function setTrayIcon(
     icon: Surface | Pointer | null;
   }
 ) {
-  const iconPtr =
-    options.icon instanceof Surface
-      ? options.icon.$address
-      : (options.icon ?? null);
-
-  this.symbols.SDL_SetTrayIcon(options.tray, iconPtr);
+  this.symbols.SDL_SetTrayIcon(
+    options.tray,
+    options.icon ? getStructAddress(options.icon) : null
+  );
 }
 
 export function setTrayTooltip(
   this: SDL,
   options: {
     tray: Pointer;
-    tooltip: CString;
+    tooltip: string;
   }
 ) {
-  this.symbols.SDL_SetTrayTooltip(options.tray, options.tooltip.ptr);
+  this.symbols.SDL_SetTrayTooltip(
+    options.tray,
+    stringToCString(options.tooltip).ptr
+  );
 }
 
 export function createTrayMenu(this: SDL, tray: Pointer) {
@@ -91,14 +91,14 @@ export function insertTrayEntryAt(
   options: {
     menu: Pointer;
     pos: number;
-    label: CString;
+    label: string;
     flags: TrayEntryFlags;
   }
 ) {
   return this.symbols.SDL_InsertTrayEntryAt(
     options.menu,
     options.pos,
-    options.label.ptr,
+    stringToCString(options.label).ptr,
     options.flags
   );
 }
@@ -107,10 +107,13 @@ export function setTrayEntryLabel(
   this: SDL,
   options: {
     entry: Pointer;
-    label: CString;
+    label: string;
   }
 ) {
-  this.symbols.SDL_SetTrayEntryLabel(options.entry, options.label.ptr);
+  this.symbols.SDL_SetTrayEntryLabel(
+    options.entry,
+    stringToCString(options.label).ptr
+  );
 }
 
 export function getTrayEntryLabel(this: SDL, entry: Pointer) {

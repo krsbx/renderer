@@ -1,15 +1,22 @@
-import { CString, ptr, type Pointer } from 'bun:ffi';
+import { type Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
+import {
+  getStructMemoryAddress,
+  stringToCString,
+} from '../../../utility/common';
 import { CStruct } from '../../../utility/cstruct';
 
 export function ioprintf(
   this: SDL,
   options: {
     context: Pointer;
-    fmt: CString;
+    fmt: string;
   }
 ) {
-  return this.symbols.SDL_IOprintf(options.context, options.fmt.ptr);
+  return this.symbols.SDL_IOprintf(
+    options.context,
+    stringToCString(options.fmt).ptr
+  );
 }
 
 export function iovprintf(this: SDL) {
@@ -44,10 +51,13 @@ export function loadFileIO(
   };
 }
 
-export function loadFile(this: SDL, file: CString) {
+export function loadFile(this: SDL, file: string) {
   const struct = new CStruct({ length: CStruct.BYTE_SIZE.u64 });
 
-  const dataPtr = this.symbols.SDL_LoadFile(file.ptr, struct.$address);
+  const dataPtr = this.symbols.SDL_LoadFile(
+    stringToCString(file).ptr,
+    struct.$address
+  );
 
   if (!dataPtr) return null;
 
@@ -71,12 +81,9 @@ export function saveFileIO(
     closeio: boolean;
   }
 ) {
-  const dataPtr =
-    options.data instanceof Uint8Array ? ptr(options.data) : options.data;
-
   return this.symbols.SDL_SaveFile_IO(
     options.src,
-    dataPtr,
+    getStructMemoryAddress(options.data),
     options.datasize,
     options.closeio
   );
@@ -85,13 +92,14 @@ export function saveFileIO(
 export function saveFile(
   this: SDL,
   options: {
-    file: CString;
+    file: string;
     data: Pointer | Uint8Array;
     datasize: number;
   }
 ) {
-  const dataPtr =
-    options.data instanceof Uint8Array ? ptr(options.data) : options.data;
-
-  return this.symbols.SDL_SaveFile(options.file.ptr, dataPtr, options.datasize);
+  return this.symbols.SDL_SaveFile(
+    stringToCString(options.file).ptr,
+    getStructMemoryAddress(options.data),
+    options.datasize
+  );
 }

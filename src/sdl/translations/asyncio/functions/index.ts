@@ -1,12 +1,16 @@
-import { CString, type Pointer } from 'bun:ffi';
+import { type Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
+import { getStructAddress, stringToCString } from '../../../utility/common';
 import { AsyncIOOutcome } from '../utility';
 
 export function asyncIOFromFile(
   this: SDL,
-  options: { file: CString; mode: CString }
+  options: { file: string; mode: string }
 ) {
-  return this.symbols.SDL_AsyncIOFromFile(options.file.ptr, options.mode.ptr);
+  return this.symbols.SDL_AsyncIOFromFile(
+    stringToCString(options.file).ptr,
+    stringToCString(options.mode).ptr
+  );
 }
 
 export function getAsyncIOSize(this: SDL, asyncio: Pointer) {
@@ -115,14 +119,9 @@ export function waitAsyncIOResult(
     timeoutMS: number;
   }
 ) {
-  const outcomeAddr =
-    options.outcome instanceof AsyncIOOutcome
-      ? options.outcome.$address
-      : options.outcome;
-
   return this.symbols.SDL_WaitAsyncIOResult(
     options.queue,
-    outcomeAddr,
+    getStructAddress(options.outcome),
     options.timeoutMS
   );
 }
@@ -134,13 +133,13 @@ export function signalAsyncIOQueue(this: SDL, queue: Pointer) {
 export function loadFileAsync(
   this: SDL,
   options: {
-    file: CString;
+    file: string;
     queue: Pointer;
     userdata?: Pointer | null;
   }
 ) {
   return this.symbols.SDL_LoadFileAsync(
-    options.file.ptr,
+    stringToCString(options.file).ptr,
     options.queue,
     options.userdata ?? null
   );

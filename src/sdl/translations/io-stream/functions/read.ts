@@ -1,5 +1,6 @@
-import { ptr, type Pointer } from 'bun:ffi';
+import { type Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
+import { getStructMemoryAddress } from '../../../utility/common';
 import { CStruct } from '../../../utility/cstruct';
 
 export function readIO(
@@ -10,10 +11,11 @@ export function readIO(
     size: number;
   }
 ) {
-  const destPtr =
-    options.ptr instanceof Uint8Array ? ptr(options.ptr) : options.ptr;
-
-  return this.symbols.SDL_ReadIO(options.context, destPtr, options.size);
+  return this.symbols.SDL_ReadIO(
+    options.context,
+    getStructMemoryAddress(options.ptr),
+    options.size
+  );
 }
 
 export function readU8(this: SDL, src: Pointer) {

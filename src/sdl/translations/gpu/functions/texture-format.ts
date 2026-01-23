@@ -7,6 +7,7 @@ import type {
   GPUTextureUsageFlags,
 } from '../../../ffi/gpu/constant';
 import type { PixelFormat } from '../../../ffi/pixels/constant';
+import { getStructAddress } from '../../../utility/common';
 import { GPUBlitInfo } from '../utility';
 
 // Texture Operations
@@ -31,10 +32,10 @@ export function blitGPUTexture(
     info: GPUBlitInfo | Pointer;
   }
 ) {
-  const infoPtr =
-    options.info instanceof GPUBlitInfo ? options.info.$address : options.info;
-
-  this.symbols.SDL_BlitGPUTexture(options.commandBuffer, infoPtr);
+  this.symbols.SDL_BlitGPUTexture(
+    options.commandBuffer,
+    getStructAddress(options.info)
+  );
 }
 
 // Texture Format Utilities

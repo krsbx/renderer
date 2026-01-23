@@ -1,10 +1,11 @@
 import { CString, type Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
+import { getStructAddress, stringToCString } from '../../../utility/common';
 import { CStruct } from '../../../utility/cstruct';
 import { GUID } from '../../guid/utility';
 
-export function addGamepadMapping(this: SDL, mapping: CString) {
-  return this.symbols.SDL_AddGamepadMapping(mapping.ptr);
+export function addGamepadMapping(this: SDL, mapping: string) {
+  return this.symbols.SDL_AddGamepadMapping(stringToCString(mapping).ptr);
 }
 
 export function addGamepadMappingsFromIO(
@@ -20,8 +21,8 @@ export function addGamepadMappingsFromIO(
   );
 }
 
-export function addGamepadMappingsFromFile(this: SDL, file: CString) {
-  return this.symbols.SDL_AddGamepadMappingsFromFile(file.ptr);
+export function addGamepadMappingsFromFile(this: SDL, file: string) {
+  return this.symbols.SDL_AddGamepadMappingsFromFile(stringToCString(file).ptr);
 }
 
 export function reloadGamepadMappings(this: SDL) {
@@ -37,14 +38,14 @@ export function getGamepadMappings(this: SDL) {
 
   const count = struct.getValue(0, 'i32');
   const list = new CStruct({ address: listPtr });
-  const mappings: CString[] = [];
+  const mappings: string[] = [];
 
   for (let i = 0; i < count; i++) {
     const mappingPtr = list.getValue(i * CStruct.BYTE_SIZE.ptr, 'ptr');
 
     if (!mappingPtr) continue;
 
-    mappings.push(new CString(mappingPtr));
+    mappings.push(new CString(mappingPtr).toString());
   }
 
   this.symbols.SDL_free(listPtr);
@@ -53,9 +54,7 @@ export function getGamepadMappings(this: SDL) {
 }
 
 export function getGamepadMappingForGUID(this: SDL, guid: GUID | Pointer) {
-  const guidPtr = guid instanceof GUID ? guid.$address : guid;
-
-  const ptr = this.symbols.SDL_GetGamepadMappingForGUID(guidPtr);
+  const ptr = this.symbols.SDL_GetGamepadMappingForGUID(getStructAddress(guid));
 
   if (!ptr) return null;
 
@@ -63,7 +62,7 @@ export function getGamepadMappingForGUID(this: SDL, guid: GUID | Pointer) {
 
   this.symbols.SDL_free(ptr);
 
-  return mapping;
+  return mapping.toString();
 }
 
 export function getGamepadMapping(this: SDL, gamepad: Pointer) {
@@ -75,18 +74,18 @@ export function getGamepadMapping(this: SDL, gamepad: Pointer) {
 
   this.symbols.SDL_free(ptr);
 
-  return mapping;
+  return mapping.toString();
 }
 
 export function setGamepadMapping(
   this: SDL,
   options: {
     instanceId: number;
-    mapping: CString;
+    mapping: string;
   }
 ) {
   return this.symbols.SDL_SetGamepadMapping(
     options.instanceId,
-    options.mapping.ptr
+    stringToCString(options.mapping).ptr
   );
 }

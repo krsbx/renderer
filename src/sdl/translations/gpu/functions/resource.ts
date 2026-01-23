@@ -1,5 +1,6 @@
 import type { Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
+import { getStructAddress } from '../../../utility/common';
 import {
   GPUBufferCreateInfo,
   GPUComputePipelineCreateInfo,
@@ -19,14 +20,9 @@ export function createGPUComputePipeline(
     createInfo: GPUComputePipelineCreateInfo | Pointer;
   }
 ) {
-  const createInfoPtr =
-    options.createInfo instanceof GPUComputePipelineCreateInfo
-      ? options.createInfo.$address
-      : options.createInfo;
-
   return this.symbols.SDL_CreateGPUComputePipeline(
     options.device,
-    createInfoPtr
+    getStructAddress(options.createInfo)
   );
 }
 
@@ -37,14 +33,9 @@ export function createGPUGraphicsPipeline(
     createInfo: GPUGraphicsPipelineCreateInfo | Pointer;
   }
 ) {
-  const createInfoPtr =
-    options.createInfo instanceof GPUGraphicsPipelineCreateInfo
-      ? options.createInfo.$address
-      : options.createInfo;
-
   return this.symbols.SDL_CreateGPUGraphicsPipeline(
     options.device,
-    createInfoPtr
+    getStructAddress(options.createInfo)
   );
 }
 
@@ -55,12 +46,10 @@ export function createGPUSampler(
     createInfo: GPUSamplerCreateInfo | Pointer;
   }
 ) {
-  const createInfoPtr =
-    options.createInfo instanceof GPUSamplerCreateInfo
-      ? options.createInfo.$address
-      : options.createInfo;
-
-  return this.symbols.SDL_CreateGPUSampler(options.device, createInfoPtr);
+  return this.symbols.SDL_CreateGPUSampler(
+    options.device,
+    getStructAddress(options.createInfo)
+  );
 }
 
 export function createGPUShader(
@@ -70,12 +59,10 @@ export function createGPUShader(
     createInfo: GPUShaderCreateInfo | Pointer;
   }
 ) {
-  const createInfoPtr =
-    options.createInfo instanceof GPUShaderCreateInfo
-      ? options.createInfo.$address
-      : options.createInfo;
-
-  return this.symbols.SDL_CreateGPUShader(options.device, createInfoPtr);
+  return this.symbols.SDL_CreateGPUShader(
+    options.device,
+    getStructAddress(options.createInfo)
+  );
 }
 
 // Create Texture/Buffer
@@ -87,12 +74,10 @@ export function createGPUTexture(
     createInfo: GPUTextureCreateInfo | Pointer;
   }
 ) {
-  const createInfoPtr =
-    options.createInfo instanceof GPUTextureCreateInfo
-      ? options.createInfo.$address
-      : options.createInfo;
-
-  return this.symbols.SDL_CreateGPUTexture(options.device, createInfoPtr);
+  return this.symbols.SDL_CreateGPUTexture(
+    options.device,
+    getStructAddress(options.createInfo)
+  );
 }
 
 export function createGPUBuffer(
@@ -102,12 +87,10 @@ export function createGPUBuffer(
     createInfo: GPUBufferCreateInfo | Pointer;
   }
 ) {
-  const createInfoPtr =
-    options.createInfo instanceof GPUBufferCreateInfo
-      ? options.createInfo.$address
-      : options.createInfo;
-
-  return this.symbols.SDL_CreateGPUBuffer(options.device, createInfoPtr);
+  return this.symbols.SDL_CreateGPUBuffer(
+    options.device,
+    getStructAddress(options.createInfo)
+  );
 }
 
 export function createGPUTransferBuffer(
@@ -117,14 +100,9 @@ export function createGPUTransferBuffer(
     createInfo: GPUTransferBufferCreateInfo | Pointer;
   }
 ) {
-  const createInfoPtr =
-    options.createInfo instanceof GPUTransferBufferCreateInfo
-      ? options.createInfo.$address
-      : options.createInfo;
-
   return this.symbols.SDL_CreateGPUTransferBuffer(
     options.device,
-    createInfoPtr
+    getStructAddress(options.createInfo)
   );
 }
 

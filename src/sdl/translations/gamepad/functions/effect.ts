@@ -1,5 +1,6 @@
-import { ptr, type Pointer } from 'bun:ffi';
+import { type Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
+import { getStructMemoryAddress } from '../../../utility/common';
 import { CStruct } from '../../../utility/cstruct';
 
 export function rumbleGamepad(
@@ -61,16 +62,9 @@ export function sendGamepadEffect(
     size: number;
   }
 ) {
-  const dataPtr =
-    options.data instanceof CStruct
-      ? options.data.$address
-      : options.data instanceof Uint8Array
-        ? ptr(options.data)
-        : options.data;
-
   return this.symbols.SDL_SendGamepadEffect(
     options.gamepad,
-    dataPtr,
+    getStructMemoryAddress(options.data),
     options.size
   );
 }

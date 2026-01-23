@@ -1,5 +1,6 @@
 import type { Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
+import { getStructAddress } from '../../../utility/common';
 import {
   GPUStorageBufferReadWriteBinding,
   GPUStorageTextureReadWriteBinding,
@@ -18,20 +19,15 @@ export function beginGPUComputePass(
     numStorageBufferBindings: number;
   }
 ) {
-  const storageTextureBindingsPtr =
-    options.storageTextureBindings instanceof GPUStorageTextureReadWriteBinding
-      ? options.storageTextureBindings.$address
-      : options.storageTextureBindings;
-  const storageBufferBindingsPtr =
-    options.storageBufferBindings instanceof GPUStorageBufferReadWriteBinding
-      ? options.storageBufferBindings.$address
-      : options.storageBufferBindings;
-
   return this.symbols.SDL_BeginGPUComputePass(
     options.commandBuffer,
-    storageTextureBindingsPtr ?? null,
+    options.storageTextureBindings
+      ? getStructAddress(options.storageTextureBindings)
+      : null,
     options.numStorageTextureBindings,
-    storageBufferBindingsPtr ?? null,
+    options.storageBufferBindings
+      ? getStructAddress(options.storageBufferBindings)
+      : null,
     options.numStorageBufferBindings
   );
 }
@@ -58,15 +54,10 @@ export function bindGPUComputeSamplers(
     numBindings: number;
   }
 ) {
-  const textureSamplerBindingsPtr =
-    options.textureSamplerBindings instanceof GPUTextureSamplerBinding
-      ? options.textureSamplerBindings.$address
-      : options.textureSamplerBindings;
-
   this.symbols.SDL_BindGPUComputeSamplers(
     options.computePass,
     options.firstSlot,
-    textureSamplerBindingsPtr,
+    getStructAddress(options.textureSamplerBindings),
     options.numBindings
   );
 }

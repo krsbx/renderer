@@ -1,9 +1,10 @@
 import { CString, type JSCallback, type Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
+import { stringToCString } from '../../../utility/common';
 import { CStruct } from '../../../utility/cstruct';
 
-export function setClipboardText(this: SDL, text: CString) {
-  return this.symbols.SDL_SetClipboardText(text.ptr);
+export function setClipboardText(this: SDL, text: string) {
+  return this.symbols.SDL_SetClipboardText(stringToCString(text).ptr);
 }
 
 export function getClipboardText(this: SDL) {
@@ -15,15 +16,15 @@ export function getClipboardText(this: SDL) {
 
   this.symbols.SDL_free(ptr);
 
-  return text;
+  return text.toString();
 }
 
 export function hasClipboardText(this: SDL) {
   return this.symbols.SDL_HasClipboardText();
 }
 
-export function setPrimarySelectionText(this: SDL, text: CString) {
-  return this.symbols.SDL_SetPrimarySelectionText(text.ptr);
+export function setPrimarySelectionText(this: SDL, text: string) {
+  return this.symbols.SDL_SetPrimarySelectionText(stringToCString(text).ptr);
 }
 
 export function getPrimarySelectionText(this: SDL) {
@@ -35,7 +36,7 @@ export function getPrimarySelectionText(this: SDL) {
 
   this.symbols.SDL_free(ptr);
 
-  return text;
+  return text.toString();
 }
 
 export function hasPrimarySelectionText(this: SDL) {
@@ -48,7 +49,7 @@ export function setClipboardData(
     callback: JSCallback;
     cleanup?: JSCallback | null;
     userdata?: Pointer | null;
-    mimeTypes: CString[];
+    mimeTypes: string[];
   }
 ) {
   const numMimeTypes = options.mimeTypes.length;
@@ -58,7 +59,11 @@ export function setClipboardData(
   const struct = new CStruct({ length: CStruct.BYTE_SIZE.ptr * numMimeTypes });
 
   options.mimeTypes.forEach((mimeType, i) => {
-    struct.setValue(i * CStruct.BYTE_SIZE.ptr, mimeType.ptr, 'ptr');
+    struct.setValue(
+      i * CStruct.BYTE_SIZE.ptr,
+      stringToCString(mimeType).ptr,
+      'ptr'
+    );
   });
 
   return this.symbols.SDL_SetClipboardData(
@@ -74,11 +79,11 @@ export function clearClipboardData(this: SDL) {
   return this.symbols.SDL_ClearClipboardData();
 }
 
-export function getClipboardData(this: SDL, mimeType: CString) {
+export function getClipboardData(this: SDL, mimeType: string) {
   const sizeStruct = new CStruct({ length: CStruct.BYTE_SIZE.u64 });
 
   const dataPtr = this.symbols.SDL_GetClipboardData(
-    mimeType.ptr,
+    stringToCString(mimeType).ptr,
     sizeStruct.$address
   );
 
@@ -99,8 +104,8 @@ export function getClipboardData(this: SDL, mimeType: CString) {
   };
 }
 
-export function hasClipboardData(this: SDL, mimeType: CString) {
-  return this.symbols.SDL_HasClipboardData(mimeType.ptr);
+export function hasClipboardData(this: SDL, mimeType: string) {
+  return this.symbols.SDL_HasClipboardData(stringToCString(mimeType).ptr);
 }
 
 export function getClipboardMimeTypes(this: SDL) {
@@ -113,16 +118,14 @@ export function getClipboardMimeTypes(this: SDL) {
   const count = Number(sizeStruct.getValue(0, 'u64'));
 
   const list = new CStruct({ address: listPtr });
-  const mimeTypes: CString[] = [];
+  const mimeTypes: string[] = [];
 
   for (let i = 0; i < count; i++) {
     const mimeTypePtr = list.getValue(i * CStruct.BYTE_SIZE.ptr, 'ptr');
 
     if (!mimeTypePtr) continue;
 
-    const mimeType = new CString(mimeTypePtr);
-
-    mimeTypes.push(mimeType);
+    mimeTypes.push(new CString(mimeTypePtr).toString());
   }
 
   this.symbols.SDL_free(listPtr);

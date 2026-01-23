@@ -1,6 +1,10 @@
-import { ptr, type Pointer } from 'bun:ffi';
+import { type Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
 import type { SensorType } from '../../../ffi/sensor/constant';
+import {
+  getStructAddress,
+  getStructMemoryAddress,
+} from '../../../utility/common';
 import { CStruct } from '../../../utility/cstruct';
 import { VirtualJoystickDesc } from '../utility';
 
@@ -8,9 +12,7 @@ export function attachVirtualJoystick(
   this: SDL,
   desc: VirtualJoystickDesc | Pointer
 ) {
-  const descPtr = desc instanceof VirtualJoystickDesc ? desc.$address : desc;
-
-  return this.symbols.SDL_AttachVirtualJoystick(descPtr);
+  return this.symbols.SDL_AttachVirtualJoystick(getStructAddress(desc));
 }
 
 export function detachVirtualJoystick(this: SDL, instanceId: number) {
@@ -116,18 +118,11 @@ export function sendJoystickVirtualSensorData(
     numValues: number;
   }
 ) {
-  const dataPtr =
-    options.data instanceof CStruct
-      ? options.data.$address
-      : options.data instanceof Uint8Array
-        ? ptr(options.data)
-        : options.data;
-
   return this.symbols.SDL_SendJoystickVirtualSensorData(
     options.joystick,
     options.type,
     options.sensorTimestamp,
-    dataPtr,
+    getStructMemoryAddress(options.data),
     options.numValues
   );
 }

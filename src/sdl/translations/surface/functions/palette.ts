@@ -1,14 +1,15 @@
 import type { Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
+import { getStructAddress } from '../../../utility/common';
 import { Palette } from '../../pixels/utility';
 import { Surface } from '../utility';
 
 // Palette
 
 export function createSurfacePalette(this: SDL, surface: Surface | Pointer) {
-  const surfacePtr = surface instanceof Surface ? surface.$address : surface;
-
-  const palettePtr = this.symbols.SDL_CreateSurfacePalette(surfacePtr);
+  const palettePtr = this.symbols.SDL_CreateSurfacePalette(
+    getStructAddress(surface)
+  );
 
   if (!palettePtr) return null;
 
@@ -22,22 +23,16 @@ export function setSurfacePalette(
     palette: Palette | Pointer;
   }
 ) {
-  const surfacePtr =
-    options.surface instanceof Surface
-      ? options.surface.$address
-      : options.surface;
-  const palettePtr =
-    options.palette instanceof Palette
-      ? options.palette.$address
-      : options.palette;
-
-  return this.symbols.SDL_SetSurfacePalette(surfacePtr, palettePtr);
+  return this.symbols.SDL_SetSurfacePalette(
+    getStructAddress(options.surface),
+    getStructAddress(options.palette)
+  );
 }
 
 export function getSurfacePalette(this: SDL, surface: Surface | Pointer) {
-  const surfacePtr = surface instanceof Surface ? surface.$address : surface;
-
-  const palettePtr = this.symbols.SDL_GetSurfacePalette(surfacePtr);
+  const palettePtr = this.symbols.SDL_GetSurfacePalette(
+    getStructAddress(surface)
+  );
 
   if (!palettePtr) return null;
 

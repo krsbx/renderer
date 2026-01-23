@@ -1,6 +1,7 @@
 import type { Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
 import type { RendererLogicalPresentation } from '../../../ffi/render/constant';
+import { getStructAddress } from '../../../utility/common';
 import { CStruct } from '../../../utility/cstruct';
 import { Event } from '../../events/utility';
 import { FRect, Rect } from '../../rect/utility';
@@ -140,12 +141,9 @@ export function convertEventToRenderCoordinates(
     event: Event | Pointer;
   }
 ) {
-  const eventPtr =
-    options.event instanceof Event ? options.event.$address : options.event;
-
   return this.symbols.SDL_ConvertEventToRenderCoordinates(
     options.renderer,
-    eventPtr
+    getStructAddress(options.event)
   );
 }
 
@@ -158,10 +156,10 @@ export function setRenderViewport(
     rect?: Rect | Pointer | null;
   }
 ) {
-  const rectPtr =
-    options.rect instanceof Rect ? options.rect.$address : options.rect;
-
-  return this.symbols.SDL_SetRenderViewport(options.renderer, rectPtr ?? null);
+  return this.symbols.SDL_SetRenderViewport(
+    options.renderer,
+    options.rect ? getStructAddress(options.rect) : null
+  );
 }
 
 export function getRenderViewport(this: SDL, renderer: Pointer) {
@@ -197,10 +195,10 @@ export function setRenderClipRect(
     rect?: Rect | Pointer | null;
   }
 ) {
-  const rectPtr =
-    options.rect instanceof Rect ? options.rect.$address : options.rect;
-
-  return this.symbols.SDL_SetRenderClipRect(options.renderer, rectPtr ?? null);
+  return this.symbols.SDL_SetRenderClipRect(
+    options.renderer,
+    options.rect ? getStructAddress(options.rect) : null
+  );
 }
 
 export function getRenderClipRect(this: SDL, renderer: Pointer) {

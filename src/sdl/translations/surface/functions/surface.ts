@@ -1,6 +1,10 @@
-import { ptr, type Pointer } from 'bun:ffi';
+import { type Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
 import type { Colorspace, PixelFormat } from '../../../ffi/pixels/constant';
+import {
+  getStructAddress,
+  getStructMemoryAddress,
+} from '../../../utility/common';
 import { Surface } from '../utility';
 
 // Create/Destroy
@@ -34,14 +38,11 @@ export function createSurfaceFrom(
     pitch: number;
   }
 ) {
-  const pixelsPtr =
-    options.pixels instanceof Uint8Array ? ptr(options.pixels) : options.pixels;
-
   const surface = this.symbols.SDL_CreateSurfaceFrom(
     options.width,
     options.height,
     options.format,
-    pixelsPtr,
+    getStructMemoryAddress(options.pixels),
     options.pitch
   );
 
@@ -51,17 +52,13 @@ export function createSurfaceFrom(
 }
 
 export function destroySurface(this: SDL, surface: Surface | Pointer) {
-  const surfacePtr = surface instanceof Surface ? surface.$address : surface;
-
-  this.symbols.SDL_DestroySurface(surfacePtr);
+  this.symbols.SDL_DestroySurface(getStructAddress(surface));
 }
 
 // Properties
 
 export function getSurfaceProperties(this: SDL, surface: Surface | Pointer) {
-  const surfacePtr = surface instanceof Surface ? surface.$address : surface;
-
-  return this.symbols.SDL_GetSurfaceProperties(surfacePtr);
+  return this.symbols.SDL_GetSurfaceProperties(getStructAddress(surface));
 }
 
 // Colorspace
@@ -73,30 +70,24 @@ export function setSurfaceColorspace(
     colorspace: Colorspace;
   }
 ) {
-  const surfacePtr =
-    options.surface instanceof Surface
-      ? options.surface.$address
-      : options.surface;
-
-  return this.symbols.SDL_SetSurfaceColorspace(surfacePtr, options.colorspace);
+  return this.symbols.SDL_SetSurfaceColorspace(
+    getStructAddress(options.surface),
+    options.colorspace
+  );
 }
 
 export function getSurfaceColorspace(this: SDL, surface: Surface | Pointer) {
-  const surfacePtr = surface instanceof Surface ? surface.$address : surface;
-
-  return this.symbols.SDL_GetSurfaceColorspace(surfacePtr) as Colorspace;
+  return this.symbols.SDL_GetSurfaceColorspace(
+    getStructAddress(surface)
+  ) as Colorspace;
 }
 
 // Lock/Unlock
 
 export function lockSurface(this: SDL, surface: Surface | Pointer) {
-  const surfacePtr = surface instanceof Surface ? surface.$address : surface;
-
-  return this.symbols.SDL_LockSurface(surfacePtr);
+  return this.symbols.SDL_LockSurface(getStructAddress(surface));
 }
 
 export function unlockSurface(this: SDL, surface: Surface | Pointer) {
-  const surfacePtr = surface instanceof Surface ? surface.$address : surface;
-
-  this.symbols.SDL_UnlockSurface(surfacePtr);
+  this.symbols.SDL_UnlockSurface(getStructAddress(surface));
 }

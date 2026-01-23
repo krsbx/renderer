@@ -1,5 +1,6 @@
 import type { Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
+import { getStructAddress } from '../../../utility/common';
 import { CStruct } from '../../../utility/cstruct';
 import { FPoint, FRect } from '../utility';
 
@@ -10,10 +11,10 @@ export function hasRectIntersectionFloat(
     b: FRect | Pointer;
   }
 ) {
-  const aPtr = options.a instanceof FRect ? options.a.$address : options.a;
-  const bPtr = options.b instanceof FRect ? options.b.$address : options.b;
-
-  return this.symbols.SDL_HasRectIntersectionFloat(aPtr, bPtr);
+  return this.symbols.SDL_HasRectIntersectionFloat(
+    getStructAddress(options.a),
+    getStructAddress(options.b)
+  );
 }
 
 export function getRectIntersectionFloat(
@@ -23,13 +24,11 @@ export function getRectIntersectionFloat(
     b: FRect | Pointer;
   }
 ) {
-  const aPtr = options.a instanceof FRect ? options.a.$address : options.a;
-  const bPtr = options.b instanceof FRect ? options.b.$address : options.b;
   const result = new FRect(FRect.allocMemory());
 
   const success = this.symbols.SDL_GetRectIntersectionFloat(
-    aPtr,
-    bPtr,
+    getStructAddress(options.a),
+    getStructAddress(options.b),
     result.$address
   );
 
@@ -45,13 +44,11 @@ export function getRectUnionFloat(
     b: FRect | Pointer;
   }
 ) {
-  const aPtr = options.a instanceof FRect ? options.a.$address : options.a;
-  const bPtr = options.b instanceof FRect ? options.b.$address : options.b;
   const result = new FRect(FRect.allocMemory());
 
   const success = this.symbols.SDL_GetRectUnionFloat(
-    aPtr,
-    bPtr,
+    getStructAddress(options.a),
+    getStructAddress(options.b),
     result.$address
   );
 
@@ -68,19 +65,12 @@ export function getRectEnclosingPointsFloat(
     clip?: FRect | Pointer | null;
   }
 ) {
-  const pointsPtr =
-    options.points instanceof FPoint ? options.points.$address : options.points;
-  const clipPtr = options.clip
-    ? options.clip instanceof FRect
-      ? options.clip.$address
-      : options.clip
-    : null;
   const result = new FRect(FRect.allocMemory());
 
   const success = this.symbols.SDL_GetRectEnclosingPointsFloat(
-    pointsPtr,
+    getStructAddress(options.points),
     options.count,
-    clipPtr,
+    options.clip ? getStructAddress(options.clip) : null,
     result.$address
   );
 
@@ -99,9 +89,6 @@ export function getRectAndLineIntersectionFloat(
     y2: number;
   }
 ) {
-  const rectPtr =
-    options.rect instanceof FRect ? options.rect.$address : options.rect;
-
   const x1Struct = new CStruct({
     length: CStruct.BYTE_SIZE.f32,
   }).setValue(0, options.x1, 'f32');
@@ -119,7 +106,7 @@ export function getRectAndLineIntersectionFloat(
   }).setValue(0, options.y2, 'f32');
 
   const success = this.symbols.SDL_GetRectAndLineIntersectionFloat(
-    rectPtr,
+    getStructAddress(options.rect),
     x1Struct.$address,
     y1Struct.$address,
     x2Struct.$address,

@@ -1,6 +1,7 @@
-import { type CString, type JSCallback, type Pointer } from 'bun:ffi';
+import { type JSCallback, type Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
 import type { FileDialogType } from '../../../ffi/dialog/constant';
+import { stringToCString } from '../../../utility/common';
 import { CStruct } from '../../../utility/cstruct';
 import { DialogFileFilter } from '../utility';
 
@@ -34,7 +35,7 @@ export function showOpenFileDialog(
     userdata?: Pointer | null;
     window: Pointer;
     filters?: DialogFileFilter | DialogFileFilter[] | null;
-    defaultLocation?: CString | null;
+    defaultLocation?: string | null;
     allowMany?: boolean | null;
   }
 ) {
@@ -46,7 +47,9 @@ export function showOpenFileDialog(
     options.window,
     filterCount > 0 ? filtersBuffer.$address : null,
     filterCount,
-    options.defaultLocation?.ptr ?? null,
+    options.defaultLocation
+      ? stringToCString(options.defaultLocation).ptr
+      : null,
     options.allowMany ?? false
   );
 }
@@ -58,7 +61,7 @@ export function showSaveFileDialog(
     userdata?: Pointer | null;
     window: Pointer;
     filters?: DialogFileFilter | DialogFileFilter[] | null;
-    defaultLocation?: CString | null;
+    defaultLocation?: string | null;
   }
 ) {
   const { filterCount, filtersBuffer } = constructFilters(options.filters);
@@ -69,7 +72,9 @@ export function showSaveFileDialog(
     options.window,
     filterCount > 0 ? filtersBuffer.$address : null,
     filterCount,
-    options.defaultLocation?.ptr ?? null
+    options.defaultLocation
+      ? stringToCString(options.defaultLocation).ptr
+      : null
   );
 }
 
@@ -79,7 +84,7 @@ export function showOpenFolderDialog(
     callback: JSCallback;
     userdata?: Pointer | null;
     window: Pointer;
-    defaultLocation?: CString | null;
+    defaultLocation?: string | null;
     allowMany?: boolean | null;
   }
 ) {
@@ -87,7 +92,9 @@ export function showOpenFolderDialog(
     options.callback.ptr,
     options.userdata ?? null,
     options.window,
-    options.defaultLocation?.ptr ?? null,
+    options.defaultLocation
+      ? stringToCString(options.defaultLocation).ptr
+      : null,
     options.allowMany ?? false
   );
 }

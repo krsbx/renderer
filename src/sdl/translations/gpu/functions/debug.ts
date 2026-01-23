@@ -1,5 +1,6 @@
-import type { CString, Pointer } from 'bun:ffi';
+import type { Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
+import { stringToCString } from '../../../utility/common';
 
 // Debug/Naming
 
@@ -8,13 +9,13 @@ export function setGPUBufferName(
   options: {
     device: Pointer;
     buffer: Pointer;
-    text: CString;
+    text: string;
   }
 ) {
   this.symbols.SDL_SetGPUBufferName(
     options.device,
     options.buffer,
-    options.text.ptr
+    stringToCString(options.text).ptr
   );
 }
 
@@ -23,13 +24,13 @@ export function setGPUTextureName(
   options: {
     device: Pointer;
     texture: Pointer;
-    text: CString;
+    text: string;
   }
 ) {
   this.symbols.SDL_SetGPUTextureName(
     options.device,
     options.texture,
-    options.text.ptr
+    stringToCString(options.text).ptr
   );
 }
 
@@ -37,20 +38,26 @@ export function insertGPUDebugLabel(
   this: SDL,
   options: {
     commandBuffer: Pointer;
-    text: CString;
+    text: string;
   }
 ) {
-  this.symbols.SDL_InsertGPUDebugLabel(options.commandBuffer, options.text.ptr);
+  this.symbols.SDL_InsertGPUDebugLabel(
+    options.commandBuffer,
+    stringToCString(options.text).ptr
+  );
 }
 
 export function pushGPUDebugGroup(
   this: SDL,
   options: {
     commandBuffer: Pointer;
-    name: CString;
+    name: string;
   }
 ) {
-  this.symbols.SDL_PushGPUDebugGroup(options.commandBuffer, options.name.ptr);
+  this.symbols.SDL_PushGPUDebugGroup(
+    options.commandBuffer,
+    stringToCString(options.name).ptr
+  );
 }
 
 export function popGPUDebugGroup(this: SDL, commandBuffer: Pointer) {

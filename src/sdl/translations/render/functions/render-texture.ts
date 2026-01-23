@@ -1,6 +1,7 @@
 import type { Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
 import type { FlipMode } from '../../../ffi/surface/constant';
+import { getStructAddress } from '../../../utility/common';
 import { FPoint, FRect } from '../../rect/utility';
 
 export function renderTextureRotated(
@@ -15,24 +16,13 @@ export function renderTextureRotated(
     flip: FlipMode;
   }
 ) {
-  const srcRectPtr =
-    options.srcRect instanceof FRect
-      ? options.srcRect.$address
-      : options.srcRect;
-  const dstRectPtr =
-    options.dstRect instanceof FRect
-      ? options.dstRect.$address
-      : options.dstRect;
-  const centerPtr =
-    options.center instanceof FPoint ? options.center.$address : options.center;
-
   return this.symbols.SDL_RenderTextureRotated(
     options.renderer,
     options.texture,
-    srcRectPtr ?? null,
-    dstRectPtr ?? null,
+    options.srcRect ? getStructAddress(options.srcRect) : null,
+    options.dstRect ? getStructAddress(options.dstRect) : null,
     options.angle,
-    centerPtr ?? null,
+    options.center ? getStructAddress(options.center) : null,
     options.flip
   );
 }
@@ -48,24 +38,13 @@ export function renderTextureAffine(
     down?: FPoint | Pointer | null;
   }
 ) {
-  const srcRectPtr =
-    options.srcRect instanceof FRect
-      ? options.srcRect.$address
-      : options.srcRect;
-  const originPtr =
-    options.origin instanceof FPoint ? options.origin.$address : options.origin;
-  const rightPtr =
-    options.right instanceof FPoint ? options.right.$address : options.right;
-  const downPtr =
-    options.down instanceof FPoint ? options.down.$address : options.down;
-
   return this.symbols.SDL_RenderTextureAffine(
     options.renderer,
     options.texture,
-    srcRectPtr ?? null,
-    originPtr ?? null,
-    rightPtr ?? null,
-    downPtr ?? null
+    options.srcRect ? getStructAddress(options.srcRect) : null,
+    options.origin ? getStructAddress(options.origin) : null,
+    options.right ? getStructAddress(options.right) : null,
+    options.down ? getStructAddress(options.down) : null
   );
 }
 
@@ -79,21 +58,12 @@ export function renderTextureTiled(
     dstRect?: FRect | Pointer | null;
   }
 ) {
-  const srcRectPtr =
-    options.srcRect instanceof FRect
-      ? options.srcRect.$address
-      : options.srcRect;
-  const dstRectPtr =
-    options.dstRect instanceof FRect
-      ? options.dstRect.$address
-      : options.dstRect;
-
   return this.symbols.SDL_RenderTextureTiled(
     options.renderer,
     options.texture,
-    srcRectPtr ?? null,
+    options.srcRect ? getStructAddress(options.srcRect) : null,
     options.scale,
-    dstRectPtr ?? null
+    options.dstRect ? getStructAddress(options.dstRect) : null
   );
 }
 
@@ -111,25 +81,16 @@ export function renderTexture9Grid(
     dstRect?: FRect | Pointer | null;
   }
 ) {
-  const srcRectPtr =
-    options.srcRect instanceof FRect
-      ? options.srcRect.$address
-      : options.srcRect;
-  const dstRectPtr =
-    options.dstRect instanceof FRect
-      ? options.dstRect.$address
-      : options.dstRect;
-
   return this.symbols.SDL_RenderTexture9Grid(
     options.renderer,
     options.texture,
-    srcRectPtr ?? null,
+    options.srcRect ? getStructAddress(options.srcRect) : null,
     options.leftWidth,
     options.rightWidth,
     options.topHeight,
     options.bottomHeight,
     options.scale,
-    dstRectPtr ?? null
+    options.dstRect ? getStructAddress(options.dstRect) : null
   );
 }
 
@@ -148,25 +109,16 @@ export function renderTexture9GridTiled(
     tileScale: number;
   }
 ) {
-  const srcRectPtr =
-    options.srcRect instanceof FRect
-      ? options.srcRect.$address
-      : options.srcRect;
-  const dstRectPtr =
-    options.dstRect instanceof FRect
-      ? options.dstRect.$address
-      : options.dstRect;
-
   return this.symbols.SDL_RenderTexture9GridTiled(
     options.renderer,
     options.texture,
-    srcRectPtr ?? null,
+    options.srcRect ? getStructAddress(options.srcRect) : null,
     options.leftWidth,
     options.rightWidth,
     options.topHeight,
     options.bottomHeight,
     options.scale,
-    dstRectPtr ?? null,
+    options.dstRect ? getStructAddress(options.dstRect) : null,
     options.tileScale
   );
 }

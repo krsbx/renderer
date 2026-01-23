@@ -4,6 +4,7 @@ import type {
   CameraPermissionState,
   CameraPosition,
 } from '../../../ffi/camera/constant';
+import { getStructAddress } from '../../../utility/common';
 import { CStruct } from '../../../utility/cstruct';
 import { Surface } from '../../surface/utility';
 import { CameraSpec } from '../utility';
@@ -178,12 +179,10 @@ export function releaseCameraFrame(
     surface: Surface | Pointer;
   }
 ) {
-  const surfacePtr =
-    options.surface instanceof Surface
-      ? options.surface.$address
-      : options.surface;
-
-  this.symbols.SDL_ReleaseCameraFrame(options.camera, surfacePtr);
+  this.symbols.SDL_ReleaseCameraFrame(
+    options.camera,
+    getStructAddress(options.surface)
+  );
 }
 
 export function closeCamera(this: SDL, camera: Pointer) {

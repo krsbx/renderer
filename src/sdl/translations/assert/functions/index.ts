@@ -1,21 +1,22 @@
-import { CString, type Pointer } from 'bun:ffi';
+import { type Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
 import type { AssertState } from '../../../ffi/assert/constant';
+import { stringToCString } from '../../../utility/common';
 import { AssertData } from '../utility';
 
 export function reportAssertion(
   this: SDL,
   options: {
     data: AssertData;
-    func: CString;
-    file: CString;
+    func: string;
+    file: string;
     line: number;
   }
 ) {
   const result = this.symbols.SDL_ReportAssertion(
     options.data.$address,
-    options.func.ptr,
-    options.file.ptr,
+    stringToCString(options.func).ptr,
+    stringToCString(options.file).ptr,
     options.line
   );
 

@@ -1,7 +1,8 @@
-import type { CString, Pointer } from 'bun:ffi';
+import type { Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
 import type { Keycode, Keymod } from '../../../ffi/keycode/constant';
 import type { Scancode } from '../../../ffi/scancode/constant';
+import { getStructAddress, stringToCString } from '../../../utility/common';
 import { CStruct } from '../../../utility/cstruct';
 import { Rect } from '../../rect/utility';
 import { KeyboardState } from '../utility';
@@ -98,26 +99,31 @@ export function setScancodeName(
   this: SDL,
   options: {
     scancode: Scancode;
-    name: CString;
+    name: string;
   }
 ) {
-  return this.symbols.SDL_SetScancodeName(options.scancode, options.name.ptr);
+  return this.symbols.SDL_SetScancodeName(
+    options.scancode,
+    stringToCString(options.name).ptr
+  );
 }
 
 export function getScancodeName(this: SDL, scancode: Scancode) {
   return this.symbols.SDL_GetScancodeName(scancode);
 }
 
-export function getScancodeFromName(this: SDL, name: CString) {
-  return this.symbols.SDL_GetScancodeFromName(name.ptr) as Scancode;
+export function getScancodeFromName(this: SDL, name: string) {
+  return this.symbols.SDL_GetScancodeFromName(
+    stringToCString(name).ptr
+  ) as Scancode;
 }
 
 export function getKeyName(this: SDL, key: Keycode) {
   return this.symbols.SDL_GetKeyName(key);
 }
 
-export function getKeyFromName(this: SDL, name: CString) {
-  return this.symbols.SDL_GetKeyFromName(name.ptr) as Keycode;
+export function getKeyFromName(this: SDL, name: string) {
+  return this.symbols.SDL_GetKeyFromName(stringToCString(name).ptr) as Keycode;
 }
 
 export function startTextInput(this: SDL, window: Pointer) {
@@ -157,12 +163,9 @@ export function setTextInputArea(
     cursor: number;
   }
 ) {
-  const rectPtr =
-    options.rect instanceof Rect ? options.rect.$address : options.rect;
-
   return this.symbols.SDL_SetTextInputArea(
     options.window,
-    rectPtr,
+    getStructAddress(options.rect),
     options.cursor
   );
 }

@@ -1,5 +1,6 @@
 import type { Pointer } from 'bun:ffi';
 import type { SDL } from '../../..';
+import { getStructAddress } from '../../../utility/common';
 import { CStruct } from '../../../utility/cstruct';
 import { FPoint, FRect } from '../../rect/utility';
 
@@ -108,10 +109,10 @@ export function renderRect(
     rect?: FRect | Pointer | null;
   }
 ) {
-  const rectPtr =
-    options.rect instanceof FRect ? options.rect.$address : options.rect;
-
-  return this.symbols.SDL_RenderRect(options.renderer, rectPtr ?? null);
+  return this.symbols.SDL_RenderRect(
+    options.renderer,
+    options.rect ? getStructAddress(options.rect) : null
+  );
 }
 
 export function renderRects(
@@ -153,10 +154,10 @@ export function renderFillRect(
     rect?: FRect | Pointer | null;
   }
 ) {
-  const rectPtr =
-    options.rect instanceof FRect ? options.rect.$address : options.rect;
-
-  return this.symbols.SDL_RenderFillRect(options.renderer, rectPtr ?? null);
+  return this.symbols.SDL_RenderFillRect(
+    options.renderer,
+    options.rect ? getStructAddress(options.rect) : null
+  );
 }
 
 export function renderFillRects(
@@ -200,19 +201,10 @@ export function renderTexture(
     dstRect?: FRect | Pointer | null;
   }
 ) {
-  const srcRectPtr =
-    options.srcRect instanceof FRect
-      ? options.srcRect.$address
-      : options.srcRect;
-  const dstRectPtr =
-    options.dstRect instanceof FRect
-      ? options.dstRect.$address
-      : options.dstRect;
-
   return this.symbols.SDL_RenderTexture(
     options.renderer,
     options.texture,
-    srcRectPtr ?? null,
-    dstRectPtr ?? null
+    options.srcRect ? getStructAddress(options.srcRect) : null,
+    options.dstRect ? getStructAddress(options.dstRect) : null
   );
 }

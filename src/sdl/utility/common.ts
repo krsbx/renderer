@@ -1,19 +1,9 @@
-import { CString, ptr } from 'bun:ffi';
+import { CString, ptr, type Pointer } from 'bun:ffi';
 import { IS_WINDOWS, WIDE_STRING_CHAR_SIZE } from './constant';
+import { CWideString } from './cwstring';
 
 export const IS_BIG_ENDIAN =
   new Uint8Array(new Uint16Array([0x1234]).buffer)[0] === 0x12;
-
-export function convertStringToFfi(str: string) {
-  const finalStr = str.endsWith('\0') ? str : str + '\0';
-  const strBuf = Buffer.from(finalStr, 'utf-8');
-  const strPtr = ptr(strBuf);
-
-  return {
-    buffer: strBuf,
-    reference: strPtr,
-  };
-}
 
 export function toCWideStringBuffer(value: string) {
   const chars = [...value];
@@ -62,18 +52,18 @@ export function cloneCString(value: string | CString) {
   const clone = new CString(address);
   (clone as CString & { $buffer: Uint8Array }).$buffer = buffer;
 
-  return clone;
+  return clone as CString & { $buffer: Uint8Array };
 }
 
-export function cloneCWideString(value: string | CString) {
+export function cloneCWideString(value: string | CWideString) {
   const finalValue = typeof value === 'string' ? value : value.toString();
   const buffer = toCWideStringBuffer(finalValue);
   const address = ptr(buffer);
 
-  const clone = new CString(address);
-  (clone as CString & { $buffer: Uint8Array }).$buffer = buffer;
+  const clone = new CWideString(address);
+  (clone as CWideString & { $buffer: Uint8Array }).$buffer = buffer;
 
-  return clone;
+  return clone as CWideString & { $buffer: Uint8Array };
 }
 
 export function stringToCString(value: string) {
@@ -82,4 +72,20 @@ export function stringToCString(value: string) {
 
 export function stringToCWideString(value: string) {
   return cloneCWideString(value);
+}
+
+export function getStructAddress<T extends { $address: Pointer } | Pointer>(
+  struct: T
+) {
+  if (typeof struct === 'object') return struct.$address;
+
+  return struct as Pointer;
+}
+
+export function getStructMemoryAddress<
+  T extends { $address: Pointer } | Pointer | NodeJS.TypedArray,
+>(struct: T) {
+  if ('buffer' in struct) return ptr(struct);
+
+  return getStructAddress(struct);
 }

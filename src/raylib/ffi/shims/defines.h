@@ -1,0 +1,140 @@
+// Window
+#define GetMonitorPosition _raylib_GetMonitorPosition
+#define GetWindowPosition _raylib_GetWindowPosition
+#define GetWindowScaleDPI _raylib_GetWindowScaleDPI
+#define GetClipboardImage _raylib_GetClipboardImage
+
+// Input
+#define GetMousePosition _raylib_GetMousePosition
+#define GetMouseDelta _raylib_GetMouseDelta
+#define GetMouseWheelMoveV _raylib_GetMouseWheelMoveV
+#define GetTouchPosition _raylib_GetTouchPosition
+#define GetGestureDragVector _raylib_GetGestureDragVector
+#define GetGesturePinchVector _raylib_GetGesturePinchVector
+
+// Screen Space
+#define GetWorldToScreen _raylib_GetWorldToScreen
+#define GetWorldToScreenEx _raylib_GetWorldToScreenEx
+#define GetWorldToScreen2D _raylib_GetWorldToScreen2D
+#define GetScreenToWorld2D _raylib_GetScreenToWorld2D
+#define GetScreenToWorldRay _raylib_GetScreenToWorldRay
+#define GetScreenToWorldRayEx _raylib_GetScreenToWorldRayEx
+
+// Camera
+#define GetCameraMatrix _raylib_GetCameraMatrix
+#define GetCameraMatrix2D _raylib_GetCameraMatrix2D
+
+// Splines
+#define GetSplinePointLinear _raylib_GetSplinePointLinear
+#define GetSplinePointBasis _raylib_GetSplinePointBasis
+#define GetSplinePointCatmullRom _raylib_GetSplinePointCatmullRom
+#define GetSplinePointBezierQuad _raylib_GetSplinePointBezierQuad
+#define GetSplinePointBezierCubic _raylib_GetSplinePointBezierCubic
+
+// Shapes
+#define GetShapesTexture _raylib_GetShapesTexture
+#define GetShapesTextureRectangle _raylib_GetShapesTextureRectangle
+#define GetCollisionRec _raylib_GetCollisionRec
+
+// Colors
+#define Fade _raylib_Fade
+#define ColorNormalize _raylib_ColorNormalize
+#define ColorToHSV _raylib_ColorToHSV
+#define ColorFromNormalized _raylib_ColorFromNormalized
+#define ColorFromHSV _raylib_ColorFromHSV
+#define ColorTint _raylib_ColorTint
+#define ColorBrightness _raylib_ColorBrightness
+#define ColorContrast _raylib_ColorContrast
+#define ColorAlpha _raylib_ColorAlpha
+#define ColorAlphaBlend _raylib_ColorAlphaBlend
+#define ColorLerp _raylib_ColorLerp
+#define GetColor _raylib_GetColor
+#define GetPixelColor _raylib_GetPixelColor
+
+// Images
+#define LoadImage _raylib_LoadImage
+#define LoadImageRaw _raylib_LoadImageRaw
+#define LoadImageAnim _raylib_LoadImageAnim
+#define LoadImageAnimFromMemory _raylib_LoadImageAnimFromMemory
+#define LoadImageFromMemory _raylib_LoadImageFromMemory
+#define LoadImageFromTexture _raylib_LoadImageFromTexture
+#define LoadImageFromScreen _raylib_LoadImageFromScreen
+#define GenImageColor _raylib_GenImageColor
+#define GenImageGradientLinear _raylib_GenImageGradientLinear
+#define GenImageGradientRadial _raylib_GenImageGradientRadial
+#define GenImageGradientSquare _raylib_GenImageGradientSquare
+#define GenImageChecked _raylib_GenImageChecked
+#define GenImageWhiteNoise _raylib_GenImageWhiteNoise
+#define GenImagePerlinNoise _raylib_GenImagePerlinNoise
+#define GenImageCellular _raylib_GenImageCellular
+#define ImageCopy _raylib_ImageCopy
+#define ImageFromImage _raylib_ImageFromImage
+#define ImageFromChannel _raylib_ImageFromChannel
+#define ImageText _raylib_ImageText
+#define ImageTextEx _raylib_ImageTextEx
+#define GetImageColor _raylib_GetImageColor
+#define GetImageAlphaBorder _raylib_GetImageAlphaBorder
+
+// Textures
+#define LoadTexture _raylib_LoadTexture
+#define LoadTextureFromImage _raylib_LoadTextureFromImage
+#define LoadTextureCubemap _raylib_LoadTextureCubemap
+#define LoadRenderTexture _raylib_LoadRenderTexture
+
+// Fonts
+#define GetFontDefault _raylib_GetFontDefault
+#define LoadFont _raylib_LoadFont
+#define LoadFontEx _raylib_LoadFontEx
+#define LoadFontFromImage _raylib_LoadFontFromImage
+#define LoadFontFromMemory _raylib_LoadFontFromMemory
+#define GetGlyphInfo _raylib_GetGlyphInfo
+#define GetGlyphAtlasRec _raylib_GetGlyphAtlasRec
+
+// Shaders
+#define LoadShader _raylib_LoadShader
+#define LoadShaderFromMemory _raylib_LoadShaderFromMemory
+
+// Models
+#define LoadModel _raylib_LoadModel
+#define LoadModelFromMesh _raylib_LoadModelFromMesh
+#define GetModelBoundingBox _raylib_GetModelBoundingBox
+#define GetMeshBoundingBox _raylib_GetMeshBoundingBox
+#define GenMeshPoly _raylib_GenMeshPoly
+#define GenMeshPlane _raylib_GenMeshPlane
+#define GenMeshCube _raylib_GenMeshCube
+#define GenMeshSphere _raylib_GenMeshSphere
+#define GenMeshHemiSphere _raylib_GenMeshHemiSphere
+#define GenMeshCylinder _raylib_GenMeshCylinder
+#define GenMeshCone _raylib_GenMeshCone
+#define GenMeshTorus _raylib_GenMeshTorus
+#define GenMeshKnot _raylib_GenMeshKnot
+#define GenMeshHeightmap _raylib_GenMeshHeightmap
+#define GenMeshCubicmap _raylib_GenMeshCubicmap
+#define LoadMaterialDefault _raylib_LoadMaterialDefault
+
+// Collision
+#define GetRayCollisionSphere _raylib_GetRayCollisionSphere
+#define GetRayCollisionBox _raylib_GetRayCollisionBox
+#define GetRayCollisionMesh _raylib_GetRayCollisionMesh
+#define GetRayCollisionTriangle _raylib_GetRayCollisionTriangle
+#define GetRayCollisionQuad _raylib_GetRayCollisionQuad
+
+// Audio
+#define LoadWave _raylib_LoadWave
+#define LoadWaveFromMemory _raylib_LoadWaveFromMemory
+#define WaveCopy _raylib_WaveCopy
+#define LoadSound _raylib_LoadSound
+#define LoadSoundFromWave _raylib_LoadSoundFromWave
+#define LoadSoundAlias _raylib_LoadSoundAlias
+#define LoadMusicStream _raylib_LoadMusicStream
+#define LoadMusicStreamFromMemory _raylib_LoadMusicStreamFromMemory
+#define LoadAudioStream _raylib_LoadAudioStream
+
+// VR
+#define LoadVrStereoConfig _raylib_LoadVrStereoConfig
+
+// Files
+#define LoadDroppedFiles _raylib_LoadDroppedFiles
+
+// Automation
+#define LoadAutomationEventList _raylib_LoadAutomationEventList

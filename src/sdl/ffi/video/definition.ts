@@ -211,10 +211,10 @@ export const VideoDefinition = {
     returns: FFIType.bool,
   },
   // bool SDL_GetWindowPosition(SDL_Window *window, int *x, int *y);                                                                                                                                       // Get the position of a window.
-  SDL_GetWindowPosition: {
-    args: [FFIType.ptr, FFIType.ptr, FFIType.ptr],
-    returns: FFIType.bool,
-  },
+  // SDL_GetWindowPosition: {
+  //   args: [FFIType.ptr, FFIType.ptr, FFIType.ptr],
+  //   returns: FFIType.bool,
+  // },
   // bool SDL_SetWindowSize(SDL_Window *window, int w, int h);                                                                                                                                             // Request that the size of a window's client area be set.
   SDL_SetWindowSize: {
     args: [FFIType.ptr, FFIType.i32, FFIType.i32],

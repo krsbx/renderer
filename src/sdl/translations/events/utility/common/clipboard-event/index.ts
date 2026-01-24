@@ -1,4 +1,5 @@
 import { CString, ptr, read, toArrayBuffer, type Pointer } from 'bun:ffi';
+import { stringToCString } from '../../../../../utility/common';
 import { ByteOffset } from './constant';
 import type { ClipboardEventType } from './types';
 
@@ -10,6 +11,10 @@ export class ClipboardEvent {
   public $view: DataView;
 
   public $mimeTypesBuffer: Uint8Array | null;
+
+  private $cache: Partial<{
+    mimeTypes: CString[];
+  }>;
 
   public constructor(data: Pointer | Uint8Array) {
     if (data instanceof Uint8Array) {
@@ -28,6 +33,7 @@ export class ClipboardEvent {
     );
 
     this.$mimeTypesBuffer = null;
+    this.$cache = {};
   }
 
   public static allocMemory() {
@@ -82,7 +88,7 @@ export class ClipboardEvent {
 
     if (!mimeTypesCount || !mimeTypesAddr || mimeTypesAddr === 0n) return [];
 
-    const mimeTypes: CString[] = [];
+    const mimeTypes: string[] = [];
     const mimeTypesPtr = Number(mimeTypesAddr) as Pointer;
 
     for (let i = 0; i < mimeTypesCount; i++) {
@@ -90,13 +96,13 @@ export class ClipboardEvent {
 
       if (!stringPtr) continue;
 
-      mimeTypes.push(new CString(stringPtr));
+      mimeTypes.push(new CString(stringPtr).toString());
     }
 
     return mimeTypes;
   }
 
-  public set mimeTypes(value: CString[]) {
+  public set mimeTypes(value: string[]) {
     this.mimeTypesCount = value.length;
 
     if (this.mimeTypesCount === 0) {
@@ -105,11 +111,13 @@ export class ClipboardEvent {
       return;
     }
 
+    this.$cache.mimeTypes = value.map(stringToCString);
+
     const buffer = new Uint8Array(value.length * 8);
     const view = new DataView(buffer.buffer);
 
     for (let i = 0; i < this.mimeTypesCount; i++) {
-      const stringPtr = value[i]!.ptr;
+      const stringPtr = this.$cache.mimeTypes[i]!.ptr;
 
       view.setBigUint64(i * 8, BigInt(stringPtr), true);
     }

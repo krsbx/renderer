@@ -6,6 +6,7 @@ import {
   type FFIFunction,
   type Pointer,
 } from 'bun:ffi';
+import { stringToCString } from '../../../../utility/common';
 import { VirtualJoystickSensorDesc } from '../virtual-joystick-sensor-desc';
 import { VirtualJoystickTouchpadDesc } from '../virtual-joystick-touchpad-desc';
 import { ByteOffset } from './constant';
@@ -24,9 +25,12 @@ export class VirtualJoystickDesc {
   public $address: Pointer;
   public $memory: Uint8Array;
   public $view: DataView;
-
   public $touchpadsBuffer: Uint8Array | null;
   public $sensorsBuffer: Uint8Array | null;
+
+  private $cache: Partial<{
+    name: CString;
+  }>;
 
   public constructor(data: Pointer | Uint8Array) {
     if (data instanceof Uint8Array) {
@@ -45,6 +49,7 @@ export class VirtualJoystickDesc {
     );
     this.$touchpadsBuffer = null;
     this.$sensorsBuffer = null;
+    this.$cache = {};
   }
 
   public static allocMemory() {
@@ -174,11 +179,17 @@ export class VirtualJoystickDesc {
     const nameAddr = this.$view.getBigUint64(ByteOffset.name, true);
     const namePtr = Number(nameAddr) as Pointer;
 
-    return new CString(namePtr);
+    return new CString(namePtr).toString();
   }
 
-  public set name(value: CString) {
-    this.$view.setBigUint64(ByteOffset.name, BigInt(value.ptr), true);
+  public set name(value: string) {
+    this.$cache.name = stringToCString(value);
+
+    this.$view.setBigUint64(
+      ByteOffset.name,
+      BigInt(this.$cache.name.ptr),
+      true
+    );
   }
 
   public get touchpads() {

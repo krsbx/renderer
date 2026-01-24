@@ -37,9 +37,3 @@ export type TupleRange<
       [...Current, Value],
       Acc | Readonly<[...Current, Value]>
     >;
-
-export type IteratableArray<
-  Min extends number,
-  Max extends number,
-  Value,
-> = TupleRange<Min, Max, Value>;

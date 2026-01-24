@@ -1,5 +1,6 @@
 import { CString, ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
 import type { MessageBoxButtonFlags } from '../../../../ffi/message-box/constant';
+import { stringToCString } from '../../../../utility/common';
 import { ByteOffset } from './constant';
 
 export class MessageBoxButtonData {
@@ -8,6 +9,10 @@ export class MessageBoxButtonData {
   public $address: Pointer;
   public $memory: Uint8Array;
   public $view: DataView;
+
+  private $cache: Partial<{
+    text: CString;
+  }>;
 
   public constructor(data: Pointer | Uint8Array) {
     if (data instanceof Uint8Array) {
@@ -24,6 +29,7 @@ export class MessageBoxButtonData {
       this.$memory.byteOffset,
       this.$memory.byteLength
     );
+    this.$cache = {};
   }
 
   public static allocMemory() {
@@ -55,10 +61,16 @@ export class MessageBoxButtonData {
     const textAddr = this.$view.getBigUint64(ByteOffset.text, true);
     const textPtr = Number(textAddr) as Pointer;
 
-    return new CString(textPtr);
+    return new CString(textPtr).toString();
   }
 
-  public set text(value: CString) {
-    this.$view.setBigUint64(ByteOffset.text, BigInt(value.ptr), true);
+  public set text(value: string) {
+    this.$cache.text = stringToCString(value);
+
+    this.$view.setBigUint64(
+      ByteOffset.text,
+      BigInt(this.$cache.text.ptr),
+      true
+    );
   }
 }

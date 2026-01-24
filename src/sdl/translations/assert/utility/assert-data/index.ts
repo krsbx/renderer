@@ -1,4 +1,5 @@
 import { CString, ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
+import { stringToCString } from '../../../../utility/common';
 import { ByteOffset } from './constant';
 
 export class AssertData {
@@ -7,6 +8,12 @@ export class AssertData {
   public $address: Pointer;
   public $memory: Uint8Array;
   public $view: DataView;
+
+  private $cache: Partial<{
+    condition: CString;
+    filename: CString;
+    function: CString;
+  }>;
 
   public constructor(data: Pointer | Uint8Array) {
     if (data instanceof Uint8Array) {
@@ -23,6 +30,7 @@ export class AssertData {
       this.$memory.byteOffset,
       this.$memory.byteLength
     );
+    this.$cache = {};
   }
 
   public static allocMemory() {
@@ -51,22 +59,34 @@ export class AssertData {
     const conditionAddr = this.$view.getBigUint64(ByteOffset.condition, true);
     const conditionPtr = Number(conditionAddr) as Pointer;
 
-    return new CString(conditionPtr);
+    return new CString(conditionPtr).toString();
   }
 
-  public set condition(value: CString) {
-    this.$view.setBigUint64(ByteOffset.condition, BigInt(value.ptr), true);
+  public set condition(value: string) {
+    this.$cache.condition = stringToCString(value);
+
+    this.$view.setBigUint64(
+      ByteOffset.condition,
+      BigInt(this.$cache.condition.ptr),
+      true
+    );
   }
 
   public get filename() {
     const filenameAddr = this.$view.getBigUint64(ByteOffset.filename, true);
     const filenamePtr = Number(filenameAddr) as Pointer;
 
-    return new CString(filenamePtr);
+    return new CString(filenamePtr).toString();
   }
 
-  public set filename(value: CString) {
-    this.$view.setBigUint64(ByteOffset.filename, BigInt(value.ptr), true);
+  public set filename(value: string) {
+    this.$cache.filename = stringToCString(value);
+
+    this.$view.setBigUint64(
+      ByteOffset.filename,
+      BigInt(this.$cache.filename.ptr),
+      true
+    );
   }
 
   public get lineNum() {
@@ -81,11 +101,17 @@ export class AssertData {
     const functionAdr = this.$view.getBigUint64(ByteOffset.function, true);
     const functionPtr = Number(functionAdr) as Pointer;
 
-    return new CString(functionPtr);
+    return new CString(functionPtr).toString();
   }
 
-  public set function(value: CString) {
-    this.$view.setBigUint64(ByteOffset.function, BigInt(value.ptr), true);
+  public set function(value: string) {
+    this.$cache.function = stringToCString(value);
+
+    this.$view.setBigUint64(
+      ByteOffset.function,
+      BigInt(this.$cache.function.ptr),
+      true
+    );
   }
 
   public get next(): AssertData | null {

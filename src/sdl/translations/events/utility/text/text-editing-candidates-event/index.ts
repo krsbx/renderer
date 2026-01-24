@@ -1,4 +1,5 @@
 import { CString, ptr, read, toArrayBuffer, type Pointer } from 'bun:ffi';
+import { stringToCString } from '../../../../../utility/common';
 import { ByteOffset } from './constant';
 import type { TextEditingCandidatesEventType } from './types';
 
@@ -10,6 +11,10 @@ export class TextEditingCandidatesEvent {
   public $view: DataView;
 
   public $candidatesBuffer: Uint8Array | null;
+
+  private $cache: Partial<{
+    candidates: CString[];
+  }>;
 
   public constructor(data: Pointer | Uint8Array) {
     if (data instanceof Uint8Array) {
@@ -32,6 +37,7 @@ export class TextEditingCandidatesEvent {
     );
 
     this.$candidatesBuffer = null;
+    this.$cache = {};
   }
 
   public static allocMemory() {
@@ -81,7 +87,7 @@ export class TextEditingCandidatesEvent {
 
     if (!candidateCount || !candidatesAddr || candidatesAddr === 0n) return [];
 
-    const candidates: CString[] = [];
+    const candidates: string[] = [];
     const candidatesPtr = Number(candidatesAddr) as Pointer;
 
     for (let i = 0; i < candidateCount; i++) {
@@ -89,13 +95,13 @@ export class TextEditingCandidatesEvent {
 
       if (!stringPtr) continue;
 
-      candidates.push(new CString(stringPtr));
+      candidates.push(new CString(stringPtr).toString());
     }
 
     return candidates;
   }
 
-  public set candidates(value: CString[]) {
+  public set candidates(value: string[]) {
     this.candidateCount = value.length;
 
     if (this.candidateCount === 0) {
@@ -104,11 +110,13 @@ export class TextEditingCandidatesEvent {
       return;
     }
 
+    this.$cache.candidates = value.map(stringToCString);
+
     const buffer = new Uint8Array(value.length * 8);
     const view = new DataView(buffer.buffer);
 
     for (let i = 0; i < this.candidateCount; i++) {
-      const stringPtr = value[i]!.ptr;
+      const stringPtr = this.$cache.candidates[i]!.ptr;
 
       view.setBigUint64(i * 8, BigInt(stringPtr), true);
     }

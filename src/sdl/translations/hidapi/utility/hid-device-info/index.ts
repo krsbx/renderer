@@ -1,5 +1,6 @@
 import { CString, ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
 import type { HIDBusType } from '../../../../ffi/hidapi/constant';
+import { stringToCString } from '../../../../utility/common';
 import { CWideString } from '../../../../utility/cwstring';
 import { ByteOffset } from './constant';
 
@@ -9,6 +10,10 @@ export class HIDDeviceInfo {
   public $address: Pointer;
   public $memory: Uint8Array;
   public $view: DataView;
+
+  private $cache: Partial<{
+    path: CString;
+  }>;
 
   public constructor(data: Pointer | Uint8Array) {
     if (data instanceof Uint8Array) {
@@ -25,6 +30,7 @@ export class HIDDeviceInfo {
       this.$memory.byteOffset,
       this.$memory.byteLength
     );
+    this.$cache = {};
   }
 
   public static allocMemory() {
@@ -37,11 +43,17 @@ export class HIDDeviceInfo {
     const pathAddr = this.$view.getBigUint64(ByteOffset.path, true);
     const pathPtr = Number(pathAddr) as Pointer;
 
-    return new CString(pathPtr);
+    return new CString(pathPtr).toString();
   }
 
-  public set path(value: CString) {
-    this.$view.setBigUint64(ByteOffset.path, BigInt(value.ptr), true);
+  public set path(value: string) {
+    this.$cache.path = stringToCString(value);
+
+    this.$view.setBigUint64(
+      ByteOffset.path,
+      BigInt(this.$cache.path.ptr),
+      true
+    );
   }
 
   public get vendorId() {
@@ -67,11 +79,7 @@ export class HIDDeviceInfo {
     );
     const serialNumberPtr = Number(serialNumberAddr) as Pointer;
 
-    return new CWideString(serialNumberPtr);
-  }
-
-  public set serialNumber(value: CWideString) {
-    this.$view.setBigUint64(ByteOffset.serial_number, BigInt(value.ptr), true);
+    return new CWideString(serialNumberPtr).toString();
   }
 
   public get releaseNumber() {
@@ -89,15 +97,7 @@ export class HIDDeviceInfo {
     );
     const manufacturerStringPtr = Number(manufacturerStringAddr) as Pointer;
 
-    return new CWideString(manufacturerStringPtr);
-  }
-
-  public set manufacturerString(value: CWideString) {
-    this.$view.setBigUint64(
-      ByteOffset.manufacturer_string,
-      BigInt(value.ptr),
-      true
-    );
+    return new CWideString(manufacturerStringPtr).toString();
   }
 
   public get productString() {
@@ -107,11 +107,7 @@ export class HIDDeviceInfo {
     );
     const productStringPtr = Number(productStringAddr) as Pointer;
 
-    return new CWideString(productStringPtr);
-  }
-
-  public set productString(value: CWideString) {
-    this.$view.setBigUint64(ByteOffset.product_string, BigInt(value.ptr), true);
+    return new CWideString(productStringPtr).toString();
   }
 
   public get usagePage() {

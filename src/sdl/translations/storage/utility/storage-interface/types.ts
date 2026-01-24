@@ -1,49 +1,49 @@
-import { CString, JSCallback, type Pointer } from 'bun:ffi';
+import { JSCallback, type Pointer } from 'bun:ffi';
 
 export interface EnumerateDirectoryOptions {
   userdata?: Pointer | null;
-  path: CString;
+  path: string;
   callback: JSCallback;
   callbackUserdata?: Pointer | null;
 }
 
 export interface InfoOptions {
   userdata?: Pointer | null;
-  path: CString;
+  path: string;
 }
 
 export interface ReadFileOptionss {
   userdata?: Pointer | null;
   length?: bigint;
-  path: CString;
+  path: string;
 }
 
 export interface WriteFileOptions {
   userdata?: Pointer | null;
-  path: CString;
+  path: string;
   source: Uint8Array;
 }
 
 export interface MkdirOptions {
   userdata?: Pointer | null;
-  path: CString;
+  path: string;
 }
 
 export interface RemoveOptions {
   userdata?: Pointer | null;
-  path: CString;
+  path: string;
 }
 
 export interface RenameOptions {
   userdata?: Pointer | null;
-  oldPath: CString;
-  newPath: CString;
+  oldPath: string;
+  newPath: string;
 }
 
 export interface CopyOptions {
   userdata?: Pointer | null;
-  oldPath: CString;
-  newPath: CString;
+  oldPath: string;
+  newPath: string;
 }
 
 export interface CreateFfiOptions {

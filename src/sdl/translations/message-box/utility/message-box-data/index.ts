@@ -1,5 +1,6 @@
 import { CString, ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
 import type { MessageBoxFlags } from '../../../../ffi/message-box/constant';
+import { stringToCString } from '../../../../utility/common';
 import { MessageBoxButtonData } from '../message-box-button-data';
 import { MessageBoxColorScheme } from '../message-box-color-scheme';
 import { ByteOffset } from './constant';
@@ -12,6 +13,11 @@ export class MessageBoxData {
   public $view: DataView;
 
   public $buttonsBuffer: Uint8Array | null;
+
+  private $cache: Partial<{
+    title: CString;
+    message: CString;
+  }>;
 
   public constructor(data: Pointer | Uint8Array) {
     if (data instanceof Uint8Array) {
@@ -29,6 +35,7 @@ export class MessageBoxData {
       this.$memory.byteLength
     );
     this.$buttonsBuffer = null;
+    this.$cache = {};
   }
 
   public static allocMemory() {
@@ -57,22 +64,34 @@ export class MessageBoxData {
     const addr = this.$view.getBigUint64(ByteOffset.title, true);
     const ptr = Number(addr) as Pointer;
 
-    return new CString(ptr);
+    return new CString(ptr).toString();
   }
 
-  public set title(value: CString) {
-    this.$view.setBigUint64(ByteOffset.title, BigInt(value.ptr), true);
+  public set title(value: string) {
+    this.$cache.title = stringToCString(value);
+
+    this.$view.setBigUint64(
+      ByteOffset.title,
+      BigInt(this.$cache.title.ptr),
+      true
+    );
   }
 
   public get message() {
     const addr = this.$view.getBigUint64(ByteOffset.message, true);
     const ptr = Number(addr) as Pointer;
 
-    return new CString(ptr);
+    return new CString(ptr).toString();
   }
 
-  public set message(value: CString) {
-    this.$view.setBigUint64(ByteOffset.message, BigInt(value.ptr), true);
+  public set message(value: string) {
+    this.$cache.message = stringToCString(value);
+
+    this.$view.setBigUint64(
+      ByteOffset.message,
+      BigInt(this.$cache.message.ptr),
+      true
+    );
   }
 
   public get buttonCount() {

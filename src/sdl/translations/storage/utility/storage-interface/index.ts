@@ -6,6 +6,7 @@ import {
   type Library,
   type Pointer,
 } from 'bun:ffi';
+import { stringToCString } from '../../../../utility/common';
 import { PathInfo } from '../../../file-system/utility';
 import { ByteOffset } from './constant';
 import { StorageInterfaceDefinition } from './definition';
@@ -111,7 +112,7 @@ export class StorageInterface {
       StorageInterfaceDefinition.enumerate,
       [
         options.userdata ?? null,
-        options.path.ptr,
+        stringToCString(options.path).ptr,
         options.callback.ptr,
         options.callbackUserdata ?? null,
       ]
@@ -126,7 +127,11 @@ export class StorageInterface {
     const success = this.invoke<boolean>(
       ByteOffset.info,
       StorageInterfaceDefinition.info,
-      [options.userdata ?? null, options.path.ptr, info.$address]
+      [
+        options.userdata ?? null,
+        stringToCString(options.path).ptr,
+        info.$address,
+      ]
     );
 
     if (!success) return null;
@@ -136,7 +141,7 @@ export class StorageInterface {
 
   /** Passing the length, will by-pass the needs to call info */
   public readFile(options: ReadFileOptionss) {
-    const pathPtr = options.path.ptr;
+    const pathPtr = stringToCString(options.path).ptr;
     let length: number | null = options.length ? Number(options.length) : null;
 
     if (!length) {
@@ -162,7 +167,7 @@ export class StorageInterface {
   }
 
   public writeFile(options: WriteFileOptions) {
-    const pathPtr = options.path.ptr;
+    const pathPtr = stringToCString(options.path).ptr;
     const srcPtr = ptr(options.source);
     const length = BigInt(options.source.byteLength);
 
@@ -176,7 +181,7 @@ export class StorageInterface {
   }
 
   public mkdir(options: MkdirOptions) {
-    const pathPtr = options.path.ptr;
+    const pathPtr = stringToCString(options.path).ptr;
 
     const success = this.invoke<boolean>(
       ByteOffset.mkdir,
@@ -188,7 +193,7 @@ export class StorageInterface {
   }
 
   public remove(options: RemoveOptions) {
-    const pathPtr = options.path.ptr;
+    const pathPtr = stringToCString(options.path).ptr;
 
     const success = this.invoke<boolean>(
       ByteOffset.remove,
@@ -200,8 +205,8 @@ export class StorageInterface {
   }
 
   public rename(options: RenameOptions) {
-    const oldPathPtr = options.oldPath.ptr;
-    const newPathPtr = options.newPath.ptr;
+    const oldPathPtr = stringToCString(options.oldPath).ptr;
+    const newPathPtr = stringToCString(options.newPath).ptr;
 
     const success = this.invoke<boolean>(
       ByteOffset.rename,
@@ -213,8 +218,8 @@ export class StorageInterface {
   }
 
   public copy(options: CopyOptions) {
-    const oldPathPtr = options.oldPath.ptr;
-    const newPathPtr = options.newPath.ptr;
+    const oldPathPtr = stringToCString(options.oldPath).ptr;
+    const newPathPtr = stringToCString(options.newPath).ptr;
 
     const success = this.invoke<boolean>(
       ByteOffset.copy,

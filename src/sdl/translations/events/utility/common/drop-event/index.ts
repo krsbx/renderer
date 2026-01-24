@@ -1,4 +1,5 @@
 import { CString, ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
+import { stringToCString } from '../../../../../utility/common';
 import { ByteOffset } from './constant';
 import type { DropEventType } from './types';
 
@@ -8,6 +9,11 @@ export class DropEvent {
   public $address: Pointer;
   public $memory: Uint8Array;
   public $view: DataView;
+
+  private $cache: Partial<{
+    source: CString;
+    data: CString;
+  }>;
 
   public constructor(data: Pointer | Uint8Array) {
     if (data instanceof Uint8Array) {
@@ -24,6 +30,7 @@ export class DropEvent {
       this.$memory.byteOffset,
       this.$memory.byteLength
     );
+    this.$cache = {};
   }
 
   public static allocMemory() {
@@ -84,21 +91,33 @@ export class DropEvent {
     const sourceAddr = this.$view.getBigUint64(ByteOffset.source, true);
     const sourcePtr = Number(sourceAddr) as Pointer;
 
-    return new CString(sourcePtr);
+    return new CString(sourcePtr).toString();
   }
 
-  public set source(value: CString) {
-    this.$view.setBigUint64(ByteOffset.source, BigInt(value.ptr), true);
+  public set source(value: string) {
+    this.$cache.source = stringToCString(value);
+
+    this.$view.setBigUint64(
+      ByteOffset.source,
+      BigInt(this.$cache.source.ptr),
+      true
+    );
   }
 
   public get data() {
     const dataAddr = this.$view.getBigUint64(ByteOffset.data, true);
     const dataPtr = Number(dataAddr) as Pointer;
 
-    return new CString(dataPtr);
+    return new CString(dataPtr).toString();
   }
 
-  public set data(value: CString) {
-    this.$view.setBigUint64(ByteOffset.data, BigInt(value.ptr), true);
+  public set data(value: string) {
+    this.$cache.data = stringToCString(value);
+
+    this.$view.setBigUint64(
+      ByteOffset.data,
+      BigInt(this.$cache.data.ptr),
+      true
+    );
   }
 }

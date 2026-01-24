@@ -1,5 +1,6 @@
 import { CString, ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
 import type { GPUShaderFormat } from '../../../../../ffi/gpu/constant';
+import { stringToCString } from '../../../../../utility/common';
 import { ByteOffset } from './constant';
 
 export class GPUComputePipelineCreateInfo {
@@ -8,6 +9,10 @@ export class GPUComputePipelineCreateInfo {
   public $address: Pointer;
   public $memory: Uint8Array;
   public $view: DataView;
+
+  private $cache: Partial<{
+    entrypoint: CString;
+  }>;
 
   public constructor(data: Pointer | Uint8Array) {
     if (data instanceof Uint8Array) {
@@ -28,6 +33,7 @@ export class GPUComputePipelineCreateInfo {
       this.$memory.byteOffset,
       this.$memory.byteLength
     );
+    this.$cache = {};
   }
 
   public static allocMemory() {
@@ -56,11 +62,17 @@ export class GPUComputePipelineCreateInfo {
     const entrypointAddr = this.$view.getBigUint64(ByteOffset.entrypoint, true);
     const entrypointPtr = Number(entrypointAddr) as Pointer;
 
-    return new CString(entrypointPtr);
+    return new CString(entrypointPtr).toString();
   }
 
-  public set entrypoint(value: CString) {
-    this.$view.setBigUint64(ByteOffset.entrypoint, BigInt(value.ptr), true);
+  public set entrypoint(value: string) {
+    this.$cache.entrypoint = stringToCString(value);
+
+    this.$view.setBigUint64(
+      ByteOffset.entrypoint,
+      BigInt(this.$cache.entrypoint.ptr),
+      true
+    );
   }
 
   public get format() {

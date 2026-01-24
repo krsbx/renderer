@@ -2,7 +2,7 @@ import { toArrayBuffer, type Pointer } from 'bun:ffi';
 import { ByteOffset } from './constant';
 
 export class AudioStream {
-  public static readonly BYTE_SIZE = 32;
+  public static readonly BYTE_SIZE = 28;
 
   public $address: Pointer | Uint8Array;
   public $memory: Uint8Array;

@@ -77,16 +77,18 @@ export const FileSystemDefinition = {
     returns: FFIType.bool,
   },
   // FilePathList LoadDirectoryFiles(const char *dirPath);
-  // Note: FilePathList is a struct with capacity, count, paths
-  LoadDirectoryFiles: {
-    args: [FFIType.cstring],
-    returns: FFIType.ptr,
-  },
+  // SHIMMED - see src/raylib/ffi/shims/definition.ts
+  // Note: FilePathList is a struct with count, paths
+  // LoadDirectoryFiles: {
+  //   args: [FFIType.cstring],
+  //   returns: FFIType.ptr,
+  // },
   // FilePathList LoadDirectoryFilesEx(const char *basePath, const char *filter, bool scanSubdirs);
-  LoadDirectoryFilesEx: {
-    args: [FFIType.cstring, FFIType.cstring, FFIType.bool],
-    returns: FFIType.ptr,
-  },
+  // SHIMMED - see src/raylib/ffi/shims/definition.ts
+  // LoadDirectoryFilesEx: {
+  //   args: [FFIType.cstring, FFIType.cstring, FFIType.bool],
+  //   returns: FFIType.ptr,
+  // },
   // void UnloadDirectoryFiles(FilePathList files);
   UnloadDirectoryFiles: {
     args: [FFIType.ptr],
@@ -98,10 +100,11 @@ export const FileSystemDefinition = {
     returns: FFIType.bool,
   },
   // FilePathList LoadDroppedFiles(void);
-  LoadDroppedFiles: {
-    args: [],
-    returns: FFIType.ptr,
-  },
+  // SHIMMED - see src/raylib/ffi/shims/definition.ts
+  // LoadDroppedFiles: {
+  //   args: [],
+  //   returns: FFIType.ptr,
+  // },
   // void UnloadDroppedFiles(FilePathList files);
   UnloadDroppedFiles: {
     args: [FFIType.ptr],

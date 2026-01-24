@@ -2,10 +2,11 @@ import { FFIType, type FFIFunction } from 'bun:ffi';
 
 export const AutomationDefinition = {
   // AutomationEventList LoadAutomationEventList(const char *fileName);
-  LoadAutomationEventList: {
-    args: [FFIType.cstring],
-    returns: FFIType.ptr,
-  },
+  // SHIMMED - see src/raylib/ffi/shims/definition.ts
+  // LoadAutomationEventList: {
+  //   args: [FFIType.cstring],
+  //   returns: FFIType.ptr,
+  // },
   // void UnloadAutomationEventList(AutomationEventList list);
   UnloadAutomationEventList: {
     args: [FFIType.ptr],

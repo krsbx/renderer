@@ -2,11 +2,12 @@ import { FFIType, type FFIFunction } from 'bun:ffi';
 
 export const VRDefinition = {
   // VrStereoConfig LoadVrStereoConfig(VrDeviceInfo device);
+  // SHIMMED - see src/raylib/ffi/shims/definition.ts
   // Note: Both VrStereoConfig and VrDeviceInfo are large structs
-  LoadVrStereoConfig: {
-    args: [FFIType.ptr],
-    returns: FFIType.ptr,
-  },
+  // LoadVrStereoConfig: {
+  //   args: [FFIType.ptr],
+  //   returns: FFIType.ptr,
+  // },
   // void UnloadVrStereoConfig(VrStereoConfig config);
   UnloadVrStereoConfig: {
     args: [FFIType.ptr],

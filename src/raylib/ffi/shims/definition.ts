@@ -488,6 +488,14 @@ export const ShimDefinition = {
   // #endregion VR
 
   // #region Files
+  LoadDirectoryFiles: {
+    args: [FFIType.cstring, FFIType.ptr],
+    returns: FFIType.void,
+  },
+  LoadDirectoryFilesEx: {
+    args: [FFIType.cstring, FFIType.cstring, FFIType.bool, FFIType.ptr],
+    returns: FFIType.void,
+  },
   LoadDroppedFiles: { args: [FFIType.ptr], returns: FFIType.void },
   // #endregion Files
 

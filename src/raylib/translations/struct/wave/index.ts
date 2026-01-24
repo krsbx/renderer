@@ -8,6 +8,10 @@ export class Wave {
   public $memory: Uint8Array;
   public $view: DataView;
 
+  // Cached data array
+  private $data: number[] | null = null;
+  private $dataView: DataView | null = null;
+
   public constructor(data: Pointer | Uint8Array) {
     if (data instanceof Uint8Array) {
       this.$memory = data;
@@ -65,10 +69,45 @@ export class Wave {
     return Number(this.$view.getBigUint64(ByteOffset.data, true)) as Pointer;
   }
 
-  public get data() {
-    const dataPtr = this.data_ptr;
-    const buffer = toArrayBuffer(dataPtr);
+  public set data_ptr(value: Pointer) {
+    this.$view.setBigUint64(ByteOffset.data, BigInt(value as number), true);
+    this.$data = null;
+    this.$dataView = null;
+  }
 
-    return new Uint16Array(buffer);
+  public get data() {
+    const ptr = this.data_ptr;
+    if (!ptr) return null;
+    if (this.$data) return this.$data;
+
+    // Calculate byte size: frameCount * channels * (sampleSize / 8)
+    const byteSize = this.frameCount * this.channels * (this.sampleSize / 8);
+    // Length in uint16 elements
+    const length = Math.floor(byteSize / 2);
+    const buffer = toArrayBuffer(ptr, 0, byteSize);
+    this.$dataView = new DataView(buffer);
+
+    this.$data = new Proxy(new Array(length), {
+      get: (target, prop) => {
+        const index = Number(prop);
+        if (Number.isNaN(index)) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const val = (target as any)[prop];
+          return typeof val === 'function' ? val.bind(target) : val;
+        }
+        if (index < 0 || index >= length) {
+          throw new RangeError(`Index out of range: ${index}`);
+        }
+        return this.$dataView!.getUint16(index * 2, true);
+      },
+      set: (_, prop, value) => {
+        const index = Number(prop);
+        if (Number.isNaN(index) || index < 0 || index >= length) return false;
+        this.$dataView!.setUint16(index * 2, value, true);
+        return true;
+      },
+    }) as never;
+
+    return this.$data;
   }
 }

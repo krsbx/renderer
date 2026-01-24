@@ -1,2 +1,2 @@
-export { CoreShimDefinition } from './definition';
-export { loadCoreShim } from './loader';
+export { ShimDefinition } from './definition';
+export { loadShim } from './loader';

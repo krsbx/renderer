@@ -132,15 +132,17 @@ export const InputDefinition = {
     returns: FFIType.i32,
   },
   // Vector2 GetMousePosition(void);
-  GetMousePosition: {
-    args: [],
-    returns: FFIType.ptr,
-  },
+  // SHIMMED - see src/raylib/ffi/shims/definition.ts
+  // GetMousePosition: {
+  //   args: [],
+  //   returns: FFIType.ptr,
+  // },
   // Vector2 GetMouseDelta(void);
-  GetMouseDelta: {
-    args: [],
-    returns: FFIType.ptr,
-  },
+  // SHIMMED - see src/raylib/ffi/shims/definition.ts
+  // GetMouseDelta: {
+  //   args: [],
+  //   returns: FFIType.ptr,
+  // },
   // void SetMousePosition(int x, int y);
   SetMousePosition: {
     args: [FFIType.i32, FFIType.i32],
@@ -162,10 +164,11 @@ export const InputDefinition = {
     returns: FFIType.f32,
   },
   // Vector2 GetMouseWheelMoveV(void);
-  GetMouseWheelMoveV: {
-    args: [],
-    returns: FFIType.ptr,
-  },
+  // SHIMMED - see src/raylib/ffi/shims/definition.ts
+  // GetMouseWheelMoveV: {
+  //   args: [],
+  //   returns: FFIType.ptr,
+  // },
   // void SetMouseCursor(int cursor);
   SetMouseCursor: {
     args: [FFIType.i32],
@@ -184,10 +187,11 @@ export const InputDefinition = {
     returns: FFIType.i32,
   },
   // Vector2 GetTouchPosition(int index);
-  GetTouchPosition: {
-    args: [FFIType.i32],
-    returns: FFIType.ptr,
-  },
+  // SHIMMED - see src/raylib/ffi/shims/definition.ts
+  // GetTouchPosition: {
+  //   args: [FFIType.i32],
+  //   returns: FFIType.ptr,
+  // },
   // int GetTouchPointId(int index);
   GetTouchPointId: {
     args: [FFIType.i32],
@@ -221,20 +225,22 @@ export const InputDefinition = {
     returns: FFIType.f32,
   },
   // Vector2 GetGestureDragVector(void);
-  GetGestureDragVector: {
-    args: [],
-    returns: FFIType.ptr,
-  },
+  // SHIMMED - see src/raylib/ffi/shims/definition.ts
+  // GetGestureDragVector: {
+  //   args: [],
+  //   returns: FFIType.ptr,
+  // },
   // float GetGestureDragAngle(void);
   GetGestureDragAngle: {
     args: [],
     returns: FFIType.f32,
   },
   // Vector2 GetGesturePinchVector(void);
-  GetGesturePinchVector: {
-    args: [],
-    returns: FFIType.ptr,
-  },
+  // SHIMMED - see src/raylib/ffi/shims/definition.ts
+  // GetGesturePinchVector: {
+  //   args: [],
+  //   returns: FFIType.ptr,
+  // },
   // float GetGesturePinchAngle(void);
   GetGesturePinchAngle: {
     args: [],

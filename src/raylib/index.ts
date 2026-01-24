@@ -3,8 +3,7 @@ import {
   FFIDefinition,
   type FFIDefinition as FFIDefinitionType,
 } from './ffi/definition';
-import type { ShimDefinition } from './ffi/shims/definition';
-import { loadShim } from './ffi/shims/loader';
+import { loadShim, type ShimDefinition } from './ffi/shims';
 
 export class BaseRayLib implements Library<FFIDefinitionType> {
   /** Close the SDL library */
@@ -23,6 +22,10 @@ export class BaseRayLib implements Library<FFIDefinitionType> {
       sdl.close();
       this.shim.close();
     };
+  }
+
+  public [Symbol.dispose]() {
+    this.close();
   }
 }
 

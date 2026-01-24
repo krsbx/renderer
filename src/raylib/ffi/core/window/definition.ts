@@ -179,10 +179,11 @@ export const WindowDefinition = {
   },
   // Vector2 GetMonitorPosition(int monitor);
   // Note: Vector2 is 8 bytes (2 floats), returned as struct
-  GetMonitorPosition: {
-    args: [FFIType.i32],
-    returns: FFIType.ptr,
-  },
+  // SHIMMED - see src/raylib/ffi/shims/definition.ts
+  // GetMonitorPosition: {
+  //   args: [FFIType.i32],
+  //   returns: FFIType.ptr,
+  // },
   // int GetMonitorWidth(int monitor);
   GetMonitorWidth: {
     args: [FFIType.i32],
@@ -209,15 +210,17 @@ export const WindowDefinition = {
     returns: FFIType.i32,
   },
   // Vector2 GetWindowPosition(void);
-  GetWindowPosition: {
-    args: [],
-    returns: FFIType.ptr,
-  },
+  // SHIMMED - see src/raylib/ffi/shims/definition.ts
+  // GetWindowPosition: {
+  //   args: [],
+  //   returns: FFIType.ptr,
+  // },
   // Vector2 GetWindowScaleDPI(void);
-  GetWindowScaleDPI: {
-    args: [],
-    returns: FFIType.ptr,
-  },
+  // SHIMMED - see src/raylib/ffi/shims/definition.ts
+  // GetWindowScaleDPI: {
+  //   args: [],
+  //   returns: FFIType.ptr,
+  // },
   // const char *GetMonitorName(int monitor);
   GetMonitorName: {
     args: [FFIType.i32],
@@ -235,10 +238,11 @@ export const WindowDefinition = {
   },
   // Image GetClipboardImage(void);
   // Note: Image is a struct (24 bytes), need special handling
-  GetClipboardImage: {
-    args: [],
-    returns: FFIType.ptr,
-  },
+  // SHIMMED - see src/raylib/ffi/shims/definition.ts
+  // GetClipboardImage: {
+  //   args: [],
+  //   returns: FFIType.ptr,
+  // },
   // void EnableEventWaiting(void);
   EnableEventWaiting: {
     args: [],

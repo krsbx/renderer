@@ -6,5 +6,6 @@
       "source.fixAll.ts": "explicit",
       "source.organizeImports": "explicit"
     }
-  }
+  },
+  "C_Cpp.errorSquiggles": "disabled"
 }

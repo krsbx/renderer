@@ -89,6 +89,8 @@
 #define LoadFontFromMemory _raylib_LoadFontFromMemory
 #define GetGlyphInfo _raylib_GetGlyphInfo
 #define GetGlyphAtlasRec _raylib_GetGlyphAtlasRec
+#define GenImageFontAtlas _raylib_GenImageFontAtlas
+#define MeasureTextEx _raylib_MeasureTextEx
 
 // Shaders
 #define LoadShader _raylib_LoadShader

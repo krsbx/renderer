@@ -333,6 +333,22 @@ export const ShimDefinition = {
     args: [FFIType.ptr, FFIType.i32, FFIType.ptr],
     returns: FFIType.void,
   },
+  GenImageFontAtlas: {
+    args: [
+      FFIType.ptr,
+      FFIType.ptr,
+      FFIType.i32,
+      FFIType.i32,
+      FFIType.i32,
+      FFIType.i32,
+      FFIType.ptr,
+    ],
+    returns: FFIType.void,
+  },
+  MeasureTextEx: {
+    args: [FFIType.ptr, FFIType.cstring, FFIType.f32, FFIType.f32, FFIType.ptr],
+    returns: FFIType.void,
+  },
   // #endregion Fonts
 
   // #region Shaders

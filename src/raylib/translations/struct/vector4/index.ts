@@ -63,3 +63,5 @@ export class Vector4 {
     this.$view.setFloat32(ByteOffset.w, value, true);
   }
 }
+
+export { Vector4 as Quaternion };

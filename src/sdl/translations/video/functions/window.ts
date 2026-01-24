@@ -24,7 +24,7 @@ export function setWindowFullscreenMode(
   this: SDL,
   options: {
     window: Pointer;
-    mode: DisplayMode | Pointer;
+    mode: DisplayMode;
   }
 ) {
   return this.symbols.SDL_SetWindowFullscreenMode(
@@ -677,7 +677,7 @@ export function setWindowShape(
   this: SDL,
   options: {
     window: Pointer;
-    shape: Surface | Pointer;
+    shape: Surface;
   }
 ) {
   return this.symbols.SDL_SetWindowShape(

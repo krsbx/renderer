@@ -24,7 +24,7 @@ import type {
 export class StorageInterface {
   public static readonly BYTE_SIZE = 96;
 
-  public $address: Pointer;
+  public $address: Pointer | Uint8Array;
   public $memory: Uint8Array;
   public $view: DataView;
   private $lib: Library<never> | null;
@@ -32,7 +32,7 @@ export class StorageInterface {
   public constructor(data: Pointer | Uint8Array) {
     if (data instanceof Uint8Array) {
       this.$memory = data;
-      this.$address = ptr(data);
+      this.$address = data;
     } else {
       const buffer = toArrayBuffer(data, 0, StorageInterface.BYTE_SIZE);
       this.$memory = new Uint8Array(buffer);

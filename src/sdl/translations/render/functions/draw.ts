@@ -106,7 +106,7 @@ export function renderRect(
   this: SDL,
   options: {
     renderer: Pointer;
-    rect?: FRect | Pointer | null;
+    rect?: FRect | null;
   }
 ) {
   return this.symbols.SDL_RenderRect(
@@ -151,7 +151,7 @@ export function renderFillRect(
   this: SDL,
   options: {
     renderer: Pointer;
-    rect?: FRect | Pointer | null;
+    rect?: FRect | null;
   }
 ) {
   return this.symbols.SDL_RenderFillRect(
@@ -197,8 +197,8 @@ export function renderTexture(
   options: {
     renderer: Pointer;
     texture: Pointer;
-    srcRect?: FRect | Pointer | null;
-    dstRect?: FRect | Pointer | null;
+    srcRect?: FRect | null;
+    dstRect?: FRect | null;
   }
 ) {
   return this.symbols.SDL_RenderTexture(

@@ -1,7 +1,6 @@
 import { CStruct } from '@cstruct';
 import {
   linkSymbols,
-  ptr,
   toArrayBuffer,
   type FFIFunction,
   type Library,
@@ -15,7 +14,7 @@ import type { ReadOptions, SeekOptions, WriteOptions } from './types';
 export class IOStreamInterface {
   public static readonly BYTE_SIZE = 56;
 
-  public $address: Pointer;
+  public $address: Pointer | Uint8Array;
   public $memory: Uint8Array;
   public $view: DataView;
   private $lib: Library<never> | null;
@@ -23,7 +22,7 @@ export class IOStreamInterface {
   public constructor(data: Pointer | Uint8Array) {
     if (data instanceof Uint8Array) {
       this.$memory = data;
-      this.$address = ptr(data);
+      this.$address = data;
     } else {
       const buffer = toArrayBuffer(data, 0, IOStreamInterface.BYTE_SIZE);
       this.$memory = new Uint8Array(buffer);

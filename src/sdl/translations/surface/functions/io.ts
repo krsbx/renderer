@@ -56,7 +56,7 @@ export function loadBMP(this: SDL, file: string) {
 export function saveBMPIO(
   this: SDL,
   options: {
-    surface: Surface | Pointer;
+    surface: Surface;
     dst: Pointer;
     closeio: boolean;
   }
@@ -71,7 +71,7 @@ export function saveBMPIO(
 export function saveBMP(
   this: SDL,
   options: {
-    surface: Surface | Pointer;
+    surface: Surface;
     file: string;
   }
 ) {
@@ -110,7 +110,7 @@ export function loadPNG(this: SDL, file: string) {
 export function savePNGIO(
   this: SDL,
   options: {
-    surface: Surface | Pointer;
+    surface: Surface;
     dst: Pointer;
     closeio: boolean;
   }
@@ -125,7 +125,7 @@ export function savePNGIO(
 export function savePNG(
   this: SDL,
   options: {
-    surface: Surface | Pointer;
+    surface: Surface;
     file: string;
   }
 ) {

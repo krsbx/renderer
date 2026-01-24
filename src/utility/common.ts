@@ -71,16 +71,16 @@ export function stringToCWideString(value: string) {
   return cloneCWideString(value);
 }
 
-export function getStructAddress<T extends { $address: Pointer } | Pointer>(
-  struct: T
-) {
+export function getStructAddress<
+  T extends { $address: Pointer | Uint8Array } | Pointer,
+>(struct: T) {
   if (typeof struct === 'object') return struct.$address;
 
   return struct as Pointer;
 }
 
 export function getStructMemoryAddress<
-  T extends { $address: Pointer } | Pointer | NodeJS.TypedArray,
+  T extends Parameters<typeof getStructAddress>[0] | NodeJS.TypedArray,
 >(struct: T) {
   if ('buffer' in struct) return ptr(struct);
 

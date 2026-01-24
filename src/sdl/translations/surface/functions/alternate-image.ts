@@ -1,7 +1,6 @@
 import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
 import { getStructAddress } from '@utility/common';
-import type { Pointer } from 'bun:ffi';
 import { Surface } from '../utility';
 
 // Alternate Images
@@ -9,8 +8,8 @@ import { Surface } from '../utility';
 export function addSurfaceAlternateImage(
   this: SDL,
   options: {
-    surface: Surface | Pointer;
-    image: Surface | Pointer;
+    surface: Surface;
+    image: Surface;
   }
 ) {
   return this.symbols.SDL_AddSurfaceAlternateImage(
@@ -19,14 +18,11 @@ export function addSurfaceAlternateImage(
   );
 }
 
-export function surfaceHasAlternateImages(
-  this: SDL,
-  surface: Surface | Pointer
-) {
+export function surfaceHasAlternateImages(this: SDL, surface: Surface) {
   return this.symbols.SDL_SurfaceHasAlternateImages(getStructAddress(surface));
 }
 
-export function getSurfaceImages(this: SDL, surface: Surface | Pointer) {
+export function getSurfaceImages(this: SDL, surface: Surface) {
   const countStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
   const listPtr = this.symbols.SDL_GetSurfaceImages(
@@ -57,9 +53,6 @@ export function getSurfaceImages(this: SDL, surface: Surface | Pointer) {
   return images;
 }
 
-export function removeSurfaceAlternateImages(
-  this: SDL,
-  surface: Surface | Pointer
-) {
+export function removeSurfaceAlternateImages(this: SDL, surface: Surface) {
   this.symbols.SDL_RemoveSurfaceAlternateImages(getStructAddress(surface));
 }

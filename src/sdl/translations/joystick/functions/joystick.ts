@@ -164,7 +164,7 @@ export function getJoystickType(this: SDL, joystick: Pointer) {
   return this.symbols.SDL_GetJoystickType(joystick) as JoystickType;
 }
 
-export function getJoystickGUIDInfo(this: SDL, guid: GUID | Pointer) {
+export function getJoystickGUIDInfo(this: SDL, guid: GUID) {
   const vendorStruct = new CStruct({ length: CStruct.BYTE_SIZE.u16 });
   const productStruct = new CStruct({ length: CStruct.BYTE_SIZE.u16 });
   const versionStruct = new CStruct({ length: CStruct.BYTE_SIZE.u16 });

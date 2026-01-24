@@ -53,7 +53,7 @@ export function getGamepadMappings(this: SDL) {
   return mappings;
 }
 
-export function getGamepadMappingForGUID(this: SDL, guid: GUID | Pointer) {
+export function getGamepadMappingForGUID(this: SDL, guid: GUID) {
   const ptr = this.symbols.SDL_GetGamepadMappingForGUID(getStructAddress(guid));
 
   if (!ptr) return null;

@@ -5,7 +5,7 @@ import type { TextEditingCandidatesEventType } from './types';
 export class TextEditingCandidatesEvent {
   public static readonly BYTE_SIZE = 48;
 
-  public $address: Pointer;
+  public $address: Pointer | Uint8Array;
   public $memory: Uint8Array;
   public $view: DataView;
 
@@ -18,7 +18,7 @@ export class TextEditingCandidatesEvent {
   public constructor(data: Pointer | Uint8Array) {
     if (data instanceof Uint8Array) {
       this.$memory = data;
-      this.$address = ptr(data);
+      this.$address = data;
     } else {
       const buffer = toArrayBuffer(
         data,

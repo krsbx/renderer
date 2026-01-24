@@ -1,4 +1,4 @@
-import { ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
+import { toArrayBuffer, type Pointer } from 'bun:ffi';
 import { GPUMultisampleState, GPURasterizerState } from '../../common';
 import { GPUDepthStencilState } from '../../stencil';
 import { GPUVertexInputState } from '../../vertex';
@@ -8,7 +8,7 @@ import { ByteOffset } from './constant';
 export class GPUGraphicsPipelineCreateInfo {
   public static readonly BYTE_SIZE = 168;
 
-  public $address: Pointer;
+  public $address: Pointer | Uint8Array;
   public $memory: Uint8Array;
   public $view: DataView;
 
@@ -21,7 +21,7 @@ export class GPUGraphicsPipelineCreateInfo {
   public constructor(data: Pointer | Uint8Array) {
     if (data instanceof Uint8Array) {
       this.$memory = data;
-      this.$address = ptr(data);
+      this.$address = data;
     } else {
       const buffer = toArrayBuffer(
         data,

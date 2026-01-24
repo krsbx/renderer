@@ -170,7 +170,7 @@ export function createCursor(
 export function createColorCursor(
   this: SDL,
   options: {
-    surface: Surface | Pointer;
+    surface: Surface;
     hotX: number;
     hotY: number;
   }
@@ -185,7 +185,7 @@ export function createColorCursor(
 export function createAnimatedCursor(
   this: SDL,
   options: {
-    frames: CursorFrameInfo | Pointer;
+    frames: CursorFrameInfo;
     frameCount: number;
     hotX: number;
     hotY: number;

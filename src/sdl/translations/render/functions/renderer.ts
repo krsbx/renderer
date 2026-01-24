@@ -65,7 +65,7 @@ export function getGPURendererDevice(this: SDL, renderer: Pointer) {
   return this.symbols.SDL_GetGPURendererDevice(renderer);
 }
 
-export function createSoftwareRenderer(this: SDL, surface: Surface | Pointer) {
+export function createSoftwareRenderer(this: SDL, surface: Surface) {
   return this.symbols.SDL_CreateSoftwareRenderer(getStructAddress(surface));
 }
 

@@ -10,7 +10,7 @@ export function renderReadPixels(
   this: SDL,
   options: {
     renderer: Pointer;
-    rect?: Rect | Pointer | null;
+    rect?: Rect | null;
   }
 ) {
   const surfacePtr = this.symbols.SDL_RenderReadPixels(

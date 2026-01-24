@@ -138,7 +138,7 @@ export function convertEventToRenderCoordinates(
   this: SDL,
   options: {
     renderer: Pointer;
-    event: Event | Pointer;
+    event: Event;
   }
 ) {
   return this.symbols.SDL_ConvertEventToRenderCoordinates(
@@ -153,7 +153,7 @@ export function setRenderViewport(
   this: SDL,
   options: {
     renderer: Pointer;
-    rect?: Rect | Pointer | null;
+    rect?: Rect | null;
   }
 ) {
   return this.symbols.SDL_SetRenderViewport(
@@ -192,7 +192,7 @@ export function setRenderClipRect(
   this: SDL,
   options: {
     renderer: Pointer;
-    rect?: Rect | Pointer | null;
+    rect?: Rect | null;
   }
 ) {
   return this.symbols.SDL_SetRenderClipRect(

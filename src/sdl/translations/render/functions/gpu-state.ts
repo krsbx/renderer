@@ -8,7 +8,7 @@ export function createGPURenderState(
   this: SDL,
   options: {
     renderer: Pointer;
-    createInfo: GPURenderStateCreateInfo | Pointer;
+    createInfo: GPURenderStateCreateInfo;
   }
 ) {
   return this.symbols.SDL_CreateGPURenderState(
@@ -22,7 +22,7 @@ export function setGPURenderStateFragmentUniforms(
   options: {
     state: Pointer;
     slotIndex: number;
-    data: CStruct | Pointer | Uint8Array;
+    data: CStruct | Uint8Array;
     length: number;
   }
 ) {

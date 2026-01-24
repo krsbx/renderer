@@ -5,10 +5,7 @@ import { type Pointer } from 'bun:ffi';
 import type { SensorType } from '../../../ffi/sensor/constant';
 import { VirtualJoystickDesc } from '../utility';
 
-export function attachVirtualJoystick(
-  this: SDL,
-  desc: VirtualJoystickDesc | Pointer
-) {
+export function attachVirtualJoystick(this: SDL, desc: VirtualJoystickDesc) {
   return this.symbols.SDL_AttachVirtualJoystick(getStructAddress(desc));
 }
 
@@ -111,7 +108,7 @@ export function sendJoystickVirtualSensorData(
     joystick: Pointer;
     type: SensorType;
     sensorTimestamp: bigint;
-    data: CStruct | Uint8Array | Pointer;
+    data: CStruct | Uint8Array;
     numValues: number;
   }
 ) {

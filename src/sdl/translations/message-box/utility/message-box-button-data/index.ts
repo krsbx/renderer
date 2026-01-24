@@ -1,12 +1,12 @@
 import { stringToCString } from '@utility/common';
-import { CString, ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
+import { CString, toArrayBuffer, type Pointer } from 'bun:ffi';
 import type { MessageBoxButtonFlags } from '../../../../ffi/message-box/constant';
 import { ByteOffset } from './constant';
 
 export class MessageBoxButtonData {
   public static readonly BYTE_SIZE = 16;
 
-  public $address: Pointer;
+  public $address: Pointer | Uint8Array;
   public $memory: Uint8Array;
   public $view: DataView;
 
@@ -17,7 +17,7 @@ export class MessageBoxButtonData {
   public constructor(data: Pointer | Uint8Array) {
     if (data instanceof Uint8Array) {
       this.$memory = data;
-      this.$address = ptr(data);
+      this.$address = data;
     } else {
       const buffer = toArrayBuffer(data, 0, MessageBoxButtonData.BYTE_SIZE);
       this.$memory = new Uint8Array(buffer);

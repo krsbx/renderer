@@ -12,7 +12,7 @@ export function pushGPUVertexUniformData(
   options: {
     commandBuffer: Pointer;
     slotIndex: number;
-    data: CStruct | Pointer | Uint8Array;
+    data: CStruct | Uint8Array;
     length: number;
   }
 ) {
@@ -29,7 +29,7 @@ export function pushGPUFragmentUniformData(
   options: {
     commandBuffer: Pointer;
     slotIndex: number;
-    data: CStruct | Pointer | Uint8Array;
+    data: CStruct | Uint8Array;
     length: number;
   }
 ) {
@@ -46,7 +46,7 @@ export function pushGPUComputeUniformData(
   options: {
     commandBuffer: Pointer;
     slotIndex: number;
-    data: CStruct | Pointer | Uint8Array;
+    data: CStruct | Uint8Array;
     length: number;
   }
 ) {

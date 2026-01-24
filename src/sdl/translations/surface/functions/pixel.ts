@@ -98,7 +98,7 @@ export function premultiplyAlpha(
 export function premultiplySurfaceAlpha(
   this: SDL,
   options: {
-    surface: Surface | Pointer;
+    surface: Surface;
     linear: boolean;
   }
 ) {
@@ -113,7 +113,7 @@ export function premultiplySurfaceAlpha(
 export function clearSurface(
   this: SDL,
   options: {
-    surface: Surface | Pointer;
+    surface: Surface;
     r: number;
     g: number;
     b: number;
@@ -132,8 +132,8 @@ export function clearSurface(
 export function fillSurfaceRect(
   this: SDL,
   options: {
-    dst: Surface | Pointer;
-    rect?: Rect | Pointer | null;
+    dst: Surface;
+    rect?: Rect | null;
     color: number;
   }
 ) {
@@ -147,7 +147,7 @@ export function fillSurfaceRect(
 export function fillSurfaceRects(
   this: SDL,
   options: {
-    dst: Surface | Pointer;
+    dst: Surface;
     rects: Rect[];
     count: number;
     color: number;
@@ -182,7 +182,7 @@ export function fillSurfaceRects(
 export function mapSurfaceRGB(
   this: SDL,
   options: {
-    surface: Surface | Pointer;
+    surface: Surface;
     r: number;
     g: number;
     b: number;
@@ -199,7 +199,7 @@ export function mapSurfaceRGB(
 export function mapSurfaceRGBA(
   this: SDL,
   options: {
-    surface: Surface | Pointer;
+    surface: Surface;
     r: number;
     g: number;
     b: number;
@@ -220,7 +220,7 @@ export function mapSurfaceRGBA(
 export function readSurfacePixel(
   this: SDL,
   options: {
-    surface: Surface | Pointer;
+    surface: Surface;
     x: number;
     y: number;
   }
@@ -253,7 +253,7 @@ export function readSurfacePixel(
 export function readSurfacePixelFloat(
   this: SDL,
   options: {
-    surface: Surface | Pointer;
+    surface: Surface;
     x: number;
     y: number;
   }
@@ -288,7 +288,7 @@ export function readSurfacePixelFloat(
 export function writeSurfacePixel(
   this: SDL,
   options: {
-    surface: Surface | Pointer;
+    surface: Surface;
     x: number;
     y: number;
     r: number;
@@ -311,7 +311,7 @@ export function writeSurfacePixel(
 export function writeSurfacePixelFloat(
   this: SDL,
   options: {
-    surface: Surface | Pointer;
+    surface: Surface;
     x: number;
     y: number;
     r: number;

@@ -1,7 +1,6 @@
 import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
 import { getStructAddress } from '@utility/common';
-import type { Pointer } from 'bun:ffi';
 import type { BlendMode } from '../../../ffi/blend-mode/constant';
 import { Rect } from '../../rect/utility';
 import { Surface } from '../utility';
@@ -11,7 +10,7 @@ import { Surface } from '../utility';
 export function setSurfaceRLE(
   this: SDL,
   options: {
-    surface: Surface | Pointer;
+    surface: Surface;
     enabled: boolean;
   }
 ) {
@@ -21,7 +20,7 @@ export function setSurfaceRLE(
   );
 }
 
-export function surfaceHasRLE(this: SDL, surface: Surface | Pointer) {
+export function surfaceHasRLE(this: SDL, surface: Surface) {
   return this.symbols.SDL_SurfaceHasRLE(getStructAddress(surface));
 }
 
@@ -30,7 +29,7 @@ export function surfaceHasRLE(this: SDL, surface: Surface | Pointer) {
 export function setSurfaceColorKey(
   this: SDL,
   options: {
-    surface: Surface | Pointer;
+    surface: Surface;
     enabled: boolean;
     key: number;
   }
@@ -42,11 +41,11 @@ export function setSurfaceColorKey(
   );
 }
 
-export function surfaceHasColorKey(this: SDL, surface: Surface | Pointer) {
+export function surfaceHasColorKey(this: SDL, surface: Surface) {
   return this.symbols.SDL_SurfaceHasColorKey(getStructAddress(surface));
 }
 
-export function getSurfaceColorKey(this: SDL, surface: Surface | Pointer) {
+export function getSurfaceColorKey(this: SDL, surface: Surface) {
   const keyStruct = new CStruct({ length: CStruct.BYTE_SIZE.u32 });
 
   const success = this.symbols.SDL_GetSurfaceColorKey(
@@ -64,7 +63,7 @@ export function getSurfaceColorKey(this: SDL, surface: Surface | Pointer) {
 export function setSurfaceColorMod(
   this: SDL,
   options: {
-    surface: Surface | Pointer;
+    surface: Surface;
     r: number;
     g: number;
     b: number;
@@ -78,7 +77,7 @@ export function setSurfaceColorMod(
   );
 }
 
-export function getSurfaceColorMod(this: SDL, surface: Surface | Pointer) {
+export function getSurfaceColorMod(this: SDL, surface: Surface) {
   const rStruct = new CStruct({ length: CStruct.BYTE_SIZE.u8 });
   const gStruct = new CStruct({ length: CStruct.BYTE_SIZE.u8 });
   const bStruct = new CStruct({ length: CStruct.BYTE_SIZE.u8 });
@@ -104,7 +103,7 @@ export function getSurfaceColorMod(this: SDL, surface: Surface | Pointer) {
 export function setSurfaceAlphaMod(
   this: SDL,
   options: {
-    surface: Surface | Pointer;
+    surface: Surface;
     alpha: number;
   }
 ) {
@@ -114,7 +113,7 @@ export function setSurfaceAlphaMod(
   );
 }
 
-export function getSurfaceAlphaMod(this: SDL, surface: Surface | Pointer) {
+export function getSurfaceAlphaMod(this: SDL, surface: Surface) {
   const alphaStruct = new CStruct({ length: CStruct.BYTE_SIZE.u8 });
 
   const success = this.symbols.SDL_GetSurfaceAlphaMod(
@@ -132,7 +131,7 @@ export function getSurfaceAlphaMod(this: SDL, surface: Surface | Pointer) {
 export function setSurfaceBlendMode(
   this: SDL,
   options: {
-    surface: Surface | Pointer;
+    surface: Surface;
     blendMode: BlendMode;
   }
 ) {
@@ -142,7 +141,7 @@ export function setSurfaceBlendMode(
   );
 }
 
-export function getSurfaceBlendMode(this: SDL, surface: Surface | Pointer) {
+export function getSurfaceBlendMode(this: SDL, surface: Surface) {
   const blendModeStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
   const success = this.symbols.SDL_GetSurfaceBlendMode(
@@ -160,8 +159,8 @@ export function getSurfaceBlendMode(this: SDL, surface: Surface | Pointer) {
 export function setSurfaceClipRect(
   this: SDL,
   options: {
-    surface: Surface | Pointer;
-    rect?: Rect | Pointer | null;
+    surface: Surface;
+    rect?: Rect | null;
   }
 ) {
   return this.symbols.SDL_SetSurfaceClipRect(
@@ -170,7 +169,7 @@ export function setSurfaceClipRect(
   );
 }
 
-export function getSurfaceClipRect(this: SDL, surface: Surface | Pointer) {
+export function getSurfaceClipRect(this: SDL, surface: Surface) {
   const rect = new Rect(Rect.allocMemory());
 
   const success = this.symbols.SDL_GetSurfaceClipRect(

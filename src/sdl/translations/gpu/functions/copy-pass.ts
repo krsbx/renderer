@@ -53,8 +53,8 @@ export function uploadToGPUTexture(
   this: SDL,
   options: {
     copyPass: Pointer;
-    source: GPUTextureTransferInfo | Pointer;
-    destination: GPUTextureRegion | Pointer;
+    source: GPUTextureTransferInfo;
+    destination: GPUTextureRegion;
     /**
      * @default false
      */
@@ -73,8 +73,8 @@ export function uploadToGPUBuffer(
   this: SDL,
   options: {
     copyPass: Pointer;
-    source: GPUTransferBufferLocation | Pointer;
-    destination: GPUBufferRegion | Pointer;
+    source: GPUTransferBufferLocation;
+    destination: GPUBufferRegion;
     /**
      * @default false
      */
@@ -93,8 +93,8 @@ export function copyGPUTextureToTexture(
   this: SDL,
   options: {
     copyPass: Pointer;
-    source: GPUTextureLocation | Pointer;
-    destination: GPUTextureLocation | Pointer;
+    source: GPUTextureLocation;
+    destination: GPUTextureLocation;
     w: number;
     h: number;
     d: number;
@@ -119,8 +119,8 @@ export function copyGPUBufferToBuffer(
   this: SDL,
   options: {
     copyPass: Pointer;
-    source: GPUBufferLocation | Pointer;
-    destination: GPUBufferLocation | Pointer;
+    source: GPUBufferLocation;
+    destination: GPUBufferLocation;
     size: number;
     /**
      * @default false
@@ -141,8 +141,8 @@ export function downloadFromGPUTexture(
   this: SDL,
   options: {
     copyPass: Pointer;
-    source: GPUTextureRegion | Pointer;
-    destination: GPUTextureTransferInfo | Pointer;
+    source: GPUTextureRegion;
+    destination: GPUTextureTransferInfo;
   }
 ) {
   this.symbols.SDL_DownloadFromGPUTexture(
@@ -156,8 +156,8 @@ export function downloadFromGPUBuffer(
   this: SDL,
   options: {
     copyPass: Pointer;
-    source: GPUBufferRegion | Pointer;
-    destination: GPUTransferBufferLocation | Pointer;
+    source: GPUBufferRegion;
+    destination: GPUTransferBufferLocation;
   }
 ) {
   this.symbols.SDL_DownloadFromGPUBuffer(

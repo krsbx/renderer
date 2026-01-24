@@ -1,13 +1,13 @@
 import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
 import { getStructAddress, stringToCString } from '@utility/common';
-import { CString, type Pointer } from 'bun:ffi';
+import { CString } from 'bun:ffi';
 import { GUID } from '../utility';
 
 // GUID string format is 32 hex chars + null terminator = 33 bytes
 const GUID_STRING_SIZE = 33;
 
-export function guidToString(this: SDL, guid: GUID | Pointer) {
+export function guidToString(this: SDL, guid: GUID) {
   const buffer = new CStruct({ length: GUID_STRING_SIZE });
 
   this.symbols.SDL_GUIDToString(

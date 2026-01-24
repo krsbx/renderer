@@ -159,7 +159,7 @@ export function setTextInputArea(
   this: SDL,
   options: {
     window: Pointer;
-    rect: Rect | Pointer;
+    rect: Rect;
     cursor: number;
   }
 ) {

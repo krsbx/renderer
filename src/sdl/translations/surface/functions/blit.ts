@@ -1,6 +1,5 @@
 import type { SDL } from '@/sdl';
 import { getStructAddress } from '@utility/common';
-import type { Pointer } from 'bun:ffi';
 import type { ScaleMode } from '../../../ffi/surface/constant';
 import { Rect } from '../../rect/utility';
 import { Surface } from '../utility';
@@ -8,10 +7,10 @@ import { Surface } from '../utility';
 export function blitSurface(
   this: SDL,
   options: {
-    src: Surface | Pointer;
-    srcrect?: Rect | Pointer | null;
-    dst: Surface | Pointer;
-    dstrect?: Rect | Pointer | null;
+    src: Surface;
+    srcrect?: Rect | null;
+    dst: Surface;
+    dstrect?: Rect | null;
   }
 ) {
   return this.symbols.SDL_BlitSurface(
@@ -25,10 +24,10 @@ export function blitSurface(
 export function blitSurfaceUnchecked(
   this: SDL,
   options: {
-    src: Surface | Pointer;
-    srcrect?: Rect | Pointer | null;
-    dst: Surface | Pointer;
-    dstrect?: Rect | Pointer | null;
+    src: Surface;
+    srcrect?: Rect | null;
+    dst: Surface;
+    dstrect?: Rect | null;
   }
 ) {
   return this.symbols.SDL_BlitSurfaceUnchecked(
@@ -42,10 +41,10 @@ export function blitSurfaceUnchecked(
 export function blitSurfaceScaled(
   this: SDL,
   options: {
-    src: Surface | Pointer;
-    srcrect?: Rect | Pointer | null;
-    dst: Surface | Pointer;
-    dstrect?: Rect | Pointer | null;
+    src: Surface;
+    srcrect?: Rect | null;
+    dst: Surface;
+    dstrect?: Rect | null;
     scaleMode: ScaleMode;
   }
 ) {
@@ -61,10 +60,10 @@ export function blitSurfaceScaled(
 export function blitSurfaceUncheckedScaled(
   this: SDL,
   options: {
-    src: Surface | Pointer;
-    srcrect?: Rect | Pointer | null;
-    dst: Surface | Pointer;
-    dstrect?: Rect | Pointer | null;
+    src: Surface;
+    srcrect?: Rect | null;
+    dst: Surface;
+    dstrect?: Rect | null;
     scaleMode: ScaleMode;
   }
 ) {
@@ -80,10 +79,10 @@ export function blitSurfaceUncheckedScaled(
 export function stretchSurface(
   this: SDL,
   options: {
-    src: Surface | Pointer;
-    srcrect?: Rect | Pointer | null;
-    dst: Surface | Pointer;
-    dstrect?: Rect | Pointer | null;
+    src: Surface;
+    srcrect?: Rect | null;
+    dst: Surface;
+    dstrect?: Rect | null;
     scaleMode: ScaleMode;
   }
 ) {
@@ -99,10 +98,10 @@ export function stretchSurface(
 export function blitSurfaceTiled(
   this: SDL,
   options: {
-    src: Surface | Pointer;
-    srcrect?: Rect | Pointer | null;
-    dst: Surface | Pointer;
-    dstrect?: Rect | Pointer | null;
+    src: Surface;
+    srcrect?: Rect | null;
+    dst: Surface;
+    dstrect?: Rect | null;
   }
 ) {
   return this.symbols.SDL_BlitSurfaceTiled(
@@ -116,12 +115,12 @@ export function blitSurfaceTiled(
 export function blitSurfaceTiledWithScale(
   this: SDL,
   options: {
-    src: Surface | Pointer;
-    srcrect?: Rect | Pointer | null;
+    src: Surface;
+    srcrect?: Rect | null;
     scale: number;
     scaleMode: ScaleMode;
-    dst: Surface | Pointer;
-    dstrect?: Rect | Pointer | null;
+    dst: Surface;
+    dstrect?: Rect | null;
   }
 ) {
   return this.symbols.SDL_BlitSurfaceTiledWithScale(
@@ -137,16 +136,16 @@ export function blitSurfaceTiledWithScale(
 export function blitSurface9Grid(
   this: SDL,
   options: {
-    src: Surface | Pointer;
-    srcrect?: Rect | Pointer | null;
+    src: Surface;
+    srcrect?: Rect | null;
     leftWidth: number;
     rightWidth: number;
     topHeight: number;
     bottomHeight: number;
     scale: number;
     scaleMode: ScaleMode;
-    dst: Surface | Pointer;
-    dstrect?: Rect | Pointer | null;
+    dst: Surface;
+    dstrect?: Rect | null;
   }
 ) {
   return this.symbols.SDL_BlitSurface9Grid(

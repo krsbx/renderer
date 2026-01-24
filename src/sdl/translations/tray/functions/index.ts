@@ -8,7 +8,7 @@ import { Surface } from '../../surface/utility';
 export function createTray(
   this: SDL,
   options: {
-    icon: Surface | Pointer | null;
+    icon: Surface | null;
     tooltip: string;
   }
 ) {
@@ -22,7 +22,7 @@ export function setTrayIcon(
   this: SDL,
   options: {
     tray: Pointer;
-    icon: Surface | Pointer | null;
+    icon: Surface | null;
   }
 ) {
   this.symbols.SDL_SetTrayIcon(

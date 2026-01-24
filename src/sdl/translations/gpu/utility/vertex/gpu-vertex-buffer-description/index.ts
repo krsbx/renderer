@@ -5,14 +5,14 @@ import { ByteOffset } from './constant';
 export class GPUVertexBufferDescription {
   public static readonly BYTE_SIZE = 16;
 
-  public $address: Pointer;
+  public $address: Pointer | Uint8Array;
   public $memory: Uint8Array;
   public $view: DataView;
 
   public constructor(data: Pointer | Uint8Array) {
     if (data instanceof Uint8Array) {
       this.$memory = data;
-      this.$address = ptr(data);
+      this.$address = data;
     } else {
       const buffer = toArrayBuffer(
         data,

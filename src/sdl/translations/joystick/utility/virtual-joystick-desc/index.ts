@@ -22,7 +22,7 @@ import type {
 export class VirtualJoystickDesc {
   public static readonly BYTE_SIZE = 136;
 
-  public $address: Pointer;
+  public $address: Pointer | Uint8Array;
   public $memory: Uint8Array;
   public $view: DataView;
   public $touchpadsBuffer: Uint8Array | null;
@@ -35,7 +35,7 @@ export class VirtualJoystickDesc {
   public constructor(data: Pointer | Uint8Array) {
     if (data instanceof Uint8Array) {
       this.$memory = data;
-      this.$address = ptr(data);
+      this.$address = data;
     } else {
       const buffer = toArrayBuffer(data, 0, VirtualJoystickDesc.BYTE_SIZE);
       this.$memory = new Uint8Array(buffer);

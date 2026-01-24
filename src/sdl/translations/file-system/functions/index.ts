@@ -87,30 +87,19 @@ export function getPathInfo(
   this: SDL,
   options: {
     path: string;
-    info?: PathInfo | Pointer | null;
+    info?: PathInfo | null;
   }
 ) {
-  let infoPtr: Pointer;
-  let infoInstance: PathInfo | null = null;
-
-  if (options.info instanceof PathInfo) {
-    infoPtr = options.info.$address;
-    infoInstance = options.info;
-  } else if (options.info) {
-    infoPtr = options.info;
-  } else {
-    infoInstance = new PathInfo(PathInfo.allocMemory());
-    infoPtr = infoInstance.$address;
-  }
+  const infoInstance = options.info ?? new PathInfo(PathInfo.allocMemory());
 
   const success = this.symbols.SDL_GetPathInfo(
     stringToCString(options.path).ptr,
-    infoPtr
+    infoInstance.$address
   );
 
   if (!success) return null;
 
-  return infoInstance ?? new PathInfo(infoPtr);
+  return infoInstance;
 }
 
 export function globDirectory(

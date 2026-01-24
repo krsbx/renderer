@@ -1,14 +1,13 @@
 import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
 import { getStructAddress } from '@utility/common';
-import type { Pointer } from 'bun:ffi';
 import { FPoint, FRect } from '../utility';
 
 export function hasRectIntersectionFloat(
   this: SDL,
   options: {
-    a: FRect | Pointer;
-    b: FRect | Pointer;
+    a: FRect;
+    b: FRect;
   }
 ) {
   return this.symbols.SDL_HasRectIntersectionFloat(
@@ -20,8 +19,8 @@ export function hasRectIntersectionFloat(
 export function getRectIntersectionFloat(
   this: SDL,
   options: {
-    a: FRect | Pointer;
-    b: FRect | Pointer;
+    a: FRect;
+    b: FRect;
   }
 ) {
   const result = new FRect(FRect.allocMemory());
@@ -40,8 +39,8 @@ export function getRectIntersectionFloat(
 export function getRectUnionFloat(
   this: SDL,
   options: {
-    a: FRect | Pointer;
-    b: FRect | Pointer;
+    a: FRect;
+    b: FRect;
   }
 ) {
   const result = new FRect(FRect.allocMemory());
@@ -60,9 +59,9 @@ export function getRectUnionFloat(
 export function getRectEnclosingPointsFloat(
   this: SDL,
   options: {
-    points: FPoint | Pointer;
+    points: FPoint;
     count: number;
-    clip?: FRect | Pointer | null;
+    clip?: FRect | null;
   }
 ) {
   const result = new FRect(FRect.allocMemory());
@@ -82,7 +81,7 @@ export function getRectEnclosingPointsFloat(
 export function getRectAndLineIntersectionFloat(
   this: SDL,
   options: {
-    rect: FRect | Pointer;
+    rect: FRect;
     x1: number;
     y1: number;
     x2: number;

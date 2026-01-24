@@ -1,7 +1,6 @@
 import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
 import { getStructAddress } from '@utility/common';
-import type { Pointer } from 'bun:ffi';
 import type { DateFormat, TimeFormat } from '../../../ffi/time/constant';
 import { DateTime } from '../utility';
 
@@ -52,7 +51,7 @@ export function timeToDateTime(
   return dt;
 }
 
-export function dateTimeToTime(this: SDL, dt: DateTime | Pointer) {
+export function dateTimeToTime(this: SDL, dt: DateTime) {
   const ticksStruct = new CStruct({ length: CStruct.BYTE_SIZE.i64 });
 
   const success = this.symbols.SDL_DateTimeToTime(

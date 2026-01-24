@@ -172,11 +172,11 @@ export function getCurrentDisplayMode(this: SDL, displayID: number) {
   return new DisplayMode(result);
 }
 
-export function getDisplayForPoint(this: SDL, point: Point | Pointer) {
+export function getDisplayForPoint(this: SDL, point: Point) {
   return this.symbols.SDL_GetDisplayForPoint(getStructAddress(point));
 }
 
-export function getDisplayForRect(this: SDL, rect: Rect | Pointer) {
+export function getDisplayForRect(this: SDL, rect: Rect) {
   return this.symbols.SDL_GetDisplayForRect(getStructAddress(rect));
 }
 

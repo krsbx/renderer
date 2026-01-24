@@ -1,4 +1,4 @@
-import { ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
+import { toArrayBuffer, type Pointer } from 'bun:ffi';
 import type { GPUTextureFormat } from '../../../../../ffi/gpu/constant';
 import { GPUColorTargetBlendState } from '../gpu-color-target-blend-state';
 import { ByteOffset } from './constant';
@@ -6,7 +6,7 @@ import { ByteOffset } from './constant';
 export class GPUColorTargetDescription {
   public static readonly BYTE_SIZE = 36;
 
-  public $address: Pointer;
+  public $address: Pointer | Uint8Array;
   public $memory: Uint8Array;
   public $view: DataView;
 
@@ -15,7 +15,7 @@ export class GPUColorTargetDescription {
   public constructor(data: Pointer | Uint8Array) {
     if (data instanceof Uint8Array) {
       this.$memory = data;
-      this.$address = ptr(data);
+      this.$address = data;
     } else {
       const buffer = toArrayBuffer(
         data,

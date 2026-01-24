@@ -1,4 +1,4 @@
-import { ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
+import { toArrayBuffer, type Pointer } from 'bun:ffi';
 import {
   GamepadBindingType,
   GamepadButton,
@@ -9,7 +9,7 @@ import type { GamepadInput, GamepadOutput } from './types';
 export class GamepadBinding {
   public static readonly BYTE_SIZE = 32;
 
-  public $address: Pointer;
+  public $address: Pointer | Uint8Array;
   public $memory: Uint8Array;
   public $view: DataView;
 
@@ -20,7 +20,7 @@ export class GamepadBinding {
   public constructor(data: Pointer | Uint8Array) {
     if (data instanceof Uint8Array) {
       this.$memory = data;
-      this.$address = ptr(data);
+      this.$address = data;
     } else {
       const buffer = toArrayBuffer(data, 0, GamepadBinding.BYTE_SIZE);
       this.$memory = new Uint8Array(buffer);

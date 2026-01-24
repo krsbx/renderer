@@ -29,7 +29,7 @@ export function blitGPUTexture(
   this: SDL,
   options: {
     commandBuffer: Pointer;
-    info: GPUBlitInfo | Pointer;
+    info: GPUBlitInfo;
   }
 ) {
   this.symbols.SDL_BlitGPUTexture(

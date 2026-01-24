@@ -86,29 +86,20 @@ export function openCamera(
   this: SDL,
   options: {
     cameraId: number;
-    spec?: CameraSpec | Pointer | null;
+    spec?: CameraSpec | null;
   }
 ) {
-  let specPtr: Pointer;
-  let specInstance: CameraSpec | null = null;
-
-  if (options.spec instanceof CameraSpec) {
-    specPtr = options.spec.$address;
-    specInstance = options.spec;
-  } else if (options.spec) {
-    specPtr = options.spec;
-  } else {
-    specInstance = new CameraSpec(CameraSpec.allocMemory());
-    specPtr = specInstance.$address;
-  }
-
-  const camera = this.symbols.SDL_OpenCamera(options.cameraId, specPtr);
+  const specInstance = options.spec ?? new CameraSpec(CameraSpec.allocMemory());
+  const camera = this.symbols.SDL_OpenCamera(
+    options.cameraId,
+    specInstance.$address
+  );
 
   if (!camera) return null;
 
   return {
     camera,
-    spec: specInstance ?? new CameraSpec(specPtr),
+    spec: specInstance,
   };
 }
 
@@ -130,27 +121,18 @@ export function getCameraFormat(
   this: SDL,
   options: {
     camera: Pointer;
-    spec?: CameraSpec | Pointer | null;
+    spec?: CameraSpec | null;
   }
 ) {
-  let specPtr: Pointer;
-  let specInstance: CameraSpec | null = null;
-
-  if (options.spec instanceof CameraSpec) {
-    specPtr = options.spec.$address;
-    specInstance = options.spec;
-  } else if (options.spec) {
-    specPtr = options.spec;
-  } else {
-    specInstance = new CameraSpec(CameraSpec.allocMemory());
-    specPtr = specInstance.$address;
-  }
-
-  const success = this.symbols.SDL_GetCameraFormat(options.camera, specPtr);
+  const specInstance = options.spec ?? new CameraSpec(CameraSpec.allocMemory());
+  const success = this.symbols.SDL_GetCameraFormat(
+    options.camera,
+    specInstance.$address
+  );
 
   if (!success) return null;
 
-  return specInstance ?? new CameraSpec(specPtr);
+  return specInstance;
 }
 
 export function acquireCameraFrame(this: SDL, camera: Pointer) {
@@ -176,7 +158,7 @@ export function releaseCameraFrame(
   this: SDL,
   options: {
     camera: Pointer;
-    surface: Surface | Pointer;
+    surface: Surface;
   }
 ) {
   this.symbols.SDL_ReleaseCameraFrame(

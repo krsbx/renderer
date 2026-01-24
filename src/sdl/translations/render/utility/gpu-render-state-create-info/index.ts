@@ -5,7 +5,7 @@ import { ByteOffset } from './constant';
 export class GPURenderStateCreateInfo {
   public static readonly BYTE_SIZE = 64;
 
-  public $address: Pointer;
+  public $address: Pointer | Uint8Array;
   public $memory: Uint8Array;
   public $view: DataView;
 
@@ -16,7 +16,7 @@ export class GPURenderStateCreateInfo {
   public constructor(data: Pointer | Uint8Array) {
     if (data instanceof Uint8Array) {
       this.$memory = data;
-      this.$address = ptr(data);
+      this.$address = data;
     } else {
       const buffer = toArrayBuffer(data, 0, GPURenderStateCreateInfo.BYTE_SIZE);
       this.$memory = new Uint8Array(buffer);

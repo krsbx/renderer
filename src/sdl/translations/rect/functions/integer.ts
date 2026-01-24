@@ -1,14 +1,13 @@
 import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
 import { getStructAddress } from '@utility/common';
-import type { Pointer } from 'bun:ffi';
 import { Point, Rect } from '../utility';
 
 export function hasRectIntersection(
   this: SDL,
   options: {
-    a: Rect | Pointer;
-    b: Rect | Pointer;
+    a: Rect;
+    b: Rect;
   }
 ) {
   return this.symbols.SDL_HasRectIntersection(
@@ -20,8 +19,8 @@ export function hasRectIntersection(
 export function getRectIntersection(
   this: SDL,
   options: {
-    a: Rect | Pointer;
-    b: Rect | Pointer;
+    a: Rect;
+    b: Rect;
   }
 ) {
   const result = new Rect(Rect.allocMemory());
@@ -40,8 +39,8 @@ export function getRectIntersection(
 export function getRectUnion(
   this: SDL,
   options: {
-    a: Rect | Pointer;
-    b: Rect | Pointer;
+    a: Rect;
+    b: Rect;
   }
 ) {
   const result = new Rect(Rect.allocMemory());
@@ -60,9 +59,9 @@ export function getRectUnion(
 export function getRectEnclosingPoints(
   this: SDL,
   options: {
-    points: Point | Pointer;
+    points: Point;
     count: number;
-    clip?: Rect | Pointer | null;
+    clip?: Rect | null;
   }
 ) {
   const result = new Rect(Rect.allocMemory());
@@ -82,7 +81,7 @@ export function getRectEnclosingPoints(
 export function getRectAndLineIntersection(
   this: SDL,
   options: {
-    rect: Rect | Pointer;
+    rect: Rect;
     x1: number;
     y1: number;
     x2: number;

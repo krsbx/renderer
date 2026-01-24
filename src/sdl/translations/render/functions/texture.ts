@@ -33,7 +33,7 @@ export function createTextureFromSurface(
   this: SDL,
   options: {
     renderer: Pointer;
-    surface: Surface | Pointer;
+    surface: Surface;
   }
 ) {
   return this.symbols.SDL_CreateTextureFromSurface(
@@ -85,7 +85,7 @@ export function setTexturePalette(
   this: SDL,
   options: {
     texture: Pointer;
-    palette: Palette | Pointer;
+    palette: Palette;
   }
 ) {
   return this.symbols.SDL_SetTexturePalette(
@@ -283,8 +283,8 @@ export function updateTexture(
   this: SDL,
   options: {
     texture: Pointer;
-    rect?: Rect | Pointer | null;
-    pixels: CStruct | Pointer | Uint8Array;
+    rect?: Rect | null;
+    pixels: CStruct | Uint8Array;
     pitch: number;
   }
 ) {
@@ -300,12 +300,12 @@ export function updateYUVTexture(
   this: SDL,
   options: {
     texture: Pointer;
-    rect?: Rect | Pointer | null;
-    yPlane: CStruct | Pointer | Uint8Array;
+    rect?: Rect | null;
+    yPlane: CStruct | Uint8Array;
     yPitch: number;
-    uPlane: CStruct | Pointer | Uint8Array;
+    uPlane: CStruct | Uint8Array;
     uPitch: number;
-    vPlane: CStruct | Pointer | Uint8Array;
+    vPlane: CStruct | Uint8Array;
     vPitch: number;
   }
 ) {
@@ -325,10 +325,10 @@ export function updateNVTexture(
   this: SDL,
   options: {
     texture: Pointer;
-    rect?: Rect | Pointer | null;
-    yPlane: CStruct | Pointer | Uint8Array;
+    rect?: Rect | null;
+    yPlane: CStruct | Uint8Array;
     yPitch: number;
-    uvPlane: CStruct | Pointer | Uint8Array;
+    uvPlane: CStruct | Uint8Array;
     uvPitch: number;
   }
 ) {
@@ -346,7 +346,7 @@ export function lockTexture(
   this: SDL,
   options: {
     texture: Pointer;
-    rect?: Rect | Pointer | null;
+    rect?: Rect | null;
   }
 ) {
   const pixelsStruct = new CStruct({ length: CStruct.BYTE_SIZE.ptr });
@@ -371,7 +371,7 @@ export function lockTextureToSurface(
   this: SDL,
   options: {
     texture: Pointer;
-    rect?: Rect | Pointer | null;
+    rect?: Rect | null;
   }
 ) {
   const surfaceStruct = new CStruct({ length: CStruct.BYTE_SIZE.ptr });

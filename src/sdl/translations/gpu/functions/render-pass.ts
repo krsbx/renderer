@@ -18,9 +18,9 @@ export function beginGPURenderPass(
   this: SDL,
   options: {
     commandBuffer: Pointer;
-    colorTargetInfos: GPUColorTargetInfo | Pointer;
+    colorTargetInfos: GPUColorTargetInfo;
     numColorTargets: number;
-    depthStencilTargetInfo?: GPUDepthStencilTargetInfo | Pointer | null;
+    depthStencilTargetInfo?: GPUDepthStencilTargetInfo | null;
   }
 ) {
   return this.symbols.SDL_BeginGPURenderPass(
@@ -50,7 +50,7 @@ export function setGPUViewport(
   this: SDL,
   options: {
     renderPass: Pointer;
-    viewport: GPUViewport | Pointer;
+    viewport: GPUViewport;
   }
 ) {
   this.symbols.SDL_SetGPUViewport(
@@ -63,7 +63,7 @@ export function setGPUScissor(
   this: SDL,
   options: {
     renderPass: Pointer;
-    scissor: Rect | Pointer;
+    scissor: Rect;
   }
 ) {
   this.symbols.SDL_SetGPUScissor(
@@ -76,7 +76,7 @@ export function setGPUBlendConstants(
   this: SDL,
   options: {
     renderPass: Pointer;
-    blendConstants: FColor | Pointer;
+    blendConstants: FColor;
   }
 ) {
   this.symbols.SDL_SetGPUBlendConstants(
@@ -105,7 +105,7 @@ export function bindGPUVertexBuffers(
   options: {
     renderPass: Pointer;
     firstSlot: number;
-    bindings: GPUBufferBinding | Pointer;
+    bindings: GPUBufferBinding;
     numBindings: number;
   }
 ) {
@@ -121,7 +121,7 @@ export function bindGPUIndexBuffer(
   this: SDL,
   options: {
     renderPass: Pointer;
-    binding: GPUBufferBinding | Pointer;
+    binding: GPUBufferBinding;
     indexElementSize: GPUIndexElementSize;
   }
 ) {
@@ -139,7 +139,7 @@ export function bindGPUVertexSamplers(
   options: {
     renderPass: Pointer;
     firstSlot: number;
-    textureSamplerBindings: GPUTextureSamplerBinding | Pointer;
+    textureSamplerBindings: GPUTextureSamplerBinding;
     numBindings: number;
   }
 ) {
@@ -192,7 +192,7 @@ export function bindGPUFragmentSamplers(
   options: {
     renderPass: Pointer;
     firstSlot: number;
-    textureSamplerBindings: GPUTextureSamplerBinding | Pointer;
+    textureSamplerBindings: GPUTextureSamplerBinding;
     numBindings: number;
   }
 ) {

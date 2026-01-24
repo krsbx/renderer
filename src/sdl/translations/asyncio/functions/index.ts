@@ -88,34 +88,27 @@ export function getAsyncIOResult(
   this: SDL,
   options: {
     queue: Pointer;
-    outcome?: AsyncIOOutcome | Pointer | null;
+    outcome?: AsyncIOOutcome | null;
   }
 ) {
-  let outcomeAddr: Pointer;
-  let outcomeInstance: AsyncIOOutcome | null = null;
+  const outcomeInstance =
+    options.outcome ?? new AsyncIOOutcome(AsyncIOOutcome.allocMemory());
 
-  if (options.outcome instanceof AsyncIOOutcome) {
-    outcomeAddr = options.outcome.$address;
-    outcomeInstance = options.outcome;
-  } else if (options.outcome) {
-    outcomeAddr = options.outcome;
-  } else {
-    outcomeInstance = new AsyncIOOutcome(AsyncIOOutcome.allocMemory());
-    outcomeAddr = outcomeInstance.$address;
-  }
-
-  const success = this.symbols.SDL_GetAsyncIOResult(options.queue, outcomeAddr);
+  const success = this.symbols.SDL_GetAsyncIOResult(
+    options.queue,
+    outcomeInstance.$address
+  );
 
   if (!success) return null;
 
-  return outcomeInstance ?? new AsyncIOOutcome(outcomeAddr);
+  return outcomeInstance;
 }
 
 export function waitAsyncIOResult(
   this: SDL,
   options: {
     queue: Pointer;
-    outcome: AsyncIOOutcome | Pointer;
+    outcome: AsyncIOOutcome;
     timeoutMS: number;
   }
 ) {

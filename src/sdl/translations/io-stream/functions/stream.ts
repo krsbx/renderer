@@ -54,7 +54,7 @@ export function ioFromDynamicMem(this: SDL) {
 export function openIO(
   this: SDL,
   options: {
-    iface: IOStreamInterface | Pointer;
+    iface: IOStreamInterface;
     userdata?: Pointer | null;
   }
 ) {

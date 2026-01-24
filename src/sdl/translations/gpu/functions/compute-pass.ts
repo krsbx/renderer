@@ -13,9 +13,9 @@ export function beginGPUComputePass(
   this: SDL,
   options: {
     commandBuffer: Pointer;
-    storageTextureBindings?: GPUStorageTextureReadWriteBinding | Pointer | null;
+    storageTextureBindings?: GPUStorageTextureReadWriteBinding | null;
     numStorageTextureBindings: number;
-    storageBufferBindings?: GPUStorageBufferReadWriteBinding | Pointer | null;
+    storageBufferBindings?: GPUStorageBufferReadWriteBinding | null;
     numStorageBufferBindings: number;
   }
 ) {
@@ -50,7 +50,7 @@ export function bindGPUComputeSamplers(
   options: {
     computePass: Pointer;
     firstSlot: number;
-    textureSamplerBindings: GPUTextureSamplerBinding | Pointer;
+    textureSamplerBindings: GPUTextureSamplerBinding;
     numBindings: number;
   }
 ) {

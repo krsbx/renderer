@@ -12,7 +12,7 @@ export function pumpEvents(this: SDL) {
 export function peepEvents(
   this: SDL,
   options: {
-    events: Event | Pointer;
+    events: Event;
     numevents: number;
     action: EventAction;
     minType: EventType;
@@ -56,79 +56,43 @@ export function flushEvents(
   this.symbols.SDL_FlushEvents(options.minType, options.maxType);
 }
 
-export function pollEvent(this: SDL, event?: Event | Pointer | null) {
-  let eventPtr: Pointer;
-  let eventInstance: Event | null = null;
-
-  if (event instanceof Event) {
-    eventPtr = event.$address;
-    eventInstance = event;
-  } else if (event) {
-    eventPtr = event;
-  } else {
-    eventInstance = new Event(Event.allocMemory());
-    eventPtr = eventInstance.$address;
-  }
-
-  const hasEvent = this.symbols.SDL_PollEvent(eventPtr);
+export function pollEvent(this: SDL, event?: Event | null) {
+  const eventInstance = event ?? new Event(Event.allocMemory());
+  const hasEvent = this.symbols.SDL_PollEvent(eventInstance.$address);
 
   if (!hasEvent) return null;
 
-  return eventInstance ?? new Event(eventPtr);
+  return eventInstance;
 }
 
-export function waitEvent(this: SDL, event?: Event | Pointer | null) {
-  let eventPtr: Pointer;
-  let eventInstance: Event | null = null;
-
-  if (event instanceof Event) {
-    eventPtr = event.$address;
-    eventInstance = event;
-  } else if (event) {
-    eventPtr = event;
-  } else {
-    eventInstance = new Event(Event.allocMemory());
-    eventPtr = eventInstance.$address;
-  }
-
-  const success = this.symbols.SDL_WaitEvent(eventPtr);
+export function waitEvent(this: SDL, event?: Event | null) {
+  const eventInstance = event ?? new Event(Event.allocMemory());
+  const success = this.symbols.SDL_WaitEvent(eventInstance.$address);
 
   if (!success) return null;
 
-  return eventInstance ?? new Event(eventPtr);
+  return eventInstance;
 }
 
 export function waitEventTimeout(
   this: SDL,
   options: {
-    event?: Event | Pointer | null;
+    event?: Event | null;
     timeoutMS: number;
   }
 ) {
-  let eventPtr: Pointer;
-  let eventInstance: Event | null = null;
-
-  if (options.event instanceof Event) {
-    eventPtr = options.event.$address;
-    eventInstance = options.event;
-  } else if (options.event) {
-    eventPtr = options.event;
-  } else {
-    eventInstance = new Event(Event.allocMemory());
-    eventPtr = eventInstance.$address;
-  }
-
+  const eventInstance = options.event ?? new Event(Event.allocMemory());
   const success = this.symbols.SDL_WaitEventTimeout(
-    eventPtr,
+    eventInstance.$address,
     options.timeoutMS
   );
 
   if (!success) return null;
 
-  return eventInstance ?? new Event(eventPtr);
+  return eventInstance;
 }
 
-export function pushEvent(this: SDL, event: Event | Pointer) {
+export function pushEvent(this: SDL, event: Event) {
   return this.symbols.SDL_PushEvent(getStructAddress(event));
 }
 
@@ -213,11 +177,11 @@ export function registerEvents(this: SDL, numevents: number) {
   return this.symbols.SDL_RegisterEvents(numevents);
 }
 
-export function getWindowFromEvent(this: SDL, event: Event | Pointer) {
+export function getWindowFromEvent(this: SDL, event: Event) {
   return this.symbols.SDL_GetWindowFromEvent(getStructAddress(event));
 }
 
-export function getEventDescription(this: SDL, event: Event | Pointer) {
+export function getEventDescription(this: SDL, event: Event) {
   // SDL_GetEventDescription returns the length needed
   // First call with null to get size, then allocate and call again
   const buflen = 256; // Reasonable default buffer size

@@ -41,7 +41,7 @@ export function openFileStorage(this: SDL, path: string) {
 export function openStorage(
   this: SDL,
   options: {
-    iface: StorageInterface | Pointer;
+    iface: StorageInterface;
     userdata?: Pointer | null;
   }
 ) {

@@ -68,34 +68,22 @@ export function getAudioDeviceFormat(
   this: SDL,
   options: {
     deviceId: number;
-    spec?: AudioSpec | Pointer | null;
+    spec?: AudioSpec | null;
   }
 ) {
-  let specPtr: Pointer;
-  let specInstance: AudioSpec | null = null;
-
-  if (options.spec instanceof AudioSpec) {
-    specPtr = options.spec.$address;
-    specInstance = options.spec;
-  } else if (options.spec) {
-    specPtr = options.spec;
-  } else {
-    specInstance = new AudioSpec(AudioSpec.allocMemory());
-    specPtr = specInstance.$address;
-  }
-
+  const specInstance = options.spec ?? new AudioSpec(AudioSpec.allocMemory());
   const sampleFrames = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
   const success = this.symbols.SDL_GetAudioDeviceFormat(
     options.deviceId,
-    specPtr,
+    specInstance.$address,
     sampleFrames.$address
   );
 
   if (!success) return null;
 
   return {
-    spec: specInstance ?? new AudioSpec(specPtr),
+    spec: specInstance,
     sampleFrames: sampleFrames.getValue(0, 'i32'),
   };
 }
@@ -130,7 +118,7 @@ export function openAudioDevice(
   this: SDL,
   options: {
     deviceId: number;
-    spec: AudioSpec | Pointer;
+    spec: AudioSpec;
   }
 ) {
   return this.symbols.SDL_OpenAudioDevice(
@@ -223,8 +211,8 @@ export function getAudioStreamDevice(this: SDL, stream: Pointer) {
 export function createAudioStream(
   this: SDL,
   options: {
-    srcSpec: AudioSpec | Pointer;
-    dstSpec: AudioSpec | Pointer;
+    srcSpec: AudioSpec;
+    dstSpec: AudioSpec;
   }
 ) {
   return this.symbols.SDL_CreateAudioStream(
@@ -241,47 +229,26 @@ export function getAudioStreamFormat(
   this: SDL,
   options: {
     stream: Pointer;
-    srcSpec?: AudioSpec | Pointer | null;
-    dstSpec?: AudioSpec | Pointer | null;
+    srcSpec?: AudioSpec | null;
+    dstSpec?: AudioSpec | null;
   }
 ) {
-  let srcAddr: Pointer;
-  let srcSpecInstance: AudioSpec | null = null;
-
-  let dstAddr: Pointer;
-  let dstSpecInstance: AudioSpec | null = null;
-
-  if (options.srcSpec instanceof AudioSpec) {
-    srcAddr = options.srcSpec.$address;
-    srcSpecInstance = options.srcSpec;
-  } else if (options.srcSpec) {
-    srcAddr = options.srcSpec;
-  } else {
-    srcSpecInstance = new AudioSpec(AudioSpec.allocMemory());
-    srcAddr = srcSpecInstance.$address;
-  }
-
-  if (options.dstSpec instanceof AudioSpec) {
-    dstAddr = options.dstSpec.$address;
-    dstSpecInstance = options.dstSpec;
-  } else if (options.dstSpec) {
-    dstAddr = options.dstSpec;
-  } else {
-    dstSpecInstance = new AudioSpec(AudioSpec.allocMemory());
-    dstAddr = dstSpecInstance.$address;
-  }
+  const srcSpecInstance =
+    options.srcSpec ?? new AudioSpec(AudioSpec.allocMemory());
+  const dstSpecInstance =
+    options.dstSpec ?? new AudioSpec(AudioSpec.allocMemory());
 
   const success = this.symbols.SDL_GetAudioStreamFormat(
     options.stream,
-    srcAddr,
-    dstAddr
+    srcSpecInstance.$address,
+    dstSpecInstance.$address
   );
 
   if (!success) return null;
 
   return {
-    srcSpec: srcSpecInstance ?? new AudioSpec(srcAddr),
-    dstSpec: dstSpecInstance ?? new AudioSpec(dstAddr),
+    srcSpec: srcSpecInstance,
+    dstSpec: dstSpecInstance,
   };
 }
 
@@ -289,8 +256,8 @@ export function setAudioStreamFormat(
   this: SDL,
   options: {
     stream: Pointer;
-    srcSpec?: AudioSpec | Pointer | null;
-    dstSpec?: AudioSpec | Pointer | null;
+    srcSpec?: AudioSpec | null;
+    dstSpec?: AudioSpec | null;
   }
 ) {
   return this.symbols.SDL_SetAudioStreamFormat(
@@ -537,7 +504,7 @@ export function openAudioDeviceStream(
   this: SDL,
   options: {
     deviceId: number;
-    spec: AudioSpec | Pointer | null;
+    spec: AudioSpec | null;
     callback: Pointer | null;
     userdata: Pointer | null;
   }
@@ -563,28 +530,16 @@ export function setAudioPostmixCallback(
 
 export function loadWAV_IO(
   this: SDL,
-  options: { src: Pointer; closeio: boolean; spec?: AudioSpec | Pointer | null }
+  options: { src: Pointer; closeio: boolean; spec?: AudioSpec | null }
 ) {
-  let specInstance: AudioSpec | null = null;
-  let specAddr: Pointer;
-
-  if (options.spec instanceof AudioSpec) {
-    specAddr = options.spec.$address;
-    specInstance = options.spec;
-  } else if (options.spec) {
-    specAddr = options.spec;
-  } else {
-    specInstance = new AudioSpec(AudioSpec.allocMemory());
-    specAddr = specInstance.$address;
-  }
-
+  const specInstance = options.spec ?? new AudioSpec(AudioSpec.allocMemory());
   const audioBuf = new CStruct({ length: CStruct.BYTE_SIZE.ptr });
   const audioLen = new CStruct({ length: CStruct.BYTE_SIZE.u32 });
 
   const success = this.symbols.SDL_LoadWAV_IO(
     options.src,
     options.closeio,
-    specAddr,
+    specInstance.$address,
     audioBuf.$address,
     audioLen.$address
   );
@@ -594,7 +549,7 @@ export function loadWAV_IO(
     sdl: this,
     address: audioBuf.getValue(0, 'ptr'),
     length: audioLen.getValue(0, 'u32'),
-    spec: specInstance ?? new AudioSpec(specAddr),
+    spec: specInstance,
   });
 }
 
@@ -602,28 +557,16 @@ export function loadWAV(
   this: SDL,
   options: {
     path: string;
-    spec?: AudioSpec | Pointer | null;
+    spec?: AudioSpec | null;
   }
 ) {
-  let specInstance: AudioSpec | null = null;
-  let specAddr: Pointer;
-
-  if (options.spec instanceof AudioSpec) {
-    specAddr = options.spec.$address;
-    specInstance = options.spec;
-  } else if (options.spec) {
-    specAddr = options.spec;
-  } else {
-    specInstance = new AudioSpec(AudioSpec.allocMemory());
-    specAddr = specInstance.$address;
-  }
-
+  const specInstance = options.spec ?? new AudioSpec(AudioSpec.allocMemory());
   const audioBuf = new CStruct({ length: CStruct.BYTE_SIZE.ptr });
   const audioLen = new CStruct({ length: CStruct.BYTE_SIZE.u32 });
 
   const success = this.symbols.SDL_LoadWAV(
     stringToCString(options.path).ptr,
-    specAddr,
+    specInstance.$address,
     audioBuf.$address,
     audioLen.$address
   );
@@ -634,7 +577,7 @@ export function loadWAV(
     sdl: this,
     address: audioBuf.getValue(0, 'ptr'),
     length: audioLen.getValue(0, 'u32'),
-    spec: specInstance ?? new AudioSpec(specAddr),
+    spec: specInstance,
   });
 }
 
@@ -660,10 +603,10 @@ export function mixAudio(
 export function convertAudioSamples(
   this: SDL,
   options: {
-    srcSpec: AudioSpec | Pointer;
+    srcSpec: AudioSpec;
     srcData: Pointer;
     srcLen: number;
-    dstSpec: AudioSpec | Pointer;
+    dstSpec: AudioSpec;
   }
 ) {
   const srcSpecAddr = getStructAddress(options.srcSpec);

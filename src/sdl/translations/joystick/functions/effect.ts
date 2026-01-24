@@ -58,7 +58,7 @@ export function sendJoystickEffect(
   this: SDL,
   options: {
     joystick: Pointer;
-    data: CStruct | Pointer | Uint8Array;
+    data: CStruct | Uint8Array;
     size: number;
   }
 ) {

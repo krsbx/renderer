@@ -48,13 +48,13 @@ export function createSurfaceFrom(
   return new Surface(surface);
 }
 
-export function destroySurface(this: SDL, surface: Surface | Pointer) {
+export function destroySurface(this: SDL, surface: Surface) {
   this.symbols.SDL_DestroySurface(getStructAddress(surface));
 }
 
 // Properties
 
-export function getSurfaceProperties(this: SDL, surface: Surface | Pointer) {
+export function getSurfaceProperties(this: SDL, surface: Surface) {
   return this.symbols.SDL_GetSurfaceProperties(getStructAddress(surface));
 }
 
@@ -63,7 +63,7 @@ export function getSurfaceProperties(this: SDL, surface: Surface | Pointer) {
 export function setSurfaceColorspace(
   this: SDL,
   options: {
-    surface: Surface | Pointer;
+    surface: Surface;
     colorspace: Colorspace;
   }
 ) {
@@ -73,7 +73,7 @@ export function setSurfaceColorspace(
   );
 }
 
-export function getSurfaceColorspace(this: SDL, surface: Surface | Pointer) {
+export function getSurfaceColorspace(this: SDL, surface: Surface) {
   return this.symbols.SDL_GetSurfaceColorspace(
     getStructAddress(surface)
   ) as Colorspace;
@@ -81,10 +81,10 @@ export function getSurfaceColorspace(this: SDL, surface: Surface | Pointer) {
 
 // Lock/Unlock
 
-export function lockSurface(this: SDL, surface: Surface | Pointer) {
+export function lockSurface(this: SDL, surface: Surface) {
   return this.symbols.SDL_LockSurface(getStructAddress(surface));
 }
 
-export function unlockSurface(this: SDL, surface: Surface | Pointer) {
+export function unlockSurface(this: SDL, surface: Surface) {
   this.symbols.SDL_UnlockSurface(getStructAddress(surface));
 }

@@ -12,7 +12,7 @@ export function renderGeometry(
     renderer: Pointer;
     texture?: Pointer | null;
     vertices: Vertex[];
-    indices?: CStruct | Pointer | Uint8Array | null;
+    indices?: CStruct | Uint8Array | null;
     numIndices?: number;
   }
 ) {
@@ -62,14 +62,14 @@ export function renderGeometryRaw(
   options: {
     renderer: Pointer;
     texture?: Pointer | null;
-    xy: CStruct | Pointer | Uint8Array;
+    xy: CStruct | Uint8Array;
     xyStride: number;
-    color: FColor | Pointer | Uint8Array;
+    color: FColor | Uint8Array;
     colorStride: number;
-    uv: CStruct | Pointer | Uint8Array;
+    uv: CStruct | Uint8Array;
     uvStride: number;
     numVertices: number;
-    indices?: CStruct | Pointer | Uint8Array | null;
+    indices?: CStruct | Uint8Array | null;
     numIndices: number;
     sizeIndices: number;
   }

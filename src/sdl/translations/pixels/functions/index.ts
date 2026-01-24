@@ -1,7 +1,6 @@
 import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
 import { getStructAddress } from '@utility/common';
-import type { Pointer } from 'bun:ffi';
 import type { PixelFormat } from '../../../ffi/pixels/constant';
 import { Color, Palette, PixelFormatDetails } from '../utility';
 
@@ -74,8 +73,8 @@ export function createPalette(this: SDL, ncolors: number) {
 export function setPaletteColors(
   this: SDL,
   options: {
-    palette: Palette | Pointer;
-    colors: Color | Pointer;
+    palette: Palette;
+    colors: Color;
     firstcolor: number;
     ncolors: number;
   }
@@ -88,15 +87,15 @@ export function setPaletteColors(
   );
 }
 
-export function destroyPalette(this: SDL, palette: Palette | Pointer) {
+export function destroyPalette(this: SDL, palette: Palette) {
   this.symbols.SDL_DestroyPalette(getStructAddress(palette));
 }
 
 export function mapRGB(
   this: SDL,
   options: {
-    format: PixelFormatDetails | Pointer;
-    palette?: Palette | Pointer | null;
+    format: PixelFormatDetails;
+    palette?: Palette | null;
     r: number;
     g: number;
     b: number;
@@ -114,8 +113,8 @@ export function mapRGB(
 export function mapRGBA(
   this: SDL,
   options: {
-    format: PixelFormatDetails | Pointer;
-    palette?: Palette | Pointer | null;
+    format: PixelFormatDetails;
+    palette?: Palette | null;
     r: number;
     g: number;
     b: number;
@@ -136,8 +135,8 @@ export function getRGB(
   this: SDL,
   options: {
     pixel: number;
-    format: PixelFormatDetails | Pointer;
-    palette?: Palette | Pointer | null;
+    format: PixelFormatDetails;
+    palette?: Palette | null;
   }
 ) {
   const rStruct = new CStruct({ length: CStruct.BYTE_SIZE.u8 });
@@ -164,8 +163,8 @@ export function getRGBA(
   this: SDL,
   options: {
     pixel: number;
-    format: PixelFormatDetails | Pointer;
-    palette?: Palette | Pointer | null;
+    format: PixelFormatDetails;
+    palette?: Palette | null;
   }
 ) {
   const rStruct = new CStruct({ length: CStruct.BYTE_SIZE.u8 });

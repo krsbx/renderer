@@ -8,7 +8,7 @@ import { ByteOffset } from './constant';
 export class MessageBoxData {
   public static readonly BYTE_SIZE = 56;
 
-  public $address: Pointer;
+  public $address: Pointer | Uint8Array;
   public $memory: Uint8Array;
   public $view: DataView;
 
@@ -22,7 +22,7 @@ export class MessageBoxData {
   public constructor(data: Pointer | Uint8Array) {
     if (data instanceof Uint8Array) {
       this.$memory = data;
-      this.$address = ptr(data);
+      this.$address = data;
     } else {
       const buffer = toArrayBuffer(data, 0, MessageBoxData.BYTE_SIZE);
       this.$memory = new Uint8Array(buffer);
@@ -171,7 +171,11 @@ export class MessageBoxData {
 
     this.$view.setBigUint64(
       ByteOffset.colorScheme,
-      BigInt(value.$address),
+      BigInt(
+        typeof value.$address === 'number'
+          ? value.$address
+          : ptr(value.$address)
+      ),
       true
     );
   }

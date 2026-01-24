@@ -86,7 +86,7 @@ export function hapticEffectSupported(
   this: SDL,
   options: {
     haptic: Pointer;
-    effect: HapticEffect | Pointer;
+    effect: HapticEffect;
   }
 ) {
   return this.symbols.SDL_HapticEffectSupported(
@@ -99,7 +99,7 @@ export function createHapticEffect(
   this: SDL,
   options: {
     haptic: Pointer;
-    effect: HapticEffect | Pointer;
+    effect: HapticEffect;
   }
 ) {
   return this.symbols.SDL_CreateHapticEffect(
@@ -113,7 +113,7 @@ export function updateHapticEffect(
   options: {
     haptic: Pointer;
     effect: number;
-    data: HapticEffect | Pointer | Uint8Array;
+    data: HapticEffect | Uint8Array;
   }
 ) {
   return this.symbols.SDL_UpdateHapticEffect(

@@ -9,10 +9,10 @@ export function renderTextureRotated(
   options: {
     renderer: Pointer;
     texture: Pointer;
-    srcRect?: FRect | Pointer | null;
-    dstRect?: FRect | Pointer | null;
+    srcRect?: FRect | null;
+    dstRect?: FRect | null;
     angle: number;
-    center?: FPoint | Pointer | null;
+    center?: FPoint | null;
     flip: FlipMode;
   }
 ) {
@@ -32,10 +32,10 @@ export function renderTextureAffine(
   options: {
     renderer: Pointer;
     texture: Pointer;
-    srcRect?: FRect | Pointer | null;
-    origin?: FPoint | Pointer | null;
-    right?: FPoint | Pointer | null;
-    down?: FPoint | Pointer | null;
+    srcRect?: FRect | null;
+    origin?: FPoint | null;
+    right?: FPoint | null;
+    down?: FPoint | null;
   }
 ) {
   return this.symbols.SDL_RenderTextureAffine(
@@ -53,9 +53,9 @@ export function renderTextureTiled(
   options: {
     renderer: Pointer;
     texture: Pointer;
-    srcRect?: FRect | Pointer | null;
+    srcRect?: FRect | null;
     scale: number;
-    dstRect?: FRect | Pointer | null;
+    dstRect?: FRect | null;
   }
 ) {
   return this.symbols.SDL_RenderTextureTiled(
@@ -72,13 +72,13 @@ export function renderTexture9Grid(
   options: {
     renderer: Pointer;
     texture: Pointer;
-    srcRect?: FRect | Pointer | null;
+    srcRect?: FRect | null;
     leftWidth: number;
     rightWidth: number;
     topHeight: number;
     bottomHeight: number;
     scale: number;
-    dstRect?: FRect | Pointer | null;
+    dstRect?: FRect | null;
   }
 ) {
   return this.symbols.SDL_RenderTexture9Grid(
@@ -99,13 +99,13 @@ export function renderTexture9GridTiled(
   options: {
     renderer: Pointer;
     texture: Pointer;
-    srcRect?: FRect | Pointer | null;
+    srcRect?: FRect | null;
     leftWidth: number;
     rightWidth: number;
     topHeight: number;
     bottomHeight: number;
     scale: number;
-    dstRect?: FRect | Pointer | null;
+    dstRect?: FRect | null;
     tileScale: number;
   }
 ) {

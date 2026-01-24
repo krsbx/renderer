@@ -1,6 +1,5 @@
 import type { SDL } from '@/sdl';
 import { getStructAddress } from '@utility/common';
-import type { Pointer } from 'bun:ffi';
 import type { Colorspace, PixelFormat } from '../../../ffi/pixels/constant';
 import type { FlipMode, ScaleMode } from '../../../ffi/surface/constant';
 import { Palette } from '../../pixels/utility';
@@ -11,7 +10,7 @@ import { Surface } from '../utility';
 export function flipSurface(
   this: SDL,
   options: {
-    surface: Surface | Pointer;
+    surface: Surface;
     flip: FlipMode;
   }
 ) {
@@ -26,7 +25,7 @@ export function flipSurface(
 export function rotateSurface(
   this: SDL,
   options: {
-    surface: Surface | Pointer;
+    surface: Surface;
     angle: number;
   }
 ) {
@@ -42,7 +41,7 @@ export function rotateSurface(
 
 // Duplicate
 
-export function duplicateSurface(this: SDL, surface: Surface | Pointer) {
+export function duplicateSurface(this: SDL, surface: Surface) {
   const newSurfacePtr = this.symbols.SDL_DuplicateSurface(
     getStructAddress(surface)
   );
@@ -57,7 +56,7 @@ export function duplicateSurface(this: SDL, surface: Surface | Pointer) {
 export function scaleSurface(
   this: SDL,
   options: {
-    surface: Surface | Pointer;
+    surface: Surface;
     width: number;
     height: number;
     scaleMode: ScaleMode;
@@ -80,7 +79,7 @@ export function scaleSurface(
 export function convertSurface(
   this: SDL,
   options: {
-    surface: Surface | Pointer;
+    surface: Surface;
     format: PixelFormat;
   }
 ) {
@@ -97,9 +96,9 @@ export function convertSurface(
 export function convertSurfaceAndColorspace(
   this: SDL,
   options: {
-    surface: Surface | Pointer;
+    surface: Surface;
     format: PixelFormat;
-    palette?: Palette | Pointer | null;
+    palette?: Palette | null;
     colorspace: Colorspace;
     props?: number;
   }

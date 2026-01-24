@@ -1,4 +1,4 @@
-import { ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
+import { toArrayBuffer, type Pointer } from 'bun:ffi';
 import type { HapticEffectType } from '../../../../ffi/haptic/constant';
 import { HapticDirection } from '../haptic-direction';
 import { ByteOffset } from './constant';
@@ -6,7 +6,7 @@ import { ByteOffset } from './constant';
 export class HapticCondition {
   public static readonly BYTE_SIZE = 72;
 
-  public $address: Pointer;
+  public $address: Pointer | Uint8Array;
   public $memory: Uint8Array;
   public $view: DataView;
 
@@ -22,7 +22,7 @@ export class HapticCondition {
   public constructor(data: Pointer | Uint8Array) {
     if (data instanceof Uint8Array) {
       this.$memory = data;
-      this.$address = ptr(data);
+      this.$address = data;
     } else {
       const buffer = toArrayBuffer(data, 0, HapticCondition.BYTE_SIZE);
       this.$memory = new Uint8Array(buffer);

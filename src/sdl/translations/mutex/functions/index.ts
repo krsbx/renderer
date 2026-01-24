@@ -126,18 +126,18 @@ export function waitConditionTimeout(
   );
 }
 
-export function shouldInit(this: SDL, state: InitState | Pointer) {
+export function shouldInit(this: SDL, state: InitState) {
   return this.symbols.SDL_ShouldInit(getStructAddress(state));
 }
 
-export function shouldQuit(this: SDL, state: InitState | Pointer) {
+export function shouldQuit(this: SDL, state: InitState) {
   return this.symbols.SDL_ShouldQuit(getStructAddress(state));
 }
 
 export function setInitialized(
   this: SDL,
   options: {
-    state: InitState | Pointer;
+    state: InitState;
     initialized: boolean;
   }
 ) {

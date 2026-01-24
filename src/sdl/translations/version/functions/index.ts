@@ -5,5 +5,5 @@ export function getVersion(this: SDL) {
 }
 
 export function getRevision(this: SDL) {
-  return this.symbols.SDL_GetRevision();
+  return this.symbols.SDL_GetRevision().toString();
 }

@@ -14,11 +14,11 @@ export function getNumVideoDrivers(this: SDL) {
 }
 
 export function getVideoDriver(this: SDL, index: number) {
-  return this.symbols.SDL_GetVideoDriver(index);
+  return this.symbols.SDL_GetVideoDriver(index).toString();
 }
 
 export function getCurrentVideoDriver(this: SDL) {
-  return this.symbols.SDL_GetCurrentVideoDriver();
+  return this.symbols.SDL_GetCurrentVideoDriver().toString();
 }
 
 export function getSystemTheme(this: SDL) {
@@ -56,7 +56,7 @@ export function getDisplayProperties(this: SDL, displayID: number) {
 }
 
 export function getDisplayName(this: SDL, displayID: number) {
-  return this.symbols.SDL_GetDisplayName(displayID);
+  return this.symbols.SDL_GetDisplayName(displayID).toString();
 }
 
 export function getDisplayBounds(this: SDL, displayID: number) {

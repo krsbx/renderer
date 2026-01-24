@@ -4,7 +4,7 @@ import type { ThreadPriority, ThreadState } from '../../../ffi/thread/constant';
 import { CStruct } from '../../../utility/cstruct';
 
 export function getThreadName(this: SDL, thread: Pointer) {
-  return this.symbols.SDL_GetThreadName(thread);
+  return this.symbols.SDL_GetThreadName(thread).toString();
 }
 
 export function getCurrentThreadID(this: SDL) {

@@ -26,7 +26,7 @@ export function getTouchDevices(this: SDL) {
 }
 
 export function getTouchDeviceName(this: SDL, touchId: bigint) {
-  return this.symbols.SDL_GetTouchDeviceName(touchId);
+  return this.symbols.SDL_GetTouchDeviceName(touchId).toString();
 }
 
 export function getTouchDeviceType(this: SDL, touchId: bigint) {

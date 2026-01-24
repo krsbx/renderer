@@ -9,11 +9,11 @@ export function getNumAudioDrivers(this: SDL) {
 }
 
 export function getAudioDriver(this: SDL, index: number) {
-  return this.symbols.SDL_GetAudioDriver(index);
+  return this.symbols.SDL_GetAudioDriver(index).toString();
 }
 
 export function getCurrentAudioDriver(this: SDL) {
-  return this.symbols.SDL_GetCurrentAudioDriver();
+  return this.symbols.SDL_GetCurrentAudioDriver().toString();
 }
 
 export function getAudioPlaybackDevices(this: SDL) {
@@ -61,7 +61,7 @@ export function getAudioRecordingDevices(this: SDL) {
 }
 
 export function getAudioDeviceName(this: SDL, deviceId: number) {
-  return this.symbols.SDL_GetAudioDeviceName(deviceId);
+  return this.symbols.SDL_GetAudioDeviceName(deviceId).toString();
 }
 
 export function getAudioDeviceFormat(
@@ -695,7 +695,7 @@ export function convertAudioSamples(
 }
 
 export function getAudioFormatName(this: SDL, format: number) {
-  return this.symbols.SDL_GetAudioFormatName(format);
+  return this.symbols.SDL_GetAudioFormatName(format).toString();
 }
 
 export function getSilenceValueForFormat(this: SDL, format: number) {

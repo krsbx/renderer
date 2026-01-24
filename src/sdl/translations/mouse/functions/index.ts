@@ -39,7 +39,7 @@ export function getMice(this: SDL) {
 }
 
 export function getMouseNameForID(this: SDL, instanceId: number) {
-  return this.symbols.SDL_GetMouseNameForID(instanceId);
+  return this.symbols.SDL_GetMouseNameForID(instanceId).toString();
 }
 
 export function getMouseFocus(this: SDL) {

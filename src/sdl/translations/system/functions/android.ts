@@ -27,7 +27,7 @@ export function sendAndroidBackButton(this: SDL) {
 }
 
 export function getAndroidInternalStoragePath(this: SDL) {
-  return this.symbols.SDL_GetAndroidInternalStoragePath();
+  return this.symbols.SDL_GetAndroidInternalStoragePath().toString();
 }
 
 export function getAndroidExternalStorageState(this: SDL) {
@@ -35,11 +35,11 @@ export function getAndroidExternalStorageState(this: SDL) {
 }
 
 export function getAndroidExternalStoragePath(this: SDL) {
-  return this.symbols.SDL_GetAndroidExternalStoragePath();
+  return this.symbols.SDL_GetAndroidExternalStoragePath().toString();
 }
 
 export function getAndroidCachePath(this: SDL) {
-  return this.symbols.SDL_GetAndroidCachePath();
+  return this.symbols.SDL_GetAndroidCachePath().toString();
 }
 
 export function requestAndroidPermission(

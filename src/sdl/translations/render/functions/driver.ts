@@ -5,5 +5,5 @@ export function getNumRenderDrivers(this: SDL) {
 }
 
 export function getRenderDriver(this: SDL, index: number) {
-  return this.symbols.SDL_GetRenderDriver(index);
+  return this.symbols.SDL_GetRenderDriver(index).toString();
 }

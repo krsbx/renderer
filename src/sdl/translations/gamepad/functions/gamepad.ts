@@ -43,11 +43,11 @@ export function isGamepad(this: SDL, instanceId: number) {
 }
 
 export function getGamepadNameForID(this: SDL, instanceId: number) {
-  return this.symbols.SDL_GetGamepadNameForID(instanceId);
+  return this.symbols.SDL_GetGamepadNameForID(instanceId).toString();
 }
 
 export function getGamepadPathForID(this: SDL, instanceId: number) {
-  return this.symbols.SDL_GetGamepadPathForID(instanceId);
+  return this.symbols.SDL_GetGamepadPathForID(instanceId).toString();
 }
 
 export function getGamepadPlayerIndexForID(this: SDL, instanceId: number) {
@@ -115,11 +115,11 @@ export function getGamepadID(this: SDL, gamepad: Pointer) {
 }
 
 export function getGamepadName(this: SDL, gamepad: Pointer) {
-  return this.symbols.SDL_GetGamepadName(gamepad);
+  return this.symbols.SDL_GetGamepadName(gamepad).toString();
 }
 
 export function getGamepadPath(this: SDL, gamepad: Pointer) {
-  return this.symbols.SDL_GetGamepadPath(gamepad);
+  return this.symbols.SDL_GetGamepadPath(gamepad).toString();
 }
 
 export function getGamepadType(this: SDL, gamepad: Pointer) {
@@ -164,7 +164,7 @@ export function getGamepadFirmwareVersion(this: SDL, gamepad: Pointer) {
 }
 
 export function getGamepadSerial(this: SDL, gamepad: Pointer) {
-  return this.symbols.SDL_GetGamepadSerial(gamepad);
+  return this.symbols.SDL_GetGamepadSerial(gamepad).toString();
 }
 
 export function getGamepadSteamHandle(this: SDL, gamepad: Pointer) {
@@ -247,7 +247,7 @@ export function getGamepadTypeFromString(this: SDL, str: string) {
 }
 
 export function getGamepadStringForType(this: SDL, type: GamepadType) {
-  return this.symbols.SDL_GetGamepadStringForType(type);
+  return this.symbols.SDL_GetGamepadStringForType(type).toString();
 }
 
 export function closeGamepad(this: SDL, gamepad: Pointer) {
@@ -261,10 +261,9 @@ export function getGamepadAppleSFSymbolsNameForButton(
     button: GamepadButton;
   }
 ) {
-  return this.symbols.SDL_GetGamepadAppleSFSymbolsNameForButton(
-    options.gamepad,
-    options.button
-  );
+  return this.symbols
+    .SDL_GetGamepadAppleSFSymbolsNameForButton(options.gamepad, options.button)
+    .toString();
 }
 
 export function getGamepadAppleSFSymbolsNameForAxis(
@@ -274,8 +273,7 @@ export function getGamepadAppleSFSymbolsNameForAxis(
     axis: GamepadAxis;
   }
 ) {
-  return this.symbols.SDL_GetGamepadAppleSFSymbolsNameForAxis(
-    options.gamepad,
-    options.axis
-  );
+  return this.symbols
+    .SDL_GetGamepadAppleSFSymbolsNameForAxis(options.gamepad, options.axis)
+    .toString();
 }

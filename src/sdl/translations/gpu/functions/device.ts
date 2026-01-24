@@ -57,11 +57,11 @@ export function getNumGPUDrivers(this: SDL) {
 }
 
 export function getGPUDriver(this: SDL, index: number) {
-  return this.symbols.SDL_GetGPUDriver(index);
+  return this.symbols.SDL_GetGPUDriver(index).toString();
 }
 
 export function getGPUDeviceDriver(this: SDL, device: Pointer) {
-  return this.symbols.SDL_GetGPUDeviceDriver(device);
+  return this.symbols.SDL_GetGPUDeviceDriver(device).toString();
 }
 
 export function getGPUShaderFormats(this: SDL, device: Pointer) {

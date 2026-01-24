@@ -1,33 +1,3 @@
-import { type Pointer } from 'bun:ffi';
-
-export interface WidthHeight {
-  w: number;
-  h: number;
-}
-
-export interface Vector2 {
-  x: number;
-  y: number;
-}
-
-export interface Vector3 extends Vector2 {
-  z: number;
-}
-
-export interface FreeAddress {
-  /**
-   * Free the address from the memory
-   */
-  free: (() => void) | null;
-}
-
-export interface MemoryAddress {
-  /**
-   * The address to resource in memory
-   */
-  address: Pointer | null;
-}
-
 export type Enumerate<
   N extends number,
   Acc extends number[] = [],
@@ -41,3 +11,35 @@ export type NumericRange<F extends number, T extends number> = Exclude<
 >;
 
 export type Brand<K, T> = K & { __brand: T };
+
+// Build a tuple of exact length
+export type BuildTuple<
+  Length extends number,
+  Value,
+  Acc extends Value[] = [],
+> = Acc['length'] extends Length
+  ? Acc
+  : BuildTuple<Length, Value, [...Acc, Value]>;
+
+// Generate union of readonly tuples from Min to Max length
+export type TupleRange<
+  Min extends number,
+  Max extends number,
+  Value,
+  Current extends Value[] = BuildTuple<Min, Value>,
+  Acc = Readonly<Current>,
+> = Current['length'] extends Max
+  ? Acc
+  : TupleRange<
+      Min,
+      Max,
+      Value,
+      [...Current, Value],
+      Acc | Readonly<[...Current, Value]>
+    >;
+
+export type IteratableArray<
+  Min extends number,
+  Max extends number,
+  Value,
+> = TupleRange<Min, Max, Value>;

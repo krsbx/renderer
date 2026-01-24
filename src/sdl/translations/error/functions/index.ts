@@ -14,7 +14,7 @@ export function outOfMemory(this: SDL) {
 }
 
 export function getError(this: SDL) {
-  return this.symbols.SDL_GetError();
+  return this.symbols.SDL_GetError().toString();
 }
 
 export function clearError(this: SDL) {

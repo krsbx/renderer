@@ -50,11 +50,11 @@ export function getJoysticks(this: SDL) {
 // Info by Instance ID
 
 export function getJoystickNameForID(this: SDL, instanceId: number) {
-  return this.symbols.SDL_GetJoystickNameForID(instanceId);
+  return this.symbols.SDL_GetJoystickNameForID(instanceId).toString();
 }
 
 export function getJoystickPathForID(this: SDL, instanceId: number) {
-  return this.symbols.SDL_GetJoystickPathForID(instanceId);
+  return this.symbols.SDL_GetJoystickPathForID(instanceId).toString();
 }
 
 export function getJoystickPlayerIndexForID(this: SDL, instanceId: number) {
@@ -108,11 +108,11 @@ export function getJoystickProperties(this: SDL, joystick: Pointer) {
 // Info by Joystick Pointer
 
 export function getJoystickName(this: SDL, joystick: Pointer) {
-  return this.symbols.SDL_GetJoystickName(joystick);
+  return this.symbols.SDL_GetJoystickName(joystick).toString();
 }
 
 export function getJoystickPath(this: SDL, joystick: Pointer) {
-  return this.symbols.SDL_GetJoystickPath(joystick);
+  return this.symbols.SDL_GetJoystickPath(joystick).toString();
 }
 
 export function getJoystickPlayerIndex(this: SDL, joystick: Pointer) {
@@ -157,7 +157,7 @@ export function getJoystickFirmwareVersion(this: SDL, joystick: Pointer) {
 }
 
 export function getJoystickSerial(this: SDL, joystick: Pointer) {
-  return this.symbols.SDL_GetJoystickSerial(joystick);
+  return this.symbols.SDL_GetJoystickSerial(joystick).toString();
 }
 
 export function getJoystickType(this: SDL, joystick: Pointer) {

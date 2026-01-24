@@ -6,7 +6,7 @@ import { CStruct } from '../../../utility/cstruct';
 import { Color, Palette, PixelFormatDetails } from '../utility';
 
 export function getPixelFormatName(this: SDL, format: PixelFormat) {
-  return this.symbols.SDL_GetPixelFormatName(format);
+  return this.symbols.SDL_GetPixelFormatName(format).toString();
 }
 
 export function getMasksForPixelFormat(this: SDL, format: PixelFormat) {

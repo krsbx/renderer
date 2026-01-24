@@ -6,7 +6,7 @@ import { CStruct } from '../../../utility/cstruct';
 import { PathInfo } from '../utility';
 
 export function getBasePath(this: SDL) {
-  return this.symbols.SDL_GetBasePath();
+  return this.symbols.SDL_GetBasePath().toString();
 }
 
 export function getPrefPath(

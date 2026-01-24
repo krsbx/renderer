@@ -26,7 +26,7 @@ export function getSensors(this: SDL) {
 }
 
 export function getSensorNameForID(this: SDL, instanceId: number) {
-  return this.symbols.SDL_GetSensorNameForID(instanceId);
+  return this.symbols.SDL_GetSensorNameForID(instanceId).toString();
 }
 
 export function getSensorTypeForID(this: SDL, instanceId: number) {
@@ -50,7 +50,7 @@ export function getSensorProperties(this: SDL, sensor: Pointer) {
 }
 
 export function getSensorName(this: SDL, sensor: Pointer) {
-  return this.symbols.SDL_GetSensorName(sensor);
+  return this.symbols.SDL_GetSensorName(sensor).toString();
 }
 
 export function getSensorType(this: SDL, sensor: Pointer) {

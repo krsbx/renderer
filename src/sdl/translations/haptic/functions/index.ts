@@ -30,7 +30,7 @@ export function getHaptics(this: SDL) {
 }
 
 export function getHapticNameForID(this: SDL, instanceId: number) {
-  return this.symbols.SDL_GetHapticNameForID(instanceId);
+  return this.symbols.SDL_GetHapticNameForID(instanceId).toString();
 }
 
 export function openHaptic(this: SDL, instanceId: number) {
@@ -46,7 +46,7 @@ export function getHapticID(this: SDL, haptic: Pointer) {
 }
 
 export function getHapticName(this: SDL, haptic: Pointer) {
-  return this.symbols.SDL_GetHapticName(haptic);
+  return this.symbols.SDL_GetHapticName(haptic).toString();
 }
 
 export function isMouseHaptic(this: SDL) {

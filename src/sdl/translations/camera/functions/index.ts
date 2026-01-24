@@ -14,11 +14,11 @@ export function getNumCameraDrivers(this: SDL) {
 }
 
 export function getCameraDriver(this: SDL, index: number) {
-  return this.symbols.SDL_GetCameraDriver(index);
+  return this.symbols.SDL_GetCameraDriver(index).toString();
 }
 
 export function getCurrentCameraDriver(this: SDL) {
-  return this.symbols.SDL_GetCurrentCameraDriver();
+  return this.symbols.SDL_GetCurrentCameraDriver().toString();
 }
 
 export function getCameras(this: SDL) {
@@ -75,7 +75,7 @@ export function getCameraSupportedFormats(this: SDL, cameraId: number) {
 }
 
 export function getCameraName(this: SDL, cameraId: number) {
-  return this.symbols.SDL_GetCameraName(cameraId);
+  return this.symbols.SDL_GetCameraName(cameraId).toString();
 }
 
 export function getCameraPosition(this: SDL, cameraId: number) {

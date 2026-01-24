@@ -34,7 +34,7 @@ export function getKeyboards(this: SDL) {
 }
 
 export function getKeyboardNameForID(this: SDL, instanceId: number) {
-  return this.symbols.SDL_GetKeyboardNameForID(instanceId);
+  return this.symbols.SDL_GetKeyboardNameForID(instanceId).toString();
 }
 
 export function getKeyboardFocus(this: SDL) {
@@ -109,7 +109,7 @@ export function setScancodeName(
 }
 
 export function getScancodeName(this: SDL, scancode: Scancode) {
-  return this.symbols.SDL_GetScancodeName(scancode);
+  return this.symbols.SDL_GetScancodeName(scancode).toString();
 }
 
 export function getScancodeFromName(this: SDL, name: string) {
@@ -119,7 +119,7 @@ export function getScancodeFromName(this: SDL, name: string) {
 }
 
 export function getKeyName(this: SDL, key: Keycode) {
-  return this.symbols.SDL_GetKeyName(key);
+  return this.symbols.SDL_GetKeyName(key).toString();
 }
 
 export function getKeyFromName(this: SDL, name: string) {

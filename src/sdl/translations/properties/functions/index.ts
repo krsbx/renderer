@@ -172,11 +172,13 @@ export function getStringProperty(
     defaultValue: string;
   }
 ) {
-  return this.symbols.SDL_GetStringProperty(
-    options.props,
-    stringToCString(options.name).ptr,
-    stringToCString(options.defaultValue).ptr
-  );
+  return this.symbols
+    .SDL_GetStringProperty(
+      options.props,
+      stringToCString(options.name).ptr,
+      stringToCString(options.defaultValue).ptr
+    )
+    .toString();
 }
 
 export function getNumberProperty(

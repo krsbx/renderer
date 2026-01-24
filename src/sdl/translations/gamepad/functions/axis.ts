@@ -10,7 +10,7 @@ export function getGamepadAxisFromString(this: SDL, str: string) {
 }
 
 export function getGamepadStringForAxis(this: SDL, axis: GamepadAxis) {
-  return this.symbols.SDL_GetGamepadStringForAxis(axis);
+  return this.symbols.SDL_GetGamepadStringForAxis(axis).toString();
 }
 
 export function gamepadHasAxis(

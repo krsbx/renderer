@@ -14,7 +14,7 @@ export function getGamepadButtonFromString(this: SDL, str: string) {
 }
 
 export function getGamepadStringForButton(this: SDL, button: GamepadButton) {
-  return this.symbols.SDL_GetGamepadStringForButton(button);
+  return this.symbols.SDL_GetGamepadStringForButton(button).toString();
 }
 
 export function gamepadHasButton(

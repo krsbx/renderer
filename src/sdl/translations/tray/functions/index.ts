@@ -117,7 +117,7 @@ export function setTrayEntryLabel(
 }
 
 export function getTrayEntryLabel(this: SDL, entry: Pointer) {
-  return this.symbols.SDL_GetTrayEntryLabel(entry);
+  return this.symbols.SDL_GetTrayEntryLabel(entry).toString();
 }
 
 export function setTrayEntryChecked(

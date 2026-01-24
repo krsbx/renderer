@@ -40,7 +40,7 @@ export function resetHints(this: SDL) {
 }
 
 export function getHint(this: SDL, name: string) {
-  return this.symbols.SDL_GetHint(stringToCString(name).ptr);
+  return this.symbols.SDL_GetHint(stringToCString(name).ptr).toString();
 }
 
 export function getHintBoolean(

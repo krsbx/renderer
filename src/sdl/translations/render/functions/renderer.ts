@@ -78,7 +78,7 @@ export function getRenderWindow(this: SDL, renderer: Pointer) {
 }
 
 export function getRendererName(this: SDL, renderer: Pointer) {
-  return this.symbols.SDL_GetRendererName(renderer);
+  return this.symbols.SDL_GetRendererName(renderer).toString();
 }
 
 export function getRendererProperties(this: SDL, renderer: Pointer) {

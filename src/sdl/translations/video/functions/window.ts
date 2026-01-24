@@ -171,7 +171,7 @@ export function setWindowTitle(
 }
 
 export function getWindowTitle(this: SDL, window: Pointer) {
-  return this.symbols.SDL_GetWindowTitle(window);
+  return this.symbols.SDL_GetWindowTitle(window).toString();
 }
 
 export function setWindowIcon(

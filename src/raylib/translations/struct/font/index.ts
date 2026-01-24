@@ -1,5 +1,5 @@
 import { CStruct } from '@cstruct';
-import { ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
+import { toArrayBuffer, type Pointer } from 'bun:ffi';
 import { GlyphInfo } from '../glyph-info';
 import { Rectangle } from '../rectangle';
 import { Texture2D } from '../texture';
@@ -8,7 +8,7 @@ import { ByteOffset } from './constant';
 export class Font {
   public static readonly BYTE_SIZE = 48;
 
-  public $address: Pointer;
+  public $address: Pointer | Uint8Array;
   public $memory: Uint8Array;
   public $view: DataView;
 
@@ -24,7 +24,7 @@ export class Font {
   public constructor(data: Pointer | Uint8Array) {
     if (data instanceof Uint8Array) {
       this.$memory = data;
-      this.$address = ptr(data);
+      this.$address = data;
     } else {
       const buffer = toArrayBuffer(data, 0, Font.BYTE_SIZE);
       this.$memory = new Uint8Array(buffer);

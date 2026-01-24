@@ -1,4 +1,4 @@
-import type { SDL } from '../../..';
+import type { SDL } from '@/sdl';
 
 export function screenSaverEnabled(this: SDL) {
   return this.symbols.SDL_ScreenSaverEnabled();

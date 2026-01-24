@@ -1,5 +1,5 @@
-import type { SDL } from '../../..';
-import { CStruct } from '../../../utility/cstruct';
+import type { SDL } from '@/sdl';
+import { CStruct } from '@cstruct';
 
 export function getGDKTaskQueue(this: SDL) {
   const taskQueueStruct = new CStruct({ length: CStruct.BYTE_SIZE.ptr });

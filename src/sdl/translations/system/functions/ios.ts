@@ -1,5 +1,5 @@
+import type { SDL } from '@/sdl';
 import type { JSCallback, Pointer } from 'bun:ffi';
-import type { SDL } from '../../..';
 
 export function setiOSAnimationCallback(
   this: SDL,

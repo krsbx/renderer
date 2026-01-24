@@ -1,7 +1,7 @@
+import type { SDL } from '@/sdl';
+import { CStruct } from '@cstruct';
 import type { JSCallback, Pointer } from 'bun:ffi';
-import type { SDL } from '../../..';
 import type { ThreadPriority, ThreadState } from '../../../ffi/thread/constant';
-import { CStruct } from '../../../utility/cstruct';
 
 export function getThreadName(this: SDL, thread: Pointer) {
   return this.symbols.SDL_GetThreadName(thread).toString();

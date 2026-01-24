@@ -1,5 +1,5 @@
+import type { SDL } from '@/sdl';
 import type { JSCallback, Pointer } from 'bun:ffi';
-import type { SDL } from '../../..';
 
 export function getTicks(this: SDL) {
   return this.symbols.SDL_GetTicks();

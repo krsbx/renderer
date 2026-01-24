@@ -1,8 +1,7 @@
+import { stringToCString } from '@utility/common';
 import { CString, ptr, read, toArrayBuffer, type Pointer } from 'bun:ffi';
-import { stringToCString } from '../../../../../utility/common';
 import { ByteOffset } from './constant';
 import type { ClipboardEventType } from './types';
-
 export class ClipboardEvent {
   public static readonly BYTE_SIZE = 32;
 

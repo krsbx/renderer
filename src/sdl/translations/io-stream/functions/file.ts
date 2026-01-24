@@ -1,10 +1,7 @@
+import type { SDL } from '@/sdl';
+import { CStruct } from '@cstruct';
+import { getStructMemoryAddress, stringToCString } from '@utility/common';
 import { type Pointer } from 'bun:ffi';
-import type { SDL } from '../../..';
-import {
-  getStructMemoryAddress,
-  stringToCString,
-} from '../../../utility/common';
-import { CStruct } from '../../../utility/cstruct';
 
 export function ioprintf(
   this: SDL,

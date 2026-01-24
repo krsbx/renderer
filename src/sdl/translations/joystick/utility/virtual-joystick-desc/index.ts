@@ -1,3 +1,4 @@
+import { stringToCString } from '@utility/common';
 import {
   CString,
   linkSymbols,
@@ -6,7 +7,6 @@ import {
   type FFIFunction,
   type Pointer,
 } from 'bun:ffi';
-import { stringToCString } from '../../../../utility/common';
 import { VirtualJoystickSensorDesc } from '../virtual-joystick-sensor-desc';
 import { VirtualJoystickTouchpadDesc } from '../virtual-joystick-touchpad-desc';
 import { ByteOffset } from './constant';

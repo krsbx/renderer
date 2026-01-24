@@ -1,3 +1,4 @@
+import { CStruct } from '@cstruct';
 import {
   linkSymbols,
   ptr,
@@ -7,7 +8,6 @@ import {
   type Pointer,
 } from 'bun:ffi';
 import type { IOStatus } from '../../../../ffi/io-stream/constant';
-import { CStruct } from '../../../../utility/cstruct';
 import { ByteOffset } from './constant';
 import { IOStreamInterfaceDefinition } from './definition';
 import type { ReadOptions, SeekOptions, WriteOptions } from './types';

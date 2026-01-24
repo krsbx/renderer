@@ -1,4 +1,4 @@
-import type { Brand } from '../../types/shared';
+import type { Brand } from '@/types/shared';
 
 const RawInitFlags = {
   AUDIO: 0x00000010 /**< `SDL_INIT_AUDIO` implies `SDL_INIT_EVENTS` */,

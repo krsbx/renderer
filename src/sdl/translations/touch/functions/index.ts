@@ -1,6 +1,6 @@
-import type { SDL } from '../../..';
+import type { SDL } from '@/sdl';
+import { CStruct } from '@cstruct';
 import type { TouchDeviceType } from '../../../ffi/touch/constant';
-import { CStruct } from '../../../utility/cstruct';
 import { Finger } from '../utility';
 
 export function getTouchDevices(this: SDL) {

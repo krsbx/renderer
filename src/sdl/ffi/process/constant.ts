@@ -1,4 +1,4 @@
-import type { Brand } from '../../types/shared';
+import type { Brand } from '@/types/shared';
 
 const RawProcessIO = {
   INHERITED: 0 /**< The I/O stream is inherited from the application. */,

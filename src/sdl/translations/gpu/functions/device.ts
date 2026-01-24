@@ -1,7 +1,7 @@
+import type { SDL } from '@/sdl';
+import { stringToCString } from '@utility/common';
 import type { Pointer } from 'bun:ffi';
-import type { SDL } from '../../..';
 import type { GPUShaderFormat } from '../../../ffi/gpu/constant';
-import { stringToCString } from '../../../utility/common';
 
 // Support Check
 

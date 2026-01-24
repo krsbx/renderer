@@ -1,4 +1,4 @@
-import type { Brand } from '../../types/shared';
+import type { Brand } from '@/types/shared';
 
 const RawTouchDeviceType = {
   INVALID: -1,

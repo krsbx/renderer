@@ -1,7 +1,7 @@
+import type { SDL } from '@/sdl';
+import { getStructAddress } from '@utility/common';
 import type { Pointer } from 'bun:ffi';
-import type { SDL } from '../../..';
 import type { FlipMode } from '../../../ffi/surface/constant';
-import { getStructAddress } from '../../../utility/common';
 import { FPoint, FRect } from '../../rect/utility';
 
 export function renderTextureRotated(

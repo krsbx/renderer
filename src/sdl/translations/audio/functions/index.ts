@@ -1,7 +1,7 @@
+import type { SDL } from '@/sdl';
+import { CStruct } from '@cstruct';
+import { getStructAddress, stringToCString } from '@utility/common';
 import { type Pointer } from 'bun:ffi';
-import type { SDL } from '../../..';
-import { getStructAddress, stringToCString } from '../../../utility/common';
-import { CStruct } from '../../../utility/cstruct';
 import { AudioBuffer, AudioSpec } from '../utility';
 
 export function getNumAudioDrivers(this: SDL) {

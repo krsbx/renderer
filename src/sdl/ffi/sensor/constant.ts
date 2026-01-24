@@ -1,4 +1,4 @@
-import type { Brand } from '../../types/shared';
+import type { Brand } from '@/types/shared';
 
 const RawSensorType = {
   INVALID: -1 /**< Returned for an invalid sensor */,

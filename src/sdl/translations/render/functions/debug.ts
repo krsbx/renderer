@@ -1,8 +1,8 @@
+import type { SDL } from '@/sdl';
+import { CStruct } from '@cstruct';
+import { stringToCString } from '@utility/common';
 import type { Pointer } from 'bun:ffi';
-import type { SDL } from '../../..';
 import type { ScaleMode } from '../../../ffi/surface/constant';
-import { stringToCString } from '../../../utility/common';
-import { CStruct } from '../../../utility/cstruct';
 
 // Debug Text
 

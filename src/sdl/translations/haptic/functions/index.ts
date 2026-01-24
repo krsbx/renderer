@@ -1,10 +1,7 @@
+import type { SDL } from '@/sdl';
+import { CStruct } from '@cstruct';
+import { getStructAddress, getStructMemoryAddress } from '@utility/common';
 import { type Pointer } from 'bun:ffi';
-import type { SDL } from '../../..';
-import {
-  getStructAddress,
-  getStructMemoryAddress,
-} from '../../../utility/common';
-import { CStruct } from '../../../utility/cstruct';
 import { HapticEffect } from '../utility';
 
 export function getHaptics(this: SDL) {

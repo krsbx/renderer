@@ -1,6 +1,6 @@
+import type { SDL } from '@/sdl';
+import { getStructAddress, stringToCString } from '@utility/common';
 import type { Pointer } from 'bun:ffi';
-import type { SDL } from '../../..';
-import { getStructAddress, stringToCString } from '../../../utility/common';
 import { Surface } from '../utility';
 
 // Load Surface (BMP or PNG)

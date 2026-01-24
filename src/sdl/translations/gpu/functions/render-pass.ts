@@ -1,7 +1,7 @@
+import type { SDL } from '@/sdl';
+import { getStructAddress } from '@utility/common';
 import type { Pointer } from 'bun:ffi';
-import type { SDL } from '../../..';
 import type { GPUIndexElementSize } from '../../../ffi/gpu/constant';
-import { getStructAddress } from '../../../utility/common';
 import { FColor } from '../../pixels/utility';
 import { Rect } from '../../rect/utility';
 import {

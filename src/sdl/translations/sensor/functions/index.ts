@@ -1,7 +1,7 @@
+import type { SDL } from '@/sdl';
+import { CStruct } from '@cstruct';
 import type { Pointer } from 'bun:ffi';
-import type { SDL } from '../../..';
 import type { SensorType } from '../../../ffi/sensor/constant';
-import { CStruct } from '../../../utility/cstruct';
 
 export function getSensors(this: SDL) {
   const countStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });

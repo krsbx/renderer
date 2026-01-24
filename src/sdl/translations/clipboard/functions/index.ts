@@ -1,7 +1,7 @@
+import type { SDL } from '@/sdl';
+import { CStruct } from '@cstruct';
+import { stringToCString } from '@utility/common';
 import { CString, type JSCallback, type Pointer } from 'bun:ffi';
-import type { SDL } from '../../..';
-import { stringToCString } from '../../../utility/common';
-import { CStruct } from '../../../utility/cstruct';
 
 export function setClipboardText(this: SDL, text: string) {
   return this.symbols.SDL_SetClipboardText(stringToCString(text).ptr);

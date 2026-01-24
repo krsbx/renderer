@@ -1,8 +1,8 @@
+import type { SDL } from '@/sdl';
+import { CStruct } from '@cstruct';
+import { getStructAddress } from '@utility/common';
 import { CString, type JSCallback, type Pointer } from 'bun:ffi';
-import type { SDL } from '../../..';
 import { type EventAction, type EventType } from '../../../ffi/events/constant';
-import { getStructAddress } from '../../../utility/common';
-import { CStruct } from '../../../utility/cstruct';
 import { Event } from '../utility';
 
 export function pumpEvents(this: SDL) {

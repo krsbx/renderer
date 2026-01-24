@@ -1,8 +1,8 @@
+import type { SDL } from '@/sdl';
+import { getStructAddress } from '@utility/common';
 import type { Pointer } from 'bun:ffi';
-import type { SDL } from '../../..';
 import type { Colorspace, PixelFormat } from '../../../ffi/pixels/constant';
 import type { FlipMode, ScaleMode } from '../../../ffi/surface/constant';
-import { getStructAddress } from '../../../utility/common';
 import { Palette } from '../../pixels/utility';
 import { Surface } from '../utility';
 

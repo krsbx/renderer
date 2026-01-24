@@ -1,6 +1,6 @@
+import type { SDL } from '@/sdl';
+import { CStruct } from '@cstruct';
 import type { Pointer } from 'bun:ffi';
-import type { SDL } from '../../..';
-import { CStruct } from '../../../utility/cstruct';
 
 export function getJoystickAxis(
   this: SDL,

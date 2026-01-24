@@ -1,11 +1,11 @@
-import { type Pointer } from 'bun:ffi';
-import type { SDL } from '../../..';
-import { type IOStatus, type IOWhence } from '../../../ffi/io-stream/constant';
+import type { SDL } from '@/sdl';
 import {
   getStructAddress,
   getStructMemoryAddress,
   stringToCString,
-} from '../../../utility/common';
+} from '@utility/common';
+import { type Pointer } from 'bun:ffi';
+import { type IOStatus, type IOWhence } from '../../../ffi/io-stream/constant';
 import { IOStreamInterface } from '../utility';
 
 export function ioFromFile(

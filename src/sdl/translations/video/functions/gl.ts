@@ -1,8 +1,8 @@
+import type { BaseSDL } from '@/sdl';
+import { CStruct } from '@cstruct';
+import { stringToCString } from '@utility/common';
 import type { JSCallback, Pointer } from 'bun:ffi';
-import type { BaseSDL } from '../../..';
 import type { GLAttr } from '../../../ffi/video/constant';
-import { stringToCString } from '../../../utility/common';
-import { CStruct } from '../../../utility/cstruct';
 
 export function glLoadLibrary(this: BaseSDL, path: string) {
   return this.symbols.SDL_GL_LoadLibrary(stringToCString(path).ptr);

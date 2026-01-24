@@ -1,3 +1,4 @@
+import { stringToCString } from '@utility/common';
 import {
   linkSymbols,
   ptr,
@@ -6,7 +7,6 @@ import {
   type Library,
   type Pointer,
 } from 'bun:ffi';
-import { stringToCString } from '../../../../utility/common';
 import { PathInfo } from '../../../file-system/utility';
 import { ByteOffset } from './constant';
 import { StorageInterfaceDefinition } from './definition';

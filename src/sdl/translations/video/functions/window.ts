@@ -1,13 +1,13 @@
+import type { SDL } from '@/sdl';
+import { CStruct } from '@cstruct';
+import { getStructAddress, stringToCString } from '@utility/common';
 import type { JSCallback, Pointer } from 'bun:ffi';
-import type { SDL } from '../../..';
 import type { PixelFormat } from '../../../ffi/pixels/constant';
 import type {
   FlashOperation,
   ProgressState,
   WindowFlags,
 } from '../../../ffi/video/constant';
-import { getStructAddress, stringToCString } from '../../../utility/common';
-import { CStruct } from '../../../utility/cstruct';
 import { Rect } from '../../rect/utility';
 import { Surface } from '../../surface/utility';
 import { DisplayMode } from '../utility';

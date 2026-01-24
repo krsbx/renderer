@@ -1,4 +1,4 @@
-import type { Brand } from '../../types/shared';
+import type { Brand } from '@/types/shared';
 
 const RawSystemCursor = {
   DEFAULT: 0 /**< Default cursor. Usually an arrow. */,

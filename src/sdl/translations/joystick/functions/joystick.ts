@@ -1,12 +1,12 @@
+import type { SDL } from '@/sdl';
+import { CStruct } from '@cstruct';
+import { getStructAddress } from '@utility/common';
 import type { Pointer } from 'bun:ffi';
-import type { SDL } from '../../..';
 import type {
   JoystickConnectionState,
   JoystickType,
 } from '../../../ffi/joystick/constant';
 import type { PowerState } from '../../../ffi/power/constant';
-import { getStructAddress } from '../../../utility/common';
-import { CStruct } from '../../../utility/cstruct';
 import { GUID } from '../../guid/utility';
 
 // Lock/Unlock

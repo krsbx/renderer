@@ -1,5 +1,5 @@
-import type { SDL } from '../../..';
-import { stringToCString } from '../../../utility/common';
+import type { SDL } from '@/sdl';
+import { stringToCString } from '@utility/common';
 
 export function setError(this: SDL, fmt: string) {
   return this.symbols.SDL_SetError(stringToCString(fmt).ptr);

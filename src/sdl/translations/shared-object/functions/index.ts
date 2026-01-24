@@ -1,6 +1,6 @@
+import type { SDL } from '@/sdl';
+import { stringToCString } from '@utility/common';
 import type { Pointer } from 'bun:ffi';
-import type { SDL } from '../../..';
-import { stringToCString } from '../../../utility/common';
 
 export function loadObject(this: SDL, sofile: string) {
   return this.symbols.SDL_LoadObject(stringToCString(sofile).ptr);

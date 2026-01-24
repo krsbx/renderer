@@ -1,5 +1,5 @@
-import type { SDL } from '../../..';
-import { CStruct } from '../../../utility/cstruct';
+import type { SDL } from '@/sdl';
+import { CStruct } from '@cstruct';
 import { Locale } from '../utility';
 
 export function getPreferredLocales(this: SDL) {

@@ -1,7 +1,7 @@
+import type { SDL } from '@/sdl';
+import { CStruct } from '@cstruct';
+import { getStructMemoryAddress } from '@utility/common';
 import { type Pointer } from 'bun:ffi';
-import type { SDL } from '../../..';
-import { getStructMemoryAddress } from '../../../utility/common';
-import { CStruct } from '../../../utility/cstruct';
 
 export function acquireGPUCommandBuffer(this: SDL, device: Pointer) {
   return this.symbols.SDL_AcquireGPUCommandBuffer(device);

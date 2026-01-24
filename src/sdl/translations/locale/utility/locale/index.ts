@@ -1,5 +1,5 @@
+import { stringToCString } from '@utility/common';
 import { CString, ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
-import { stringToCString } from '../../../../utility/common';
 import { ByteOffset } from './constant';
 
 export class Locale {

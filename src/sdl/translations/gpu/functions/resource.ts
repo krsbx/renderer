@@ -1,6 +1,6 @@
+import type { SDL } from '@/sdl';
+import { getStructAddress } from '@utility/common';
 import type { Pointer } from 'bun:ffi';
-import type { SDL } from '../../..';
-import { getStructAddress } from '../../../utility/common';
 import {
   GPUBufferCreateInfo,
   GPUComputePipelineCreateInfo,

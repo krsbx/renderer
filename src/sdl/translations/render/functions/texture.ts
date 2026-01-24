@@ -1,14 +1,11 @@
+import type { SDL } from '@/sdl';
+import { CStruct } from '@cstruct';
+import { getStructAddress, getStructMemoryAddress } from '@utility/common';
 import { type Pointer } from 'bun:ffi';
-import type { SDL } from '../../..';
 import type { BlendMode } from '../../../ffi/blend-mode/constant';
 import type { PixelFormat } from '../../../ffi/pixels/constant';
 import type { TextureAccess } from '../../../ffi/render/constant';
 import type { ScaleMode } from '../../../ffi/surface/constant';
-import {
-  getStructAddress,
-  getStructMemoryAddress,
-} from '../../../utility/common';
-import { CStruct } from '../../../utility/cstruct';
 import { Palette } from '../../pixels/utility';
 import { Rect } from '../../rect/utility';
 import { Surface } from '../../surface/utility';

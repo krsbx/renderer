@@ -1,7 +1,7 @@
+import type { SDL } from '@/sdl';
+import { CStruct } from '@cstruct';
+import { stringToCString } from '@utility/common';
 import { CString, type Pointer } from 'bun:ffi';
-import type { SDL } from '../../..';
-import { stringToCString } from '../../../utility/common';
-import { CStruct } from '../../../utility/cstruct';
 
 export function vulkanLoadLibrary(this: SDL, path: string) {
   return this.symbols.SDL_Vulkan_LoadLibrary(stringToCString(path).ptr);

@@ -1,4 +1,4 @@
-import type { Brand } from '../../types/shared';
+import type { Brand } from '@/types/shared';
 
 const RawIOStatus = {
   READY: 0 /**< Everything is ready (no errors and not EOF). */,

@@ -1,8 +1,8 @@
+import type { SDL } from '@/sdl';
+import { CStruct } from '@cstruct';
+import { stringToCString } from '@utility/common';
 import type { JSCallback, Pointer } from 'bun:ffi';
-import type { SDL } from '../../..';
 import type { LogPriority } from '../../../ffi/log/constant';
-import { stringToCString } from '../../../utility/common';
-import { CStruct } from '../../../utility/cstruct';
 
 export function setLogPriorities(this: SDL, priority: LogPriority) {
   this.symbols.SDL_SetLogPriorities(priority);

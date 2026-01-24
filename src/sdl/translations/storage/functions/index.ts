@@ -1,8 +1,8 @@
+import type { SDL } from '@/sdl';
+import { CStruct } from '@cstruct';
+import { getStructAddress, stringToCString } from '@utility/common';
 import { CString, ptr, type JSCallback, type Pointer } from 'bun:ffi';
-import type { SDL } from '../../..';
 import type { GlobFlags } from '../../../ffi/file-system/constant';
-import { getStructAddress, stringToCString } from '../../../utility/common';
-import { CStruct } from '../../../utility/cstruct';
 import { PathInfo } from '../../file-system/utility';
 import { StorageInterface } from '../utility';
 

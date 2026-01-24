@@ -1,11 +1,11 @@
+import type { SDL } from '@/sdl';
+import { CStruct } from '@cstruct';
 import type { Pointer } from 'bun:ffi';
-import type { SDL } from '../../..';
 import type {
   GPUPresentMode,
   GPUSwapchainComposition,
   GPUTextureFormat,
 } from '../../../ffi/gpu/constant';
-import { CStruct } from '../../../utility/cstruct';
 
 // Swapchain
 

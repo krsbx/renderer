@@ -1,7 +1,7 @@
+import type { SDL } from '@/sdl';
+import { stringToCString } from '@utility/common';
 import type { JSCallback, Pointer } from 'bun:ffi';
-import type { SDL } from '../../..';
 import type { InitFlags } from '../../../ffi/init/constant';
-import { stringToCString } from '../../../utility/common';
 
 export function init(this: SDL, flags: InitFlags) {
   return this.symbols.SDL_Init(flags);

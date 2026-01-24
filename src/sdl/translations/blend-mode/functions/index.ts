@@ -1,4 +1,4 @@
-import type { SDL } from '../../..';
+import type { SDL } from '@/sdl';
 import type {
   BlendFactor,
   BlendMode,

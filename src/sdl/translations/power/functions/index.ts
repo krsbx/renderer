@@ -1,6 +1,6 @@
-import type { SDL } from '../../..';
+import type { SDL } from '@/sdl';
+import { CStruct } from '@cstruct';
 import type { PowerState } from '../../../ffi/power/constant';
-import { CStruct } from '../../../utility/cstruct';
 
 export function getPowerInfo(this: SDL) {
   const secondsStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });

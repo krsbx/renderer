@@ -1,5 +1,5 @@
+import type { SDL } from '@/sdl';
 import type { Pointer } from 'bun:ffi';
-import type { SDL } from '../../..';
 
 // Submit/Cancel
 

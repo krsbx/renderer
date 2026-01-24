@@ -1,8 +1,8 @@
+import type { SDL } from '@/sdl';
+import { CStruct } from '@cstruct';
+import { getStructAddress } from '@utility/common';
 import type { Pointer } from 'bun:ffi';
-import type { SDL } from '../../..';
 import type { PixelFormat } from '../../../ffi/pixels/constant';
-import { getStructAddress } from '../../../utility/common';
-import { CStruct } from '../../../utility/cstruct';
 import { Color, Palette, PixelFormatDetails } from '../utility';
 
 export function getPixelFormatName(this: SDL, format: PixelFormat) {

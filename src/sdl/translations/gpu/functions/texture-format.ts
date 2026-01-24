@@ -1,5 +1,6 @@
+import type { SDL } from '@/sdl';
+import { getStructAddress } from '@utility/common';
 import type { Pointer } from 'bun:ffi';
-import type { SDL } from '../../..';
 import type {
   GPUSampleCount,
   GPUTextureFormat,
@@ -7,7 +8,6 @@ import type {
   GPUTextureUsageFlags,
 } from '../../../ffi/gpu/constant';
 import type { PixelFormat } from '../../../ffi/pixels/constant';
-import { getStructAddress } from '../../../utility/common';
 import { GPUBlitInfo } from '../utility';
 
 // Texture Operations

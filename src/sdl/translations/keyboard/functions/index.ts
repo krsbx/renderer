@@ -1,9 +1,9 @@
+import type { SDL } from '@/sdl';
+import { CStruct } from '@cstruct';
+import { getStructAddress, stringToCString } from '@utility/common';
 import type { Pointer } from 'bun:ffi';
-import type { SDL } from '../../..';
 import type { Keycode, Keymod } from '../../../ffi/keycode/constant';
 import type { Scancode } from '../../../ffi/scancode/constant';
-import { getStructAddress, stringToCString } from '../../../utility/common';
-import { CStruct } from '../../../utility/cstruct';
 import { Rect } from '../../rect/utility';
 import { KeyboardState } from '../utility';
 

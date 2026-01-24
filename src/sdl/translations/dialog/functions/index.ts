@@ -1,8 +1,8 @@
+import type { SDL } from '@/sdl';
+import { CStruct } from '@cstruct';
+import { stringToCString } from '@utility/common';
 import { type JSCallback, type Pointer } from 'bun:ffi';
-import type { SDL } from '../../..';
 import type { FileDialogType } from '../../../ffi/dialog/constant';
-import { stringToCString } from '../../../utility/common';
-import { CStruct } from '../../../utility/cstruct';
 import { DialogFileFilter } from '../utility';
 
 function constructFilters(

@@ -1,4 +1,4 @@
-import type { Brand } from '../../types/shared';
+import type { Brand } from '@/types/shared';
 
 const RawTrayEntryFlags = {
   BUTTON: 0x00000001,

@@ -1,9 +1,9 @@
+import type { SDL } from '@/sdl';
+import { getStructAddress } from '@utility/common';
 import type { Pointer } from 'bun:ffi';
-import type { SDL } from '../../..';
 import type { ScaleMode } from '../../../ffi/surface/constant';
-import { getStructAddress } from '../../../utility/common';
-import { Surface } from '../utility';
 import { Rect } from '../../rect/utility';
+import { Surface } from '../utility';
 
 export function blitSurface(
   this: SDL,

@@ -1,4 +1,4 @@
-import type { SDL } from '../../..';
+import type { SDL } from '@/sdl';
 
 export function setLinuxThreadPriority(
   this: SDL,

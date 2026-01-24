@@ -1,7 +1,7 @@
+import type { SDL } from '@/sdl';
+import { CStruct } from '@cstruct';
 import type { Pointer } from 'bun:ffi';
-import type { SDL } from '../../..';
 import type { BlendMode } from '../../../ffi/blend-mode/constant';
-import { CStruct } from '../../../utility/cstruct';
 
 // Draw Color
 

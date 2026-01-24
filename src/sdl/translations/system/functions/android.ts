@@ -1,6 +1,6 @@
+import type { SDL } from '@/sdl';
+import { stringToCString } from '@utility/common';
 import { type JSCallback, type Pointer } from 'bun:ffi';
-import type { SDL } from '../../..';
-import { stringToCString } from '../../../utility/common';
 
 export function getAndroidJNIEnv(this: SDL) {
   return this.symbols.SDL_GetAndroidJNIEnv();

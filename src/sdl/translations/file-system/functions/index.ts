@@ -1,8 +1,8 @@
+import type { SDL } from '@/sdl';
+import { CStruct } from '@cstruct';
+import { stringToCString } from '@utility/common';
 import { CString, type JSCallback, type Pointer } from 'bun:ffi';
-import type { SDL } from '../../..';
 import type { Folder, GlobFlags } from '../../../ffi/file-system/constant';
-import { stringToCString } from '../../../utility/common';
-import { CStruct } from '../../../utility/cstruct';
 import { PathInfo } from '../utility';
 
 export function getBasePath(this: SDL) {

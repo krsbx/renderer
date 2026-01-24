@@ -1,7 +1,7 @@
+import { CWideString } from '@cwstring';
+import { stringToCString } from '@utility/common';
 import { CString, ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
 import type { HIDBusType } from '../../../../ffi/hidapi/constant';
-import { stringToCString } from '../../../../utility/common';
-import { CWideString } from '../../../../utility/cwstring';
 import { ByteOffset } from './constant';
 
 export class HIDDeviceInfo {

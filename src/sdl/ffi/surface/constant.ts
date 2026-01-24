@@ -1,4 +1,4 @@
-import type { Brand } from '../../types/shared';
+import type { Brand } from '@/types/shared';
 
 const RawSurfaceFlags = {
   PREALLOCATED: 0x00000001 /**< Surface uses preallocated pixel memory */,

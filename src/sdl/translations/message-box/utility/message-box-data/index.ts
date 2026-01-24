@@ -1,6 +1,6 @@
+import { stringToCString } from '@utility/common';
 import { CString, ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
 import type { MessageBoxFlags } from '../../../../ffi/message-box/constant';
-import { stringToCString } from '../../../../utility/common';
 import { MessageBoxButtonData } from '../message-box-button-data';
 import { MessageBoxColorScheme } from '../message-box-color-scheme';
 import { ByteOffset } from './constant';

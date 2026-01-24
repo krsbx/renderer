@@ -1,4 +1,4 @@
-import type { Brand } from '../../types/shared';
+import type { Brand } from '@/types/shared';
 
 const RawHapticEffectType = {
   CONSTANT: 1 << 0, // 1

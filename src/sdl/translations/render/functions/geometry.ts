@@ -1,8 +1,8 @@
+import type { SDL } from '@/sdl';
+import { CStruct } from '@cstruct';
+import { getStructMemoryAddress } from '@utility/common';
 import { type Pointer } from 'bun:ffi';
-import type { SDL } from '../../..';
 import type { TextureAddressMode } from '../../../ffi/render/constant';
-import { getStructMemoryAddress } from '../../../utility/common';
-import { CStruct } from '../../../utility/cstruct';
 import { FColor } from '../../pixels/utility';
 import { Vertex } from '../utility';
 

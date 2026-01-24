@@ -1,14 +1,11 @@
+import type { SDL } from '@/sdl';
+import { CStruct } from '@cstruct';
+import { getStructAddress, getStructMemoryAddress } from '@utility/common';
 import { type JSCallback, type Pointer } from 'bun:ffi';
-import type { SDL } from '../../..';
 import type {
   MouseButtonFlags,
   SystemCursor,
 } from '../../../ffi/mouse/constant';
-import {
-  getStructAddress,
-  getStructMemoryAddress,
-} from '../../../utility/common';
-import { CStruct } from '../../../utility/cstruct';
 import { Surface } from '../../surface/utility';
 import { CursorFrameInfo } from '../utility';
 

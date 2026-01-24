@@ -1,7 +1,7 @@
+import type { SDL } from '@/sdl';
+import { CStruct } from '@cstruct';
+import { getStructAddress, stringToCString } from '@utility/common';
 import { CString, type Pointer } from 'bun:ffi';
-import type { SDL } from '../../..';
-import { getStructAddress, stringToCString } from '../../../utility/common';
-import { CStruct } from '../../../utility/cstruct';
 import { GUID } from '../utility';
 
 // GUID string format is 32 hex chars + null terminator = 33 bytes

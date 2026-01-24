@@ -1,4 +1,4 @@
-import type { Brand } from '../../types/shared';
+import type { Brand } from '@/types/shared';
 
 const RawTextureAccess = {
   STATIC: 0 /**< Changes rarely, not lockable */,

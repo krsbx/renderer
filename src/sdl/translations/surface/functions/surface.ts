@@ -1,10 +1,7 @@
+import type { SDL } from '@/sdl';
+import { getStructAddress, getStructMemoryAddress } from '@utility/common';
 import { type Pointer } from 'bun:ffi';
-import type { SDL } from '../../..';
 import type { Colorspace, PixelFormat } from '../../../ffi/pixels/constant';
-import {
-  getStructAddress,
-  getStructMemoryAddress,
-} from '../../../utility/common';
 import { Surface } from '../utility';
 
 // Create/Destroy

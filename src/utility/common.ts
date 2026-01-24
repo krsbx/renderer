@@ -2,9 +2,6 @@ import { CString, ptr, type Pointer } from 'bun:ffi';
 import { IS_WINDOWS, WIDE_STRING_CHAR_SIZE } from './constant';
 import { CWideString } from './cwstring';
 
-export const IS_BIG_ENDIAN =
-  new Uint8Array(new Uint16Array([0x1234]).buffer)[0] === 0x12;
-
 export function toCWideStringBuffer(value: string) {
   const chars = [...value];
   const isTerminated = chars.length > 0 && chars.at(-1)?.codePointAt?.(0) === 0;

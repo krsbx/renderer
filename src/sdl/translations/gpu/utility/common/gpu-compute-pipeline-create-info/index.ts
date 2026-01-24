@@ -1,8 +1,7 @@
+import { stringToCString } from '@utility/common';
 import { CString, ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
 import type { GPUShaderFormat } from '../../../../../ffi/gpu/constant';
-import { stringToCString } from '../../../../../utility/common';
 import { ByteOffset } from './constant';
-
 export class GPUComputePipelineCreateInfo {
   public static readonly BYTE_SIZE = 72;
 

@@ -1,8 +1,8 @@
+import type { SDL } from '@/sdl';
+import { CStruct } from '@cstruct';
+import { getStructAddress } from '@utility/common';
 import type { Pointer } from 'bun:ffi';
-import type { SDL } from '../../..';
 import type { RendererLogicalPresentation } from '../../../ffi/render/constant';
-import { getStructAddress } from '../../../utility/common';
-import { CStruct } from '../../../utility/cstruct';
 import { Event } from '../../events/utility';
 import { FRect, Rect } from '../../rect/utility';
 

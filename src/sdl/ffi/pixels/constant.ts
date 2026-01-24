@@ -1,5 +1,5 @@
-import type { Brand } from '../../types/shared';
-import { IS_BIG_ENDIAN } from '../../utility/common';
+import type { Brand } from '@/types/shared';
+import { IS_BIG_ENDIAN } from '@constant';
 
 const RawPixelType = {
   UNKNOWN: 0,

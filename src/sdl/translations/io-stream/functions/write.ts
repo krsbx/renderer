@@ -1,6 +1,6 @@
+import type { SDL } from '@/sdl';
+import { getStructMemoryAddress } from '@utility/common';
 import { type Pointer } from 'bun:ffi';
-import type { SDL } from '../../..';
-import { getStructMemoryAddress } from '../../../utility/common';
 
 export function writeIO(
   this: SDL,

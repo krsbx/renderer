@@ -1,5 +1,7 @@
+import type { SDL } from '@/sdl';
+import { CStruct } from '@cstruct';
+import { stringToCString } from '@utility/common';
 import { CString, type Pointer } from 'bun:ffi';
-import type { SDL } from '../../..';
 import {
   type GamepadAxis,
   type GamepadButton,
@@ -7,8 +9,6 @@ import {
 } from '../../../ffi/gamepad/constant';
 import type { JoystickConnectionState } from '../../../ffi/joystick/constant';
 import type { PowerState } from '../../../ffi/power/constant';
-import { stringToCString } from '../../../utility/common';
-import { CStruct } from '../../../utility/cstruct';
 import { GUID } from '../../guid/utility';
 import { GamepadBinding } from '../utility';
 

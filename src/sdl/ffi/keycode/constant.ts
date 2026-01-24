@@ -1,4 +1,4 @@
-import type { Brand } from '../../types/shared';
+import type { Brand } from '@/types/shared';
 
 export const RawKeycode = {
   EXTENDED_MASK: 1 << 29,

@@ -1,8 +1,7 @@
+import { stringToCString } from '@utility/common';
 import { CString, ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
-import { stringToCString } from '../../../../../utility/common';
 import { ByteOffset } from './constant';
 import type { TextEditingEventType } from './types';
-
 export class TextEditingEvent {
   public static readonly BYTE_SIZE = 48;
 

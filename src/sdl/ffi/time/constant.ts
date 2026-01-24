@@ -1,4 +1,4 @@
-import type { Brand } from '../../types/shared';
+import type { Brand } from '@/types/shared';
 
 const RawDateFormat = {
   YYYYMMDD: 0 /**< Year/Month/Day */,

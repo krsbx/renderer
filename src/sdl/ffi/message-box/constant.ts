@@ -1,4 +1,4 @@
-import type { Brand } from '../../types/shared';
+import type { Brand } from '@/types/shared';
 
 const RawMessageBoxFlags = {
   ERROR: 0x00000010 /**< error dialog */,

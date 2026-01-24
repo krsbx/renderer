@@ -1,6 +1,6 @@
+import type { SDL } from '@/sdl';
+import { CStruct } from '@cstruct';
 import type { JSCallback, Pointer } from 'bun:ffi';
-import type { SDL } from '../../..';
-import { CStruct } from '../../../utility/cstruct';
 
 export function setWindowsMessageHook(
   this: SDL,

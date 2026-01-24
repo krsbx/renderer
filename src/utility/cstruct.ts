@@ -2,6 +2,11 @@ import { type Pointer, ptr, read, toArrayBuffer } from 'bun:ffi';
 
 type ReadType = keyof typeof read;
 
+interface StructConstructor<T> {
+  new (data: Pointer | Uint8Array): T;
+  readonly BYTE_SIZE: number;
+}
+
 type CStructOptions =
   | {
       length: number;
@@ -222,5 +227,38 @@ export class CStruct {
     struct.$address = ptr(struct.$memory);
 
     return struct as CStruct & { $memory: Uint8Array };
+  }
+
+  public static readArray<T>(
+    StructClass: StructConstructor<T>,
+    address: Pointer,
+    count: number
+  ): T[] {
+    if (!address || count <= 0) return [];
+
+    const totalSize = count * StructClass.BYTE_SIZE;
+    const buffer = toArrayBuffer(address, 0, totalSize);
+    const memory = new Uint8Array(buffer);
+
+    return Array.from({ length: count }, (_, i) => {
+      const offset = i * StructClass.BYTE_SIZE;
+      return new StructClass(
+        memory.subarray(offset, offset + StructClass.BYTE_SIZE)
+      );
+    });
+  }
+
+  public static writeArray<T extends { $memory: Uint8Array }>(
+    items: T[],
+    itemSize: number
+  ): { buffer: Uint8Array; address: Pointer } {
+    const buffer = new Uint8Array(items.length * itemSize);
+
+    for (let i = 0; i < items.length; i++) {
+      const offset = i * itemSize;
+      buffer.set(items[i]!.$memory, offset);
+    }
+
+    return { buffer, address: ptr(buffer) };
   }
 }

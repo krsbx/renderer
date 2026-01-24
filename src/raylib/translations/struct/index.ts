@@ -1,0 +1,12 @@
+export { Color } from './color';
+export { Font } from './font';
+export { GlyphInfo } from './glyph-info';
+export { Image } from './image';
+export { Matrix } from './matrix';
+export { NPatchInfo } from './n-patch-info';
+export { Rectangle } from './rectangle';
+export { RenderTexture } from './render-texture';
+export { Texture, Texture2D } from './texture';
+export { Vector2 } from './vector2';
+export { Vector3 } from './vector3';
+export { Vector4 } from './vector4';

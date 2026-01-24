@@ -7,19 +7,36 @@ interface StructConstructor<T> {
   readonly BYTE_SIZE: number;
 }
 
-type CStructOptions =
-  | {
-      length: number;
-      address: Pointer;
-    }
-  | {
-      length: number;
-    }
-  | {
-      address: Pointer;
-    };
+type CStructOptionsWithLength = {
+  length: number;
+};
 
-export class CStruct {
+type CStructOptionsWithAddress = {
+  address: Pointer;
+};
+
+type CStructOptionsWithLengthAndAddress = {
+  length: number;
+  address: Pointer;
+};
+
+type CStructOptions =
+  | CStructOptionsWithLength
+  | CStructOptionsWithAddress
+  | CStructOptionsWithLengthAndAddress;
+
+export class CStruct<
+  Options extends CStructOptions = CStructOptions,
+  Address extends Options extends CStructOptionsWithLength
+    ? Uint8Array
+    : Options extends CStructOptionsWithAddress
+      ? Pointer
+      : Uint8Array = Options extends CStructOptionsWithLength
+    ? Uint8Array
+    : Options extends CStructOptionsWithAddress
+      ? Pointer
+      : Uint8Array,
+> {
   public static readonly BYTE_SIZE = {
     u8: 1,
     i8: 1,
@@ -35,33 +52,29 @@ export class CStruct {
     ptr: 8,
   } as const;
 
-  public $memory: Uint8Array | null;
-  public $address: Pointer;
-  public $view: DataView | null;
+  public $memory: Uint8Array;
+  public $address: Address;
+  public $view: DataView;
 
-  public constructor(options: CStructOptions) {
+  public constructor(options: Options) {
     if ('address' in options && 'length' in options) {
       const buffer = toArrayBuffer(options.address, 0, options.length);
       this.$memory = new Uint8Array(buffer);
-      this.$address = options.address;
+      this.$address = options.address as Address;
     } else if ('length' in options) {
       this.$memory = new Uint8Array(options.length);
-      this.$address = ptr(this.$memory);
+      this.$address = this.$memory as Address;
     } else {
-      this.$memory = null;
-      this.$address = options.address;
-      this.$view = null;
+      const buffer = toArrayBuffer(options.address);
+      this.$memory = new Uint8Array(buffer);
+      this.$address = options.address as Address;
     }
 
-    if (this.$memory) {
-      this.$view = new DataView(
-        this.$memory.buffer,
-        this.$memory.byteOffset,
-        this.$memory.byteLength
-      );
-    } else {
-      this.$view = null;
-    }
+    this.$view = new DataView(
+      this.$memory.buffer,
+      this.$memory.byteOffset,
+      this.$memory.byteLength
+    );
   }
 
   public getValue(
@@ -79,62 +92,38 @@ export class CStruct {
   public getValue(offset: number, type: ReadType) {
     switch (type) {
       case 'u8':
-        return this.$view
-          ? this.$view.getUint8(offset)
-          : read.u8(this.$address, offset);
+        return this.$view.getUint8(offset);
 
       case 'i8':
-        return this.$view
-          ? this.$view.getInt8(offset)
-          : read.i8(this.$address, offset);
+        return this.$view.getInt8(offset);
 
       case 'u16':
-        return this.$view
-          ? this.$view.getUint16(offset, true)
-          : read.u16(this.$address, offset);
+        return this.$view.getUint16(offset, true);
 
       case 'i16':
-        return this.$view
-          ? this.$view.getInt16(offset, true)
-          : read.i16(this.$address, offset);
+        return this.$view.getInt16(offset, true);
 
       case 'u32':
-        return this.$view
-          ? this.$view.getUint32(offset, true)
-          : read.u32(this.$address, offset);
+        return this.$view.getUint32(offset, true);
 
       case 'i32':
-        return this.$view
-          ? this.$view.getInt32(offset, true)
-          : read.i32(this.$address, offset);
+        return this.$view.getInt32(offset, true);
 
       case 'f32':
-        return this.$view
-          ? this.$view.getFloat32(offset, true)
-          : read.f32(this.$address, offset);
+        return this.$view.getFloat32(offset, true);
 
       case 'u64':
-        return this.$view
-          ? this.$view.getBigUint64(offset, true)
-          : read.u64(this.$address, offset);
+        return this.$view.getBigUint64(offset, true);
 
       case 'i64':
-        return this.$view
-          ? this.$view.getBigInt64(offset, true)
-          : read.i64(this.$address, offset);
+        return this.$view.getBigInt64(offset, true);
 
       case 'f64':
-        return this.$view
-          ? this.$view.getFloat64(offset, true)
-          : read.f64(this.$address, offset);
+        return this.$view.getFloat64(offset, true);
 
       case 'intptr':
-      case 'ptr': {
-        if (this.$view)
-          return Number(this.$view.getBigInt64(offset, true)) as Pointer;
-
-        return read.ptr(this.$address, offset);
-      }
+      case 'ptr':
+        return Number(this.$view.getBigInt64(offset, true)) as Pointer;
 
       default:
         throw new Error(`Unsupported type: ${type}`);
@@ -224,9 +213,9 @@ export class CStruct {
     });
 
     struct.$memory = this.$memory.slice();
-    struct.$address = ptr(struct.$memory);
+    struct.$address = struct.$memory;
 
-    return struct as CStruct & { $memory: Uint8Array };
+    return struct;
   }
 
   public static readArray<T>(

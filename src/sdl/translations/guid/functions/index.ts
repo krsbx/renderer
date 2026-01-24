@@ -1,7 +1,7 @@
 import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
 import { getStructAddress, stringToCString } from '@utility/common';
-import { CString } from 'bun:ffi';
+import { CString, ptr } from 'bun:ffi';
 import { GUID } from '../utility';
 
 // GUID string format is 32 hex chars + null terminator = 33 bytes
@@ -16,7 +16,7 @@ export function guidToString(this: SDL, guid: GUID) {
     GUID_STRING_SIZE
   );
 
-  return new CString(buffer.$address).toString();
+  return new CString(ptr(buffer.$address)).toString();
 }
 
 export function stringToGUID(this: SDL, str: string) {

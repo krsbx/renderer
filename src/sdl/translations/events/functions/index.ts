@@ -1,7 +1,7 @@
 import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
 import { getStructAddress } from '@utility/common';
-import { CString, type JSCallback, type Pointer } from 'bun:ffi';
+import { CString, ptr, type JSCallback, type Pointer } from 'bun:ffi';
 import { type EventAction, type EventType } from '../../../ffi/events/constant';
 import { Event } from '../utility';
 
@@ -195,5 +195,5 @@ export function getEventDescription(this: SDL, event: Event) {
 
   if (length <= 0) return null;
 
-  return new CString(buffer.$address).toString();
+  return new CString(ptr(buffer.$address)).toString();
 }

@@ -56,3 +56,5 @@ export class RenderTexture {
     this.$view.setUint32(ByteOffset.id, value, true);
   }
 }
+
+export { RenderTexture as RenderTexture2D };

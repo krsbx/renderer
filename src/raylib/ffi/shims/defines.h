@@ -136,6 +136,8 @@
 #define LoadVrStereoConfig _raylib_LoadVrStereoConfig
 
 // Files
+#define LoadDirectoryFiles _raylib_LoadDirectoryFiles
+#define LoadDirectoryFilesEx _raylib_LoadDirectoryFilesEx
 #define LoadDroppedFiles _raylib_LoadDroppedFiles
 
 // Automation

@@ -5,22 +5,24 @@ import {
 } from './ffi/definition';
 import { loadShim, type ShimDefinition } from './ffi/shims';
 
-export class BaseRayLib implements Library<FFIDefinitionType> {
+export class BaseRayLib implements Library<FFIDefinitionType & ShimDefinition> {
   /** Close the SDL library */
   public readonly close: () => void;
   /** Raw SDL functions */
-  public readonly symbols: ConvertFns<FFIDefinitionType>;
-
-  public readonly shim: Library<ShimDefinition>;
+  public readonly symbols: ConvertFns<FFIDefinitionType & ShimDefinition>;
 
   public constructor(filePath: string) {
     const sdl = dlopen(filePath, FFIDefinition);
-    this.symbols = sdl.symbols;
-    this.shim = loadShim(filePath);
+    const shim = loadShim(filePath);
+
+    this.symbols = {
+      ...sdl.symbols,
+      ...shim.symbols,
+    };
 
     this.close = () => {
       sdl.close();
-      this.shim.close();
+      shim.close();
     };
   }
 

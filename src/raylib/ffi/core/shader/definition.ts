@@ -2,16 +2,18 @@ import { FFIType, type FFIFunction } from 'bun:ffi';
 
 export const ShaderDefinition = {
   // Shader LoadShader(const char *vsFileName, const char *fsFileName);
+  // SHIMMED - see src/raylib/ffi/shims/definition.ts
   // Note: Shader struct is 16 bytes (id + locs pointer)
-  LoadShader: {
-    args: [FFIType.cstring, FFIType.cstring],
-    returns: FFIType.ptr,
-  },
+  // LoadShader: {
+  //   args: [FFIType.cstring, FFIType.cstring],
+  //   returns: FFIType.ptr,
+  // },
   // Shader LoadShaderFromMemory(const char *vsCode, const char *fsCode);
-  LoadShaderFromMemory: {
-    args: [FFIType.cstring, FFIType.cstring],
-    returns: FFIType.ptr,
-  },
+  // SHIMMED - see src/raylib/ffi/shims/definition.ts
+  // LoadShaderFromMemory: {
+  //   args: [FFIType.cstring, FFIType.cstring],
+  //   returns: FFIType.ptr,
+  // },
   // bool IsShaderValid(Shader shader);
   IsShaderValid: {
     args: [FFIType.ptr],

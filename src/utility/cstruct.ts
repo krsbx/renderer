@@ -2,7 +2,7 @@ import { type Pointer, ptr, read, toArrayBuffer } from 'bun:ffi';
 
 type ReadType = keyof typeof read;
 
-interface StructConstructor<T> {
+export interface StructConstructor<T> {
   new (data: Pointer | Uint8Array): T;
   readonly BYTE_SIZE: number;
 }

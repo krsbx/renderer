@@ -3,22 +3,22 @@ import { FFIType, type FFIFunction } from 'bun:ffi';
 export const TextureDrawingDefinition = {
   // void DrawTexture(Texture2D texture, int posX, int posY, Color tint);
   DrawTexture: {
-    args: [FFIType.ptr, FFIType.i32, FFIType.i32, FFIType.u32],
+    args: [FFIType.ptr, FFIType.i32, FFIType.i32, FFIType.ptr],
     returns: FFIType.void,
   },
   // void DrawTextureV(Texture2D texture, Vector2 position, Color tint);
   DrawTextureV: {
-    args: [FFIType.ptr, FFIType.ptr, FFIType.u32],
+    args: [FFIType.ptr, FFIType.ptr, FFIType.ptr],
     returns: FFIType.void,
   },
   // void DrawTextureEx(Texture2D texture, Vector2 position, float rotation, float scale, Color tint);
   DrawTextureEx: {
-    args: [FFIType.ptr, FFIType.ptr, FFIType.f32, FFIType.f32, FFIType.u32],
+    args: [FFIType.ptr, FFIType.ptr, FFIType.f32, FFIType.f32, FFIType.ptr],
     returns: FFIType.void,
   },
   // void DrawTextureRec(Texture2D texture, Rectangle source, Vector2 position, Color tint);
   DrawTextureRec: {
-    args: [FFIType.ptr, FFIType.ptr, FFIType.ptr, FFIType.u32],
+    args: [FFIType.ptr, FFIType.ptr, FFIType.ptr, FFIType.ptr],
     returns: FFIType.void,
   },
   // void DrawTexturePro(Texture2D texture, Rectangle source, Rectangle dest, Vector2 origin, float rotation, Color tint);
@@ -29,7 +29,7 @@ export const TextureDrawingDefinition = {
       FFIType.ptr,
       FFIType.ptr,
       FFIType.f32,
-      FFIType.u32,
+      FFIType.ptr,
     ],
     returns: FFIType.void,
   },
@@ -41,7 +41,7 @@ export const TextureDrawingDefinition = {
       FFIType.ptr,
       FFIType.ptr,
       FFIType.f32,
-      FFIType.u32,
+      FFIType.ptr,
     ],
     returns: FFIType.void,
   },

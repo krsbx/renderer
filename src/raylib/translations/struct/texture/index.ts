@@ -72,4 +72,4 @@ export class Texture {
   }
 }
 
-export { Texture as Texture2D };
+export { Texture as Texture2D, Texture as TextureCubemap };

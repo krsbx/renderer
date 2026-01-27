@@ -82,7 +82,7 @@ export function getStructAddress<
 export function getStructMemoryAddress<
   T extends Parameters<typeof getStructAddress>[0] | NodeJS.TypedArray,
 >(struct: T) {
-  if ('buffer' in struct) return ptr(struct);
+  if ('buffer' in struct) return struct as unknown as Pointer;
 
   return getStructAddress(struct);
 }

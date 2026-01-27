@@ -1,3 +1,4 @@
+import type { StructInit } from '@/types/shared';
 import { stringToCString } from '@utility/common';
 import {
   CString,
@@ -56,6 +57,14 @@ export class VirtualJoystickDesc {
     const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
+  }
+
+  public static create(data?: StructInit<VirtualJoystickDesc>) {
+    const instance = new VirtualJoystickDesc(VirtualJoystickDesc.allocMemory());
+
+    if (data) Object.assign(instance, data);
+
+    return instance;
   }
 
   public get version() {

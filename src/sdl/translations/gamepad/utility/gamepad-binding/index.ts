@@ -1,3 +1,4 @@
+import type { StructInit } from '@/types/shared';
 import { toArrayBuffer, type Pointer } from 'bun:ffi';
 import {
   GamepadBindingType,
@@ -121,6 +122,14 @@ export class GamepadBinding {
     const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
+  }
+
+  public static create(data?: StructInit<GamepadBinding>) {
+    const instance = new GamepadBinding(GamepadBinding.allocMemory());
+
+    if (data) Object.assign(instance, data);
+
+    return instance;
   }
 
   public get inputType() {

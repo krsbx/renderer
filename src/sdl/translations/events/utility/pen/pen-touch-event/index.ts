@@ -1,3 +1,4 @@
+import type { StructInit } from '@/types/shared';
 import { toArrayBuffer, type Pointer } from 'bun:ffi';
 import type { PenInputFlags } from '../../../../../ffi/pen/constant';
 import { ByteOffset } from './constant';
@@ -31,6 +32,14 @@ export class PenTouchEvent {
     const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
+  }
+
+  public static create(data?: StructInit<PenTouchEvent>) {
+    const instance = new PenTouchEvent(PenTouchEvent.allocMemory());
+
+    if (data) Object.assign(instance, data);
+
+    return instance;
   }
 
   public get type() {

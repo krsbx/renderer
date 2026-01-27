@@ -1,3 +1,4 @@
+import type { StructInit } from '@/types/shared';
 import { toArrayBuffer, type Pointer } from 'bun:ffi';
 import { Surface } from '../../../surface/utility';
 import { ByteOffset } from './constant';
@@ -39,6 +40,14 @@ export class CursorFrameInfo {
     const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
+  }
+
+  public static create(data?: StructInit<CursorFrameInfo>) {
+    const instance = new CursorFrameInfo(CursorFrameInfo.allocMemory());
+
+    if (data) Object.assign(instance, data);
+
+    return instance;
   }
 
   public get duration() {

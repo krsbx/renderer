@@ -1,3 +1,4 @@
+import type { StructInit } from '@/types/shared';
 import { stringToCString } from '@utility/common';
 import { CString, toArrayBuffer, type Pointer } from 'bun:ffi';
 import { ByteOffset } from './constant';
@@ -36,6 +37,14 @@ export class DialogFileFilter {
     const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
+  }
+
+  public static create(data?: StructInit<DialogFileFilter>) {
+    const instance = new DialogFileFilter(DialogFileFilter.allocMemory());
+
+    if (data) Object.assign(instance, data);
+
+    return instance;
   }
 
   public get name() {

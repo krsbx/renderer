@@ -1,3 +1,4 @@
+import type { StructInit } from '@/types/shared';
 import { toArrayBuffer, type Pointer } from 'bun:ffi';
 import type { PathType } from '../../../../ffi/file-system/constant';
 import { ByteOffset } from './constant';
@@ -30,6 +31,14 @@ export class PathInfo {
     const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
+  }
+
+  public static create(data?: StructInit<PathInfo>) {
+    const instance = new PathInfo(PathInfo.allocMemory());
+
+    if (data) Object.assign(instance, data);
+
+    return instance;
   }
 
   public get type() {

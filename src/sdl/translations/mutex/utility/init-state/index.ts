@@ -1,3 +1,4 @@
+import type { StructInit } from '@/types/shared';
 import { toArrayBuffer, type Pointer } from 'bun:ffi';
 import { AtomicInt } from '../../../atomic/utility';
 import { ByteOffset } from './constant';
@@ -39,6 +40,14 @@ export class InitState {
     const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
+  }
+
+  public static create(data?: StructInit<InitState>) {
+    const instance = new InitState(InitState.allocMemory());
+
+    if (data) Object.assign(instance, data);
+
+    return instance;
   }
 
   public get thread() {

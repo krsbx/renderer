@@ -1,3 +1,4 @@
+import type { StructInit } from '@/types/shared';
 import { toArrayBuffer, type Pointer } from 'bun:ffi';
 import type { MouseWheelDirection } from '../../../../../ffi/mouse/constant';
 import { ByteOffset } from './constant';
@@ -31,6 +32,14 @@ export class MouseWheelEvent {
     const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
+  }
+
+  public static create(data?: StructInit<MouseWheelEvent>) {
+    const instance = new MouseWheelEvent(MouseWheelEvent.allocMemory());
+
+    if (data) Object.assign(instance, data);
+
+    return instance;
   }
 
   public get type() {

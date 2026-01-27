@@ -1,3 +1,4 @@
+import type { StructInit } from '@/types/shared';
 import { type Pointer, ptr, toArrayBuffer } from 'bun:ffi';
 import { GPUVertexAttribute } from '../gpu-vertex-attribute';
 import { GPUVertexBufferDescription } from '../gpu-vertex-buffer-description';
@@ -36,6 +37,14 @@ export class GPUVertexInputState {
     const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
+  }
+
+  public static create(data?: StructInit<GPUVertexInputState>) {
+    const instance = new GPUVertexInputState(GPUVertexInputState.allocMemory());
+
+    if (data) Object.assign(instance, data);
+
+    return instance;
   }
 
   public get vertexBufferDescriptions() {

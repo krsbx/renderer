@@ -1,3 +1,4 @@
+import type { StructInit } from '@/types/shared';
 import { stringToCString } from '@utility/common';
 import { CString, ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
 import type { MessageBoxFlags } from '../../../../ffi/message-box/constant';
@@ -42,6 +43,14 @@ export class MessageBoxData {
     const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
+  }
+
+  public static create(data?: StructInit<MessageBoxData>) {
+    const instance = new MessageBoxData(MessageBoxData.allocMemory());
+
+    if (data) Object.assign(instance, data);
+
+    return instance;
   }
 
   public get flags() {

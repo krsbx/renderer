@@ -1,3 +1,4 @@
+import type { StructInit } from '@/types/shared';
 import { ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
 import type { GPUTextureFormat } from '../../../../../ffi/gpu/constant';
 import { GPUColorTargetDescription } from '../../color-target';
@@ -39,6 +40,16 @@ export class GPUGraphicsPipelineTargetInfo {
     const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
+  }
+
+  public static create(data?: StructInit<GPUGraphicsPipelineTargetInfo>) {
+    const instance = new GPUGraphicsPipelineTargetInfo(
+      GPUGraphicsPipelineTargetInfo.allocMemory()
+    );
+
+    if (data) Object.assign(instance, data);
+
+    return instance;
   }
 
   public get colorTargetDescriptions() {

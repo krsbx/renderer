@@ -1,3 +1,4 @@
+import type { StructInit } from '@/types/shared';
 import { ptr, read, toArrayBuffer, type Pointer } from 'bun:ffi';
 import { GPUTextureSamplerBinding } from '../../../gpu/utility';
 import { ByteOffset } from './constant';
@@ -207,5 +208,21 @@ export class GPURenderStateCreateInfo {
       BigInt(ptr(this.$storageBufferBuffer)),
       true
     );
+  }
+
+  public static allocMemory() {
+    const buffer = new Uint8Array(this.BYTE_SIZE);
+
+    return buffer;
+  }
+
+  public static create(data?: StructInit<GPURenderStateCreateInfo>) {
+    const instance = new GPURenderStateCreateInfo(
+      GPURenderStateCreateInfo.allocMemory()
+    );
+
+    if (data) Object.assign(instance, data);
+
+    return instance;
   }
 }

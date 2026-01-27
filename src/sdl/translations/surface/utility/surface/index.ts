@@ -1,3 +1,4 @@
+import type { StructInit } from '@/types/shared';
 import { toArrayBuffer, type Pointer } from 'bun:ffi';
 import type { PixelFormat } from '../../../../ffi/pixels/constant';
 import type { SurfaceFlags } from '../../../../ffi/surface/constant';
@@ -31,6 +32,14 @@ export class Surface {
     const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
+  }
+
+  public static create(data?: StructInit<Surface>) {
+    const instance = new Surface(Surface.allocMemory());
+
+    if (data) Object.assign(instance, data);
+
+    return instance;
   }
 
   public get flags() {

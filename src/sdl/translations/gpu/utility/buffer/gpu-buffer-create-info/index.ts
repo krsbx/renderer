@@ -1,3 +1,4 @@
+import type { StructInit } from '@/types/shared';
 import { toArrayBuffer, type Pointer } from 'bun:ffi';
 import type { GPUBufferUsageFlags } from '../../../../../ffi/gpu/constant';
 import { ByteOffset } from './constant';
@@ -30,6 +31,14 @@ export class GPUBufferCreateInfo {
     const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
+  }
+
+  public static create(data?: StructInit<GPUBufferCreateInfo>) {
+    const instance = new GPUBufferCreateInfo(GPUBufferCreateInfo.allocMemory());
+
+    if (data) Object.assign(instance, data);
+
+    return instance;
   }
 
   public get usage() {

@@ -1,3 +1,4 @@
+import type { StructInit } from '@/types/shared';
 import { toArrayBuffer, type Pointer } from 'bun:ffi';
 import { FColor } from '../../../pixels/utility';
 import { FPoint } from '../../../rect/utility';
@@ -54,5 +55,13 @@ export class Vertex {
     const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
+  }
+
+  public static create(data?: StructInit<Vertex>) {
+    const instance = new Vertex(Vertex.allocMemory());
+
+    if (data) Object.assign(instance, data);
+
+    return instance;
   }
 }

@@ -1,3 +1,4 @@
+import type { StructInit } from '@/types/shared';
 import { stringToCString } from '@utility/common';
 import { CString, toArrayBuffer, type Pointer } from 'bun:ffi';
 import type { GPUShaderFormat } from '../../../../../ffi/gpu/constant';
@@ -39,6 +40,16 @@ export class GPUComputePipelineCreateInfo {
     const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
+  }
+
+  public static create(data?: StructInit<GPUComputePipelineCreateInfo>) {
+    const instance = new GPUComputePipelineCreateInfo(
+      GPUComputePipelineCreateInfo.allocMemory()
+    );
+
+    if (data) Object.assign(instance, data);
+
+    return instance;
   }
 
   public get codeSize() {

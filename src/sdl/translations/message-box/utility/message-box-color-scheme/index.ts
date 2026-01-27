@@ -1,3 +1,4 @@
+import type { StructInit } from '@/types/shared';
 import { toArrayBuffer, type Pointer } from 'bun:ffi';
 import { MessageBoxColorType } from '../../../../ffi/message-box/constant';
 import { MessageBoxColor } from '../message-box-color';
@@ -45,6 +46,16 @@ export class MessageBoxColorScheme {
     const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
+  }
+
+  public static create(data?: StructInit<MessageBoxColorScheme>) {
+    const instance = new MessageBoxColorScheme(
+      MessageBoxColorScheme.allocMemory()
+    );
+
+    if (data) Object.assign(instance, data);
+
+    return instance;
   }
 
   public get background() {

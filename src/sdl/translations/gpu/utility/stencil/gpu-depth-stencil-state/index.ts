@@ -1,3 +1,4 @@
+import type { StructInit } from '@/types/shared';
 import { toArrayBuffer, type Pointer } from 'bun:ffi';
 import type { GPUCompareOp } from '../../../../../ffi/gpu/constant';
 import { GPUStencilOpState } from '../gpu-stencil-op-state';
@@ -47,6 +48,16 @@ export class GPUDepthStencilState {
     const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
+  }
+
+  public static create(data?: StructInit<GPUDepthStencilState>) {
+    const instance = new GPUDepthStencilState(
+      GPUDepthStencilState.allocMemory()
+    );
+
+    if (data) Object.assign(instance, data);
+
+    return instance;
   }
 
   public get compareOp() {

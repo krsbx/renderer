@@ -1,3 +1,4 @@
+import type { StructInit } from '@/types/shared';
 import { toArrayBuffer, type Pointer } from 'bun:ffi';
 import type { GPUFilter, GPULoadOp } from '../../../../../ffi/gpu/constant';
 import type { FlipMode } from '../../../../../ffi/surface/constant';
@@ -56,6 +57,14 @@ export class GPUBlitInfo {
     const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
+  }
+
+  public static create(data?: StructInit<GPUBlitInfo>) {
+    const instance = new GPUBlitInfo(GPUBlitInfo.allocMemory());
+
+    if (data) Object.assign(instance, data);
+
+    return instance;
   }
 
   public get loadOp() {

@@ -41,3 +41,5 @@ export type TupleRange<
 export type PublicStructProperties<T> = {
   [K in keyof T as K extends `$${string}` ? never : K]: T[K];
 };
+
+export type StructInit<T> = Partial<PublicStructProperties<T>>;

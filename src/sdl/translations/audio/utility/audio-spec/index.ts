@@ -1,3 +1,4 @@
+import type { StructInit } from '@/types/shared';
 import { toArrayBuffer, type Pointer } from 'bun:ffi';
 import type { AudioFormat } from '../../../../ffi/audio/constant';
 import { ByteOffset } from './constant';
@@ -30,6 +31,14 @@ export class AudioSpec {
     const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
+  }
+
+  public static create(data?: StructInit<AudioSpec>) {
+    const instance = new AudioSpec(AudioSpec.allocMemory());
+
+    if (data) Object.assign(instance, data);
+
+    return instance;
   }
 
   public get format() {

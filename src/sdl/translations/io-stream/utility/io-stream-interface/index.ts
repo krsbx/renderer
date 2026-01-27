@@ -1,3 +1,4 @@
+import type { StructInit } from '@/types/shared';
 import { CStruct } from '@cstruct';
 import {
   linkSymbols,
@@ -45,6 +46,14 @@ export class IOStreamInterface {
     const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
+  }
+
+  public static create(data?: StructInit<IOStreamInterface>) {
+    const instance = new IOStreamInterface(IOStreamInterface.allocMemory());
+
+    if (data) Object.assign(instance, data);
+
+    return instance;
   }
 
   public get version() {

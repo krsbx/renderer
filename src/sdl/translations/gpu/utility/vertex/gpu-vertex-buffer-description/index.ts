@@ -1,3 +1,4 @@
+import type { StructInit } from '@/types/shared';
 import { type Pointer, ptr, toArrayBuffer } from 'bun:ffi';
 import type { GPUVertexInputRate } from '../../../../../ffi/gpu/constant';
 import { ByteOffset } from './constant';
@@ -34,6 +35,16 @@ export class GPUVertexBufferDescription {
     const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
+  }
+
+  public static create(data?: StructInit<GPUVertexBufferDescription>) {
+    const instance = new GPUVertexBufferDescription(
+      GPUVertexBufferDescription.allocMemory()
+    );
+
+    if (data) Object.assign(instance, data);
+
+    return instance;
   }
 
   public get slot() {

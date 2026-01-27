@@ -1,3 +1,4 @@
+import type { StructInit } from '@/types/shared';
 import { toArrayBuffer, type Pointer } from 'bun:ffi';
 import type { GPULoadOp, GPUStoreOp } from '../../../../../ffi/gpu/constant';
 import { FColor } from '../../../../pixels/utility';
@@ -39,6 +40,14 @@ export class GPUColorTargetInfo {
     const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
+  }
+
+  public static create(data?: StructInit<GPUColorTargetInfo>) {
+    const instance = new GPUColorTargetInfo(GPUColorTargetInfo.allocMemory());
+
+    if (data) Object.assign(instance, data);
+
+    return instance;
   }
 
   public get texture() {

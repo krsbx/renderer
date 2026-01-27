@@ -1,3 +1,4 @@
+import type { StructInit } from '@/types/shared';
 import { toArrayBuffer, type Pointer } from 'bun:ffi';
 import type { HapticEffectType } from '../../../../ffi/haptic/constant';
 import { HapticCondition } from '../haptic-condition';
@@ -49,6 +50,14 @@ export class HapticEffect {
     const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
+  }
+
+  public static create(data?: StructInit<HapticEffect>) {
+    const instance = new HapticEffect(HapticEffect.allocMemory());
+
+    if (data) Object.assign(instance, data);
+
+    return instance;
   }
 
   public get type() {

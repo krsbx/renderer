@@ -1,3 +1,4 @@
+import type { StructInit } from '@/types/shared';
 import { toArrayBuffer, type Pointer } from 'bun:ffi';
 import { ByteOffset } from './constant';
 import type { JoyButtonEventType } from './types';
@@ -30,6 +31,14 @@ export class JoyButtonEvent {
     const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
+  }
+
+  public static create(data?: StructInit<JoyButtonEvent>) {
+    const instance = new JoyButtonEvent(JoyButtonEvent.allocMemory());
+
+    if (data) Object.assign(instance, data);
+
+    return instance;
   }
 
   public get type() {

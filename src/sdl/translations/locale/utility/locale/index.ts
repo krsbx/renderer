@@ -1,3 +1,4 @@
+import type { StructInit } from '@/types/shared';
 import { stringToCString } from '@utility/common';
 import { CString, toArrayBuffer, type Pointer } from 'bun:ffi';
 import { ByteOffset } from './constant';
@@ -36,6 +37,14 @@ export class Locale {
     const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
+  }
+
+  public static create(data?: StructInit<Locale>) {
+    const instance = new Locale(Locale.allocMemory());
+
+    if (data) Object.assign(instance, data);
+
+    return instance;
   }
 
   public get language() {

@@ -1,3 +1,4 @@
+import type { StructInit } from '@/types/shared';
 import { stringToCString } from '@utility/common';
 import {
   linkSymbols,
@@ -55,6 +56,14 @@ export class StorageInterface {
     const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
+  }
+
+  public static create(data?: StructInit<StorageInterface>) {
+    const instance = new StorageInterface(StorageInterface.allocMemory());
+
+    if (data) Object.assign(instance, data);
+
+    return instance;
   }
 
   public get version() {

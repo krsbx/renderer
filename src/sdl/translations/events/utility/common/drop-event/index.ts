@@ -1,3 +1,4 @@
+import type { StructInit } from '@/types/shared';
 import { stringToCString } from '@utility/common';
 import { CString, toArrayBuffer, type Pointer } from 'bun:ffi';
 import { ByteOffset } from './constant';
@@ -36,6 +37,14 @@ export class DropEvent {
     const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
+  }
+
+  public static create(data?: StructInit<DropEvent>) {
+    const instance = new DropEvent(DropEvent.allocMemory());
+
+    if (data) Object.assign(instance, data);
+
+    return instance;
   }
 
   public get type() {

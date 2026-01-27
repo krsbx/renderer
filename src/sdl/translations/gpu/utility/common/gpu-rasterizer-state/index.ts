@@ -1,3 +1,4 @@
+import type { StructInit } from '@/types/shared';
 import { toArrayBuffer, type Pointer } from 'bun:ffi';
 import type {
   GPUCullMode,
@@ -34,6 +35,14 @@ export class GPURasterizerState {
     const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
+  }
+
+  public static create(data?: StructInit<GPURasterizerState>) {
+    const instance = new GPURasterizerState(GPURasterizerState.allocMemory());
+
+    if (data) Object.assign(instance, data);
+
+    return instance;
   }
 
   public get fillMode() {

@@ -1,3 +1,4 @@
+import type { StructInit } from '@/types/shared';
 import { CWideString } from '@cwstring';
 import { stringToCString } from '@utility/common';
 import { CString, toArrayBuffer, type Pointer } from 'bun:ffi';
@@ -37,6 +38,14 @@ export class HIDDeviceInfo {
     const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
+  }
+
+  public static create(data?: StructInit<HIDDeviceInfo>) {
+    const instance = new HIDDeviceInfo(HIDDeviceInfo.allocMemory());
+
+    if (data) Object.assign(instance, data);
+
+    return instance;
   }
 
   public get path() {

@@ -1,3 +1,4 @@
+import type { StructInit } from '@/types/shared';
 import { stringToCString } from '@utility/common';
 import { CString, ptr, read, toArrayBuffer, type Pointer } from 'bun:ffi';
 import { ByteOffset } from './constant';
@@ -43,6 +44,16 @@ export class TextEditingCandidatesEvent {
     const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
+  }
+
+  public static create(data?: StructInit<TextEditingCandidatesEvent>) {
+    const instance = new TextEditingCandidatesEvent(
+      TextEditingCandidatesEvent.allocMemory()
+    );
+
+    if (data) Object.assign(instance, data);
+
+    return instance;
   }
 
   public get type() {

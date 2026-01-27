@@ -1,3 +1,4 @@
+import type { StructInit } from '@/types/shared';
 import { toArrayBuffer, type Pointer } from 'bun:ffi';
 import { GPUMultisampleState, GPURasterizerState } from '../../common';
 import { GPUDepthStencilState } from '../../stencil';
@@ -68,6 +69,22 @@ export class GPUGraphicsPipelineCreateInfo {
         GPUGraphicsPipelineTargetInfo.BYTE_SIZE + ByteOffset.target_info
       )
     );
+  }
+
+  public static allocMemory() {
+    const buffer = new Uint8Array(this.BYTE_SIZE);
+
+    return buffer;
+  }
+
+  public static create(data?: StructInit<GPUGraphicsPipelineCreateInfo>) {
+    const instance = new GPUGraphicsPipelineCreateInfo(
+      GPUGraphicsPipelineCreateInfo.allocMemory()
+    );
+
+    if (data) Object.assign(instance, data);
+
+    return instance;
   }
 
   public get vertexShader() {

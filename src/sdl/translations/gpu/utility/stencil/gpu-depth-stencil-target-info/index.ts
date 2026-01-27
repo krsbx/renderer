@@ -1,3 +1,4 @@
+import type { StructInit } from '@/types/shared';
 import { toArrayBuffer, type Pointer } from 'bun:ffi';
 import type { GPULoadOp, GPUStoreOp } from '../../../../../ffi/gpu/constant';
 import { ByteOffset } from './constant';
@@ -34,6 +35,16 @@ export class GPUDepthStencilTargetInfo {
     const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
+  }
+
+  public static create(data?: StructInit<GPUDepthStencilTargetInfo>) {
+    const instance = new GPUDepthStencilTargetInfo(
+      GPUDepthStencilTargetInfo.allocMemory()
+    );
+
+    if (data) Object.assign(instance, data);
+
+    return instance;
   }
 
   public get texture() {

@@ -1,8 +1,9 @@
+import type { StructInit } from '@/types/shared';
 import { toArrayBuffer, type Pointer } from 'bun:ffi';
+import { BoneInfo } from '../bone-info';
+import { Material } from '../material';
 import { Matrix } from '../matrix';
 import { Mesh } from '../mesh';
-import { Material } from '../material';
-import { BoneInfo } from '../bone-info';
 import { Transform } from '../transform';
 import { ByteOffset } from './constant';
 
@@ -53,6 +54,14 @@ export class Model {
 
   public static allocMemory() {
     return new Uint8Array(this.BYTE_SIZE);
+  }
+
+  public static create(data?: StructInit<Model>) {
+    const instance = new Model(Model.allocMemory());
+
+    if (data) Object.assign(instance, data);
+
+    return instance;
   }
 
   public get meshCount() {

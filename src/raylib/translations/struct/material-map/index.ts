@@ -1,6 +1,7 @@
+import type { StructInit } from '@/types/shared';
 import { toArrayBuffer, type Pointer } from 'bun:ffi';
-import { Texture } from '../texture';
 import { Color } from '../color';
+import { Texture } from '../texture';
 import { ByteOffset } from './constant';
 
 export class MaterialMap {
@@ -45,6 +46,14 @@ export class MaterialMap {
 
   public static allocMemory() {
     return new Uint8Array(this.BYTE_SIZE);
+  }
+
+  public static create(data?: StructInit<MaterialMap>) {
+    const instance = new MaterialMap(MaterialMap.allocMemory());
+
+    if (data) Object.assign(instance, data);
+
+    return instance;
   }
 
   public get value() {

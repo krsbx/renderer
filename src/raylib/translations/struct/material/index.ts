@@ -1,6 +1,7 @@
+import type { StructInit } from '@/types/shared';
 import { toArrayBuffer, type Pointer } from 'bun:ffi';
-import { Shader } from '../shader';
 import { MaterialMap } from '../material-map';
+import { Shader } from '../shader';
 import { ByteOffset } from './constant';
 
 // raylib defines MAX_MATERIAL_MAPS = 12
@@ -45,6 +46,14 @@ export class Material {
 
   public static allocMemory() {
     return new Uint8Array(this.BYTE_SIZE);
+  }
+
+  public static create(data?: StructInit<Material>) {
+    const instance = new Material(Material.allocMemory());
+
+    if (data) Object.assign(instance, data);
+
+    return instance;
   }
 
   public get maps_ptr() {

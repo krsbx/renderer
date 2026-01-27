@@ -1,3 +1,4 @@
+import type { StructInit } from '@/types/shared';
 import { toArrayBuffer, type Pointer } from 'bun:ffi';
 import { ByteOffset } from './constant';
 
@@ -31,6 +32,14 @@ export class Wave {
 
   public static allocMemory() {
     return new Uint8Array(this.BYTE_SIZE);
+  }
+
+  public static create(data?: StructInit<Wave>) {
+    const instance = new Wave(Wave.allocMemory());
+
+    if (data) Object.assign(instance, data);
+
+    return instance;
   }
 
   public get frameCount() {

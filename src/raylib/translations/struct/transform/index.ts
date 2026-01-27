@@ -1,3 +1,4 @@
+import type { StructInit } from '@/types/shared';
 import { toArrayBuffer, type Pointer } from 'bun:ffi';
 import { Vector3 } from '../vector3';
 import { Quaternion } from '../vector4';
@@ -52,5 +53,13 @@ export class Transform {
 
   public static allocMemory() {
     return new Uint8Array(this.BYTE_SIZE);
+  }
+
+  public static create(data?: StructInit<Transform>) {
+    const instance = new Transform(Transform.allocMemory());
+
+    if (data) Object.assign(instance, data);
+
+    return instance;
   }
 }

@@ -1,3 +1,4 @@
+import type { StructInit } from '@/types/shared';
 import { toArrayBuffer, type Pointer } from 'bun:ffi';
 import { Rectangle } from '../rectangle';
 import { ByteOffset } from './constant';
@@ -39,6 +40,14 @@ export class NPatchInfo {
     const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
+  }
+
+  public static create(data?: StructInit<NPatchInfo>) {
+    const instance = new NPatchInfo(NPatchInfo.allocMemory());
+
+    if (data) Object.assign(instance, data);
+
+    return instance;
   }
 
   public get left() {

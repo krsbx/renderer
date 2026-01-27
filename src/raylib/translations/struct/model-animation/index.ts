@@ -1,3 +1,4 @@
+import type { StructInit } from '@/types/shared';
 import { toArrayBuffer, type Pointer } from 'bun:ffi';
 import { BoneInfo } from '../bone-info';
 import { Transform } from '../transform';
@@ -34,6 +35,14 @@ export class ModelAnimation {
 
   public static allocMemory() {
     return new Uint8Array(this.BYTE_SIZE);
+  }
+
+  public static create(data?: StructInit<ModelAnimation>) {
+    const instance = new ModelAnimation(ModelAnimation.allocMemory());
+
+    if (data) Object.assign(instance, data);
+
+    return instance;
   }
 
   public get boneCount() {

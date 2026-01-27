@@ -1,3 +1,4 @@
+import type { StructInit } from '@/types/shared';
 import { CStruct } from '@cstruct';
 import { toArrayBuffer, type Pointer } from 'bun:ffi';
 import { GlyphInfo } from '../glyph-info';
@@ -53,6 +54,14 @@ export class Font {
     const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
+  }
+
+  public static create(data?: StructInit<Font>) {
+    const instance = new Font(Font.allocMemory());
+
+    if (data) Object.assign(instance, data);
+
+    return instance;
   }
 
   public get baseSize() {

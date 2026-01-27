@@ -1,3 +1,4 @@
+import type { StructInit } from '@/types/shared';
 import { toArrayBuffer, type Pointer } from 'bun:ffi';
 import { AudioStream } from '../audio-stream';
 import { ByteOffset } from './constant';
@@ -37,6 +38,14 @@ export class Sound {
 
   public static allocMemory() {
     return new Uint8Array(this.BYTE_SIZE);
+  }
+
+  public static create(data?: StructInit<Sound>) {
+    const instance = new Sound(Sound.allocMemory());
+
+    if (data) Object.assign(instance, data);
+
+    return instance;
   }
 
   public get frameCount() {

@@ -1,3 +1,4 @@
+import type { StructInit } from '@/types/shared';
 import { toArrayBuffer, type Pointer } from 'bun:ffi';
 import { Vector2 } from '../vector2';
 import { ByteOffset } from './constant';
@@ -44,6 +45,14 @@ export class Camera2D {
 
   public static allocMemory() {
     return new Uint8Array(this.BYTE_SIZE);
+  }
+
+  public static create(data?: StructInit<Camera2D>) {
+    const instance = new Camera2D(Camera2D.allocMemory());
+
+    if (data) Object.assign(instance, data);
+
+    return instance;
   }
 
   public get rotation() {

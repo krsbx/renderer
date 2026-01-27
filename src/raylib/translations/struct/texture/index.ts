@@ -1,3 +1,4 @@
+import type { StructInit } from '@/types/shared';
 import { toArrayBuffer, type Pointer } from 'bun:ffi';
 import { ByteOffset } from './constant';
 
@@ -29,6 +30,14 @@ export class Texture {
     const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
+  }
+
+  public static create(data?: StructInit<Texture>) {
+    const instance = new Texture(Texture.allocMemory());
+
+    if (data) Object.assign(instance, data);
+
+    return instance;
   }
 
   public get id() {

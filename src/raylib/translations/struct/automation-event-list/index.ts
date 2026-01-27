@@ -1,3 +1,4 @@
+import type { StructInit } from '@/types/shared';
 import { toArrayBuffer, type Pointer } from 'bun:ffi';
 import { AutomationEvent } from '../automation-event';
 import { ByteOffset } from './constant';
@@ -32,6 +33,14 @@ export class AutomationEventList {
 
   public static allocMemory() {
     return new Uint8Array(this.BYTE_SIZE);
+  }
+
+  public static create(data?: StructInit<AutomationEventList>) {
+    const instance = new AutomationEventList(AutomationEventList.allocMemory());
+
+    if (data) Object.assign(instance, data);
+
+    return instance;
   }
 
   public get capacity() {

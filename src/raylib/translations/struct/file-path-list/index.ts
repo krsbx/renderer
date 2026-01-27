@@ -1,3 +1,4 @@
+import type { StructInit } from '@/types/shared';
 import { CString, toArrayBuffer, type Pointer } from 'bun:ffi';
 import { ByteOffset } from './constant';
 
@@ -30,6 +31,14 @@ export class FilePathList {
 
   public static allocMemory() {
     return new Uint8Array(this.BYTE_SIZE);
+  }
+
+  public static create(data?: StructInit<FilePathList>) {
+    const instance = new FilePathList(FilePathList.allocMemory());
+
+    if (data) Object.assign(instance, data);
+
+    return instance;
   }
 
   public get count() {

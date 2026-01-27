@@ -1,3 +1,4 @@
+import type { StructInit } from '@/types/shared';
 import { toArrayBuffer, type Pointer } from 'bun:ffi';
 import { Vector3 } from '../vector3';
 import { ByteOffset } from './constant';
@@ -44,5 +45,13 @@ export class Ray {
 
   public static allocMemory() {
     return new Uint8Array(this.BYTE_SIZE);
+  }
+
+  public static create(data?: StructInit<Ray>) {
+    const instance = new Ray(Ray.allocMemory());
+
+    if (data) Object.assign(instance, data);
+
+    return instance;
   }
 }

@@ -1,3 +1,4 @@
+import type { StructInit } from '@/types/shared';
 import { toArrayBuffer, type Pointer } from 'bun:ffi';
 import { Image } from '../image';
 import { ByteOffset } from './constant';
@@ -39,6 +40,14 @@ export class GlyphInfo {
     const buffer = new Uint8Array(this.BYTE_SIZE);
 
     return buffer;
+  }
+
+  public static create(data?: StructInit<GlyphInfo>) {
+    const instance = new GlyphInfo(GlyphInfo.allocMemory());
+
+    if (data) Object.assign(instance, data);
+
+    return instance;
   }
 
   public get value() {

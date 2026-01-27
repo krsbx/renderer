@@ -1,3 +1,4 @@
+import type { StructInit } from '@/types/shared';
 import { toArrayBuffer, type Pointer } from 'bun:ffi';
 import { Matrix } from '../matrix';
 import { ByteOffset } from './constant';
@@ -59,6 +60,14 @@ export class Mesh {
 
   public static allocMemory() {
     return new Uint8Array(this.BYTE_SIZE);
+  }
+
+  public static create(data?: StructInit<Mesh>) {
+    const instance = new Mesh(Mesh.allocMemory());
+
+    if (data) Object.assign(instance, data);
+
+    return instance;
   }
 
   public get vertexCount() {

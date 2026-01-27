@@ -3,7 +3,7 @@ import { ModelDefinition } from './models/definition';
 import { ShapeDefinition } from './shapes/definition';
 import { ShimDefinition } from './shims/definition';
 import { TextDefinition } from './text/definition';
-import { TextureDefinition } from './texture/definition';
+import { TextureDefinition } from './textures/definition';
 
 export const FFIDefinition = {
   ...CoreDefinition,

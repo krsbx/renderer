@@ -3,7 +3,6 @@ import { stringToCString } from '@/utility/common';
 import { CStruct } from '@/utility/cstruct';
 import { type Pointer } from 'bun:ffi';
 import { Color, Font, Image, Rectangle } from '../struct';
-import { lazyLoadStructArray } from '../utility/common';
 
 export function imageCopy(this: RayLib, image: Image) {
   const copy = new Image(Image.allocMemory());
@@ -356,7 +355,7 @@ export function loadImageColors(this: RayLib, image: Image) {
     };
 
   const count = image.width * image.height;
-  const colors = lazyLoadStructArray(Color, ptr, count) as readonly Color[];
+  const colors = CStruct.readArrayLazy(Color, ptr, count);
 
   return {
     colors,
@@ -387,7 +386,7 @@ export function loadImagePalette(
   }
 
   const count = colorCountOut.getValue(0, 'i32');
-  const colors = lazyLoadStructArray(Color, ptr, count) as readonly Color[];
+  const colors = CStruct.readArrayLazy(Color, ptr, count);
 
   return {
     colors,

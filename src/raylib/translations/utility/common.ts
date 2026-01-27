@@ -1,5 +1,4 @@
-import { CStruct, type StructConstructor } from '@/utility/cstruct';
-import { toArrayBuffer, type Pointer } from 'bun:ffi';
+import { CStruct } from '@/utility/cstruct';
 import { Vector2 } from '../struct';
 
 export function generateVector2Points(points: Vector2[]) {
@@ -21,42 +20,4 @@ export function generateVector2Points(points: Vector2[]) {
   }
 
   return struct;
-}
-
-export function lazyLoadStructArray<T>(
-  StructClass: StructConstructor<T>,
-  address: Pointer,
-  count: number
-) {
-  return new Proxy([] as T[], {
-    get(_, prop) {
-      if (prop === 'length') return count;
-
-      const index = Number(prop);
-
-      if (typeof prop === 'string' && !Number.isNaN(index)) {
-        if (index < 0 || index >= count) {
-          throw new RangeError(`Index out of range: ${index}`);
-        }
-
-        const offset = index * StructClass.BYTE_SIZE;
-
-        return new StructClass(
-          new Uint8Array(toArrayBuffer(address, offset, StructClass.BYTE_SIZE))
-        );
-      }
-
-      return undefined;
-    },
-    has(_, prop) {
-      if (prop === 'length') return true;
-
-      if (typeof prop === 'string' && !isNaN(Number(prop))) {
-        const index = Number(prop);
-        return index >= 0 && index < count;
-      }
-
-      return false;
-    },
-  });
 }

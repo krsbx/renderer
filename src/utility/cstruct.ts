@@ -237,6 +237,61 @@ export class CStruct<
     });
   }
 
+  public static readArrayLazy<T>(
+    StructClass: StructConstructor<T>,
+    address: Pointer,
+    count: number
+  ): readonly T[] {
+    if (!address || count <= 0) return [];
+
+    function createInstance(index: number) {
+      const offset = index * StructClass.BYTE_SIZE;
+
+      return new StructClass(
+        new Uint8Array(toArrayBuffer(address, offset, StructClass.BYTE_SIZE))
+      );
+    }
+
+    return new Proxy([], {
+      get(_, prop) {
+        if (prop === 'length') return count;
+
+        if (prop === Symbol.iterator) {
+          return function* () {
+            for (let i = 0; i < count; i++) {
+              yield createInstance(i);
+            }
+          };
+        }
+
+        const index = Number(prop);
+
+        if (typeof prop === 'string' && !Number.isNaN(index)) {
+          if (index < 0 || index >= count) {
+            throw new RangeError(`Index out of range: ${index}`);
+          }
+
+          return createInstance(index);
+        }
+
+        return undefined;
+      },
+      set() {
+        throw new TypeError('Cannot assign to read only array');
+      },
+      has(_, prop) {
+        if (prop === 'length') return true;
+
+        if (typeof prop === 'string' && !isNaN(Number(prop))) {
+          const index = Number(prop);
+          return index >= 0 && index < count;
+        }
+
+        return false;
+      },
+    });
+  }
+
   public static writeArray<T extends { $memory: Uint8Array }>(
     items: T[],
     itemSize: number

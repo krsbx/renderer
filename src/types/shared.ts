@@ -37,3 +37,7 @@ export type TupleRange<
       [...Current, Value],
       Acc | Readonly<[...Current, Value]>
     >;
+
+export type PublicStructProperties<T> = {
+  [K in keyof T as K extends `$${string}` ? never : K]: T[K];
+};

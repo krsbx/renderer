@@ -66,7 +66,7 @@ export function getRenderLogicalPresentation(this: SDL, renderer: Pointer) {
 }
 
 export function getRenderLogicalPresentationRect(this: SDL, renderer: Pointer) {
-  const rect = new FRect(FRect.allocMemory());
+  const rect = FRect.create();
 
   const success = this.symbols.SDL_GetRenderLogicalPresentationRect(
     renderer,
@@ -163,7 +163,7 @@ export function setRenderViewport(
 }
 
 export function getRenderViewport(this: SDL, renderer: Pointer) {
-  const rect = new Rect(Rect.allocMemory());
+  const rect = Rect.create();
 
   const success = this.symbols.SDL_GetRenderViewport(renderer, rect.$address);
 
@@ -177,7 +177,7 @@ export function renderViewportSet(this: SDL, renderer: Pointer) {
 }
 
 export function getRenderSafeArea(this: SDL, renderer: Pointer) {
-  const rect = new Rect(Rect.allocMemory());
+  const rect = Rect.create();
 
   const success = this.symbols.SDL_GetRenderSafeArea(renderer, rect.$address);
 
@@ -202,7 +202,7 @@ export function setRenderClipRect(
 }
 
 export function getRenderClipRect(this: SDL, renderer: Pointer) {
-  const rect = new Rect(Rect.allocMemory());
+  const rect = Rect.create();
 
   const success = this.symbols.SDL_GetRenderClipRect(renderer, rect.$address);
 

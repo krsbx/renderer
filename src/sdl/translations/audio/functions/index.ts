@@ -71,7 +71,7 @@ export function getAudioDeviceFormat(
     spec?: AudioSpec | null;
   }
 ) {
-  const specInstance = options.spec ?? new AudioSpec(AudioSpec.allocMemory());
+  const specInstance = options.spec ?? AudioSpec.create();
   const sampleFrames = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
   const success = this.symbols.SDL_GetAudioDeviceFormat(
@@ -233,10 +233,8 @@ export function getAudioStreamFormat(
     dstSpec?: AudioSpec | null;
   }
 ) {
-  const srcSpecInstance =
-    options.srcSpec ?? new AudioSpec(AudioSpec.allocMemory());
-  const dstSpecInstance =
-    options.dstSpec ?? new AudioSpec(AudioSpec.allocMemory());
+  const srcSpecInstance = options.srcSpec ?? AudioSpec.create();
+  const dstSpecInstance = options.dstSpec ?? AudioSpec.create();
 
   const success = this.symbols.SDL_GetAudioStreamFormat(
     options.stream,
@@ -532,7 +530,7 @@ export function loadWAV_IO(
   this: SDL,
   options: { src: Pointer; closeio: boolean; spec?: AudioSpec | null }
 ) {
-  const specInstance = options.spec ?? new AudioSpec(AudioSpec.allocMemory());
+  const specInstance = options.spec ?? AudioSpec.create();
   const audioBuf = new CStruct({ length: CStruct.BYTE_SIZE.ptr });
   const audioLen = new CStruct({ length: CStruct.BYTE_SIZE.u32 });
 
@@ -560,7 +558,7 @@ export function loadWAV(
     spec?: AudioSpec | null;
   }
 ) {
-  const specInstance = options.spec ?? new AudioSpec(AudioSpec.allocMemory());
+  const specInstance = options.spec ?? AudioSpec.create();
   const audioBuf = new CStruct({ length: CStruct.BYTE_SIZE.ptr });
   const audioLen = new CStruct({ length: CStruct.BYTE_SIZE.u32 });
 

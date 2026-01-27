@@ -247,7 +247,7 @@ export function getWindowSize(this: SDL, window: Pointer) {
 }
 
 export function getWindowSafeArea(this: SDL, window: Pointer) {
-  const rect = new Rect(Rect.allocMemory());
+  const rect = Rect.create();
 
   const success = this.symbols.SDL_GetWindowSafeArea(window, rect.$address);
 

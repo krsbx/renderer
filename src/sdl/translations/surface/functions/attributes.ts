@@ -170,7 +170,7 @@ export function setSurfaceClipRect(
 }
 
 export function getSurfaceClipRect(this: SDL, surface: Surface) {
-  const rect = new Rect(Rect.allocMemory());
+  const rect = Rect.create();
 
   const success = this.symbols.SDL_GetSurfaceClipRect(
     getStructAddress(surface),

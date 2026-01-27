@@ -89,7 +89,7 @@ export function openCamera(
     spec?: CameraSpec | null;
   }
 ) {
-  const specInstance = options.spec ?? new CameraSpec(CameraSpec.allocMemory());
+  const specInstance = options.spec ?? CameraSpec.create();
   const camera = this.symbols.SDL_OpenCamera(
     options.cameraId,
     specInstance.$address
@@ -124,7 +124,7 @@ export function getCameraFormat(
     spec?: CameraSpec | null;
   }
 ) {
-  const specInstance = options.spec ?? new CameraSpec(CameraSpec.allocMemory());
+  const specInstance = options.spec ?? CameraSpec.create();
   const success = this.symbols.SDL_GetCameraFormat(
     options.camera,
     specInstance.$address

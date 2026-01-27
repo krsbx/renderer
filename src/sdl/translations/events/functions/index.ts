@@ -57,7 +57,7 @@ export function flushEvents(
 }
 
 export function pollEvent(this: SDL, event?: Event | null) {
-  const eventInstance = event ?? new Event(Event.allocMemory());
+  const eventInstance = event ?? Event.create();
   const hasEvent = this.symbols.SDL_PollEvent(eventInstance.$address);
 
   if (!hasEvent) return null;
@@ -66,7 +66,7 @@ export function pollEvent(this: SDL, event?: Event | null) {
 }
 
 export function waitEvent(this: SDL, event?: Event | null) {
-  const eventInstance = event ?? new Event(Event.allocMemory());
+  const eventInstance = event ?? Event.create();
   const success = this.symbols.SDL_WaitEvent(eventInstance.$address);
 
   if (!success) return null;
@@ -81,7 +81,7 @@ export function waitEventTimeout(
     timeoutMS: number;
   }
 ) {
-  const eventInstance = options.event ?? new Event(Event.allocMemory());
+  const eventInstance = options.event ?? Event.create();
   const success = this.symbols.SDL_WaitEventTimeout(
     eventInstance.$address,
     options.timeoutMS

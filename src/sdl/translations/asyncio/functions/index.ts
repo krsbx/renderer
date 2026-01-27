@@ -91,8 +91,7 @@ export function getAsyncIOResult(
     outcome?: AsyncIOOutcome | null;
   }
 ) {
-  const outcomeInstance =
-    options.outcome ?? new AsyncIOOutcome(AsyncIOOutcome.allocMemory());
+  const outcomeInstance = options.outcome ?? AsyncIOOutcome.create();
 
   const success = this.symbols.SDL_GetAsyncIOResult(
     options.queue,

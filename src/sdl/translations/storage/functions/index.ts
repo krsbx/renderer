@@ -205,7 +205,7 @@ export function getStoragePathInfo(
     path: string;
   }
 ) {
-  const info = new PathInfo(PathInfo.allocMemory());
+  const info = PathInfo.create();
 
   const success = this.symbols.SDL_GetStoragePathInfo(
     options.storage,

@@ -171,7 +171,7 @@ export function setTextInputArea(
 }
 
 export function getTextInputArea(this: SDL, window: Pointer) {
-  const rect = new Rect(Rect.allocMemory());
+  const rect = Rect.create();
   const cursorStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
   const success = this.symbols.SDL_GetTextInputArea(

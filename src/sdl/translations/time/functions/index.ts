@@ -38,7 +38,7 @@ export function timeToDateTime(
     localTime: boolean;
   }
 ) {
-  const dt = new DateTime(DateTime.allocMemory());
+  const dt = DateTime.create();
 
   const success = this.symbols.SDL_TimeToDateTime(
     options.ticks,

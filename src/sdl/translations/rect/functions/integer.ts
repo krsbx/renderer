@@ -23,7 +23,7 @@ export function getRectIntersection(
     b: Rect;
   }
 ) {
-  const result = new Rect(Rect.allocMemory());
+  const result = Rect.create();
 
   const success = this.symbols.SDL_GetRectIntersection(
     getStructAddress(options.a),
@@ -43,7 +43,7 @@ export function getRectUnion(
     b: Rect;
   }
 ) {
-  const result = new Rect(Rect.allocMemory());
+  const result = Rect.create();
 
   const success = this.symbols.SDL_GetRectUnion(
     getStructAddress(options.a),
@@ -64,7 +64,7 @@ export function getRectEnclosingPoints(
     clip?: Rect | null;
   }
 ) {
-  const result = new Rect(Rect.allocMemory());
+  const result = Rect.create();
 
   const success = this.symbols.SDL_GetRectEnclosingPoints(
     getStructAddress(options.points),

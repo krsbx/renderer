@@ -90,7 +90,7 @@ export function getPathInfo(
     info?: PathInfo | null;
   }
 ) {
-  const infoInstance = options.info ?? new PathInfo(PathInfo.allocMemory());
+  const infoInstance = options.info ?? PathInfo.create();
 
   const success = this.symbols.SDL_GetPathInfo(
     stringToCString(options.path).ptr,

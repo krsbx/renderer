@@ -23,7 +23,7 @@ export function getRectIntersectionFloat(
     b: FRect;
   }
 ) {
-  const result = new FRect(FRect.allocMemory());
+  const result = FRect.create();
 
   const success = this.symbols.SDL_GetRectIntersectionFloat(
     getStructAddress(options.a),
@@ -43,7 +43,7 @@ export function getRectUnionFloat(
     b: FRect;
   }
 ) {
-  const result = new FRect(FRect.allocMemory());
+  const result = FRect.create();
 
   const success = this.symbols.SDL_GetRectUnionFloat(
     getStructAddress(options.a),
@@ -64,7 +64,7 @@ export function getRectEnclosingPointsFloat(
     clip?: FRect | null;
   }
 ) {
-  const result = new FRect(FRect.allocMemory());
+  const result = FRect.create();
 
   const success = this.symbols.SDL_GetRectEnclosingPointsFloat(
     getStructAddress(options.points),

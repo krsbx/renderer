@@ -4,12 +4,15 @@ import {
   type FFIDefinition as FFIDefinitionType,
 } from './ffi/definition';
 import { loadShim, type ShimDefinition } from './ffi/shims';
+import { Translations, Translations as TranslationsType } from './translations';
 
-export class BaseRayLib implements Library<FFIDefinitionType & ShimDefinition> {
+type FFISymbols = FFIDefinitionType & ShimDefinition;
+
+class BaseRayLib implements Library<FFISymbols> {
   /** Close the SDL library */
   public readonly close: () => void;
   /** Raw SDL functions */
-  public readonly symbols: ConvertFns<FFIDefinitionType & ShimDefinition>;
+  public readonly symbols: ConvertFns<FFISymbols>;
 
   public constructor(filePath: string) {
     const sdl = dlopen(filePath, FFIDefinition);
@@ -24,6 +27,12 @@ export class BaseRayLib implements Library<FFIDefinitionType & ShimDefinition> {
       sdl.close();
       shim.close();
     };
+
+    Object.entries(Translations).forEach(([key, value]) => {
+      (this as Record<string, unknown>)[key] = (
+        value as (...args: unknown[]) => unknown
+      ).bind(this);
+    });
   }
 
   public [Symbol.dispose]() {
@@ -31,8 +40,7 @@ export class BaseRayLib implements Library<FFIDefinitionType & ShimDefinition> {
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface RayLib extends BaseRayLib {}
+export interface RayLib extends BaseRayLib, TranslationsType {}
 
 export const RayLib = BaseRayLib as new (
   ...args: ConstructorParameters<typeof BaseRayLib>

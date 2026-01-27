@@ -1,6 +1,6 @@
 import { CoreDefinition } from './core/definition';
 import { ModelDefinition } from './models/definition';
-import { ShapeDefinition } from './shape/definition';
+import { ShapeDefinition } from './shapes/definition';
 import { ShimDefinition } from './shims/definition';
 import { TextDefinition } from './text/definition';
 import { TextureDefinition } from './texture/definition';

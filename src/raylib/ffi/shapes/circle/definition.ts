@@ -3,7 +3,7 @@ import { FFIType, type FFIFunction } from 'bun:ffi';
 export const CircleDefinition = {
   // void DrawCircle(int centerX, int centerY, float radius, Color color);
   DrawCircle: {
-    args: [FFIType.i32, FFIType.i32, FFIType.f32, FFIType.u32],
+    args: [FFIType.i32, FFIType.i32, FFIType.f32, FFIType.ptr],
     returns: FFIType.void,
   },
   // void DrawCircleSector(Vector2 center, float radius, float startAngle, float endAngle, int segments, Color color);
@@ -14,7 +14,7 @@ export const CircleDefinition = {
       FFIType.f32,
       FFIType.f32,
       FFIType.i32,
-      FFIType.u32,
+      FFIType.ptr,
     ],
     returns: FFIType.void,
   },
@@ -26,28 +26,28 @@ export const CircleDefinition = {
       FFIType.f32,
       FFIType.f32,
       FFIType.i32,
-      FFIType.u32,
+      FFIType.ptr,
     ],
     returns: FFIType.void,
   },
   // void DrawCircleGradient(int centerX, int centerY, float radius, Color inner, Color outer);
   DrawCircleGradient: {
-    args: [FFIType.i32, FFIType.i32, FFIType.f32, FFIType.u32, FFIType.u32],
+    args: [FFIType.i32, FFIType.i32, FFIType.f32, FFIType.ptr, FFIType.ptr],
     returns: FFIType.void,
   },
   // void DrawCircleV(Vector2 center, float radius, Color color);
   DrawCircleV: {
-    args: [FFIType.ptr, FFIType.f32, FFIType.u32],
+    args: [FFIType.ptr, FFIType.f32, FFIType.ptr],
     returns: FFIType.void,
   },
   // void DrawCircleLines(int centerX, int centerY, float radius, Color color);
   DrawCircleLines: {
-    args: [FFIType.i32, FFIType.i32, FFIType.f32, FFIType.u32],
+    args: [FFIType.i32, FFIType.i32, FFIType.f32, FFIType.ptr],
     returns: FFIType.void,
   },
   // void DrawCircleLinesV(Vector2 center, float radius, Color color);
   DrawCircleLinesV: {
-    args: [FFIType.ptr, FFIType.f32, FFIType.u32],
+    args: [FFIType.ptr, FFIType.f32, FFIType.ptr],
     returns: FFIType.void,
   },
 } satisfies Record<string, FFIFunction>;

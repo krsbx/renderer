@@ -1,6 +1,6 @@
 import type { RayLib } from '@/raylib';
 import { Rectangle, Vector2 } from '../struct';
-import { generateVector2Points } from './utility';
+import { generateVector2Points } from '../utility/common';
 
 export function checkCollisionRecs(
   this: RayLib,

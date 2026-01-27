@@ -1,6 +1,6 @@
 import type { RayLib } from '@/raylib';
 import { Vector2, type Color } from '../struct';
-import { generateVector2Points } from './utility';
+import { generateVector2Points } from '../utility/common';
 
 export function drawSplineLinear(
   this: RayLib,

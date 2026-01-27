@@ -1,6 +1,6 @@
 import type { RayLib } from '@/raylib';
 import type { Color, Vector2 } from '../struct';
-import { generateVector2Points } from './utility';
+import { generateVector2Points } from '../utility/common';
 
 export function drawTriangle(
   this: RayLib,

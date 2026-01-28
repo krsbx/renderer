@@ -1,7 +1,6 @@
 import { BaseStruct } from '@/utility/base-struct';
 import { CStruct } from '@/utility/cstruct';
-import { stringToCString } from '@utility/common';
-import { CString, ptr, type Pointer } from 'bun:ffi';
+import { CString, type Pointer } from 'bun:ffi';
 import { ByteOffset } from './constant';
 import type { TextEditingCandidatesEventType } from './types';
 export class TextEditingCandidatesEvent extends BaseStruct {
@@ -55,12 +54,7 @@ export class TextEditingCandidatesEvent extends BaseStruct {
     if (!candidateCount || !candidatesAddr || candidatesAddr === 0n) return [];
 
     const candidatesPtr = Number(candidatesAddr) as Pointer;
-    const pointers = CStruct.readArrayPrimitive(
-      candidatesPtr,
-      candidateCount,
-      'ptr'
-    );
-    const candidates = pointers.map((ptr) => new CString(ptr).toString());
+    const candidates = CStruct.readArrayString(candidatesPtr, candidateCount);
 
     return candidates;
   }
@@ -74,17 +68,12 @@ export class TextEditingCandidatesEvent extends BaseStruct {
       return;
     }
 
-    this.$cache.candidates = value.map(stringToCString);
+    const { buffer, address, converted } = CStruct.writeArrayString(value);
 
-    const buffer = new BigUint64Array(value.length);
-
-    for (let i = 0; i < this.candidateCount; i++) {
-      buffer[i] = BigInt(this.$cache.candidates[i]!.ptr);
-    }
-
+    this.$cache.candidates = converted;
     this.$candidatesBuffer = buffer;
 
-    this.$view.setBigUint64(ByteOffset.candidates, BigInt(ptr(buffer)), true);
+    this.$view.setBigUint64(ByteOffset.candidates, BigInt(address), true);
   }
 
   public get candidateCount() {

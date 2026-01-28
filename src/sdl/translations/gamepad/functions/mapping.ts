@@ -37,8 +37,7 @@ export function getGamepadMappings(this: SDL) {
   if (!listPtr) return [];
 
   const count = countStruct.getValue(0, 'i32');
-  const pointers = CStruct.readArrayPrimitive(listPtr, count, 'ptr');
-  const mappings = pointers.map((ptr) => new CString(ptr).toString());
+  const mappings = CStruct.readArrayString(listPtr, count);
 
   this.symbols.SDL_free(listPtr);
 

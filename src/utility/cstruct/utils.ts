@@ -1,6 +1,7 @@
-import { type Pointer, ptr, toArrayBuffer } from 'bun:ffi';
+import { CString, type Pointer, ptr, toArrayBuffer } from 'bun:ffi';
 import { CStruct } from '.';
 import type { BaseStruct, BaseStructConstructor } from '../base-struct';
+import { stringToCString } from '../common';
 import { ReadArrayPrimitiveReturnTypeMap } from './constant';
 import type {
   BigIntCType,
@@ -35,6 +36,29 @@ export function readArray<T extends BaseStructConstructor>(
     const instance = new StructClass(
       memory.subarray(offset, offset + StructClass.BYTE_SIZE)
     );
+
+    return clone ? instance.clone() : instance;
+  });
+}
+
+export function readArrayPointer<
+  T extends BaseStructConstructor,
+  U extends InstanceType<T>,
+>(StructClass: T, address: Pointer, count: number): U[];
+export function readArrayPointer<
+  T extends BaseStructConstructor,
+  U extends InstanceType<T>,
+>(StructClass: T, address: Pointer, count: number, clone: true): U[];
+export function readArrayPointer<T extends BaseStructConstructor>(
+  StructClass: T,
+  address: Pointer,
+  count: number,
+  clone?: boolean
+) {
+  const pointers = CStruct.readArrayPrimitive(address, count, 'ptr');
+
+  return pointers.map((ptr) => {
+    const instance = new StructClass(ptr);
 
     return clone ? instance.clone() : instance;
   });
@@ -143,6 +167,12 @@ export function readArrayPrimitive(
   return new TypedArrayClass(buffer);
 }
 
+export function readArrayString(address: Pointer, count: number) {
+  const pointers = CStruct.readArrayPrimitive(address, count, 'ptr');
+
+  return pointers.map((ptr) => new CString(ptr).toString());
+}
+
 export function writeArray<T extends BaseStruct>(
   items: T[],
   itemSize: number
@@ -154,5 +184,36 @@ export function writeArray<T extends BaseStruct>(
     buffer.set(items[i]!.$memory, offset);
   }
 
-  return { buffer, address: ptr(buffer) };
+  return {
+    address: ptr(buffer),
+    buffer,
+  };
+}
+
+export function writeArrayString(items: string[]) {
+  const converted = items.map(stringToCString);
+  const buffer = new BigUint64Array(items.length);
+
+  for (let i = 0; i < converted.length; i++) {
+    buffer[i] = BigInt(converted[i]!.ptr);
+  }
+
+  return {
+    address: ptr(buffer),
+    buffer,
+    converted,
+  };
+}
+
+export function writeArrayPointer(items: Pointer[]) {
+  const buffer = new BigUint64Array(items.length);
+
+  for (let i = 0; i < items.length; i++) {
+    buffer[i] = BigInt(items[i]!);
+  }
+
+  return {
+    address: ptr(buffer),
+    buffer,
+  };
 }

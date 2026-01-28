@@ -122,8 +122,7 @@ export function globDirectory(
   if (!listPtr) return [];
 
   const count = countStruct.getValue(0, 'i32');
-  const pointers = CStruct.readArrayPrimitive(listPtr, count, 'ptr');
-  const paths = pointers.map((ptr) => new CString(ptr).toString());
+  const paths = CStruct.readArrayString(listPtr, count);
 
   this.symbols.SDL_free(listPtr);
 

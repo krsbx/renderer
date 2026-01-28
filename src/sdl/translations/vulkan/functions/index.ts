@@ -1,7 +1,7 @@
 import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
 import { stringToCString } from '@utility/common';
-import { CString, type Pointer } from 'bun:ffi';
+import { type Pointer } from 'bun:ffi';
 
 export function vulkanLoadLibrary(this: SDL, path: string) {
   return this.symbols.SDL_Vulkan_LoadLibrary(stringToCString(path).ptr);
@@ -25,8 +25,7 @@ export function vulkanGetInstanceExtensions(this: SDL) {
   if (!listPtr) return null;
 
   const count = countStruct.getValue(0, 'u32');
-  const pointers = CStruct.readArrayPrimitive(listPtr, count, 'ptr');
-  const extensions = pointers.map((ptr) => new CString(ptr).toString());
+  const extensions = CStruct.readArrayString(listPtr, count);
 
   this.symbols.SDL_free(listPtr);
 

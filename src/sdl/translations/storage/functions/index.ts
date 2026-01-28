@@ -1,7 +1,7 @@
 import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
 import { stringToCString } from '@utility/common';
-import { CString, ptr, type JSCallback, type Pointer } from 'bun:ffi';
+import { ptr, type JSCallback, type Pointer } from 'bun:ffi';
 import type { GlobFlags } from '../../../ffi/file-system/constant';
 import { PathInfo } from '../../file-system/utility';
 import { StorageInterface } from '../utility';
@@ -244,8 +244,7 @@ export function globStorageDirectory(
   if (!listPtr) return null;
 
   const count = countStruct.getValue(0, 'i32');
-  const pointers = CStruct.readArrayPrimitive(listPtr, count, 'ptr');
-  const paths = pointers.map((ptr) => new CString(ptr).toString());
+  const paths = CStruct.readArrayString(listPtr, count);
 
   this.symbols.SDL_free(listPtr);
 

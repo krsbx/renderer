@@ -11,8 +11,12 @@ import type {
 import {
   readArray,
   readArrayLazy,
+  readArrayPointer,
   readArrayPrimitive,
+  readArrayString,
   writeArray,
+  writeArrayPointer,
+  writeArrayString,
 } from './utils';
 
 export class CStruct<
@@ -43,9 +47,13 @@ export class CStruct<
   } as const;
 
   public static readArray = readArray;
+  public static readArrayPointer = readArrayPointer;
   public static readArrayLazy = readArrayLazy;
   public static readArrayPrimitive = readArrayPrimitive;
+  public static readArrayString = readArrayString;
   public static writeArray = writeArray;
+  public static writeArrayString = writeArrayString;
+  public static writeArrayPointer = writeArrayPointer;
 
   public $memory: Uint8Array;
   public $address: Address;

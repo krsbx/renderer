@@ -101,8 +101,7 @@ export function getFullscreenDisplayModes(this: SDL, displayID: number) {
   if (!listPtr) return null;
 
   const count = countStruct.getValue(0, 'i32');
-  const pointers = CStruct.readArrayPrimitive(listPtr, count, 'ptr');
-  const modes = pointers.map((ptr) => new DisplayMode(ptr));
+  const modes = CStruct.readArrayPointer(DisplayMode, listPtr, count, true);
 
   this.symbols.SDL_free(listPtr);
 

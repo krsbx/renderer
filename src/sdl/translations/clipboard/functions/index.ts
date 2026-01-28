@@ -52,26 +52,16 @@ export function setClipboardData(
     mimeTypes: string[];
   }
 ) {
-  const numMimeTypes = options.mimeTypes.length;
+  if (options.mimeTypes.length === 0) return false;
 
-  if (numMimeTypes === 0) return false;
-
-  const struct = new CStruct({ length: CStruct.BYTE_SIZE.ptr * numMimeTypes });
-
-  options.mimeTypes.forEach((mimeType, i) => {
-    struct.setValue(
-      i * CStruct.BYTE_SIZE.ptr,
-      stringToCString(mimeType).ptr,
-      'ptr'
-    );
-  });
+  const { buffer: mimeTypes } = CStruct.writeArrayString(options.mimeTypes);
 
   return this.symbols.SDL_SetClipboardData(
     options.callback.ptr,
     options.cleanup?.ptr ?? null,
     options.userdata ?? null,
-    struct.$address,
-    numMimeTypes
+    mimeTypes,
+    options.mimeTypes.length
   );
 }
 
@@ -116,8 +106,8 @@ export function getClipboardMimeTypes(this: SDL) {
   if (!listPtr) return [];
 
   const count = Number(sizeStruct.getValue(0, 'u64'));
-  const pointers = CStruct.readArrayPrimitive(listPtr, count, 'ptr');
-  const mimeTypes = pointers.map((ptr) => new CString(ptr).toString());
+
+  const mimeTypes = CStruct.readArrayString(listPtr, count);
 
   this.symbols.SDL_free(listPtr);
 

@@ -1,7 +1,6 @@
 import { BaseStruct } from '@/utility/base-struct';
 import { CStruct } from '@/utility/cstruct';
-import { stringToCString } from '@utility/common';
-import { CString, ptr, type Pointer } from 'bun:ffi';
+import { CString, type Pointer } from 'bun:ffi';
 import { ByteOffset } from './constant';
 import type { ClipboardEventType } from './types';
 
@@ -61,12 +60,7 @@ export class ClipboardEvent extends BaseStruct {
     if (!mimeTypesCount || !mimeTypesAddr || mimeTypesAddr === 0n) return [];
 
     const mimeTypesPtr = Number(mimeTypesAddr) as Pointer;
-    const pointers = CStruct.readArrayPrimitive(
-      mimeTypesPtr,
-      mimeTypesCount,
-      'ptr'
-    );
-    const mimeTypes = pointers.map((ptr) => new CString(ptr).toString());
+    const mimeTypes = CStruct.readArrayString(mimeTypesPtr, mimeTypesCount);
 
     return mimeTypes;
   }
@@ -80,16 +74,11 @@ export class ClipboardEvent extends BaseStruct {
       return;
     }
 
-    this.$cache.mimeTypes = value.map(stringToCString);
+    const { buffer, address, converted } = CStruct.writeArrayString(value);
 
-    const buffer = new BigUint64Array(value.length);
-
-    for (let i = 0; i < this.mimeTypesCount; i++) {
-      buffer[i] = BigInt(this.$cache.mimeTypes[i]!.ptr);
-    }
-
+    this.$cache.mimeTypes = converted;
     this.$mimeTypesBuffer = buffer;
 
-    this.$view.setBigUint64(ByteOffset.mime_types, BigInt(ptr(buffer)), true);
+    this.$view.setBigUint64(ByteOffset.mime_types, BigInt(address), true);
   }
 }

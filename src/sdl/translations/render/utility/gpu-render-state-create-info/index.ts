@@ -1,6 +1,6 @@
 import { BaseStruct } from '@/utility/base-struct';
 import { CStruct } from '@/utility/cstruct';
-import { ptr, type Pointer } from 'bun:ffi';
+import { type Pointer } from 'bun:ffi';
 import { GPUTextureSamplerBinding } from '../../../gpu/utility';
 import { ByteOffset } from './constant';
 
@@ -95,19 +95,11 @@ export class GPURenderStateCreateInfo extends BaseStruct {
       return;
     }
 
-    const buffer = new BigUint64Array(this.storageTextureCount);
-
-    for (let i = 0; i < this.storageTextureCount; i++) {
-      buffer[i] = BigInt(value[i]!);
-    }
+    const { buffer, address } = CStruct.writeArrayPointer(value);
 
     this.$storageTextureBuffer = buffer;
 
-    this.$view.setBigUint64(
-      ByteOffset.storage_textures,
-      BigInt(ptr(buffer)),
-      true
-    );
+    this.$view.setBigUint64(ByteOffset.storage_textures, BigInt(address), true);
   }
 
   public get storageBufferCount() {
@@ -138,18 +130,10 @@ export class GPURenderStateCreateInfo extends BaseStruct {
       return;
     }
 
-    const buffer = new BigUint64Array(this.storageBufferCount);
-
-    for (let i = 0; i < this.storageBufferCount; i++) {
-      buffer[i] = BigInt(value[i]!);
-    }
+    const { buffer, address } = CStruct.writeArrayPointer(value);
 
     this.$storageBufferBuffer = buffer;
 
-    this.$view.setBigUint64(
-      ByteOffset.storage_buffers,
-      BigInt(ptr(buffer)),
-      true
-    );
+    this.$view.setBigUint64(ByteOffset.storage_buffers, BigInt(address), true);
   }
 }

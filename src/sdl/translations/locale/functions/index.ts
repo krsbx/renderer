@@ -10,8 +10,7 @@ export function getPreferredLocales(this: SDL) {
   if (!listPtr) return [];
 
   const count = countStruct.getValue(0, 'i32');
-  const pointers = CStruct.readArrayPrimitive(listPtr, count, 'ptr');
-  const locales = pointers.map((ptr) => new Locale(ptr).clone());
+  const locales = CStruct.readArrayPointer(Locale, listPtr, count, true);
 
   this.symbols.SDL_free(listPtr);
 

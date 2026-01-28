@@ -9,22 +9,16 @@ function constructFilters(
   filter: DialogFileFilter | DialogFileFilter[] | null | undefined
 ) {
   const filters = filter ? (Array.isArray(filter) ? filter : [filter]) : [];
-  const filterCount = filters.length;
-  const filtersBuffer = new CStruct({
-    length: DialogFileFilter.BYTE_SIZE * filterCount,
-  });
 
-  filters.forEach((filter, i) => {
-    if (!filtersBuffer.$memory) return;
-
-    const offset = i * DialogFileFilter.BYTE_SIZE;
-
-    filtersBuffer.$memory.set(filter.$memory, offset);
-  });
+  const { buffer, address } = CStruct.writeArray(
+    filters,
+    DialogFileFilter.BYTE_SIZE
+  );
 
   return {
-    filtersBuffer,
-    filterCount,
+    filtersBuffer: buffer,
+    filtersAddress: address,
+    filterCount: filters.length,
   };
 }
 
@@ -39,13 +33,13 @@ export function showOpenFileDialog(
     allowMany?: boolean | null;
   }
 ) {
-  const { filterCount, filtersBuffer } = constructFilters(options.filters);
+  const { filterCount, filtersAddress } = constructFilters(options.filters);
 
   this.symbols.SDL_ShowOpenFileDialog(
     options.callback.ptr,
     options.userdata ?? null,
     options.window,
-    filterCount > 0 ? filtersBuffer.$address : null,
+    filterCount > 0 ? filtersAddress : null,
     filterCount,
     options.defaultLocation
       ? stringToCString(options.defaultLocation).ptr
@@ -64,13 +58,13 @@ export function showSaveFileDialog(
     defaultLocation?: string | null;
   }
 ) {
-  const { filterCount, filtersBuffer } = constructFilters(options.filters);
+  const { filterCount, filtersAddress } = constructFilters(options.filters);
 
   this.symbols.SDL_ShowSaveFileDialog(
     options.callback.ptr,
     options.userdata ?? null,
     options.window,
-    filterCount > 0 ? filtersBuffer.$address : null,
+    filterCount > 0 ? filtersAddress : null,
     filterCount,
     options.defaultLocation
       ? stringToCString(options.defaultLocation).ptr

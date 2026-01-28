@@ -1,6 +1,6 @@
 import type { RayLib } from '@/raylib';
-import { CStruct } from '@cstruct';
 import { stringToCString } from '@/utility/common';
+import { CStruct } from '@cstruct';
 import { CString, type Pointer } from 'bun:ffi';
 
 export function loadUTF8(this: RayLib, codepoints: Int32Array) {
@@ -33,7 +33,7 @@ export function loadCodepoints(this: RayLib, text: string) {
 
   return {
     ptr,
-    codepoints: new Int32Array(codepoints),
+    codepoints,
     count,
   };
 }

@@ -1,5 +1,7 @@
+import type { BuildTuple } from '@/types/shared';
 import { BaseStruct, type BaseStructOptions } from '@/utility/base-struct';
-import { toArrayBuffer, type Pointer } from 'bun:ffi';
+import { CStruct } from '@/utility/cstruct';
+import { type Pointer } from 'bun:ffi';
 import { MaterialMap } from '../material-map';
 import { Shader } from '../shader';
 import { ByteOffset } from './constant';
@@ -12,9 +14,8 @@ export class Material extends BaseStruct {
 
   public readonly shader: Shader;
 
-  private $params: [number, number, number, number] | null = null;
+  private $params: BuildTuple<4, number> | null = null;
   private $maps: MaterialMap[] | null = null;
-  private $mapsMemory: Uint8Array | null = null;
 
   public constructor(data: BaseStructOptions) {
     super(data);
@@ -32,9 +33,8 @@ export class Material extends BaseStruct {
   }
 
   public set maps_ptr(value: Pointer) {
-    this.$view.setBigUint64(ByteOffset.maps, BigInt(value as number), true);
+    this.$view.setBigUint64(ByteOffset.maps, BigInt(value), true);
     this.$maps = null;
-    this.$mapsMemory = null;
   }
 
   public get maps() {
@@ -43,31 +43,7 @@ export class Material extends BaseStruct {
     const ptr = this.maps_ptr;
     if (!ptr) return null;
 
-    const totalSize = MAX_MATERIAL_MAPS * MaterialMap.BYTE_SIZE;
-    const buffer = toArrayBuffer(ptr, 0, totalSize);
-    this.$mapsMemory = new Uint8Array(buffer);
-
-    this.$maps = new Proxy(new Array(MAX_MATERIAL_MAPS), {
-      get: (target, prop) => {
-        const index = Number(prop);
-
-        if (Number.isNaN(index)) {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const val = (target as any)[prop];
-          return typeof val === 'function' ? val.bind(target) : val;
-        }
-
-        if (index < 0 || index >= MAX_MATERIAL_MAPS) {
-          throw new RangeError(`Index out of range: ${index}`);
-        }
-
-        const offset = index * MaterialMap.BYTE_SIZE;
-        return new MaterialMap(
-          this.$mapsMemory!.subarray(offset, offset + MaterialMap.BYTE_SIZE)
-        );
-      },
-      set: () => false,
-    }) as never;
+    this.$maps = CStruct.readArray(MaterialMap, ptr, MAX_MATERIAL_MAPS);
 
     return this.$maps;
   }
@@ -75,35 +51,11 @@ export class Material extends BaseStruct {
   public get params() {
     if (this.$params) return this.$params;
 
-    const length = 4;
-
-    this.$params = new Proxy(new Array(length), {
-      get: (target, prop) => {
-        const index = Number(prop);
-
-        if (Number.isNaN(index)) {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const val = (target as any)[prop];
-          return typeof val === 'function' ? val.bind(target) : val;
-        }
-
-        if (index < 0 || index >= length) {
-          throw new RangeError(`Index out of range: ${index}`);
-        }
-
-        return this.$view.getFloat32(ByteOffset.params + index * 4, true);
-      },
-      set: (_, prop, value) => {
-        const index = Number(prop);
-
-        if (Number.isNaN(index) || index < 0 || index >= length) {
-          return false;
-        }
-
-        this.$view.setFloat32(ByteOffset.params + index * 4, value, true);
-        return true;
-      },
-    }) as never;
+    this.$params = new Float32Array(
+      this.$memory.buffer,
+      this.$memory.byteOffset + ByteOffset.params,
+      4
+    ) as never;
 
     return this.$params;
   }

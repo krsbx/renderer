@@ -1,4 +1,5 @@
 import { BaseStruct, type BaseStructOptions } from '@/utility/base-struct';
+import { CStruct } from '@/utility/cstruct';
 import { toArrayBuffer, type Pointer } from 'bun:ffi';
 import { BoneInfo } from '../bone-info';
 import { Material } from '../material';
@@ -12,17 +13,11 @@ export class Model extends BaseStruct {
 
   public readonly transform: Matrix;
 
-  // Cached arrays
   private $meshes: Mesh[] | null = null;
-  private $meshesMemory: Uint8Array | null = null;
   private $materials: Material[] | null = null;
-  private $materialsMemory: Uint8Array | null = null;
-  private $meshMaterial: number[] | null = null;
-  private $meshMaterialView: DataView | null = null;
+  private $meshMaterial: Int32Array | null = null;
   private $bones: BoneInfo[] | null = null;
-  private $bonesMemory: Uint8Array | null = null;
   private $bindPose: Transform[] | null = null;
-  private $bindPoseMemory: Uint8Array | null = null;
 
   public constructor(data: BaseStructOptions) {
     super(data);
@@ -57,42 +52,18 @@ export class Model extends BaseStruct {
   }
 
   public set meshes_ptr(value: Pointer) {
-    this.$view.setBigUint64(ByteOffset.meshes, BigInt(value as number), true);
+    this.$view.setBigUint64(ByteOffset.meshes, BigInt(value), true);
     this.$meshes = null;
-    this.$meshesMemory = null;
   }
 
   public get meshes() {
-    const ptr = this.meshes_ptr;
-    if (!ptr) return null;
     if (this.$meshes) return this.$meshes;
 
-    const count = this.meshCount;
-    const totalSize = count * Mesh.BYTE_SIZE;
-    const buffer = toArrayBuffer(ptr, 0, totalSize);
-    this.$meshesMemory = new Uint8Array(buffer);
+    const ptr = this.meshes_ptr;
 
-    this.$meshes = new Proxy(new Array(count), {
-      get: (target, prop) => {
-        const index = Number(prop);
+    if (!ptr) return null;
 
-        if (Number.isNaN(index)) {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const val = (target as any)[prop];
-          return typeof val === 'function' ? val.bind(target) : val;
-        }
-
-        if (index < 0 || index >= count) {
-          throw new RangeError(`Index out of range: ${index}`);
-        }
-
-        const offset = index * Mesh.BYTE_SIZE;
-        return new Mesh(
-          this.$meshesMemory!.subarray(offset, offset + Mesh.BYTE_SIZE)
-        );
-      },
-      set: () => false,
-    }) as never;
+    this.$meshes = CStruct.readArray(Mesh, ptr, this.meshCount);
 
     return this.$meshes;
   }
@@ -105,46 +76,18 @@ export class Model extends BaseStruct {
   }
 
   public set materials_ptr(value: Pointer) {
-    this.$view.setBigUint64(
-      ByteOffset.materials,
-      BigInt(value as number),
-      true
-    );
+    this.$view.setBigUint64(ByteOffset.materials, BigInt(value), true);
     this.$materials = null;
-    this.$materialsMemory = null;
   }
 
   public get materials() {
-    const ptr = this.materials_ptr;
-    if (!ptr) return null;
     if (this.$materials) return this.$materials;
 
-    const count = this.materialCount;
-    const totalSize = count * Material.BYTE_SIZE;
-    const buffer = toArrayBuffer(ptr, 0, totalSize);
-    this.$materialsMemory = new Uint8Array(buffer);
+    const ptr = this.materials_ptr;
 
-    this.$materials = new Proxy(new Array(count), {
-      get: (target, prop) => {
-        const index = Number(prop);
+    if (!ptr) return null;
 
-        if (Number.isNaN(index)) {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const val = (target as any)[prop];
-          return typeof val === 'function' ? val.bind(target) : val;
-        }
-
-        if (index < 0 || index >= count) {
-          throw new RangeError(`Index out of range: ${index}`);
-        }
-
-        const offset = index * Material.BYTE_SIZE;
-        return new Material(
-          this.$materialsMemory!.subarray(offset, offset + Material.BYTE_SIZE)
-        );
-      },
-      set: () => false,
-    }) as never;
+    this.$materials = CStruct.readArray(Material, ptr, this.materialCount);
 
     return this.$materials;
   }
@@ -157,44 +100,19 @@ export class Model extends BaseStruct {
   }
 
   public set meshMaterial_ptr(value: Pointer) {
-    this.$view.setBigUint64(
-      ByteOffset.meshMaterial,
-      BigInt(value as number),
-      true
-    );
+    this.$view.setBigUint64(ByteOffset.meshMaterial, BigInt(value), true);
     this.$meshMaterial = null;
-    this.$meshMaterialView = null;
   }
 
   public get meshMaterial() {
-    const ptr = this.meshMaterial_ptr;
-    if (!ptr) return null;
     if (this.$meshMaterial) return this.$meshMaterial;
 
-    const length = this.meshCount;
-    const buffer = toArrayBuffer(ptr, 0, length * 4);
-    this.$meshMaterialView = new DataView(buffer);
+    const ptr = this.meshMaterial_ptr;
 
-    this.$meshMaterial = new Proxy(new Array(length), {
-      get: (target, prop) => {
-        const index = Number(prop);
-        if (Number.isNaN(index)) {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const val = (target as any)[prop];
-          return typeof val === 'function' ? val.bind(target) : val;
-        }
-        if (index < 0 || index >= length) {
-          throw new RangeError(`Index out of range: ${index}`);
-        }
-        return this.$meshMaterialView!.getInt32(index * 4, true);
-      },
-      set: (_, prop, value) => {
-        const index = Number(prop);
-        if (Number.isNaN(index) || index < 0 || index >= length) return false;
-        this.$meshMaterialView!.setInt32(index * 4, value, true);
-        return true;
-      },
-    }) as never;
+    if (!ptr) return null;
+
+    const buffer = toArrayBuffer(ptr, 0, this.meshCount * 4);
+    this.$meshMaterial = new Int32Array(buffer);
 
     return this.$meshMaterial;
   }
@@ -213,42 +131,18 @@ export class Model extends BaseStruct {
   }
 
   public set bones_ptr(value: Pointer) {
-    this.$view.setBigUint64(ByteOffset.bones, BigInt(value as number), true);
+    this.$view.setBigUint64(ByteOffset.bones, BigInt(value), true);
     this.$bones = null;
-    this.$bonesMemory = null;
   }
 
   public get bones() {
-    const ptr = this.bones_ptr;
-    if (!ptr) return null;
     if (this.$bones) return this.$bones;
 
-    const count = this.boneCount;
-    const totalSize = count * BoneInfo.BYTE_SIZE;
-    const buffer = toArrayBuffer(ptr, 0, totalSize);
-    this.$bonesMemory = new Uint8Array(buffer);
+    const ptr = this.bones_ptr;
 
-    this.$bones = new Proxy(new Array(count), {
-      get: (target, prop) => {
-        const index = Number(prop);
+    if (!ptr) return null;
 
-        if (Number.isNaN(index)) {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const val = (target as any)[prop];
-          return typeof val === 'function' ? val.bind(target) : val;
-        }
-
-        if (index < 0 || index >= count) {
-          throw new RangeError(`Index out of range: ${index}`);
-        }
-
-        const offset = index * BoneInfo.BYTE_SIZE;
-        return new BoneInfo(
-          this.$bonesMemory!.subarray(offset, offset + BoneInfo.BYTE_SIZE)
-        );
-      },
-      set: () => false,
-    }) as never;
+    this.$bones = CStruct.readArray(BoneInfo, ptr, this.boneCount);
 
     return this.$bones;
   }
@@ -261,42 +155,18 @@ export class Model extends BaseStruct {
   }
 
   public set bindPose_ptr(value: Pointer) {
-    this.$view.setBigUint64(ByteOffset.bindPose, BigInt(value as number), true);
+    this.$view.setBigUint64(ByteOffset.bindPose, BigInt(value), true);
     this.$bindPose = null;
-    this.$bindPoseMemory = null;
   }
 
   public get bindPose() {
-    const ptr = this.bindPose_ptr;
-    if (!ptr) return null;
     if (this.$bindPose) return this.$bindPose;
 
-    const count = this.boneCount;
-    const totalSize = count * Transform.BYTE_SIZE;
-    const buffer = toArrayBuffer(ptr, 0, totalSize);
-    this.$bindPoseMemory = new Uint8Array(buffer);
+    const ptr = this.bindPose_ptr;
 
-    this.$bindPose = new Proxy(new Array(count), {
-      get: (target, prop) => {
-        const index = Number(prop);
+    if (!ptr) return null;
 
-        if (Number.isNaN(index)) {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const val = (target as any)[prop];
-          return typeof val === 'function' ? val.bind(target) : val;
-        }
-
-        if (index < 0 || index >= count) {
-          throw new RangeError(`Index out of range: ${index}`);
-        }
-
-        const offset = index * Transform.BYTE_SIZE;
-        return new Transform(
-          this.$bindPoseMemory!.subarray(offset, offset + Transform.BYTE_SIZE)
-        );
-      },
-      set: () => false,
-    }) as never;
+    this.$bindPose = CStruct.readArray(Transform, ptr, this.boneCount);
 
     return this.$bindPose;
   }

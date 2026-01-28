@@ -1,4 +1,5 @@
 import { BaseStruct } from '@/utility/base-struct';
+import { CStruct } from '@/utility/cstruct';
 import { toArrayBuffer, type Pointer } from 'bun:ffi';
 import { Matrix } from '../matrix';
 import { ByteOffset } from './constant';
@@ -9,33 +10,19 @@ const MAX_MESH_VERTEX_BUFFERS = 7;
 export class Mesh extends BaseStruct {
   public static override readonly BYTE_SIZE = 120;
 
-  // Cached array proxies
-  private $vertices: number[] | null = null;
-  private $verticesView: DataView | null = null;
-  private $texcoords: number[] | null = null;
-  private $texcoordsView: DataView | null = null;
-  private $texcoords2: number[] | null = null;
-  private $texcoords2View: DataView | null = null;
-  private $normals: number[] | null = null;
-  private $normalsView: DataView | null = null;
-  private $tangents: number[] | null = null;
-  private $tangentsView: DataView | null = null;
-  private $colors: number[] | null = null;
-  private $colorsMemory: Uint8Array | null = null;
-  private $indices: number[] | null = null;
-  private $indicesView: DataView | null = null;
-  private $animVertices: number[] | null = null;
-  private $animVerticesView: DataView | null = null;
-  private $animNormals: number[] | null = null;
-  private $animNormalsView: DataView | null = null;
-  private $boneIds: number[] | null = null;
-  private $boneIdsMemory: Uint8Array | null = null;
-  private $boneWeights: number[] | null = null;
-  private $boneWeightsView: DataView | null = null;
+  private $vertices: Float32Array | null = null;
+  private $texcoords: Float32Array | null = null;
+  private $texcoords2: Float32Array | null = null;
+  private $normals: Float32Array | null = null;
+  private $tangents: Float32Array | null = null;
+  private $colors: Uint8Array | null = null;
+  private $indices: Uint16Array | null = null;
+  private $animVertices: Float32Array | null = null;
+  private $animNormals: Float32Array | null = null;
+  private $boneIds: Uint8Array | null = null;
+  private $boneWeights: Float32Array | null = null;
   private $boneMatrices: Matrix[] | null = null;
-  private $boneMatricesMemory: Uint8Array | null = null;
-  private $vboId: number[] | null = null;
-  private $vboIdView: DataView | null = null;
+  private $vboId: Uint32Array | null = null;
 
   public get vertexCount() {
     return this.$view.getInt32(ByteOffset.vertexCount, true);
@@ -53,102 +40,6 @@ export class Mesh extends BaseStruct {
     this.$view.setInt32(ByteOffset.triangleCount, value, true);
   }
 
-  // Helper to create float32 array proxy
-  private createFloat32Proxy(view: DataView, length: number): number[] {
-    return new Proxy(new Array(length), {
-      get: (target, prop) => {
-        const index = Number(prop);
-        if (Number.isNaN(index)) {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const val = (target as any)[prop];
-          return typeof val === 'function' ? val.bind(target) : val;
-        }
-        if (index < 0 || index >= length) {
-          throw new RangeError(`Index out of range: ${index}`);
-        }
-        return view.getFloat32(index * 4, true);
-      },
-      set: (_, prop, value) => {
-        const index = Number(prop);
-        if (Number.isNaN(index) || index < 0 || index >= length) return false;
-        view.setFloat32(index * 4, value, true);
-        return true;
-      },
-    }) as never;
-  }
-
-  // Helper to create uint16 array proxy
-  private createUint16Proxy(view: DataView, length: number): number[] {
-    return new Proxy(new Array(length), {
-      get: (target, prop) => {
-        const index = Number(prop);
-        if (Number.isNaN(index)) {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const val = (target as any)[prop];
-          return typeof val === 'function' ? val.bind(target) : val;
-        }
-        if (index < 0 || index >= length) {
-          throw new RangeError(`Index out of range: ${index}`);
-        }
-        return view.getUint16(index * 2, true);
-      },
-      set: (_, prop, value) => {
-        const index = Number(prop);
-        if (Number.isNaN(index) || index < 0 || index >= length) return false;
-        view.setUint16(index * 2, value, true);
-        return true;
-      },
-    }) as never;
-  }
-
-  // Helper to create uint32 array proxy
-  private createUint32Proxy(view: DataView, length: number): number[] {
-    return new Proxy(new Array(length), {
-      get: (target, prop) => {
-        const index = Number(prop);
-        if (Number.isNaN(index)) {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const val = (target as any)[prop];
-          return typeof val === 'function' ? val.bind(target) : val;
-        }
-        if (index < 0 || index >= length) {
-          throw new RangeError(`Index out of range: ${index}`);
-        }
-        return view.getUint32(index * 4, true);
-      },
-      set: (_, prop, value) => {
-        const index = Number(prop);
-        if (Number.isNaN(index) || index < 0 || index >= length) return false;
-        view.setUint32(index * 4, value, true);
-        return true;
-      },
-    }) as never;
-  }
-
-  // Helper to create uint8 array proxy
-  private createUint8Proxy(memory: Uint8Array, length: number): number[] {
-    return new Proxy(new Array(length), {
-      get: (target, prop) => {
-        const index = Number(prop);
-        if (Number.isNaN(index)) {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const val = (target as any)[prop];
-          return typeof val === 'function' ? val.bind(target) : val;
-        }
-        if (index < 0 || index >= length) {
-          throw new RangeError(`Index out of range: ${index}`);
-        }
-        return memory[index];
-      },
-      set: (_, prop, value) => {
-        const index = Number(prop);
-        if (Number.isNaN(index) || index < 0 || index >= length) return false;
-        memory[index] = value;
-        return true;
-      },
-    }) as never;
-  }
-
   // vertices: float* (vertexCount * 3)
   public get vertices_ptr() {
     return Number(
@@ -157,20 +48,21 @@ export class Mesh extends BaseStruct {
   }
 
   public set vertices_ptr(value: Pointer) {
-    this.$view.setBigUint64(ByteOffset.vertices, BigInt(value as number), true);
+    this.$view.setBigUint64(ByteOffset.vertices, BigInt(value), true);
     this.$vertices = null;
-    this.$verticesView = null;
   }
 
   public get vertices() {
-    const ptr = this.vertices_ptr;
-    if (!ptr) return null;
     if (this.$vertices) return this.$vertices;
+
+    const ptr = this.vertices_ptr;
+
+    if (!ptr) return null;
 
     const length = this.vertexCount * 3;
     const buffer = toArrayBuffer(ptr, 0, length * 4);
-    this.$verticesView = new DataView(buffer);
-    this.$vertices = this.createFloat32Proxy(this.$verticesView, length);
+    this.$vertices = new Float32Array(buffer);
+
     return this.$vertices;
   }
 
@@ -182,24 +74,21 @@ export class Mesh extends BaseStruct {
   }
 
   public set texcoords_ptr(value: Pointer) {
-    this.$view.setBigUint64(
-      ByteOffset.texcoords,
-      BigInt(value as number),
-      true
-    );
+    this.$view.setBigUint64(ByteOffset.texcoords, BigInt(value), true);
     this.$texcoords = null;
-    this.$texcoordsView = null;
   }
 
   public get texcoords() {
-    const ptr = this.texcoords_ptr;
-    if (!ptr) return null;
     if (this.$texcoords) return this.$texcoords;
+
+    const ptr = this.texcoords_ptr;
+
+    if (!ptr) return null;
 
     const length = this.vertexCount * 2;
     const buffer = toArrayBuffer(ptr, 0, length * 4);
-    this.$texcoordsView = new DataView(buffer);
-    this.$texcoords = this.createFloat32Proxy(this.$texcoordsView, length);
+    this.$texcoords = new Float32Array(buffer);
+
     return this.$texcoords;
   }
 
@@ -211,24 +100,21 @@ export class Mesh extends BaseStruct {
   }
 
   public set texcoords2_ptr(value: Pointer) {
-    this.$view.setBigUint64(
-      ByteOffset.texcoords2,
-      BigInt(value as number),
-      true
-    );
+    this.$view.setBigUint64(ByteOffset.texcoords2, BigInt(value), true);
     this.$texcoords2 = null;
-    this.$texcoords2View = null;
   }
 
   public get texcoords2() {
-    const ptr = this.texcoords2_ptr;
-    if (!ptr) return null;
     if (this.$texcoords2) return this.$texcoords2;
+
+    const ptr = this.texcoords2_ptr;
+
+    if (!ptr) return null;
 
     const length = this.vertexCount * 2;
     const buffer = toArrayBuffer(ptr, 0, length * 4);
-    this.$texcoords2View = new DataView(buffer);
-    this.$texcoords2 = this.createFloat32Proxy(this.$texcoords2View, length);
+    this.$texcoords2 = new Float32Array(buffer);
+
     return this.$texcoords2;
   }
 
@@ -238,20 +124,21 @@ export class Mesh extends BaseStruct {
   }
 
   public set normals_ptr(value: Pointer) {
-    this.$view.setBigUint64(ByteOffset.normals, BigInt(value as number), true);
+    this.$view.setBigUint64(ByteOffset.normals, BigInt(value), true);
     this.$normals = null;
-    this.$normalsView = null;
   }
 
   public get normals() {
-    const ptr = this.normals_ptr;
-    if (!ptr) return null;
     if (this.$normals) return this.$normals;
+
+    const ptr = this.normals_ptr;
+
+    if (!ptr) return null;
 
     const length = this.vertexCount * 3;
     const buffer = toArrayBuffer(ptr, 0, length * 4);
-    this.$normalsView = new DataView(buffer);
-    this.$normals = this.createFloat32Proxy(this.$normalsView, length);
+    this.$normals = new Float32Array(buffer);
+
     return this.$normals;
   }
 
@@ -263,20 +150,21 @@ export class Mesh extends BaseStruct {
   }
 
   public set tangents_ptr(value: Pointer) {
-    this.$view.setBigUint64(ByteOffset.tangents, BigInt(value as number), true);
+    this.$view.setBigUint64(ByteOffset.tangents, BigInt(value), true);
     this.$tangents = null;
-    this.$tangentsView = null;
   }
 
   public get tangents() {
-    const ptr = this.tangents_ptr;
-    if (!ptr) return null;
     if (this.$tangents) return this.$tangents;
+
+    const ptr = this.tangents_ptr;
+
+    if (!ptr) return null;
 
     const length = this.vertexCount * 4;
     const buffer = toArrayBuffer(ptr, 0, length * 4);
-    this.$tangentsView = new DataView(buffer);
-    this.$tangents = this.createFloat32Proxy(this.$tangentsView, length);
+    this.$tangents = new Float32Array(buffer);
+
     return this.$tangents;
   }
 
@@ -286,20 +174,21 @@ export class Mesh extends BaseStruct {
   }
 
   public set colors_ptr(value: Pointer) {
-    this.$view.setBigUint64(ByteOffset.colors, BigInt(value as number), true);
+    this.$view.setBigUint64(ByteOffset.colors, BigInt(value), true);
     this.$colors = null;
-    this.$colorsMemory = null;
   }
 
   public get colors() {
-    const ptr = this.colors_ptr;
-    if (!ptr) return null;
     if (this.$colors) return this.$colors;
+
+    const ptr = this.colors_ptr;
+
+    if (!ptr) return null;
 
     const length = this.vertexCount * 4;
     const buffer = toArrayBuffer(ptr, 0, length);
-    this.$colorsMemory = new Uint8Array(buffer);
-    this.$colors = this.createUint8Proxy(this.$colorsMemory, length);
+    this.$colors = new Uint8Array(buffer);
+
     return this.$colors;
   }
 
@@ -309,20 +198,21 @@ export class Mesh extends BaseStruct {
   }
 
   public set indices_ptr(value: Pointer) {
-    this.$view.setBigUint64(ByteOffset.indices, BigInt(value as number), true);
+    this.$view.setBigUint64(ByteOffset.indices, BigInt(value), true);
     this.$indices = null;
-    this.$indicesView = null;
   }
 
   public get indices() {
-    const ptr = this.indices_ptr;
-    if (!ptr) return null;
     if (this.$indices) return this.$indices;
+
+    const ptr = this.indices_ptr;
+
+    if (!ptr) return null;
 
     const length = this.triangleCount * 3;
     const buffer = toArrayBuffer(ptr, 0, length * 2);
-    this.$indicesView = new DataView(buffer);
-    this.$indices = this.createUint16Proxy(this.$indicesView, length);
+    this.$indices = new Uint16Array(buffer);
+
     return this.$indices;
   }
 
@@ -334,27 +224,21 @@ export class Mesh extends BaseStruct {
   }
 
   public set animVertices_ptr(value: Pointer) {
-    this.$view.setBigUint64(
-      ByteOffset.animVertices,
-      BigInt(value as number),
-      true
-    );
+    this.$view.setBigUint64(ByteOffset.animVertices, BigInt(value), true);
     this.$animVertices = null;
-    this.$animVerticesView = null;
   }
 
   public get animVertices() {
-    const ptr = this.animVertices_ptr;
-    if (!ptr) return null;
     if (this.$animVertices) return this.$animVertices;
+
+    const ptr = this.animVertices_ptr;
+
+    if (!ptr) return null;
 
     const length = this.vertexCount * 3;
     const buffer = toArrayBuffer(ptr, 0, length * 4);
-    this.$animVerticesView = new DataView(buffer);
-    this.$animVertices = this.createFloat32Proxy(
-      this.$animVerticesView,
-      length
-    );
+    this.$animVertices = new Float32Array(buffer);
+
     return this.$animVertices;
   }
 
@@ -366,24 +250,21 @@ export class Mesh extends BaseStruct {
   }
 
   public set animNormals_ptr(value: Pointer) {
-    this.$view.setBigUint64(
-      ByteOffset.animNormals,
-      BigInt(value as number),
-      true
-    );
+    this.$view.setBigUint64(ByteOffset.animNormals, BigInt(value), true);
     this.$animNormals = null;
-    this.$animNormalsView = null;
   }
 
   public get animNormals() {
-    const ptr = this.animNormals_ptr;
-    if (!ptr) return null;
     if (this.$animNormals) return this.$animNormals;
+
+    const ptr = this.animNormals_ptr;
+
+    if (!ptr) return null;
 
     const length = this.vertexCount * 3;
     const buffer = toArrayBuffer(ptr, 0, length * 4);
-    this.$animNormalsView = new DataView(buffer);
-    this.$animNormals = this.createFloat32Proxy(this.$animNormalsView, length);
+    this.$animNormals = new Float32Array(buffer);
+
     return this.$animNormals;
   }
 
@@ -393,20 +274,21 @@ export class Mesh extends BaseStruct {
   }
 
   public set boneIds_ptr(value: Pointer) {
-    this.$view.setBigUint64(ByteOffset.boneIds, BigInt(value as number), true);
+    this.$view.setBigUint64(ByteOffset.boneIds, BigInt(value), true);
     this.$boneIds = null;
-    this.$boneIdsMemory = null;
   }
 
   public get boneIds() {
-    const ptr = this.boneIds_ptr;
-    if (!ptr) return null;
     if (this.$boneIds) return this.$boneIds;
+
+    const ptr = this.boneIds_ptr;
+
+    if (!ptr) return null;
 
     const length = this.vertexCount * 4;
     const buffer = toArrayBuffer(ptr, 0, length);
-    this.$boneIdsMemory = new Uint8Array(buffer);
-    this.$boneIds = this.createUint8Proxy(this.$boneIdsMemory, length);
+    this.$boneIds = new Uint8Array(buffer);
+
     return this.$boneIds;
   }
 
@@ -418,24 +300,21 @@ export class Mesh extends BaseStruct {
   }
 
   public set boneWeights_ptr(value: Pointer) {
-    this.$view.setBigUint64(
-      ByteOffset.boneWeights,
-      BigInt(value as number),
-      true
-    );
+    this.$view.setBigUint64(ByteOffset.boneWeights, BigInt(value), true);
     this.$boneWeights = null;
-    this.$boneWeightsView = null;
   }
 
   public get boneWeights() {
-    const ptr = this.boneWeights_ptr;
-    if (!ptr) return null;
     if (this.$boneWeights) return this.$boneWeights;
+
+    const ptr = this.boneWeights_ptr;
+
+    if (!ptr) return null;
 
     const length = this.vertexCount * 4;
     const buffer = toArrayBuffer(ptr, 0, length * 4);
-    this.$boneWeightsView = new DataView(buffer);
-    this.$boneWeights = this.createFloat32Proxy(this.$boneWeightsView, length);
+    this.$boneWeights = new Float32Array(buffer);
+
     return this.$boneWeights;
   }
 
@@ -447,46 +326,18 @@ export class Mesh extends BaseStruct {
   }
 
   public set boneMatrices_ptr(value: Pointer) {
-    this.$view.setBigUint64(
-      ByteOffset.boneMatrices,
-      BigInt(value as number),
-      true
-    );
+    this.$view.setBigUint64(ByteOffset.boneMatrices, BigInt(value), true);
     this.$boneMatrices = null;
-    this.$boneMatricesMemory = null;
   }
 
   public get boneMatrices() {
-    const ptr = this.boneMatrices_ptr;
-    if (!ptr) return null;
     if (this.$boneMatrices) return this.$boneMatrices;
 
-    const count = this.boneCount;
-    const totalSize = count * Matrix.BYTE_SIZE;
-    const buffer = toArrayBuffer(ptr, 0, totalSize);
-    this.$boneMatricesMemory = new Uint8Array(buffer);
+    const ptr = this.boneMatrices_ptr;
 
-    this.$boneMatrices = new Proxy(new Array(count), {
-      get: (target, prop) => {
-        const index = Number(prop);
+    if (!ptr) return null;
 
-        if (Number.isNaN(index)) {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const val = (target as any)[prop];
-          return typeof val === 'function' ? val.bind(target) : val;
-        }
-
-        if (index < 0 || index >= count) {
-          throw new RangeError(`Index out of range: ${index}`);
-        }
-
-        const offset = index * Matrix.BYTE_SIZE;
-        return new Matrix(
-          this.$boneMatricesMemory!.subarray(offset, offset + Matrix.BYTE_SIZE)
-        );
-      },
-      set: () => false,
-    }) as never;
+    this.$boneMatrices = CStruct.readArray(Matrix, ptr, this.boneCount);
 
     return this.$boneMatrices;
   }
@@ -513,22 +364,21 @@ export class Mesh extends BaseStruct {
   }
 
   public set vboId_ptr(value: Pointer) {
-    this.$view.setBigUint64(ByteOffset.vboId, BigInt(value as number), true);
+    this.$view.setBigUint64(ByteOffset.vboId, BigInt(value), true);
     this.$vboId = null;
-    this.$vboIdView = null;
   }
 
   public get vboId() {
-    const ptr = this.vboId_ptr;
-    if (!ptr) return null;
     if (this.$vboId) return this.$vboId;
 
+    const ptr = this.vboId_ptr;
+
+    if (!ptr) return null;
+
     const buffer = toArrayBuffer(ptr, 0, MAX_MESH_VERTEX_BUFFERS * 4);
-    this.$vboIdView = new DataView(buffer);
-    this.$vboId = this.createUint32Proxy(
-      this.$vboIdView,
-      MAX_MESH_VERTEX_BUFFERS
-    );
+
+    this.$vboId = new Uint32Array(buffer);
+
     return this.$vboId;
   }
 }

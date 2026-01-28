@@ -92,20 +92,13 @@ export function textJoin(
     delimiter: string;
   }
 ) {
-  const count = options.textList.length;
+  if (options.textList.length === 0) return '';
 
-  if (count === 0) return '';
-
-  const cstrings = options.textList.map(stringToCString);
-  const ptrBuffer = new CStruct({ length: CStruct.BYTE_SIZE.ptr * count });
-
-  cstrings.forEach((cstr, i) => {
-    ptrBuffer.setValue(i * CStruct.BYTE_SIZE.ptr, cstr.ptr, 'ptr');
-  });
+  const { address } = CStruct.writeArrayString(options.textList);
 
   const result = this.symbols.TextJoin(
-    ptrBuffer.$address,
-    count,
+    address,
+    options.textList.length,
     stringToCString(options.delimiter).ptr
   );
 
@@ -132,9 +125,8 @@ export function textSplit(
   if (!listPtr) return [];
 
   const count = countStruct.getValue(0, 'i32');
-  const pointers = CStruct.readArrayPrimitive(listPtr, count, 'ptr');
 
-  return pointers.map((ptr) => new CString(ptr).toString());
+  return CStruct.readArrayString(listPtr, count);
 }
 
 export function textAppend(

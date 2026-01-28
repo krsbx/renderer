@@ -48,7 +48,7 @@ export class Music extends BaseStruct {
   }
 
   public set ctxData_ptr(value: Pointer) {
-    this.$view.setBigUint64(ByteOffset.ctxData, BigInt(value as number), true);
+    this.$view.setBigUint64(ByteOffset.ctxData, BigInt(value), true);
   }
 
   public ctxData() {

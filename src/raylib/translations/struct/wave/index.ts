@@ -1,17 +1,11 @@
-import { BaseStruct, type BaseStructOptions } from '@/utility/base-struct';
+import { BaseStruct } from '@/utility/base-struct';
 import { toArrayBuffer, type Pointer } from 'bun:ffi';
 import { ByteOffset } from './constant';
 
 export class Wave extends BaseStruct {
   public static override readonly BYTE_SIZE = 24;
 
-  // Cached data array
-  private $data: number[] | null = null;
-  private $dataView: DataView | null = null;
-
-  public constructor(data: BaseStructOptions) {
-    super(data);
-  }
+  private $data: Uint16Array | null = null;
 
   public get frameCount() {
     return this.$view.getUint32(ByteOffset.frameCount, true);
@@ -50,43 +44,22 @@ export class Wave extends BaseStruct {
   }
 
   public set data_ptr(value: Pointer) {
-    this.$view.setBigUint64(ByteOffset.data, BigInt(value as number), true);
+    this.$view.setBigUint64(ByteOffset.data, BigInt(value), true);
     this.$data = null;
-    this.$dataView = null;
   }
 
   public get data() {
-    const ptr = this.data_ptr;
-    if (!ptr) return null;
     if (this.$data) return this.$data;
+
+    const ptr = this.data_ptr;
+
+    if (!ptr) return null;
 
     // Calculate byte size: frameCount * channels * (sampleSize / 8)
     const byteSize = this.frameCount * this.channels * (this.sampleSize / 8);
-    // Length in uint16 elements
-    const length = Math.floor(byteSize / 2);
     const buffer = toArrayBuffer(ptr, 0, byteSize);
-    this.$dataView = new DataView(buffer);
 
-    this.$data = new Proxy(new Array(length), {
-      get: (target, prop) => {
-        const index = Number(prop);
-        if (Number.isNaN(index)) {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const val = (target as any)[prop];
-          return typeof val === 'function' ? val.bind(target) : val;
-        }
-        if (index < 0 || index >= length) {
-          throw new RangeError(`Index out of range: ${index}`);
-        }
-        return this.$dataView!.getUint16(index * 2, true);
-      },
-      set: (_, prop, value) => {
-        const index = Number(prop);
-        if (Number.isNaN(index) || index < 0 || index >= length) return false;
-        this.$dataView!.setUint16(index * 2, value, true);
-        return true;
-      },
-    }) as never;
+    this.$data = new Uint16Array(buffer);
 
     return this.$data;
   }

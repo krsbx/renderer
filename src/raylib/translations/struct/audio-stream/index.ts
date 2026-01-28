@@ -10,7 +10,7 @@ export class AudioStream extends BaseStruct {
   }
 
   public set buffer(value: Pointer) {
-    this.$view.setBigUint64(ByteOffset.buffer, BigInt(value as number), true);
+    this.$view.setBigUint64(ByteOffset.buffer, BigInt(value), true);
   }
 
   public get processor() {
@@ -20,11 +20,7 @@ export class AudioStream extends BaseStruct {
   }
 
   public set processor(value: Pointer) {
-    this.$view.setBigUint64(
-      ByteOffset.processor,
-      BigInt(value as number),
-      true
-    );
+    this.$view.setBigUint64(ByteOffset.processor, BigInt(value), true);
   }
 
   public get sampleRate() {

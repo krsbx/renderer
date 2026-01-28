@@ -1,3 +1,4 @@
+import type { BuildTuple } from '@/types/shared';
 import { BaseStruct, type BaseStructOptions } from '@/utility/base-struct';
 import { Matrix } from '../matrix';
 import { ByteOffset } from './constant';
@@ -5,148 +6,105 @@ import { ByteOffset } from './constant';
 export class VrStereoConfig extends BaseStruct {
   public static override readonly BYTE_SIZE = 304;
 
-  private $projection: [Matrix, Matrix] | null = null;
-  private $viewOffset: [Matrix, Matrix] | null = null;
-  private $leftLensCenter: [number, number] | null = null;
-  private $rightLensCenter: [number, number] | null = null;
-  private $leftScreenCenter: [number, number] | null = null;
-  private $rightScreenCenter: [number, number] | null = null;
-  private $scale: [number, number] | null = null;
-  private $scaleIn: [number, number] | null = null;
+  public readonly projection: readonly [Matrix, Matrix];
+  public readonly viewOffset: readonly [Matrix, Matrix];
+
+  private $leftLensCenter: BuildTuple<2, number> | null = null;
+  private $rightLensCenter: BuildTuple<2, number> | null = null;
+  private $leftScreenCenter: BuildTuple<2, number> | null = null;
+  private $rightScreenCenter: BuildTuple<2, number> | null = null;
+  private $scale: BuildTuple<2, number> | null = null;
+  private $scaleIn: BuildTuple<2, number> | null = null;
 
   public constructor(data: BaseStructOptions) {
     super(data);
-  }
 
-  public get projection() {
-    if (this.$projection) return this.$projection;
+    this.projection = Array.from({ length: 2 }, (_, i) => {
+      const offset = ByteOffset.projection + i * Matrix.BYTE_SIZE;
 
-    const length = 2;
+      return new Matrix(
+        this.$memory.subarray(offset, offset + Matrix.BYTE_SIZE)
+      );
+    }) as [Matrix, Matrix];
 
-    this.$projection = new Proxy(new Array(length), {
-      get: (target, prop) => {
-        const index = Number(prop);
+    this.viewOffset = Array.from({ length: 2 }, (_, i) => {
+      const offset = ByteOffset.viewOffset + i * Matrix.BYTE_SIZE;
 
-        if (Number.isNaN(index)) {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const val = (target as any)[prop];
-          return typeof val === 'function' ? val.bind(target) : val;
-        }
-
-        if (index < 0 || index >= length) {
-          throw new RangeError(`Index out of range: ${index}`);
-        }
-
-        const offset = ByteOffset.projection + index * Matrix.BYTE_SIZE;
-        return new Matrix(
-          this.$memory.subarray(offset, offset + Matrix.BYTE_SIZE)
-        );
-      },
-      set: () => false, // Matrices are not directly assignable
-    }) as never;
-
-    return this.$projection;
-  }
-
-  public get viewOffset() {
-    if (this.$viewOffset) return this.$viewOffset;
-
-    const length = 2;
-
-    this.$viewOffset = new Proxy(new Array(length), {
-      get: (target, prop) => {
-        const index = Number(prop);
-
-        if (Number.isNaN(index)) {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const val = (target as any)[prop];
-          return typeof val === 'function' ? val.bind(target) : val;
-        }
-
-        if (index < 0 || index >= length) {
-          throw new RangeError(`Index out of range: ${index}`);
-        }
-
-        const offset = ByteOffset.viewOffset + index * Matrix.BYTE_SIZE;
-        return new Matrix(
-          this.$memory.subarray(offset, offset + Matrix.BYTE_SIZE)
-        );
-      },
-      set: () => false, // Matrices are not directly assignable
-    }) as never;
-
-    return this.$viewOffset;
-  }
-
-  private createFloat2Proxy(offset: number): [number, number] {
-    const length = 2;
-
-    return new Proxy(new Array(length), {
-      get: (target, prop) => {
-        const index = Number(prop);
-
-        if (Number.isNaN(index)) {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const val = (target as any)[prop];
-          return typeof val === 'function' ? val.bind(target) : val;
-        }
-
-        if (index < 0 || index >= length) {
-          throw new RangeError(`Index out of range: ${index}`);
-        }
-
-        return this.$view.getFloat32(offset + index * 4, true);
-      },
-      set: (_, prop, value) => {
-        const index = Number(prop);
-
-        if (Number.isNaN(index) || index < 0 || index >= length) {
-          return false;
-        }
-
-        this.$view.setFloat32(offset + index * 4, value, true);
-        return true;
-      },
-    }) as never;
+      return new Matrix(
+        this.$memory.subarray(offset, offset + Matrix.BYTE_SIZE)
+      );
+    }) as [Matrix, Matrix];
   }
 
   public get leftLensCenter() {
     if (this.$leftLensCenter) return this.$leftLensCenter;
-    this.$leftLensCenter = this.createFloat2Proxy(ByteOffset.leftLensCenter);
+
+    this.$leftLensCenter = new Float32Array(
+      this.$memory.buffer,
+      this.$memory.byteOffset + ByteOffset.leftLensCenter,
+      2
+    ) as never;
+
     return this.$leftLensCenter;
   }
 
   public get rightLensCenter() {
     if (this.$rightLensCenter) return this.$rightLensCenter;
-    this.$rightLensCenter = this.createFloat2Proxy(ByteOffset.rightLensCenter);
+
+    this.$rightLensCenter = new Float32Array(
+      this.$memory.buffer,
+      this.$memory.byteOffset + ByteOffset.rightLensCenter,
+      2
+    ) as never;
+
     return this.$rightLensCenter;
   }
 
   public get leftScreenCenter() {
     if (this.$leftScreenCenter) return this.$leftScreenCenter;
-    this.$leftScreenCenter = this.createFloat2Proxy(
-      ByteOffset.leftScreenCenter
-    );
+
+    this.$leftScreenCenter = new Float32Array(
+      this.$memory.buffer,
+      this.$memory.byteOffset + ByteOffset.leftScreenCenter,
+      2
+    ) as never;
+
     return this.$leftScreenCenter;
   }
 
   public get rightScreenCenter() {
     if (this.$rightScreenCenter) return this.$rightScreenCenter;
-    this.$rightScreenCenter = this.createFloat2Proxy(
-      ByteOffset.rightScreenCenter
-    );
+
+    this.$rightScreenCenter = new Float32Array(
+      this.$memory.buffer,
+      this.$memory.byteOffset + ByteOffset.rightScreenCenter,
+      2
+    ) as never;
+
     return this.$rightScreenCenter;
   }
 
   public get scale() {
     if (this.$scale) return this.$scale;
-    this.$scale = this.createFloat2Proxy(ByteOffset.scale);
+
+    this.$scale = new Float32Array(
+      this.$memory.buffer,
+      this.$memory.byteOffset + ByteOffset.scale,
+      2
+    ) as never;
+
     return this.$scale;
   }
 
   public get scaleIn() {
     if (this.$scaleIn) return this.$scaleIn;
-    this.$scaleIn = this.createFloat2Proxy(ByteOffset.scaleIn);
+
+    this.$scaleIn = new Float32Array(
+      this.$memory.buffer,
+      this.$memory.byteOffset + ByteOffset.scaleIn,
+      2
+    ) as never;
+
     return this.$scaleIn;
   }
 }

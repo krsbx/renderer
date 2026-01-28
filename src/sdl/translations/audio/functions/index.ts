@@ -1,7 +1,7 @@
 import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
-import { getStructAddress, stringToCString } from '@utility/common';
-import { type Pointer } from 'bun:ffi';
+import { stringToCString } from '@utility/common';
+import type { Pointer } from 'bun:ffi';
 import { AudioBuffer, AudioSpec } from '../utility';
 
 export function getNumAudioDrivers(this: SDL) {
@@ -104,7 +104,7 @@ export function openAudioDevice(
 ) {
   return this.symbols.SDL_OpenAudioDevice(
     options.deviceId,
-    getStructAddress(options.spec)
+    options.spec.$address
   );
 }
 
@@ -197,8 +197,8 @@ export function createAudioStream(
   }
 ) {
   return this.symbols.SDL_CreateAudioStream(
-    getStructAddress(options.srcSpec),
-    getStructAddress(options.dstSpec)
+    options.srcSpec.$address,
+    options.dstSpec.$address
   );
 }
 
@@ -241,8 +241,8 @@ export function setAudioStreamFormat(
 ) {
   return this.symbols.SDL_SetAudioStreamFormat(
     options.stream,
-    options.srcSpec ? getStructAddress(options.srcSpec) : null,
-    options.dstSpec ? getStructAddress(options.dstSpec) : null
+    options.srcSpec?.$address ?? null,
+    options.dstSpec?.$address ?? null
   );
 }
 
@@ -317,14 +317,13 @@ export function setAudioStreamInputChannelMap(
   this: SDL,
   options: {
     stream: Pointer;
-    chmap: Pointer;
-    count: number;
+    chmap: Int32Array;
   }
 ) {
   return this.symbols.SDL_SetAudioStreamInputChannelMap(
     options.stream,
     options.chmap,
-    options.count
+    options.chmap.length
   );
 }
 
@@ -332,14 +331,13 @@ export function setAudioStreamOutputChannelMap(
   this: SDL,
   options: {
     stream: Pointer;
-    chmap: Pointer;
-    count: number;
+    chmap: Int32Array;
   }
 ) {
   return this.symbols.SDL_SetAudioStreamOutputChannelMap(
     options.stream,
     options.chmap,
-    options.count
+    options.chmap.length
   );
 }
 
@@ -478,7 +476,7 @@ export function openAudioDeviceStream(
 ) {
   return this.symbols.SDL_OpenAudioDeviceStream(
     options.deviceId,
-    options.spec ? getStructAddress(options.spec) : null,
+    options.spec?.$address ?? null,
     options.callback,
     options.userdata ?? null
   );
@@ -576,17 +574,17 @@ export function convertAudioSamples(
     dstSpec: AudioSpec;
   }
 ) {
-  const srcSpecAddr = getStructAddress(options.srcSpec);
-  const dstSpecAddr = getStructAddress(options.dstSpec);
+  const srcSpecAddr = options.srcSpec;
+  const dstSpecAddr = options.dstSpec;
 
   const dstData = new CStruct({ length: CStruct.BYTE_SIZE.ptr });
   const dstLen = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
   const success = this.symbols.SDL_ConvertAudioSamples(
-    srcSpecAddr,
+    srcSpecAddr.$address,
     options.srcData,
     options.srcLen,
-    dstSpecAddr,
+    dstSpecAddr.$address,
     dstData.$address,
     dstLen.$address
   );
@@ -597,10 +595,7 @@ export function convertAudioSamples(
     sdl: this,
     address: dstData.getValue(0, 'ptr'),
     length: dstLen.getValue(0, 'i32'),
-    spec:
-      options.dstSpec instanceof AudioSpec
-        ? options.dstSpec
-        : new AudioSpec(dstSpecAddr),
+    spec: options.dstSpec,
   });
 }
 

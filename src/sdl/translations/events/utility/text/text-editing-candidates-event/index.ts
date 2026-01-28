@@ -1,4 +1,4 @@
-import { BaseStruct, type BaseStructOptions } from '@/utility/base-struct';
+import { BaseStruct } from '@/utility/base-struct';
 import { CStruct } from '@/utility/cstruct';
 import { stringToCString } from '@utility/common';
 import { CString, ptr, type Pointer } from 'bun:ffi';
@@ -7,17 +7,11 @@ import type { TextEditingCandidatesEventType } from './types';
 export class TextEditingCandidatesEvent extends BaseStruct {
   public static override readonly BYTE_SIZE = 48;
 
-  public $candidatesBuffer: Uint8Array | null;
+  public $candidatesBuffer: BigUint64Array | null = null;
 
   private $cache: Partial<{
     candidates: CString[];
-  }>;
-
-  public constructor(data: BaseStructOptions) {
-    super(data);
-    this.$candidatesBuffer = null;
-    this.$cache = {};
-  }
+  }> = {};
 
   public get type() {
     return this.$view.getUint32(
@@ -82,22 +76,15 @@ export class TextEditingCandidatesEvent extends BaseStruct {
 
     this.$cache.candidates = value.map(stringToCString);
 
-    const buffer = new Uint8Array(value.length * 8);
-    const view = new DataView(buffer.buffer);
+    const buffer = new BigUint64Array(value.length);
 
     for (let i = 0; i < this.candidateCount; i++) {
-      const stringPtr = this.$cache.candidates[i]!.ptr;
-
-      view.setBigUint64(i * 8, BigInt(stringPtr), true);
+      buffer[i] = BigInt(this.$cache.candidates[i]!.ptr);
     }
 
     this.$candidatesBuffer = buffer;
 
-    this.$view.setBigUint64(
-      ByteOffset.candidates,
-      BigInt(ptr(this.$candidatesBuffer)),
-      true
-    );
+    this.$view.setBigUint64(ByteOffset.candidates, BigInt(ptr(buffer)), true);
   }
 
   public get candidateCount() {

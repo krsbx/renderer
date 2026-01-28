@@ -65,13 +65,11 @@ export function getSensorData(
     numValues: number;
   }
 ) {
-  const data = new CStruct({
-    length: CStruct.BYTE_SIZE.f32 * options.numValues,
-  });
+  const data = new Float32Array(options.numValues);
 
   const success = this.symbols.SDL_GetSensorData(
     options.sensor,
-    data.$address,
+    data,
     options.numValues
   );
 

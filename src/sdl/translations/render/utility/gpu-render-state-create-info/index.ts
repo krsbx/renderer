@@ -8,8 +8,8 @@ export class GPURenderStateCreateInfo extends BaseStruct {
   public static override readonly BYTE_SIZE = 64;
 
   public $samplerBindingBuffer: Uint8Array | null = null;
-  public $storageTextureBuffer: Uint8Array | null = null;
-  public $storageBufferBuffer: Uint8Array | null = null;
+  public $storageTextureBuffer: BigUint64Array | null = null;
+  public $storageBufferBuffer: BigUint64Array | null = null;
 
   public get fragmentShader() {
     const addr = this.$view.getBigUint64(ByteOffset.fragment_shader, true);
@@ -95,20 +95,17 @@ export class GPURenderStateCreateInfo extends BaseStruct {
       return;
     }
 
-    const buffer = new Uint8Array(this.storageTextureCount * 8);
-    const view = new DataView(buffer.buffer);
+    const buffer = new BigUint64Array(this.storageTextureCount);
 
     for (let i = 0; i < this.storageTextureCount; i++) {
-      const addr = value[i]!;
-
-      view.setBigUint64(i * 8, BigInt(addr), true);
+      buffer[i] = BigInt(value[i]!);
     }
 
     this.$storageTextureBuffer = buffer;
 
     this.$view.setBigUint64(
       ByteOffset.storage_textures,
-      BigInt(ptr(this.$storageTextureBuffer)),
+      BigInt(ptr(buffer)),
       true
     );
   }
@@ -141,20 +138,17 @@ export class GPURenderStateCreateInfo extends BaseStruct {
       return;
     }
 
-    const buffer = new Uint8Array(this.storageBufferCount * 8);
-    const view = new DataView(buffer.buffer);
+    const buffer = new BigUint64Array(this.storageBufferCount);
 
     for (let i = 0; i < this.storageBufferCount; i++) {
-      const addr = value[i]!;
-
-      view.setBigUint64(i * 8, BigInt(addr), true);
+      buffer[i] = BigInt(value[i]!);
     }
 
     this.$storageBufferBuffer = buffer;
 
     this.$view.setBigUint64(
       ByteOffset.storage_buffers,
-      BigInt(ptr(this.$storageBufferBuffer)),
+      BigInt(ptr(buffer)),
       true
     );
   }

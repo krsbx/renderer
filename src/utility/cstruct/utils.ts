@@ -1,7 +1,13 @@
 import { type Pointer, ptr, toArrayBuffer } from 'bun:ffi';
 import { CStruct } from '.';
 import type { BaseStruct, BaseStructConstructor } from '../base-struct';
-import type { ReadType } from './types';
+import { ReadArrayPrimitiveReturnTypeMap } from './constant';
+import type {
+  BigIntCType,
+  NumberedCType,
+  PointerCType,
+  ReadType,
+} from './types';
 
 export function readArray<
   T extends BaseStructConstructor,
@@ -88,36 +94,53 @@ export function readArrayLazy<
   });
 }
 
+export function readArrayPrimitive<
+  T extends NumberedCType,
+  U extends ReadArrayPrimitiveReturnTypeMap[T],
+  V extends InstanceType<U>,
+>(address: Pointer, count: number, type: T): V;
+export function readArrayPrimitive<
+  T extends BigIntCType,
+  U extends ReadArrayPrimitiveReturnTypeMap[T],
+  V extends InstanceType<U>,
+>(address: Pointer, count: number, type: T): V;
 export function readArrayPrimitive(
   address: Pointer,
   count: number,
-  type: Exclude<ReadType, 'u64' | 'i64' | 'intptr' | 'ptr'>
-): number[];
-export function readArrayPrimitive(
-  address: Pointer,
-  count: number,
-  type: Extract<ReadType, 'u64' | 'i64'>
-): bigint[];
-export function readArrayPrimitive(
-  address: Pointer,
-  count: number,
-  type: Extract<ReadType, 'intptr' | 'ptr'>
+  type: PointerCType
 ): Pointer[];
 export function readArrayPrimitive(
   address: Pointer,
   count: number,
   type: ReadType
 ) {
-  if (!address || count <= 0) return [];
+  if (!address || count <= 0) {
+    if (type === 'ptr' || type === 'intptr') return [];
 
-  const list = new CStruct({
-    address,
-    length: count * CStruct.BYTE_SIZE[type],
-  });
+    const TypedArrayClass = ReadArrayPrimitiveReturnTypeMap[type];
 
-  return Array.from({ length: count }, (_, i) =>
-    list.getValue(i * CStruct.BYTE_SIZE[type], type as never)
-  ) as never;
+    return new TypedArrayClass(0);
+  }
+
+  // For pointer types, we need to read each value individually
+  if (type === 'ptr' || type === 'intptr') {
+    const list = new CStruct({
+      address,
+      length: count * CStruct.BYTE_SIZE[type],
+    });
+
+    return Array.from({ length: count }, (_, i) =>
+      list.getValue(i * CStruct.BYTE_SIZE[type], type)
+    );
+  }
+
+  // For primitive types, create a typed array view directly
+  const byteSize = count * CStruct.BYTE_SIZE[type];
+  const buffer = toArrayBuffer(address, 0, byteSize);
+
+  const TypedArrayClass = ReadArrayPrimitiveReturnTypeMap[type];
+
+  return new TypedArrayClass(buffer);
 }
 
 export function writeArray<T extends BaseStruct>(

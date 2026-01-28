@@ -1,8 +1,11 @@
 import { type Pointer, toArrayBuffer } from 'bun:ffi';
 import type {
+  BigIntCType,
   CStructOptions,
   CStructOptionsWithAddress,
   CStructOptionsWithLength,
+  NumberedCType,
+  PointerCType,
   ReadType,
 } from './types';
 import {
@@ -69,18 +72,9 @@ export class CStruct<
     );
   }
 
-  public getValue(
-    offset: number,
-    type: Exclude<ReadType, 'u64' | 'i64' | 'intptr' | 'ptr'>
-  ): number;
-  public getValue(
-    offset: number,
-    type: Extract<ReadType, 'u64' | 'i64'>
-  ): bigint;
-  public getValue(
-    offset: number,
-    type: Extract<ReadType, 'intptr' | 'ptr'>
-  ): Pointer;
+  public getValue(offset: number, type: NumberedCType): number;
+  public getValue(offset: number, type: BigIntCType): bigint;
+  public getValue(offset: number, type: PointerCType): Pointer;
   public getValue(offset: number, type: ReadType) {
     switch (type) {
       case 'u8':
@@ -122,21 +116,9 @@ export class CStruct<
     }
   }
 
-  public setValue(
-    offset: number,
-    value: number,
-    type: Exclude<ReadType, 'u64' | 'i64' | 'intptr' | 'ptr'>
-  ): this;
-  public setValue(
-    offset: number,
-    value: bigint,
-    type: Extract<ReadType, 'u64' | 'i64'>
-  ): this;
-  public setValue(
-    offset: number,
-    value: number,
-    type: Extract<ReadType, 'intptr' | 'ptr'>
-  ): this;
+  public setValue(offset: number, value: number, type: NumberedCType): this;
+  public setValue(offset: number, value: bigint, type: BigIntCType): this;
+  public setValue(offset: number, value: number, type: PointerCType): this;
   public setValue(offset: number, value: never, type: ReadType) {
     if (!this.$view) {
       throw new Error('Cannot write to a read-only struct');

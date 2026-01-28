@@ -1,16 +1,12 @@
-import { BaseStruct, type BaseStructOptions } from '@/utility/base-struct';
+import type { BuildTuple } from '@/types/shared';
+import { BaseStruct } from '@/utility/base-struct';
 import { ByteOffset } from './constant';
 import type { SensorEventType } from './types';
 
 export class SensorEvent extends BaseStruct {
   public static override readonly BYTE_SIZE = 56;
 
-  private $data: [number, number, number, number, number, number] | null;
-
-  public constructor(data: BaseStructOptions) {
-    super(data);
-    this.$data = null;
-  }
+  private $data: BuildTuple<6, number> | null = null;
 
   public get type() {
     return this.$view.getUint32(ByteOffset.type, true) as SensorEventType;
@@ -47,38 +43,11 @@ export class SensorEvent extends BaseStruct {
   public get data() {
     if (this.$data) return this.$data;
 
-    const length = 6;
-
-    this.$data = new Proxy(new Array(length), {
-      get: (target, prop) => {
-        const index = Number(prop);
-
-        if (Number.isNaN(index)) {
-          // Allow access to standard array methods (map, forEach, etc)
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const val = (target as any)[prop];
-
-          return typeof val === 'function' ? val.bind(target) : val;
-        }
-
-        if (index < 0 || index >= length) {
-          throw new RangeError(`Index out of range: ${index}`);
-        }
-
-        return this.$view.getUint32(ByteOffset.data1 + index * 4, true);
-      },
-      set: (_, prop, value) => {
-        const index = Number(prop);
-
-        if (Number.isNaN(index) || index < 0 || index >= length) {
-          return false;
-        }
-
-        this.$view.setUint32(ByteOffset.data1 + index * 4, value, true);
-
-        return true;
-      },
-    }) as never;
+    this.$data = new Uint32Array(
+      this.$memory.buffer,
+      this.$memory.byteOffset + ByteOffset.data1,
+      6
+    ) as never;
 
     return this.$data;
   }

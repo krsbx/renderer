@@ -1,17 +1,12 @@
-import { BaseStruct, type BaseStructOptions } from '@/utility/base-struct';
+import type { BuildTuple } from '@/types/shared';
+import { BaseStruct } from '@/utility/base-struct';
 import { ByteOffset } from './constant';
 import type { GamepadSensorEventType } from './types';
 
 export class GamepadSensorEvent extends BaseStruct {
   public static override readonly BYTE_SIZE = 48;
 
-  private $data: [number, number, number] | null;
-
-  public constructor(data: BaseStructOptions) {
-    super(data);
-
-    this.$data = null;
-  }
+  private $data: BuildTuple<3, number> | null = null;
 
   public get type() {
     return this.$view.getUint32(
@@ -59,38 +54,11 @@ export class GamepadSensorEvent extends BaseStruct {
   public get data() {
     if (this.$data) return this.$data;
 
-    const length = 3;
-
-    this.$data = new Proxy(new Array(length), {
-      get: (target, prop) => {
-        const index = Number(prop);
-
-        if (Number.isNaN(index)) {
-          // Allow access to standard array methods (map, forEach, etc)
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const val = (target as any)[prop];
-
-          return typeof val === 'function' ? val.bind(target) : val;
-        }
-
-        if (index < 0 || index >= length) {
-          throw new RangeError(`Index out of range: ${index}`);
-        }
-
-        return this.$view.getFloat32(ByteOffset.data1 + index * 4, true);
-      },
-      set: (_, prop, value) => {
-        const index = Number(prop);
-
-        if (Number.isNaN(index) || index < 0 || index >= length) {
-          return false;
-        }
-
-        this.$view.setFloat32(ByteOffset.data1 + index * 4, value, true);
-
-        return true;
-      },
-    }) as never;
+    this.$data = new Float32Array(
+      this.$memory.buffer,
+      this.$memory.byteOffset + ByteOffset.data1,
+      3
+    ) as never;
 
     return this.$data;
   }

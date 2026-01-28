@@ -1,4 +1,5 @@
 import type { StructInit } from '@/types/shared';
+import { CStruct } from '@/utility/cstruct';
 import { type Pointer, ptr, toArrayBuffer } from 'bun:ffi';
 import { GPUVertexAttribute } from '../gpu-vertex-attribute';
 import { GPUVertexBufferDescription } from '../gpu-vertex-buffer-description';
@@ -48,32 +49,22 @@ export class GPUVertexInputState {
   }
 
   public get vertexBufferDescriptions() {
-    const vertexBufferCount = this.vertexBufferCount;
+    if (!this.vertexBufferCount) return [];
+
     const vertexBufferDescAddr = this.$view.getBigUint64(
       ByteOffset.vertex_buffer_descriptions,
       true
     );
 
-    if (
-      !vertexBufferCount ||
-      !vertexBufferDescAddr ||
-      vertexBufferDescAddr === 0n
-    )
-      return [];
+    if (!vertexBufferDescAddr || vertexBufferDescAddr === 0n) return [];
 
-    const vertexBufferDesc: GPUVertexBufferDescription[] = [];
     const vertexBufferDescPtr = Number(vertexBufferDescAddr) as Pointer;
 
-    for (let i = 0; i < vertexBufferCount; i++) {
-      const offset = i * GPUVertexBufferDescription.BYTE_SIZE;
-      const vertexPtr = (vertexBufferDescPtr + offset) as Pointer;
-
-      if (!vertexPtr) continue;
-
-      vertexBufferDesc.push(new GPUVertexBufferDescription(vertexPtr));
-    }
-
-    return vertexBufferDesc;
+    return CStruct.readArray(
+      GPUVertexBufferDescription,
+      vertexBufferDescPtr,
+      this.vertexBufferCount
+    );
   }
 
   public set vertexBufferDescriptions(value: GPUVertexBufferDescription[]) {
@@ -113,30 +104,22 @@ export class GPUVertexInputState {
   }
 
   public get vertexAttributes() {
-    const vertexAttributeCount = this.vertexAttributeCount;
+    if (!this.vertexAttributeCount) return [];
+
     const vertexAttributesAddr = this.$view.getBigUint64(
       ByteOffset.vertex_attributes,
       true
     );
 
-    if (
-      !vertexAttributeCount ||
-      !vertexAttributesAddr ||
-      vertexAttributesAddr === 0n
-    )
-      return [];
+    if (!vertexAttributesAddr || vertexAttributesAddr === 0n) return [];
 
-    const vertexAttributes: GPUVertexAttribute[] = [];
     const vertexAttributesPtr = Number(vertexAttributesAddr) as Pointer;
 
-    for (let i = 0; i < vertexAttributeCount; i++) {
-      const offset = i * GPUVertexAttribute.BYTE_SIZE;
-      const vertexPtr = (vertexAttributesPtr + offset) as Pointer;
-
-      vertexAttributes.push(new GPUVertexAttribute(vertexPtr));
-    }
-
-    return vertexAttributes;
+    return CStruct.readArray(
+      GPUVertexAttribute,
+      vertexAttributesPtr,
+      this.vertexAttributeCount
+    );
   }
 
   public set vertexAttributes(value: GPUVertexAttribute[]) {

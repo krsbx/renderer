@@ -1,4 +1,5 @@
 import type { StructInit } from '@/types/shared';
+import { CStruct } from '@/utility/cstruct';
 import { ptr, read, toArrayBuffer, type Pointer } from 'bun:ffi';
 import { GPUTextureSamplerBinding } from '../../../gpu/utility';
 import { ByteOffset } from './constant';
@@ -68,26 +69,22 @@ export class GPURenderStateCreateInfo {
   }
 
   public get samplerBindings() {
-    const numSamplers = this.samplerBindingCount;
+    if (!this.samplerBindingCount) return [];
+
     const samplerBindingsAddr = this.$view.getBigUint64(
       ByteOffset.sampler_bindings,
       true
     );
 
-    if (!numSamplers || !samplerBindingsAddr || samplerBindingsAddr === 0n)
-      return [];
+    if (!samplerBindingsAddr || samplerBindingsAddr === 0n) return [];
 
-    const bindings: GPUTextureSamplerBinding[] = [];
     const samplerBindingPtr = Number(samplerBindingsAddr) as Pointer;
 
-    for (let i = 0; i < numSamplers; i++) {
-      const offset = i * GPUTextureSamplerBinding.BYTE_SIZE;
-      const bindingPtr = (samplerBindingPtr + offset) as Pointer;
-
-      bindings.push(new GPUTextureSamplerBinding(bindingPtr));
-    }
-
-    return bindings;
+    return CStruct.readArray(
+      GPUTextureSamplerBinding,
+      samplerBindingPtr,
+      this.samplerBindingCount
+    );
   }
 
   public set samplerBindings(value: GPUTextureSamplerBinding[]) {

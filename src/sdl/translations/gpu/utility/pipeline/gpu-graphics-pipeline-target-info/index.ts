@@ -1,4 +1,5 @@
 import type { StructInit } from '@/types/shared';
+import { CStruct } from '@/utility/cstruct';
 import { ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
 import type { GPUTextureFormat } from '../../../../../ffi/gpu/constant';
 import { GPUColorTargetDescription } from '../../color-target';
@@ -51,35 +52,25 @@ export class GPUGraphicsPipelineTargetInfo {
   }
 
   public get colorTargetDescriptions() {
-    const colorTargetsCount = this.colorTargetsCount;
+    if (!this.colorTargetsCount) return [];
+
     const colorTargetDescriptionsAddr = this.$view.getBigUint64(
       ByteOffset.color_target_descriptions,
       true
     );
 
-    if (
-      !colorTargetsCount ||
-      !colorTargetDescriptionsAddr ||
-      colorTargetDescriptionsAddr === 0n
-    )
+    if (!colorTargetDescriptionsAddr || colorTargetDescriptionsAddr === 0n)
       return [];
 
-    const colorTargetDescriptions: GPUColorTargetDescription[] = [];
     const colorTargetDescriptionsPtr = Number(
       colorTargetDescriptionsAddr
     ) as Pointer;
 
-    for (let i = 0; i < colorTargetsCount; i++) {
-      const offset = i * GPUColorTargetDescription.BYTE_SIZE;
-      const colorTargetDescriptionPtr = (colorTargetDescriptionsPtr +
-        offset) as Pointer;
-
-      colorTargetDescriptions.push(
-        new GPUColorTargetDescription(colorTargetDescriptionPtr)
-      );
-    }
-
-    return colorTargetDescriptions;
+    return CStruct.readArray(
+      GPUColorTargetDescription,
+      colorTargetDescriptionsPtr,
+      this.colorTargetsCount
+    );
   }
 
   public set colorTargetDescriptions(value: GPUColorTargetDescription[]) {

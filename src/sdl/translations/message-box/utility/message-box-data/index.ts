@@ -1,4 +1,5 @@
 import type { StructInit } from '@/types/shared';
+import { CStruct } from '@/utility/cstruct';
 import { stringToCString } from '@utility/common';
 import { CString, ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
 import type { MessageBoxFlags } from '../../../../ffi/message-box/constant';
@@ -118,17 +119,13 @@ export class MessageBoxData {
 
     if (!buttonsAddr || buttonsAddr === 0n) return [];
 
-    const buttons: MessageBoxButtonData[] = [];
+    const buttonsPtr = Number(buttonsAddr) as Pointer;
 
-    for (let i = 0; i < this.buttonCount; i++) {
-      const offset = BigInt(i) * BigInt(MessageBoxButtonData.BYTE_SIZE);
-      const touchpadAdr = buttonsAddr + offset;
-      const touchpadPtr = Number(touchpadAdr) as Pointer;
-
-      buttons.push(new MessageBoxButtonData(touchpadPtr));
-    }
-
-    return buttons;
+    return CStruct.readArray(
+      MessageBoxButtonData,
+      buttonsPtr,
+      this.buttonCount
+    );
   }
 
   public set buttons(value: MessageBoxButtonData[]) {

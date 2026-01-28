@@ -231,6 +231,7 @@ export class CStruct<
 
     return Array.from({ length: count }, (_, i) => {
       const offset = i * StructClass.BYTE_SIZE;
+
       return new StructClass(
         memory.subarray(offset, offset + StructClass.BYTE_SIZE)
       );

@@ -1,4 +1,5 @@
 import type { StructInit } from '@/types/shared';
+import { CStruct } from '@/utility/cstruct';
 import { stringToCString } from '@utility/common';
 import {
   CString,
@@ -208,17 +209,13 @@ export class VirtualJoystickDesc {
 
     if (!touchpadsAddr || touchpadsAddr === 0n) return [];
 
-    const touchpads: VirtualJoystickTouchpadDesc[] = [];
     const touchpadsPtr = Number(touchpadsAddr) as Pointer;
 
-    for (let i = 0; i < this.touchpadCount; i++) {
-      const offset = i * VirtualJoystickTouchpadDesc.BYTE_SIZE;
-      const touchpadPtr = (offset + touchpadsPtr) as Pointer;
-
-      touchpads.push(new VirtualJoystickTouchpadDesc(touchpadPtr));
-    }
-
-    return touchpads;
+    return CStruct.readArray(
+      VirtualJoystickTouchpadDesc,
+      touchpadsPtr,
+      this.touchpadCount
+    );
   }
 
   public set touchpads(value: VirtualJoystickTouchpadDesc[]) {
@@ -256,17 +253,13 @@ export class VirtualJoystickDesc {
 
     if (!sensorsAddr || sensorsAddr === 0n) return [];
 
-    const sensors: VirtualJoystickSensorDesc[] = [];
     const sensorsPtr = Number(sensorsAddr) as Pointer;
 
-    for (let i = 0; i < this.sensorCount; i++) {
-      const offset = i * VirtualJoystickSensorDesc.BYTE_SIZE;
-      const sensorPtr = (offset + sensorsPtr) as Pointer;
-
-      sensors.push(new VirtualJoystickSensorDesc(sensorPtr));
-    }
-
-    return sensors;
+    return CStruct.readArray(
+      VirtualJoystickSensorDesc,
+      sensorsPtr,
+      this.sensorCount
+    );
   }
 
   public set sensors(value: VirtualJoystickSensorDesc[]) {

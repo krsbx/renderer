@@ -16,7 +16,7 @@ export function setShapesTexture(
 }
 
 export function getShapesTexture(this: RayLib) {
-  const texture = new Texture2D(Texture2D.allocMemory());
+  const texture = Texture2D.create();
 
   this.symbols.GetShapesTexture(texture.$address);
 
@@ -24,7 +24,7 @@ export function getShapesTexture(this: RayLib) {
 }
 
 export function getShapesTextureRectangle(this: RayLib) {
-  const rect = new Rectangle(Rectangle.allocMemory());
+  const rect = Rectangle.create();
 
   this.symbols.GetShapesTextureRectangle(rect.$address);
 

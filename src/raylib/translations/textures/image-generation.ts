@@ -9,7 +9,7 @@ export function genImageColor(
     color: Color;
   }
 ) {
-  const image = new Image(Image.allocMemory());
+  const image = Image.create();
 
   this.symbols.GenImageColor(
     options.width,
@@ -31,7 +31,7 @@ export function genImageGradientLinear(
     end: Color;
   }
 ) {
-  const image = new Image(Image.allocMemory());
+  const image = Image.create();
 
   this.symbols.GenImageGradientLinear(
     options.width,
@@ -55,7 +55,7 @@ export function genImageGradientRadial(
     outer: Color;
   }
 ) {
-  const image = new Image(Image.allocMemory());
+  const image = Image.create();
 
   this.symbols.GenImageGradientRadial(
     options.width,
@@ -79,7 +79,7 @@ export function genImageGradientSquare(
     outer: Color;
   }
 ) {
-  const image = new Image(Image.allocMemory());
+  const image = Image.create();
 
   this.symbols.GenImageGradientSquare(
     options.width,
@@ -104,7 +104,7 @@ export function genImageChecked(
     col2: Color;
   }
 ) {
-  const image = new Image(Image.allocMemory());
+  const image = Image.create();
 
   this.symbols.GenImageChecked(
     options.width,
@@ -127,7 +127,7 @@ export function genImageWhiteNoise(
     factor: number;
   }
 ) {
-  const image = new Image(Image.allocMemory());
+  const image = Image.create();
 
   this.symbols.GenImageWhiteNoise(
     options.width,
@@ -149,7 +149,7 @@ export function genImagePerlinNoise(
     scale: number;
   }
 ) {
-  const image = new Image(Image.allocMemory());
+  const image = Image.create();
 
   this.symbols.GenImagePerlinNoise(
     options.width,
@@ -171,7 +171,7 @@ export function genImageCellular(
     tileSize: number;
   }
 ) {
-  const image = new Image(Image.allocMemory());
+  const image = Image.create();
 
   this.symbols.GenImageCellular(
     options.width,

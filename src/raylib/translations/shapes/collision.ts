@@ -154,7 +154,7 @@ export function checkCollisionLines(
     endPos2: Vector2;
   }
 ) {
-  const collisionPoint = new Vector2(Vector2.allocMemory());
+  const collisionPoint = Vector2.create();
 
   const collide = this.symbols.CheckCollisionLines(
     options.startPos1.$address,
@@ -177,7 +177,7 @@ export function getCollisionRec(
     rec2: Rectangle;
   }
 ) {
-  const rec = new Rectangle(Rectangle.allocMemory());
+  const rec = Rectangle.create();
 
   this.symbols.GetCollisionRec(
     options.rec1.$address,

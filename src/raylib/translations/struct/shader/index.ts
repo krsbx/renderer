@@ -19,7 +19,9 @@ export class Shader extends BaseStruct {
   }
 
   public get locs_ptr() {
-    return Number(this.$view.getBigUint64(ByteOffset.locs, true)) as Pointer;
+    const addr = this.$view.getBigUint64(ByteOffset.locs, true);
+
+    return Number(addr) as Pointer;
   }
 
   public set locs_ptr(value: Pointer) {

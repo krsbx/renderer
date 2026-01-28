@@ -48,7 +48,9 @@ export class Model extends BaseStruct {
 
   // meshes: Mesh* (meshCount)
   public get meshes_ptr() {
-    return Number(this.$view.getBigUint64(ByteOffset.meshes, true)) as Pointer;
+    const addr = this.$view.getBigUint64(ByteOffset.meshes, true);
+
+    return Number(addr) as Pointer;
   }
 
   public set meshes_ptr(value: Pointer) {
@@ -70,9 +72,9 @@ export class Model extends BaseStruct {
 
   // materials: Material* (materialCount)
   public get materials_ptr() {
-    return Number(
-      this.$view.getBigUint64(ByteOffset.materials, true)
-    ) as Pointer;
+    const addr = this.$view.getBigUint64(ByteOffset.materials, true);
+
+    return Number(addr) as Pointer;
   }
 
   public set materials_ptr(value: Pointer) {
@@ -94,9 +96,9 @@ export class Model extends BaseStruct {
 
   // meshMaterial: int* (meshCount)
   public get meshMaterial_ptr() {
-    return Number(
-      this.$view.getBigUint64(ByteOffset.meshMaterial, true)
-    ) as Pointer;
+    const addr = this.$view.getBigUint64(ByteOffset.meshMaterial, true);
+
+    return Number(addr) as Pointer;
   }
 
   public set meshMaterial_ptr(value: Pointer) {
@@ -127,7 +129,9 @@ export class Model extends BaseStruct {
 
   // bones: BoneInfo* (boneCount)
   public get bones_ptr() {
-    return Number(this.$view.getBigUint64(ByteOffset.bones, true)) as Pointer;
+    const addr = this.$view.getBigUint64(ByteOffset.bones, true);
+
+    return Number(addr) as Pointer;
   }
 
   public set bones_ptr(value: Pointer) {
@@ -149,9 +153,9 @@ export class Model extends BaseStruct {
 
   // bindPose: Transform* (boneCount)
   public get bindPose_ptr() {
-    return Number(
-      this.$view.getBigUint64(ByteOffset.bindPose, true)
-    ) as Pointer;
+    const addr = this.$view.getBigUint64(ByteOffset.bindPose, true);
+
+    return Number(addr) as Pointer;
   }
 
   public set bindPose_ptr(value: Pointer) {

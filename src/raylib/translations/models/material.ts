@@ -22,7 +22,7 @@ export function loadMaterials(this: RayLib, fileName: string) {
 }
 
 export function loadMaterialDefault(this: RayLib) {
-  const material = new Material(Material.allocMemory());
+  const material = Material.create();
 
   this.symbols.LoadMaterialDefault(material.$address);
 

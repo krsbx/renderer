@@ -28,7 +28,9 @@ export class ModelAnimation extends BaseStruct {
   }
 
   public get bones_ptr() {
-    return Number(this.$view.getBigUint64(ByteOffset.bones, true)) as Pointer;
+    const addr = this.$view.getBigUint64(ByteOffset.bones, true);
+
+    return Number(addr) as Pointer;
   }
 
   public set bones_ptr(value: Pointer) {
@@ -48,9 +50,9 @@ export class ModelAnimation extends BaseStruct {
   }
 
   public get framePoses_ptr() {
-    return Number(
-      this.$view.getBigUint64(ByteOffset.framePoses, true)
-    ) as Pointer;
+    const addr = this.$view.getBigUint64(ByteOffset.framePoses, true);
+
+    return Number(addr) as Pointer;
   }
 
   public set framePoses_ptr(value: Pointer) {

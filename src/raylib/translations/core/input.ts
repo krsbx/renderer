@@ -144,7 +144,7 @@ export function getMouseY(this: RayLib) {
 }
 
 export function getMousePosition(this: RayLib) {
-  const position = new Vector2(Vector2.allocMemory());
+  const position = Vector2.create();
 
   this.symbols.GetMousePosition(position.$address);
 
@@ -152,7 +152,7 @@ export function getMousePosition(this: RayLib) {
 }
 
 export function getMouseDelta(this: RayLib) {
-  const delta = new Vector2(Vector2.allocMemory());
+  const delta = Vector2.create();
 
   this.symbols.GetMouseDelta(delta.$address);
 
@@ -185,7 +185,7 @@ export function getMouseWheelMove(this: RayLib) {
 }
 
 export function getMouseWheelMoveV(this: RayLib) {
-  const wheelMove = new Vector2(Vector2.allocMemory());
+  const wheelMove = Vector2.create();
 
   this.symbols.GetMouseWheelMoveV(wheelMove.$address);
 
@@ -205,7 +205,7 @@ export function getTouchY(this: RayLib) {
 }
 
 export function getTouchPosition(this: RayLib) {
-  const position = new Vector2(Vector2.allocMemory());
+  const position = Vector2.create();
 
   this.symbols.GetTouchPosition(position.$address);
 
@@ -237,7 +237,7 @@ export function getGestureHoldDuration(this: RayLib) {
 }
 
 export function getGestureDragVector(this: RayLib) {
-  const vector = new Vector2(Vector2.allocMemory());
+  const vector = Vector2.create();
 
   this.symbols.GetGestureDragVector(vector.$address);
 
@@ -249,7 +249,7 @@ export function getGestureDragAngle(this: RayLib) {
 }
 
 export function getGesturePinchVector(this: RayLib) {
-  const vector = new Vector2(Vector2.allocMemory());
+  const vector = Vector2.create();
 
   this.symbols.GetGesturePinchVector(vector.$address);
 

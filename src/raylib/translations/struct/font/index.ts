@@ -1,6 +1,6 @@
 import { BaseStruct, type BaseStructOptions } from '@/utility/base-struct';
 import { CStruct } from '@cstruct';
-import { type Pointer } from 'bun:ffi';
+import type { Pointer } from 'bun:ffi';
 import { GlyphInfo } from '../glyph-info';
 import { Rectangle } from '../rectangle';
 import { Texture2D } from '../texture';
@@ -55,7 +55,8 @@ export class Font extends BaseStruct {
 
   public get recs_ptr() {
     const addr = this.$view.getBigUint64(ByteOffset.recs, true);
-    return Number(addr) as unknown as Pointer;
+
+    return Number(addr) as Pointer;
   }
 
   public get recs() {
@@ -81,7 +82,8 @@ export class Font extends BaseStruct {
 
   public get glyphs_ptr() {
     const addr = this.$view.getBigUint64(ByteOffset.glyphs, true);
-    return Number(addr) as unknown as Pointer;
+
+    return Number(addr) as Pointer;
   }
 
   public get glyphs() {

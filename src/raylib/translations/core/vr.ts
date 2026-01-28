@@ -2,7 +2,7 @@ import type { RayLib } from '@/raylib';
 import { VrStereoConfig, type VrDeviceInfo } from '../struct';
 
 export function loadVrStereoConfig(this: RayLib, device: VrDeviceInfo) {
-  const config = new VrStereoConfig(VrStereoConfig.allocMemory());
+  const config = VrStereoConfig.create();
 
   return this.symbols.LoadVrStereoConfig(device.$address, config.$address);
 }

@@ -5,7 +5,7 @@ import { toArrayBuffer } from 'bun:ffi';
 import { Image, Texture2D } from '../struct';
 
 export function loadImage(this: RayLib, fileName: string) {
-  const image = new Image(Image.allocMemory());
+  const image = Image.create();
 
   this.symbols.LoadImage(stringToCString(fileName).ptr, image.$address);
 
@@ -22,7 +22,7 @@ export function loadImageRaw(
     headerSize: number;
   }
 ) {
-  const image = new Image(Image.allocMemory());
+  const image = Image.create();
 
   this.symbols.LoadImageRaw(
     stringToCString(options.fileName).ptr,
@@ -37,7 +37,7 @@ export function loadImageRaw(
 }
 
 export function loadImageAnim(this: RayLib, fileName: string) {
-  const image = new Image(Image.allocMemory());
+  const image = Image.create();
   const framesOut = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
   this.symbols.LoadImageAnim(
@@ -59,7 +59,7 @@ export function loadImageAnimFromMemory(
     fileData: Uint8Array;
   }
 ) {
-  const image = new Image(Image.allocMemory());
+  const image = Image.create();
   const framesOut = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
   this.symbols.LoadImageAnimFromMemory(
@@ -83,7 +83,7 @@ export function loadImageFromMemory(
     fileData: Uint8Array;
   }
 ) {
-  const image = new Image(Image.allocMemory());
+  const image = Image.create();
 
   this.symbols.LoadImageFromMemory(
     stringToCString(options.fileType).ptr,
@@ -96,7 +96,7 @@ export function loadImageFromMemory(
 }
 
 export function loadImageFromTexture(this: RayLib, texture: Texture2D) {
-  const image = new Image(Image.allocMemory());
+  const image = Image.create();
 
   this.symbols.LoadImageFromTexture(texture.$address, image.$address);
 
@@ -104,7 +104,7 @@ export function loadImageFromTexture(this: RayLib, texture: Texture2D) {
 }
 
 export function loadImageFromScreen(this: RayLib) {
-  const image = new Image(Image.allocMemory());
+  const image = Image.create();
 
   this.symbols.LoadImageFromScreen(image.$address);
 

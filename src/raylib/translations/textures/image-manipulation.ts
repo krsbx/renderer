@@ -5,7 +5,7 @@ import { type Pointer } from 'bun:ffi';
 import { Color, Font, Image, Rectangle } from '../struct';
 
 export function imageCopy(this: RayLib, image: Image) {
-  const copy = new Image(Image.allocMemory());
+  const copy = Image.create();
 
   this.symbols.ImageCopy(image.$address, copy.$address);
 
@@ -19,7 +19,7 @@ export function imageFromImage(
     rec: Rectangle;
   }
 ) {
-  const newImage = new Image(Image.allocMemory());
+  const newImage = Image.create();
 
   this.symbols.ImageFromImage(
     options.image.$address,
@@ -37,7 +37,7 @@ export function imageFromChannel(
     selectedChannel: number;
   }
 ) {
-  const newImage = new Image(Image.allocMemory());
+  const newImage = Image.create();
 
   this.symbols.ImageFromChannel(
     options.image.$address,
@@ -56,7 +56,7 @@ export function imageText(
     color: Color;
   }
 ) {
-  const image = new Image(Image.allocMemory());
+  const image = Image.create();
 
   this.symbols.ImageText(
     stringToCString(options.text).ptr,
@@ -78,7 +78,7 @@ export function imageTextEx(
     tint: Color;
   }
 ) {
-  const image = new Image(Image.allocMemory());
+  const image = Image.create();
 
   this.symbols.ImageTextEx(
     options.font.$address,
@@ -412,7 +412,7 @@ export function getImageColor(
     y: number;
   }
 ) {
-  const color = new Color(Color.allocMemory());
+  const color = Color.create();
 
   this.symbols.GetImageColor(
     options.image.$address,
@@ -431,7 +431,7 @@ export function getImageAlphaBorder(
     threshold: number;
   }
 ) {
-  const rect = new Rectangle(Rectangle.allocMemory());
+  const rect = Rectangle.create();
 
   this.symbols.GetImageAlphaBorder(
     options.image.$address,

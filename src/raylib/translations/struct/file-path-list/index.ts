@@ -17,7 +17,9 @@ export class FilePathList extends BaseStruct {
   }
 
   public get paths_ptr() {
-    return Number(this.$view.getBigUint64(ByteOffset.paths, true)) as Pointer;
+    const pathAddr = this.$view.getBigUint64(ByteOffset.paths, true);
+
+    return Number(pathAddr) as Pointer;
   }
 
   public set paths_ptr(value: Pointer) {

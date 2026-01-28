@@ -29,7 +29,9 @@ export class Material extends BaseStruct {
   }
 
   public get maps_ptr() {
-    return Number(this.$view.getBigUint64(ByteOffset.maps, true)) as Pointer;
+    const addr = this.$view.getBigUint64(ByteOffset.maps, true);
+
+    return Number(addr) as Pointer;
   }
 
   public set maps_ptr(value: Pointer) {

@@ -173,7 +173,7 @@ export function getCurrentMonitor(this: RayLib) {
 }
 
 export function getMonitorPosition(this: RayLib, monitor: number) {
-  const position = new Vector2(Vector2.allocMemory());
+  const position = Vector2.create();
 
   this.symbols.GetMonitorPosition(monitor, position.$address);
 
@@ -201,7 +201,7 @@ export function getMonitorRefreshRate(this: RayLib, monitor: number) {
 }
 
 export function getWindowPosition(this: RayLib) {
-  const position = new Vector2(Vector2.allocMemory());
+  const position = Vector2.create();
 
   this.symbols.GetWindowPosition(position.$address);
 
@@ -209,7 +209,7 @@ export function getWindowPosition(this: RayLib) {
 }
 
 export function getWindowScaleDPI(this: RayLib) {
-  const dpi = new Vector2(Vector2.allocMemory());
+  const dpi = Vector2.create();
 
   this.symbols.GetWindowScaleDPI(dpi.$address);
 
@@ -229,7 +229,7 @@ export function getClipboardText(this: RayLib) {
 }
 
 export function getClipboardImage(this: RayLib) {
-  const image = new Image(Image.allocMemory());
+  const image = Image.create();
 
   this.symbols.GetClipboardImage(image.$address);
 

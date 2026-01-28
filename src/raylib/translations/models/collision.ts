@@ -56,7 +56,7 @@ export function getRayCollisionSphere(
     radius: number;
   }
 ) {
-  const collision = new RayCollision(RayCollision.allocMemory());
+  const collision = RayCollision.create();
 
   this.symbols.GetRayCollisionSphere(
     options.ray.$address,
@@ -75,7 +75,7 @@ export function getRayCollisionBox(
     box: BoundingBox;
   }
 ) {
-  const collision = new RayCollision(RayCollision.allocMemory());
+  const collision = RayCollision.create();
 
   this.symbols.GetRayCollisionBox(
     options.ray.$address,
@@ -94,7 +94,7 @@ export function getRayCollisionMesh(
     transform: Matrix;
   }
 ) {
-  const collision = new RayCollision(RayCollision.allocMemory());
+  const collision = RayCollision.create();
 
   this.symbols.GetRayCollisionMesh(
     options.ray.$address,
@@ -115,7 +115,7 @@ export function getRayCollisionTriangle(
     p3: Vector3;
   }
 ) {
-  const collision = new RayCollision(RayCollision.allocMemory());
+  const collision = RayCollision.create();
 
   this.symbols.GetRayCollisionTriangle(
     options.ray.$address,
@@ -138,7 +138,7 @@ export function getRayCollisionQuad(
     p4: Vector3;
   }
 ) {
-  const collision = new RayCollision(RayCollision.allocMemory());
+  const collision = RayCollision.create();
 
   this.symbols.GetRayCollisionQuad(
     options.ray.$address,

@@ -40,7 +40,9 @@ export class Wave extends BaseStruct {
   }
 
   public get data_ptr() {
-    return Number(this.$view.getBigUint64(ByteOffset.data, true)) as Pointer;
+    const addr = this.$view.getBigUint64(ByteOffset.data, true);
+
+    return Number(addr) as Pointer;
   }
 
   public set data_ptr(value: Pointer) {

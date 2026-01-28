@@ -13,7 +13,7 @@ import { Mesh } from '../struct/mesh';
 import { Model } from '../struct/model';
 
 export function loadModel(this: RayLib, fileName: string) {
-  const model = new Model(Model.allocMemory());
+  const model = Model.create();
 
   this.symbols.LoadModel(stringToCString(fileName).ptr, model.$address);
 
@@ -21,7 +21,7 @@ export function loadModel(this: RayLib, fileName: string) {
 }
 
 export function loadModelFromMesh(this: RayLib, mesh: Mesh) {
-  const model = new Model(Model.allocMemory());
+  const model = Model.create();
 
   this.symbols.LoadModelFromMesh(mesh.$address, model.$address);
 
@@ -37,7 +37,7 @@ export function unloadModel(this: RayLib, model: Model) {
 }
 
 export function getModelBoundingBox(this: RayLib, model: Model) {
-  const box = new BoundingBox(BoundingBox.allocMemory());
+  const box = BoundingBox.create();
 
   this.symbols.GetModelBoundingBox(model.$address, box.$address);
 

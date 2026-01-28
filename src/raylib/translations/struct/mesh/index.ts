@@ -42,9 +42,9 @@ export class Mesh extends BaseStruct {
 
   // vertices: float* (vertexCount * 3)
   public get vertices_ptr() {
-    return Number(
-      this.$view.getBigUint64(ByteOffset.vertices, true)
-    ) as Pointer;
+    const addr = this.$view.getBigUint64(ByteOffset.vertices, true);
+
+    return Number(addr) as Pointer;
   }
 
   public set vertices_ptr(value: Pointer) {
@@ -68,9 +68,9 @@ export class Mesh extends BaseStruct {
 
   // texcoords: float* (vertexCount * 2)
   public get texcoords_ptr() {
-    return Number(
-      this.$view.getBigUint64(ByteOffset.texcoords, true)
-    ) as Pointer;
+    const addr = this.$view.getBigUint64(ByteOffset.texcoords, true);
+
+    return Number(addr) as Pointer;
   }
 
   public set texcoords_ptr(value: Pointer) {
@@ -94,9 +94,9 @@ export class Mesh extends BaseStruct {
 
   // texcoords2: float* (vertexCount * 2)
   public get texcoords2_ptr() {
-    return Number(
-      this.$view.getBigUint64(ByteOffset.texcoords2, true)
-    ) as Pointer;
+    const addr = this.$view.getBigUint64(ByteOffset.texcoords2, true);
+
+    return Number(addr) as Pointer;
   }
 
   public set texcoords2_ptr(value: Pointer) {
@@ -120,7 +120,9 @@ export class Mesh extends BaseStruct {
 
   // normals: float* (vertexCount * 3)
   public get normals_ptr() {
-    return Number(this.$view.getBigUint64(ByteOffset.normals, true)) as Pointer;
+    const addr = this.$view.getBigUint64(ByteOffset.normals, true);
+
+    return Number(addr) as Pointer;
   }
 
   public set normals_ptr(value: Pointer) {
@@ -144,9 +146,9 @@ export class Mesh extends BaseStruct {
 
   // tangents: float* (vertexCount * 4)
   public get tangents_ptr() {
-    return Number(
-      this.$view.getBigUint64(ByteOffset.tangents, true)
-    ) as Pointer;
+    const addr = this.$view.getBigUint64(ByteOffset.tangents, true);
+
+    return Number(addr) as Pointer;
   }
 
   public set tangents_ptr(value: Pointer) {
@@ -170,7 +172,9 @@ export class Mesh extends BaseStruct {
 
   // colors: unsigned char* (vertexCount * 4)
   public get colors_ptr() {
-    return Number(this.$view.getBigUint64(ByteOffset.colors, true)) as Pointer;
+    const addr = this.$view.getBigUint64(ByteOffset.colors, true);
+
+    return Number(addr) as Pointer;
   }
 
   public set colors_ptr(value: Pointer) {
@@ -194,7 +198,9 @@ export class Mesh extends BaseStruct {
 
   // indices: unsigned short* (triangleCount * 3)
   public get indices_ptr() {
-    return Number(this.$view.getBigUint64(ByteOffset.indices, true)) as Pointer;
+    const addr = this.$view.getBigUint64(ByteOffset.indices, true);
+
+    return Number(addr) as Pointer;
   }
 
   public set indices_ptr(value: Pointer) {
@@ -218,9 +224,9 @@ export class Mesh extends BaseStruct {
 
   // animVertices: float* (vertexCount * 3)
   public get animVertices_ptr() {
-    return Number(
-      this.$view.getBigUint64(ByteOffset.animVertices, true)
-    ) as Pointer;
+    const addr = this.$view.getBigUint64(ByteOffset.animVertices, true);
+
+    return Number(addr) as Pointer;
   }
 
   public set animVertices_ptr(value: Pointer) {
@@ -244,9 +250,9 @@ export class Mesh extends BaseStruct {
 
   // animNormals: float* (vertexCount * 3)
   public get animNormals_ptr() {
-    return Number(
-      this.$view.getBigUint64(ByteOffset.animNormals, true)
-    ) as Pointer;
+    const addr = this.$view.getBigUint64(ByteOffset.animNormals, true);
+
+    return Number(addr) as Pointer;
   }
 
   public set animNormals_ptr(value: Pointer) {
@@ -270,7 +276,9 @@ export class Mesh extends BaseStruct {
 
   // boneIds: unsigned char* (vertexCount * 4)
   public get boneIds_ptr() {
-    return Number(this.$view.getBigUint64(ByteOffset.boneIds, true)) as Pointer;
+    const addr = this.$view.getBigUint64(ByteOffset.boneIds, true);
+
+    return Number(addr) as Pointer;
   }
 
   public set boneIds_ptr(value: Pointer) {
@@ -294,9 +302,9 @@ export class Mesh extends BaseStruct {
 
   // boneWeights: float* (vertexCount * 4)
   public get boneWeights_ptr() {
-    return Number(
-      this.$view.getBigUint64(ByteOffset.boneWeights, true)
-    ) as Pointer;
+    const addr = this.$view.getBigUint64(ByteOffset.boneWeights, true);
+
+    return Number(addr) as Pointer;
   }
 
   public set boneWeights_ptr(value: Pointer) {
@@ -320,9 +328,9 @@ export class Mesh extends BaseStruct {
 
   // boneMatrices: Matrix* (boneCount)
   public get boneMatrices_ptr() {
-    return Number(
-      this.$view.getBigUint64(ByteOffset.boneMatrices, true)
-    ) as Pointer;
+    const addr = this.$view.getBigUint64(ByteOffset.boneMatrices, true);
+
+    return Number(addr) as Pointer;
   }
 
   public set boneMatrices_ptr(value: Pointer) {
@@ -360,7 +368,9 @@ export class Mesh extends BaseStruct {
 
   // vboId: unsigned int* (MAX_MESH_VERTEX_BUFFERS = 7)
   public get vboId_ptr() {
-    return Number(this.$view.getBigUint64(ByteOffset.vboId, true)) as Pointer;
+    const addr = this.$view.getBigUint64(ByteOffset.vboId, true);
+
+    return Number(addr) as Pointer;
   }
 
   public set vboId_ptr(value: Pointer) {

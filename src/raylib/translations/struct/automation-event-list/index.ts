@@ -26,7 +26,9 @@ export class AutomationEventList extends BaseStruct {
   }
 
   public get events_ptr() {
-    return Number(this.$view.getBigUint64(ByteOffset.events, true)) as Pointer;
+    const eventsAddr = this.$view.getBigUint64(ByteOffset.events, true);
+
+    return Number(eventsAddr) as Pointer;
   }
 
   public set events_ptr(value: Pointer) {

@@ -78,7 +78,7 @@ export function drawMeshInstanced(
 }
 
 export function getMeshBoundingBox(this: RayLib, mesh: Mesh) {
-  const box = new BoundingBox(BoundingBox.allocMemory());
+  const box = BoundingBox.create();
 
   this.symbols.GetMeshBoundingBox(mesh.$address, box.$address);
 
@@ -124,7 +124,7 @@ export function genMeshPoly(
     radius: number;
   }
 ) {
-  const mesh = new Mesh(Mesh.allocMemory());
+  const mesh = Mesh.create();
 
   this.symbols.GenMeshPoly(options.sides, options.radius, mesh.$address);
 
@@ -140,7 +140,7 @@ export function genMeshPlane(
     resZ: number;
   }
 ) {
-  const mesh = new Mesh(Mesh.allocMemory());
+  const mesh = Mesh.create();
 
   this.symbols.GenMeshPlane(
     options.width,
@@ -161,7 +161,7 @@ export function genMeshCube(
     length: number;
   }
 ) {
-  const mesh = new Mesh(Mesh.allocMemory());
+  const mesh = Mesh.create();
 
   this.symbols.GenMeshCube(
     options.width,
@@ -181,7 +181,7 @@ export function genMeshSphere(
     slices: number;
   }
 ) {
-  const mesh = new Mesh(Mesh.allocMemory());
+  const mesh = Mesh.create();
 
   this.symbols.GenMeshSphere(
     options.radius,
@@ -201,7 +201,7 @@ export function genMeshHemiSphere(
     slices: number;
   }
 ) {
-  const mesh = new Mesh(Mesh.allocMemory());
+  const mesh = Mesh.create();
 
   this.symbols.GenMeshHemiSphere(
     options.radius,
@@ -221,7 +221,7 @@ export function genMeshCylinder(
     slices: number;
   }
 ) {
-  const mesh = new Mesh(Mesh.allocMemory());
+  const mesh = Mesh.create();
 
   this.symbols.GenMeshCylinder(
     options.radius,
@@ -241,7 +241,7 @@ export function genMeshCone(
     slices: number;
   }
 ) {
-  const mesh = new Mesh(Mesh.allocMemory());
+  const mesh = Mesh.create();
 
   this.symbols.GenMeshCone(
     options.radius,
@@ -262,7 +262,7 @@ export function genMeshTorus(
     sides: number;
   }
 ) {
-  const mesh = new Mesh(Mesh.allocMemory());
+  const mesh = Mesh.create();
 
   this.symbols.GenMeshTorus(
     options.radius,
@@ -284,7 +284,7 @@ export function genMeshKnot(
     sides: number;
   }
 ) {
-  const mesh = new Mesh(Mesh.allocMemory());
+  const mesh = Mesh.create();
 
   this.symbols.GenMeshKnot(
     options.radius,
@@ -304,7 +304,7 @@ export function genMeshHeightmap(
     size: Vector3;
   }
 ) {
-  const mesh = new Mesh(Mesh.allocMemory());
+  const mesh = Mesh.create();
 
   this.symbols.GenMeshHeightmap(
     options.heightmap.$address,
@@ -322,7 +322,7 @@ export function genMeshCubicmap(
     cubeSize: Vector3;
   }
 ) {
-  const mesh = new Mesh(Mesh.allocMemory());
+  const mesh = Mesh.create();
 
   this.symbols.GenMeshCubicmap(
     options.cubicmap.$address,

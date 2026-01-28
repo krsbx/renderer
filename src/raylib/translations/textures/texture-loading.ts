@@ -9,7 +9,7 @@ import {
 } from '../struct';
 
 export function loadTexture(this: RayLib, fileName: string) {
-  const texture = new Texture2D(Texture2D.allocMemory());
+  const texture = Texture2D.create();
 
   this.symbols.LoadTexture(stringToCString(fileName).ptr, texture.$address);
 
@@ -17,7 +17,7 @@ export function loadTexture(this: RayLib, fileName: string) {
 }
 
 export function loadTextureFromImage(this: RayLib, image: Image) {
-  const texture = new Texture2D(Texture2D.allocMemory());
+  const texture = Texture2D.create();
 
   this.symbols.LoadTextureFromImage(image.$address, texture.$address);
 
@@ -31,7 +31,7 @@ export function loadTextureCubemap(
     layout: number;
   }
 ) {
-  const texture = new TextureCubemap(TextureCubemap.allocMemory());
+  const texture = TextureCubemap.create();
 
   this.symbols.LoadTextureCubemap(
     options.image.$address,
@@ -49,7 +49,7 @@ export function loadRenderTexture(
     height: number;
   }
 ) {
-  const texture = new RenderTexture2D(RenderTexture2D.allocMemory());
+  const texture = RenderTexture2D.create();
 
   this.symbols.LoadRenderTexture(
     options.width,

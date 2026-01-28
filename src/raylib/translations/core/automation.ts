@@ -3,7 +3,7 @@ import { stringToCString } from '@/utility/common';
 import { AutomationEvent, AutomationEventList } from '../struct';
 
 export function loadAutomationEventList(this: RayLib, fileName: string) {
-  const list = new AutomationEventList(AutomationEventList.allocMemory());
+  const list = AutomationEventList.create();
 
   this.symbols.LoadAutomationEventList(
     stringToCString(fileName).ptr,

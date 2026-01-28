@@ -214,7 +214,7 @@ export function getSplinePointLinear(
     t: number;
   }
 ) {
-  const point = new Vector2(Vector2.allocMemory());
+  const point = Vector2.create();
 
   this.symbols.GetSplinePointLinear(
     options.startPos.$address,
@@ -236,7 +236,7 @@ export function getSplinePointBasis(
     t: number;
   }
 ) {
-  const point = new Vector2(Vector2.allocMemory());
+  const point = Vector2.create();
 
   this.symbols.GetSplinePointBasis(
     options.p1.$address,
@@ -260,7 +260,7 @@ export function getSplinePointCatmullRom(
     t: number;
   }
 ) {
-  const point = new Vector2(Vector2.allocMemory());
+  const point = Vector2.create();
 
   this.symbols.GetSplinePointCatmullRom(
     options.p1.$address,
@@ -283,7 +283,7 @@ export function getSplinePointBezierQuad(
     t: number;
   }
 ) {
-  const point = new Vector2(Vector2.allocMemory());
+  const point = Vector2.create();
 
   this.symbols.GetSplinePointBezierQuad(
     options.p1.$address,
@@ -306,7 +306,7 @@ export function getSplinePointBezierCubic(
     t: number;
   }
 ) {
-  const point = new Vector2(Vector2.allocMemory());
+  const point = Vector2.create();
 
   this.symbols.GetSplinePointBezierCubic(
     options.p1.$address,

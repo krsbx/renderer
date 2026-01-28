@@ -11,7 +11,7 @@ export function fade(
     alpha: number;
   }
 ) {
-  const color = new Color(Color.allocMemory());
+  const color = Color.create();
 
   this.symbols.Fade(options.color.$address, options.alpha, color.$address);
 
@@ -19,7 +19,7 @@ export function fade(
 }
 
 export function colorNormalize(this: RayLib, color: Color) {
-  const normalized = new Vector4(Vector4.allocMemory());
+  const normalized = Vector4.create();
 
   this.symbols.ColorNormalize(color.$address, normalized.$address);
 
@@ -27,7 +27,7 @@ export function colorNormalize(this: RayLib, color: Color) {
 }
 
 export function colorFromNormalized(this: RayLib, normalized: Vector4) {
-  const color = new Color(Color.allocMemory());
+  const color = Color.create();
 
   this.symbols.ColorFromNormalized(normalized.$address, color.$address);
 
@@ -35,7 +35,7 @@ export function colorFromNormalized(this: RayLib, normalized: Vector4) {
 }
 
 export function colorToHSV(this: RayLib, color: Color) {
-  const hsv = new Vector3(Vector3.allocMemory());
+  const hsv = Vector3.create();
 
   this.symbols.ColorToHSV(color.$address, hsv.$address);
 
@@ -50,7 +50,7 @@ export function colorFromHSV(
     value: number;
   }
 ) {
-  const color = new Color(Color.allocMemory());
+  const color = Color.create();
 
   this.symbols.ColorFromHSV(
     options.hue,
@@ -69,7 +69,7 @@ export function colorTint(
     tint: Color;
   }
 ) {
-  const tinted = new Color(Color.allocMemory());
+  const tinted = Color.create();
 
   this.symbols.ColorTint(
     options.color.$address,
@@ -87,7 +87,7 @@ export function colorBrightness(
     factor: number;
   }
 ) {
-  const brighten = new Color(Color.allocMemory());
+  const brighten = Color.create();
 
   this.symbols.ColorBrightness(
     options.color.$address,
@@ -105,7 +105,7 @@ export function colorContrast(
     contrast: number;
   }
 ) {
-  const contrasted = new Color(Color.allocMemory());
+  const contrasted = Color.create();
 
   this.symbols.ColorContrast(
     options.color.$address,
@@ -123,7 +123,7 @@ export function colorAlpha(
     alpha: number;
   }
 ) {
-  const alphaed = new Color(Color.allocMemory());
+  const alphaed = Color.create();
 
   this.symbols.ColorAlpha(
     options.color.$address,
@@ -142,7 +142,7 @@ export function colorAlphaBlend(
     tint: Color;
   }
 ) {
-  const blended = new Color(Color.allocMemory());
+  const blended = Color.create();
 
   this.symbols.ColorAlphaBlend(
     options.dst.$address,
@@ -162,7 +162,7 @@ export function colorLerp(
     amount: number;
   }
 ) {
-  const lerp = new Color(Color.allocMemory());
+  const lerp = Color.create();
 
   this.symbols.ColorLerp(
     options.color1.$address,
@@ -175,7 +175,7 @@ export function colorLerp(
 }
 
 export function getColor(this: RayLib, hex: number) {
-  const color = new Color(Color.allocMemory());
+  const color = Color.create();
 
   this.symbols.GetColor(hex, color.$address);
 
@@ -189,7 +189,7 @@ export function getPixelColor(
     format: number;
   }
 ) {
-  const color = new Color(Color.allocMemory());
+  const color = Color.create();
 
   this.symbols.GetPixelColor(
     getStructMemoryAddress(options.srcPtr),

@@ -11,7 +11,7 @@ export function loadShader(
     fsFileName: string;
   }
 ) {
-  const shader = new Shader(Shader.allocMemory());
+  const shader = Shader.create();
 
   this.symbols.LoadShader(
     stringToCString(options.vsFileName).ptr,
@@ -29,7 +29,7 @@ export function loadShaderFromMemory(
     fsCode: string;
   }
 ) {
-  const shader = new Shader(Shader.allocMemory());
+  const shader = Shader.create();
 
   this.symbols.LoadShaderFromMemory(
     stringToCString(options.vsCode).ptr,

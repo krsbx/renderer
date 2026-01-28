@@ -74,7 +74,7 @@ export function isFileNameValid(this: RayLib, fileName: string) {
 }
 
 export function loadDirectoryFiles(this: RayLib, dirPath: string) {
-  const lilst = new FilePathList(FilePathList.allocMemory());
+  const lilst = FilePathList.create();
 
   this.symbols.LoadDirectoryFiles(stringToCString(dirPath).ptr, lilst.$address);
 
@@ -89,7 +89,7 @@ export function loadDirectoryFilesEx(
     recursive: boolean;
   }
 ) {
-  const lilst = new FilePathList(FilePathList.allocMemory());
+  const lilst = FilePathList.create();
 
   this.symbols.LoadDirectoryFilesEx(
     stringToCString(options.dirPath).ptr,
@@ -110,7 +110,7 @@ export function isFileDropped(this: RayLib) {
 }
 
 export function loadDroppedFiles(this: RayLib) {
-  const list = new FilePathList(FilePathList.allocMemory());
+  const list = FilePathList.create();
 
   this.symbols.LoadDroppedFiles(list.$address);
 

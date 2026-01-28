@@ -6,7 +6,9 @@ export class AudioStream extends BaseStruct {
   public static override readonly BYTE_SIZE = 28;
 
   public get buffer() {
-    return Number(this.$view.getBigUint64(ByteOffset.buffer, true)) as Pointer;
+    const bufferAddr = this.$view.getBigUint64(ByteOffset.buffer, true);
+
+    return Number(bufferAddr) as Pointer;
   }
 
   public set buffer(value: Pointer) {
@@ -14,9 +16,9 @@ export class AudioStream extends BaseStruct {
   }
 
   public get processor() {
-    return Number(
-      this.$view.getBigUint64(ByteOffset.processor, true)
-    ) as Pointer;
+    const processorAddr = this.$view.getBigUint64(ByteOffset.processor, true);
+
+    return Number(processorAddr) as Pointer;
   }
 
   public set processor(value: Pointer) {

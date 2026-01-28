@@ -33,14 +33,7 @@ export function getJoysticks(this: SDL) {
   if (!listPtr) return [];
 
   const count = struct.getValue(0, 'i32');
-  const list = new CStruct({ address: listPtr });
-  const joysticks: number[] = [];
-
-  for (let i = 0; i < count; i++) {
-    const id = list.getValue(i * CStruct.BYTE_SIZE.u32, 'u32');
-
-    joysticks.push(id);
-  }
+  const joysticks = CStruct.readArrayPrimitive(listPtr, count, 'u32');
 
   this.symbols.SDL_free(listPtr);
 

@@ -1,6 +1,6 @@
 import type { RayLib } from '@/raylib';
+import { CStruct } from '@/utility/cstruct';
 import { Color, Rectangle, Texture2D, Vector2 } from '../struct';
-import { generateVector2Points } from '../utility/common';
 
 export function setShapesTexture(
   this: RayLib,
@@ -110,10 +110,13 @@ export function drawLineStrip(
     color: Color;
   }
 ) {
-  const points = generateVector2Points(options.points);
+  const { buffer: points } = CStruct.writeArray(
+    options.points,
+    Vector2.BYTE_SIZE
+  );
 
   this.symbols.DrawLineStrip(
-    points.$address,
+    points,
     options.points.length,
     options.color.$address
   );

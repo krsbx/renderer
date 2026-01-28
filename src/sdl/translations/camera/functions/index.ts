@@ -29,14 +29,8 @@ export function getCameras(this: SDL) {
   if (!listPtr) return [];
 
   const count = struct.getValue(0, 'i32');
-  const list = new CStruct({ address: listPtr });
-  const cameras: number[] = [];
 
-  for (let i = 0; i < count; i++) {
-    const camera = list.getValue(i * CStruct.BYTE_SIZE.u32, 'u32');
-
-    cameras.push(camera);
-  }
+  const cameras = CStruct.readArrayPrimitive(listPtr, count, 'u32');
 
   this.symbols.SDL_free(listPtr);
 
@@ -54,20 +48,8 @@ export function getCameraSupportedFormats(this: SDL, cameraId: number) {
   if (!listPtr) return [];
 
   const count = struct.getValue(0, 'i32');
-  const list = new CStruct({ address: listPtr });
-  const formats: CameraSpec[] = [];
 
-  for (let i = 0; i < count; i++) {
-    const formatPtr = list.getValue(i * CStruct.BYTE_SIZE.ptr, 'ptr');
-
-    if (!formatPtr) continue;
-
-    const sdlFormat = new CameraSpec(formatPtr);
-    // Clone the format so it become a snapshot
-    const format = new CameraSpec(sdlFormat.$memory.slice());
-
-    formats.push(format);
-  }
+  const formats = CStruct.readArray(CameraSpec, listPtr, count, true);
 
   this.symbols.SDL_free(listPtr);
 

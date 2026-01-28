@@ -24,14 +24,8 @@ export function getAudioPlaybackDevices(this: SDL) {
   if (!listPtr) return [];
 
   const count = struct.getValue(0, 'i32');
-  const list = new CStruct({ address: listPtr });
-  const devices: number[] = [];
 
-  for (let i = 0; i < count; i++) {
-    const deviceId = list.getValue(i * CStruct.BYTE_SIZE.u32, 'u32');
-
-    devices.push(deviceId);
-  }
+  const devices = CStruct.readArrayPrimitive(listPtr, count, 'u32');
 
   this.symbols.SDL_free(listPtr);
 
@@ -46,14 +40,8 @@ export function getAudioRecordingDevices(this: SDL) {
   if (!listPtr) return [];
 
   const count = struct.getValue(0, 'i32');
-  const list = new CStruct({ address: listPtr });
-  const devices: number[] = [];
 
-  for (let i = 0; i < count; i++) {
-    const deviceId = list.getValue(i * CStruct.BYTE_SIZE.u32, 'u32');
-
-    devices.push(deviceId);
-  }
+  const devices = CStruct.readArrayPrimitive(listPtr, count, 'u32');
 
   this.symbols.SDL_free(listPtr);
 
@@ -100,14 +88,7 @@ export function getAudioDeviceChannelMap(this: SDL, deviceId: number) {
 
   const count = struct.getValue(0, 'i32');
 
-  const list = new CStruct({ address: listPtr });
-  const channels: number[] = [];
-
-  for (let i = 0; i < count; i++) {
-    const channel = list.getValue(i * CStruct.BYTE_SIZE.i32, 'i32');
-
-    channels.push(channel);
-  }
+  const channels = CStruct.readArrayPrimitive(listPtr, count, 'i32');
 
   this.symbols.SDL_free(listPtr);
 
@@ -306,14 +287,8 @@ export function getAudioStreamInputChannelMap(this: SDL, stream: Pointer) {
   if (!listPtr) return [];
 
   const count = struct.getValue(0, 'i32');
-  const list = new CStruct({ address: listPtr });
-  const channels: number[] = [];
 
-  for (let i = 0; i < count; i++) {
-    const channel = list.getValue(i * CStruct.BYTE_SIZE.i32, 'i32');
-
-    channels.push(channel);
-  }
+  const channels = CStruct.readArrayPrimitive(listPtr, count, 'i32');
 
   this.symbols.SDL_free(listPtr);
 
@@ -330,14 +305,8 @@ export function getAudioStreamOutputChannelMap(this: SDL, stream: Pointer) {
   if (!listPtr) return [];
 
   const count = struct.getValue(0, 'i32');
-  const list = new CStruct({ address: listPtr });
-  const channels: number[] = [];
 
-  for (let i = 0; i < count; i++) {
-    const channel = list.getValue(i * CStruct.BYTE_SIZE.i32, 'i32');
-
-    channels.push(channel);
-  }
+  const channels = CStruct.readArrayPrimitive(listPtr, count, 'i32');
 
   this.symbols.SDL_free(listPtr);
 

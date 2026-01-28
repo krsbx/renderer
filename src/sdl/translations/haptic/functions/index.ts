@@ -12,14 +12,7 @@ export function getHaptics(this: SDL) {
   if (!listPtr) return [];
 
   const count = struct.getValue(0, 'i32');
-  const list = new CStruct({ address: listPtr });
-  const haptics: number[] = [];
-
-  for (let i = 0; i < count; i++) {
-    const id = list.getValue(i * CStruct.BYTE_SIZE.u32, 'u32');
-
-    haptics.push(id);
-  }
+  const haptics = CStruct.readArrayPrimitive(listPtr, count, 'u32');
 
   this.symbols.SDL_free(listPtr);
 

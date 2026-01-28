@@ -1,6 +1,6 @@
 import type { RayLib } from '@/raylib';
+import { CStruct } from '@/utility/cstruct';
 import { Vector2, type Color } from '../struct';
-import { generateVector2Points } from '../utility/common';
 
 export function drawSplineLinear(
   this: RayLib,
@@ -10,10 +10,13 @@ export function drawSplineLinear(
     color: Color;
   }
 ) {
-  const points = generateVector2Points(options.points);
+  const { buffer: points } = CStruct.writeArray(
+    options.points,
+    Vector2.BYTE_SIZE
+  );
 
   this.symbols.DrawSplineLinear(
-    points.$address,
+    points,
     options.points.length,
     options.thick,
     options.color.$address
@@ -28,10 +31,13 @@ export function drawSplineBasis(
     color: Color;
   }
 ) {
-  const points = generateVector2Points(options.points);
+  const { buffer: points } = CStruct.writeArray(
+    options.points,
+    Vector2.BYTE_SIZE
+  );
 
   this.symbols.DrawSplineBasis(
-    points.$address,
+    points,
     options.points.length,
     options.thick,
     options.color.$address
@@ -46,10 +52,13 @@ export function drawSplineCatmullRom(
     color: Color;
   }
 ) {
-  const points = generateVector2Points(options.points);
+  const { buffer: points } = CStruct.writeArray(
+    options.points,
+    Vector2.BYTE_SIZE
+  );
 
   this.symbols.DrawSplineCatmullRom(
-    points.$address,
+    points,
     options.points.length,
     options.thick,
     options.color.$address
@@ -64,10 +73,13 @@ export function drawSplineBezierQuadratic(
     color: Color;
   }
 ) {
-  const points = generateVector2Points(options.points);
+  const { buffer: points } = CStruct.writeArray(
+    options.points,
+    Vector2.BYTE_SIZE
+  );
 
   this.symbols.DrawSplineBezierQuadratic(
-    points.$address,
+    points,
     options.points.length,
     options.thick,
     options.color.$address
@@ -82,10 +94,13 @@ export function drawSplineBezierCubic(
     color: Color;
   }
 ) {
-  const points = generateVector2Points(options.points);
+  const { buffer: points } = CStruct.writeArray(
+    options.points,
+    Vector2.BYTE_SIZE
+  );
 
   this.symbols.DrawSplineBezierCubic(
-    points.$address,
+    points,
     options.points.length,
     options.thick,
     options.color.$address

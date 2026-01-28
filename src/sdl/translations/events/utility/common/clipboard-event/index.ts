@@ -1,6 +1,7 @@
 import { BaseStruct, type BaseStructOptions } from '@/utility/base-struct';
+import { CStruct } from '@/utility/cstruct';
 import { stringToCString } from '@utility/common';
-import { CString, ptr, read, type Pointer } from 'bun:ffi';
+import { CString, ptr, type Pointer } from 'bun:ffi';
 import { ByteOffset } from './constant';
 import type { ClipboardEventType } from './types';
 
@@ -66,16 +67,13 @@ export class ClipboardEvent extends BaseStruct {
 
     if (!mimeTypesCount || !mimeTypesAddr || mimeTypesAddr === 0n) return [];
 
-    const mimeTypes: string[] = [];
     const mimeTypesPtr = Number(mimeTypesAddr) as Pointer;
-
-    for (let i = 0; i < mimeTypesCount; i++) {
-      const stringPtr = read.ptr(mimeTypesPtr, i * 8) as Pointer | null;
-
-      if (!stringPtr) continue;
-
-      mimeTypes.push(new CString(stringPtr).toString());
-    }
+    const pointers = CStruct.readArrayPrimitive(
+      mimeTypesPtr,
+      mimeTypesCount,
+      'ptr'
+    );
+    const mimeTypes = pointers.map((ptr) => new CString(ptr).toString());
 
     return mimeTypes;
   }

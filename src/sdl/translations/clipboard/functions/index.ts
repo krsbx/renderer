@@ -116,17 +116,8 @@ export function getClipboardMimeTypes(this: SDL) {
   if (!listPtr) return [];
 
   const count = Number(sizeStruct.getValue(0, 'u64'));
-
-  const list = new CStruct({ address: listPtr });
-  const mimeTypes: string[] = [];
-
-  for (let i = 0; i < count; i++) {
-    const mimeTypePtr = list.getValue(i * CStruct.BYTE_SIZE.ptr, 'ptr');
-
-    if (!mimeTypePtr) continue;
-
-    mimeTypes.push(new CString(mimeTypePtr).toString());
-  }
+  const pointers = CStruct.readArrayPrimitive(listPtr, count, 'ptr');
+  const mimeTypes = pointers.map((ptr) => new CString(ptr).toString());
 
   this.symbols.SDL_free(listPtr);
 

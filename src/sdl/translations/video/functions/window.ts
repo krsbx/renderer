@@ -79,18 +79,9 @@ export function getWindows(this: SDL) {
   if (!listPtr) return [];
 
   const count = countStruct.getValue(0, 'i32');
-  const list = new CStruct({ address: listPtr });
-  const result: Pointer[] = [];
+  const result = CStruct.readArrayPrimitive(listPtr, count, 'ptr');
 
-  if (!listPtr) return result;
-
-  for (let i = 0; i < count; i++) {
-    const windowPtr = list.getValue(i * CStruct.BYTE_SIZE.ptr, 'ptr');
-
-    if (!windowPtr) continue;
-
-    result.push(windowPtr);
-  }
+  this.symbols.SDL_free(listPtr);
 
   return result;
 }
@@ -521,25 +512,11 @@ export function updateWindowSurfaceRects(
     rects: Rect[];
   }
 ) {
-  const rectsStruct = new CStruct({
-    length: Rect.BYTE_SIZE * options.rects.length,
-  });
-
-  for (let i = 0; i < options.rects.length; i++) {
-    const offset = i * Rect.BYTE_SIZE;
-    const rect = options.rects[i];
-
-    if (!rect) continue;
-
-    rectsStruct.setValue(offset + 0, rect.x, 'i32');
-    rectsStruct.setValue(offset + 4, rect.y, 'i32');
-    rectsStruct.setValue(offset + 8, rect.w, 'i32');
-    rectsStruct.setValue(offset + 12, rect.h, 'i32');
-  }
+  const { buffer } = CStruct.writeArray(options.rects, Rect.BYTE_SIZE);
 
   return this.symbols.SDL_UpdateWindowSurfaceRects(
     options.window,
-    rectsStruct.$address,
+    buffer,
     options.rects.length
   );
 }

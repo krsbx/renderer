@@ -30,23 +30,15 @@ export function reloadGamepadMappings(this: SDL) {
 }
 
 export function getGamepadMappings(this: SDL) {
-  const struct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
+  const countStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
-  const listPtr = this.symbols.SDL_GetGamepadMappings(struct.$address);
+  const listPtr = this.symbols.SDL_GetGamepadMappings(countStruct.$address);
 
   if (!listPtr) return [];
 
-  const count = struct.getValue(0, 'i32');
-  const list = new CStruct({ address: listPtr });
-  const mappings: string[] = [];
-
-  for (let i = 0; i < count; i++) {
-    const mappingPtr = list.getValue(i * CStruct.BYTE_SIZE.ptr, 'ptr');
-
-    if (!mappingPtr) continue;
-
-    mappings.push(new CString(mappingPtr).toString());
-  }
+  const count = countStruct.getValue(0, 'i32');
+  const pointers = CStruct.readArrayPrimitive(listPtr, count, 'ptr');
+  const mappings = pointers.map((ptr) => new CString(ptr).toString());
 
   this.symbols.SDL_free(listPtr);
 

@@ -68,16 +68,8 @@ export function getTrayEntries(this: SDL, menu: Pointer) {
   if (!listPtr) return null;
 
   const count = countStruct.getValue(0, 'i32');
-  const list = new CStruct({ address: listPtr });
-  const entries: Pointer[] = [];
 
-  for (let i = 0; i < count; i++) {
-    const entryPtr = list.getValue(i * CStruct.BYTE_SIZE.ptr, 'ptr');
-
-    if (entryPtr) {
-      entries.push(entryPtr);
-    }
-  }
+  const entries = CStruct.readArrayPrimitive(listPtr, count, 'ptr');
 
   return entries;
 }

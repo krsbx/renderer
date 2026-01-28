@@ -1,6 +1,7 @@
 import { BaseStruct, type BaseStructOptions } from '@/utility/base-struct';
+import { CStruct } from '@/utility/cstruct';
 import { stringToCString } from '@utility/common';
-import { CString, ptr, read, type Pointer } from 'bun:ffi';
+import { CString, ptr, type Pointer } from 'bun:ffi';
 import { ByteOffset } from './constant';
 import type { TextEditingCandidatesEventType } from './types';
 export class TextEditingCandidatesEvent extends BaseStruct {
@@ -59,16 +60,13 @@ export class TextEditingCandidatesEvent extends BaseStruct {
 
     if (!candidateCount || !candidatesAddr || candidatesAddr === 0n) return [];
 
-    const candidates: string[] = [];
     const candidatesPtr = Number(candidatesAddr) as Pointer;
-
-    for (let i = 0; i < candidateCount; i++) {
-      const stringPtr = read.ptr(candidatesPtr, i * 8) as Pointer | null;
-
-      if (!stringPtr) continue;
-
-      candidates.push(new CString(stringPtr).toString());
-    }
+    const pointers = CStruct.readArrayPrimitive(
+      candidatesPtr,
+      candidateCount,
+      'ptr'
+    );
+    const candidates = pointers.map((ptr) => new CString(ptr).toString());
 
     return candidates;
   }

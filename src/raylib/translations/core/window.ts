@@ -1,5 +1,6 @@
 import type { RayLib } from '@/raylib';
 import { stringToCString } from '@/utility/common';
+import { CStruct } from '@/utility/cstruct';
 import { Image, Vector2 } from '../struct';
 
 export function initWindow(
@@ -90,15 +91,7 @@ export function setWindowIcon(this: RayLib, image: Image) {
 }
 
 export function setWindowIcons(this: RayLib, images: Image[]) {
-  const buffer = new Uint8Array(Image.BYTE_SIZE * images.length);
-
-  for (let i = 0; i < images.length; i++) {
-    const image = images[i];
-
-    if (!image) continue;
-
-    buffer.set(image.$memory, Image.BYTE_SIZE * i);
-  }
+  const { buffer } = CStruct.writeArray(images, Image.BYTE_SIZE);
 
   this.symbols.SetWindowIcons(buffer, images.length);
 }

@@ -19,14 +19,7 @@ export function getKeyboards(this: SDL) {
   if (!listPtr) return null;
 
   const count = countStruct.getValue(0, 'i32');
-  const list = new CStruct({ address: listPtr });
-  const keyboards: number[] = [];
-
-  for (let i = 0; i < count; i++) {
-    const keyboardId = list.getValue(i * CStruct.BYTE_SIZE.u32, 'u32');
-
-    keyboards.push(keyboardId);
-  }
+  const keyboards = CStruct.readArrayPrimitive(listPtr, count, 'u32');
 
   this.symbols.SDL_free(listPtr);
 

@@ -11,14 +11,7 @@ export function getTouchDevices(this: SDL) {
   if (!listPtr) return null;
 
   const count = countStruct.getValue(0, 'i32');
-  const list = new CStruct({ address: listPtr });
-  const devices: bigint[] = [];
-
-  for (let i = 0; i < count; i++) {
-    const deviceId = list.getValue(i * CStruct.BYTE_SIZE.u64, 'u64');
-
-    devices.push(deviceId);
-  }
+  const devices = CStruct.readArrayPrimitive(listPtr, count, 'u64');
 
   this.symbols.SDL_free(listPtr);
 
@@ -44,20 +37,7 @@ export function getTouchFingers(this: SDL, touchId: bigint) {
   if (!listPtr) return null;
 
   const count = countStruct.getValue(0, 'i32');
-  const list = new CStruct({ address: listPtr });
-  const fingers: Finger[] = [];
-
-  for (let i = 0; i < count; i++) {
-    const fingerPtr = list.getValue(i * CStruct.BYTE_SIZE.ptr, 'ptr');
-
-    if (!fingerPtr) continue;
-
-    const sdlFinger = new Finger(fingerPtr);
-    // Clone the finger so it become a snapshot
-    const finger = new Finger(sdlFinger.$memory.slice());
-
-    fingers.push(finger);
-  }
+  const fingers = CStruct.readArray(Finger, listPtr, count, true);
 
   this.symbols.SDL_free(listPtr);
 

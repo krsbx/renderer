@@ -1,29 +1,16 @@
-import { type Pointer, ptr, read, toArrayBuffer } from 'bun:ffi';
-
-type ReadType = keyof typeof read;
-
-export interface StructConstructor<T> {
-  new (data: Pointer | Uint8Array): T;
-  readonly BYTE_SIZE: number;
-}
-
-type CStructOptionsWithLength = {
-  length: number;
-};
-
-type CStructOptionsWithAddress = {
-  address: Pointer;
-};
-
-type CStructOptionsWithLengthAndAddress = {
-  length: number;
-  address: Pointer;
-};
-
-type CStructOptions =
-  | CStructOptionsWithLength
-  | CStructOptionsWithAddress
-  | CStructOptionsWithLengthAndAddress;
+import { type Pointer, toArrayBuffer } from 'bun:ffi';
+import type {
+  CStructOptions,
+  CStructOptionsWithAddress,
+  CStructOptionsWithLength,
+  ReadType,
+} from './types';
+import {
+  readArray,
+  readArrayLazy,
+  readArrayPrimitive,
+  writeArray,
+} from './utils';
 
 export class CStruct<
   Options extends CStructOptions = CStructOptions,
@@ -51,6 +38,11 @@ export class CStruct<
     intptr: 8,
     ptr: 8,
   } as const;
+
+  public static readArray = readArray;
+  public static readArrayLazy = readArrayLazy;
+  public static readArrayPrimitive = readArrayPrimitive;
+  public static writeArray = writeArray;
 
   public $memory: Uint8Array;
   public $address: Address;
@@ -216,94 +208,5 @@ export class CStruct<
     struct.$address = struct.$memory;
 
     return struct;
-  }
-
-  public static readArray<T>(
-    StructClass: StructConstructor<T>,
-    address: Pointer,
-    count: number
-  ): T[] {
-    if (!address || count <= 0) return [];
-
-    const totalSize = count * StructClass.BYTE_SIZE;
-    const buffer = toArrayBuffer(address, 0, totalSize);
-    const memory = new Uint8Array(buffer);
-
-    return Array.from({ length: count }, (_, i) => {
-      const offset = i * StructClass.BYTE_SIZE;
-
-      return new StructClass(
-        memory.subarray(offset, offset + StructClass.BYTE_SIZE)
-      );
-    });
-  }
-
-  public static readArrayLazy<T>(
-    StructClass: StructConstructor<T>,
-    address: Pointer,
-    count: number
-  ): readonly T[] {
-    if (!address || count <= 0) return [];
-
-    function createInstance(index: number) {
-      const offset = index * StructClass.BYTE_SIZE;
-
-      return new StructClass(
-        new Uint8Array(toArrayBuffer(address, offset, StructClass.BYTE_SIZE))
-      );
-    }
-
-    return new Proxy([], {
-      get(_, prop) {
-        if (prop === 'length') return count;
-
-        if (prop === Symbol.iterator) {
-          return function* () {
-            for (let i = 0; i < count; i++) {
-              yield createInstance(i);
-            }
-          };
-        }
-
-        const index = Number(prop);
-
-        if (typeof prop === 'string' && !Number.isNaN(index)) {
-          if (index < 0 || index >= count) {
-            throw new RangeError(`Index out of range: ${index}`);
-          }
-
-          return createInstance(index);
-        }
-
-        return undefined;
-      },
-      set() {
-        throw new TypeError('Cannot assign to read only array');
-      },
-      has(_, prop) {
-        if (prop === 'length') return true;
-
-        if (typeof prop === 'string' && !isNaN(Number(prop))) {
-          const index = Number(prop);
-          return index >= 0 && index < count;
-        }
-
-        return false;
-      },
-    });
-  }
-
-  public static writeArray<T extends { $memory: Uint8Array }>(
-    items: T[],
-    itemSize: number
-  ): { buffer: Uint8Array; address: Pointer } {
-    const buffer = new Uint8Array(items.length * itemSize);
-
-    for (let i = 0; i < items.length; i++) {
-      const offset = i * itemSize;
-      buffer.set(items[i]!.$memory, offset);
-    }
-
-    return { buffer, address: ptr(buffer) };
   }
 }

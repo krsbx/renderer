@@ -153,25 +153,11 @@ export function fillSurfaceRects(
     color: number;
   }
 ) {
-  const rectsStruct = new CStruct({
-    length: Rect.BYTE_SIZE * options.rects.length,
-  });
-
-  for (let i = 0; i < options.rects.length; i++) {
-    const offset = i * Rect.BYTE_SIZE;
-    const rect = options.rects[i];
-
-    if (!rect) continue;
-
-    rectsStruct.setValue(offset + 0, rect.x, 'i32');
-    rectsStruct.setValue(offset + 4, rect.y, 'i32');
-    rectsStruct.setValue(offset + 8, rect.w, 'i32');
-    rectsStruct.setValue(offset + 12, rect.h, 'i32');
-  }
+  const { buffer } = CStruct.writeArray(options.rects, Rect.BYTE_SIZE);
 
   return this.symbols.SDL_FillSurfaceRects(
     getStructAddress(options.dst),
-    rectsStruct.$address,
+    buffer,
     options.count,
     options.color
   );

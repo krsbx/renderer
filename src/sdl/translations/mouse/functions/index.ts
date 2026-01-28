@@ -21,14 +21,7 @@ export function getMice(this: SDL) {
   if (!listPtr) return null;
 
   const count = countStruct.getValue(0, 'i32');
-  const list = new CStruct({ address: listPtr });
-  const mice: number[] = [];
-
-  for (let i = 0; i < count; i++) {
-    const mouseId = list.getValue(i * CStruct.BYTE_SIZE.u32, 'u32');
-
-    mice.push(mouseId);
-  }
+  const mice = CStruct.readArrayPrimitive(listPtr, count, 'u32');
 
   this.symbols.SDL_free(listPtr);
 

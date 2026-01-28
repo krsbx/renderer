@@ -1,7 +1,7 @@
 import type { RayLib } from '@/raylib';
 import { stringToCString } from '@/utility/common';
+import { CStruct } from '@/utility/cstruct';
 import { Font, Image, Rectangle, Vector2, type Color } from '../struct';
-import { generateVector2Points } from '../utility/common';
 
 export function imageClearBackground(
   this: RayLib,
@@ -316,11 +316,14 @@ export function imageDrawTriangleFan(
     color: Color;
   }
 ) {
-  const points = generateVector2Points(options.points);
+  const { buffer: points } = CStruct.writeArray(
+    options.points,
+    Vector2.BYTE_SIZE
+  );
 
   this.symbols.ImageDrawTriangleFan(
     options.dst.$address,
-    points.$address,
+    points,
     options.points.length,
     options.color.$address
   );
@@ -334,11 +337,14 @@ export function imageDrawTriangleStrip(
     color: Color;
   }
 ) {
-  const points = generateVector2Points(options.points);
+  const { buffer: points } = CStruct.writeArray(
+    options.points,
+    Vector2.BYTE_SIZE
+  );
 
   this.symbols.ImageDrawTriangleStrip(
     options.dst.$address,
-    points.$address,
+    points,
     options.points.length,
     options.color.$address
   );

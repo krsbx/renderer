@@ -34,19 +34,7 @@ export function getSurfaceImages(this: SDL, surface: Surface) {
 
   const count = countStruct.getValue(0, 'i32');
   const list = new CStruct({ address: listPtr });
-  const images: Surface[] = [];
-
-  for (let i = 0; i < count; i++) {
-    const imagePtr = list.getValue(i * CStruct.BYTE_SIZE.ptr, 'ptr');
-
-    if (!imagePtr) continue;
-
-    const sdlImage = new Surface(imagePtr);
-    // Clone the image so it become a snapshot
-    const image = new Surface(sdlImage.$memory.slice());
-
-    images.push(image);
-  }
+  const images = CStruct.readArray(Surface, list.$address, count, true);
 
   this.symbols.SDL_free(listPtr);
 

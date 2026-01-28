@@ -24,14 +24,8 @@ export function getGamepads(this: SDL) {
   if (!listPtr) return [];
 
   const count = struct.getValue(0, 'i32');
-  const list = new CStruct({ address: listPtr });
-  const gamepads: number[] = [];
 
-  for (let i = 0; i < count; i++) {
-    const id = list.getValue(i * CStruct.BYTE_SIZE.u32, 'u32');
-
-    gamepads.push(id);
-  }
+  const gamepads = CStruct.readArrayPrimitive(listPtr, count, 'u32');
 
   this.symbols.SDL_free(listPtr);
 
@@ -216,20 +210,8 @@ export function getGamepadBindings(this: SDL, gamepad: Pointer) {
   if (!listPtr) return [];
 
   const count = struct.getValue(0, 'i32');
-  const list = new CStruct({ address: listPtr });
-  const bindings: GamepadBinding[] = [];
 
-  for (let i = 0; i < count; i++) {
-    const bindingPtr = list.getValue(i * CStruct.BYTE_SIZE.ptr, 'ptr');
-
-    if (!bindingPtr) continue;
-
-    const sdlBinding = new GamepadBinding(bindingPtr);
-    // Clone the binding so it become a snapshot
-    const binding = new GamepadBinding(sdlBinding.$memory.slice());
-
-    bindings.push(binding);
-  }
+  const bindings = CStruct.readArray(GamepadBinding, listPtr, count, true);
 
   this.symbols.SDL_free(listPtr);
 

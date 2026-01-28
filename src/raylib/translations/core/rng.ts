@@ -30,12 +30,11 @@ export function loadRandomSequence(
       sequence: [],
     };
 
-  const sequence: number[] = [];
-  const list = new CStruct({ address: sequencePtr });
-
-  for (let i = 0; i < options.count; i++) {
-    sequence.push(list.getValue(i * CStruct.BYTE_SIZE.i32, 'i32'));
-  }
+  const sequence = CStruct.readArrayPrimitive(
+    sequencePtr,
+    options.count,
+    'i32'
+  );
 
   return {
     ptr: sequencePtr,

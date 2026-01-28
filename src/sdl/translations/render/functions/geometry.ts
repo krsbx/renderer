@@ -16,28 +16,7 @@ export function renderGeometry(
     numIndices?: number;
   }
 ) {
-  const verticesStruct = new CStruct({
-    length: Vertex.BYTE_SIZE * options.vertices.length,
-  });
-
-  for (let i = 0; i < options.vertices.length; i++) {
-    const offset = i * Vertex.BYTE_SIZE;
-    const vertex = options.vertices[i];
-
-    if (!vertex) continue;
-
-    // position (FPoint: 2 floats)
-    verticesStruct.setValue(offset + 0, vertex.position.x, 'f32');
-    verticesStruct.setValue(offset + 4, vertex.position.y, 'f32');
-    // color (FColor: 4 floats)
-    verticesStruct.setValue(offset + 8, vertex.color.r, 'f32');
-    verticesStruct.setValue(offset + 12, vertex.color.g, 'f32');
-    verticesStruct.setValue(offset + 16, vertex.color.b, 'f32');
-    verticesStruct.setValue(offset + 20, vertex.color.a, 'f32');
-    // tex_coord (FPoint: 2 floats)
-    verticesStruct.setValue(offset + 24, vertex.texCoord.x, 'f32');
-    verticesStruct.setValue(offset + 28, vertex.texCoord.y, 'f32');
-  }
+  const { buffer } = CStruct.writeArray(options.vertices, Vertex.BYTE_SIZE);
 
   const numIndices = options.numIndices
     ? options.numIndices
@@ -50,7 +29,7 @@ export function renderGeometry(
   return this.symbols.SDL_RenderGeometry(
     options.renderer,
     options.texture ?? null,
-    verticesStruct.$address,
+    buffer,
     options.vertices.length,
     options.indices ? getStructMemoryAddress(options.indices) : null,
     numIndices

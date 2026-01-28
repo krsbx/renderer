@@ -30,23 +30,11 @@ export function renderPoints(
     points: FPoint[];
   }
 ) {
-  const pointsStruct = new CStruct({
-    length: FPoint.BYTE_SIZE * options.points.length,
-  });
-
-  for (let i = 0; i < options.points.length; i++) {
-    const offset = i * FPoint.BYTE_SIZE;
-    const point = options.points[i];
-
-    if (!point) continue;
-
-    pointsStruct.setValue(offset + 0, point.x, 'f32');
-    pointsStruct.setValue(offset + 4, point.y, 'f32');
-  }
+  const { buffer } = CStruct.writeArray(options.points, FPoint.BYTE_SIZE);
 
   return this.symbols.SDL_RenderPoints(
     options.renderer,
-    pointsStruct.$address,
+    buffer,
     options.points.length
   );
 }
@@ -79,23 +67,11 @@ export function renderLines(
     points: FPoint[];
   }
 ) {
-  const pointsStruct = new CStruct({
-    length: FPoint.BYTE_SIZE * options.points.length,
-  });
-
-  for (let i = 0; i < options.points.length; i++) {
-    const offset = i * FPoint.BYTE_SIZE;
-    const point = options.points[i];
-
-    if (!point) continue;
-
-    pointsStruct.setValue(offset + 0, point.x, 'f32');
-    pointsStruct.setValue(offset + 4, point.y, 'f32');
-  }
+  const { buffer } = CStruct.writeArray(options.points, FPoint.BYTE_SIZE);
 
   return this.symbols.SDL_RenderLines(
     options.renderer,
-    pointsStruct.$address,
+    buffer,
     options.points.length
   );
 }
@@ -122,25 +98,11 @@ export function renderRects(
     rects: FRect[];
   }
 ) {
-  const rectsStruct = new CStruct({
-    length: FRect.BYTE_SIZE * options.rects.length,
-  });
-
-  for (let i = 0; i < options.rects.length; i++) {
-    const offset = i * FRect.BYTE_SIZE;
-    const rect = options.rects[i];
-
-    if (!rect) continue;
-
-    rectsStruct.setValue(offset + 0, rect.x, 'f32');
-    rectsStruct.setValue(offset + 4, rect.y, 'f32');
-    rectsStruct.setValue(offset + 8, rect.w, 'f32');
-    rectsStruct.setValue(offset + 12, rect.h, 'f32');
-  }
+  const { buffer } = CStruct.writeArray(options.rects, FRect.BYTE_SIZE);
 
   return this.symbols.SDL_RenderRects(
     options.renderer,
-    rectsStruct.$address,
+    buffer,
     options.rects.length
   );
 }
@@ -167,25 +129,11 @@ export function renderFillRects(
     rects: FRect[];
   }
 ) {
-  const rectsStruct = new CStruct({
-    length: FRect.BYTE_SIZE * options.rects.length,
-  });
-
-  for (let i = 0; i < options.rects.length; i++) {
-    const offset = i * FRect.BYTE_SIZE;
-    const rect = options.rects[i];
-
-    if (!rect) continue;
-
-    rectsStruct.setValue(offset + 0, rect.x, 'f32');
-    rectsStruct.setValue(offset + 4, rect.y, 'f32');
-    rectsStruct.setValue(offset + 8, rect.w, 'f32');
-    rectsStruct.setValue(offset + 12, rect.h, 'f32');
-  }
+  const { buffer } = CStruct.writeArray(options.rects, FRect.BYTE_SIZE);
 
   return this.symbols.SDL_RenderFillRects(
     options.renderer,
-    rectsStruct.$address,
+    buffer,
     options.rects.length
   );
 }

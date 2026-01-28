@@ -27,7 +27,7 @@
     "noPropertyAccessFromIndexSignature": false,
     "paths": {
       "@/*": ["./src/*"],
-      "@cstruct": ["./src/utility/cstruct.ts"],
+      "@cstruct": ["./src/utility/cstruct/index.ts"],
       "@cwstring": ["./src/utility/cwstring.ts"],
       "@constant": ["./src/utility/constant.ts"],
       "@utility/*": ["./src/utility/*"],

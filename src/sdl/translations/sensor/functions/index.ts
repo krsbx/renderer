@@ -11,14 +11,7 @@ export function getSensors(this: SDL) {
   if (!listPtr) return null;
 
   const count = countStruct.getValue(0, 'i32');
-  const list = new CStruct({ address: listPtr });
-  const sensors: number[] = [];
-
-  for (let i = 0; i < count; i++) {
-    const sensorId = list.getValue(i * CStruct.BYTE_SIZE.u32, 'u32');
-
-    sensors.push(sensorId);
-  }
+  const sensors = CStruct.readArrayPrimitive(listPtr, count, 'u32');
 
   this.symbols.SDL_free(listPtr);
 

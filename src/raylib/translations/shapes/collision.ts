@@ -1,6 +1,6 @@
 import type { RayLib } from '@/raylib';
+import { CStruct } from '@/utility/cstruct';
 import { Rectangle, Vector2 } from '../struct';
-import { generateVector2Points } from '../utility/common';
 
 export function checkCollisionRecs(
   this: RayLib,
@@ -133,11 +133,14 @@ export function checkCollisionPointPoly(
     points: Vector2[];
   }
 ) {
-  const points = generateVector2Points(options.points);
+  const { buffer: points } = CStruct.writeArray(
+    options.points,
+    Vector2.BYTE_SIZE
+  );
 
   return this.symbols.CheckCollisionPointPoly(
     options.point.$address,
-    points.$address,
+    points,
     options.points.length
   );
 }

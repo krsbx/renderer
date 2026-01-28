@@ -3,26 +3,15 @@ import { CStruct } from '@cstruct';
 import { Locale } from '../utility';
 
 export function getPreferredLocales(this: SDL) {
-  const struct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
+  const countStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
-  const listPtr = this.symbols.SDL_GetPreferredLocales(struct.$address);
+  const listPtr = this.symbols.SDL_GetPreferredLocales(countStruct.$address);
 
   if (!listPtr) return [];
 
-  const count = struct.getValue(0, 'i32');
-  const list = new CStruct({ address: listPtr });
-  const locales: Locale[] = [];
-
-  for (let i = 0; i < count; i++) {
-    const localePtr = list.getValue(i * CStruct.BYTE_SIZE.ptr, 'ptr');
-
-    if (!localePtr) continue;
-
-    const sdlLocale = new Locale(localePtr);
-    const locale = new Locale(sdlLocale.$memory.slice());
-
-    locales.push(locale);
-  }
+  const count = countStruct.getValue(0, 'i32');
+  const pointers = CStruct.readArrayPrimitive(listPtr, count, 'ptr');
+  const locales = pointers.map((ptr) => new Locale(ptr).clone());
 
   this.symbols.SDL_free(listPtr);
 

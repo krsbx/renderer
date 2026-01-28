@@ -1,6 +1,6 @@
 import type { RayLib } from '@/raylib';
-import type { Color, Vector2 } from '../struct';
-import { generateVector2Points } from '../utility/common';
+import { CStruct } from '@/utility/cstruct';
+import { Vector2, type Color } from '../struct';
 
 export function drawTriangle(
   this: RayLib,
@@ -43,10 +43,13 @@ export function drawTriangleFan(
     color: Color;
   }
 ) {
-  const points = generateVector2Points(options.points);
+  const { buffer: points } = CStruct.writeArray(
+    options.points,
+    Vector2.BYTE_SIZE
+  );
 
   this.symbols.DrawTriangleFan(
-    points.$address,
+    points,
     options.points.length,
     options.color.$address
   );
@@ -59,10 +62,13 @@ export function drawTriangleStrip(
     color: Color;
   }
 ) {
-  const points = generateVector2Points(options.points);
+  const { buffer: points } = CStruct.writeArray(
+    options.points,
+    Vector2.BYTE_SIZE
+  );
 
   this.symbols.DrawTriangleStrip(
-    points.$address,
+    points,
     options.points.length,
     options.color.$address
   );

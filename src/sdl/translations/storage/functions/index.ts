@@ -244,16 +244,8 @@ export function globStorageDirectory(
   if (!listPtr) return null;
 
   const count = countStruct.getValue(0, 'i32');
-  const list = new CStruct({ address: listPtr });
-  const paths: string[] = [];
-
-  for (let i = 0; i < count; i++) {
-    const pathPtr = list.getValue(i * CStruct.BYTE_SIZE.ptr, 'ptr');
-
-    if (!pathPtr) continue;
-
-    paths.push(new CString(pathPtr).toString());
-  }
+  const pointers = CStruct.readArrayPrimitive(listPtr, count, 'ptr');
+  const paths = pointers.map((ptr) => new CString(ptr).toString());
 
   this.symbols.SDL_free(listPtr);
 

@@ -33,14 +33,7 @@ export function getDisplays(this: SDL) {
   if (!listPtr) return [];
 
   const count = countStruct.getValue(0, 'i32');
-  const list = new CStruct({ address: listPtr });
-  const displayIds: number[] = [];
-
-  for (let i = 0; i < count; i++) {
-    const displayId = list.getValue(i * CStruct.BYTE_SIZE.i32, 'u32');
-
-    displayIds.push(displayId);
-  }
+  const displayIds = CStruct.readArrayPrimitive(listPtr, count, 'u32');
 
   this.symbols.SDL_free(listPtr);
 
@@ -109,18 +102,8 @@ export function getFullscreenDisplayModes(this: SDL, displayID: number) {
   if (!listPtr) return null;
 
   const count = countStruct.getValue(0, 'i32');
-  const list = new CStruct({ address: listPtr });
-  const modes: DisplayMode[] = [];
-
-  for (let i = 0; i < count; i++) {
-    const modePtr = list.getValue(i * CStruct.BYTE_SIZE.ptr, 'ptr');
-
-    if (!modePtr) continue;
-
-    const mode = new DisplayMode(modePtr);
-
-    modes.push(mode);
-  }
+  const pointers = CStruct.readArrayPrimitive(listPtr, count, 'ptr');
+  const modes = pointers.map((ptr) => new DisplayMode(ptr));
 
   this.symbols.SDL_free(listPtr);
 

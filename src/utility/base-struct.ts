@@ -5,7 +5,7 @@ export type BaseStructOptions = Pointer | Uint8Array;
 
 type BaseStructStatic = Omit<typeof BaseStruct, 'prototype'>;
 
-type BaseStructConstructor<T extends BaseStruct = BaseStruct> = {
+export type BaseStructConstructor<T extends BaseStruct = BaseStruct> = {
   new (data: BaseStructOptions): T;
 } & BaseStructStatic;
 

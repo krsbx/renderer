@@ -25,16 +25,10 @@ export function vulkanGetInstanceExtensions(this: SDL) {
   if (!listPtr) return null;
 
   const count = countStruct.getValue(0, 'u32');
-  const list = new CStruct({ address: listPtr });
-  const extensions: string[] = [];
+  const pointers = CStruct.readArrayPrimitive(listPtr, count, 'ptr');
+  const extensions = pointers.map((ptr) => new CString(ptr).toString());
 
-  for (let i = 0; i < count; i++) {
-    const extensionPtr = list.getValue(i * CStruct.BYTE_SIZE.ptr, 'ptr');
-
-    if (!extensionPtr) continue;
-
-    extensions.push(new CString(extensionPtr).toString());
-  }
+  this.symbols.SDL_free(listPtr);
 
   return extensions;
 }

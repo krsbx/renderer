@@ -1,6 +1,6 @@
 import { BaseStruct } from '@/utility/base-struct';
 import { CStruct } from '@/utility/cstruct';
-import { ptr, read, type Pointer } from 'bun:ffi';
+import { ptr, type Pointer } from 'bun:ffi';
 import { GPUTextureSamplerBinding } from '../../../gpu/utility';
 import { ByteOffset } from './constant';
 
@@ -81,16 +81,9 @@ export class GPURenderStateCreateInfo extends BaseStruct {
 
     if (!numTextures || !addr || addr === 0n) return [];
 
-    const textures: Pointer[] = [];
     const texturePtr = Number(addr) as Pointer;
 
-    for (let i = 0; i < numTextures; i++) {
-      const texPtr = read.ptr(texturePtr, i * 8) as Pointer;
-
-      textures.push(texPtr);
-    }
-
-    return textures;
+    return CStruct.readArrayPrimitive(texturePtr, numTextures, 'ptr');
   }
 
   public set storageTextures(value: Pointer[]) {
@@ -134,16 +127,9 @@ export class GPURenderStateCreateInfo extends BaseStruct {
 
     if (!numBuffers || !addr || addr === 0n) return [];
 
-    const buffers: Pointer[] = [];
     const bufferPtr = Number(addr) as Pointer;
 
-    for (let i = 0; i < numBuffers; i++) {
-      const bufPtr = read.ptr(bufferPtr, i * 8) as Pointer;
-
-      buffers.push(bufPtr);
-    }
-
-    return buffers;
+    return CStruct.readArrayPrimitive(bufferPtr, numBuffers, 'ptr');
   }
 
   public set storageBuffers(value: Pointer[]) {

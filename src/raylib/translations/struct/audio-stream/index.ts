@@ -1,42 +1,9 @@
-import type { StructInit } from '@/types/shared';
-import { toArrayBuffer, type Pointer } from 'bun:ffi';
+import { BaseStruct } from '@/utility/base-struct';
+import { type Pointer } from 'bun:ffi';
 import { ByteOffset } from './constant';
 
-export class AudioStream {
-  public static readonly BYTE_SIZE = 28;
-
-  public $address: Pointer | Uint8Array;
-  public $memory: Uint8Array;
-  public $view: DataView;
-
-  public constructor(data: Pointer | Uint8Array) {
-    if (data instanceof Uint8Array) {
-      this.$memory = data;
-      this.$address = data;
-    } else {
-      const buffer = toArrayBuffer(data, 0, AudioStream.BYTE_SIZE);
-      this.$memory = new Uint8Array(buffer);
-      this.$address = data;
-    }
-
-    this.$view = new DataView(
-      this.$memory.buffer,
-      this.$memory.byteOffset,
-      this.$memory.byteLength
-    );
-  }
-
-  public static allocMemory() {
-    return new Uint8Array(this.BYTE_SIZE);
-  }
-
-  public static create(data?: StructInit<InstanceType<typeof this>>) {
-    const instance = new this(this.allocMemory());
-
-    if (data) Object.assign(instance, data);
-
-    return instance;
-  }
+export class AudioStream extends BaseStruct {
+  public static override readonly BYTE_SIZE = 28;
 
   public get buffer() {
     return Number(this.$view.getBigUint64(ByteOffset.buffer, true)) as Pointer;

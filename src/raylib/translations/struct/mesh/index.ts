@@ -1,4 +1,4 @@
-import type { StructInit } from '@/types/shared';
+import { BaseStruct } from '@/utility/base-struct';
 import { toArrayBuffer, type Pointer } from 'bun:ffi';
 import { Matrix } from '../matrix';
 import { ByteOffset } from './constant';
@@ -6,12 +6,8 @@ import { ByteOffset } from './constant';
 // raylib defines MAX_MESH_VERTEX_BUFFERS = 7
 const MAX_MESH_VERTEX_BUFFERS = 7;
 
-export class Mesh {
-  public static readonly BYTE_SIZE = 120;
-
-  public $address: Pointer | Uint8Array;
-  public $memory: Uint8Array;
-  public $view: DataView;
+export class Mesh extends BaseStruct {
+  public static override readonly BYTE_SIZE = 120;
 
   // Cached array proxies
   private $vertices: number[] | null = null;
@@ -40,35 +36,6 @@ export class Mesh {
   private $boneMatricesMemory: Uint8Array | null = null;
   private $vboId: number[] | null = null;
   private $vboIdView: DataView | null = null;
-
-  public constructor(data: Pointer | Uint8Array) {
-    if (data instanceof Uint8Array) {
-      this.$memory = data;
-      this.$address = data;
-    } else {
-      const buffer = toArrayBuffer(data, 0, Mesh.BYTE_SIZE);
-      this.$memory = new Uint8Array(buffer);
-      this.$address = data;
-    }
-
-    this.$view = new DataView(
-      this.$memory.buffer,
-      this.$memory.byteOffset,
-      this.$memory.byteLength
-    );
-  }
-
-  public static allocMemory() {
-    return new Uint8Array(this.BYTE_SIZE);
-  }
-
-  public static create(data?: StructInit<InstanceType<typeof this>>) {
-    const instance = new this(this.allocMemory());
-
-    if (data) Object.assign(instance, data);
-
-    return instance;
-  }
 
   public get vertexCount() {
     return this.$view.getInt32(ByteOffset.vertexCount, true);

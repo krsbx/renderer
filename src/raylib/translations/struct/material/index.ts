@@ -1,4 +1,4 @@
-import type { StructInit } from '@/types/shared';
+import { BaseStruct, type BaseStructOptions } from '@/utility/base-struct';
 import { toArrayBuffer, type Pointer } from 'bun:ffi';
 import { MaterialMap } from '../material-map';
 import { Shader } from '../shader';
@@ -7,12 +7,8 @@ import { ByteOffset } from './constant';
 // raylib defines MAX_MATERIAL_MAPS = 12
 const MAX_MATERIAL_MAPS = 12;
 
-export class Material {
-  public static readonly BYTE_SIZE = 40;
-
-  public $address: Pointer | Uint8Array;
-  public $memory: Uint8Array;
-  public $view: DataView;
+export class Material extends BaseStruct {
+  public static override readonly BYTE_SIZE = 40;
 
   public readonly shader: Shader;
 
@@ -20,21 +16,8 @@ export class Material {
   private $maps: MaterialMap[] | null = null;
   private $mapsMemory: Uint8Array | null = null;
 
-  public constructor(data: Pointer | Uint8Array) {
-    if (data instanceof Uint8Array) {
-      this.$memory = data;
-      this.$address = data;
-    } else {
-      const buffer = toArrayBuffer(data, 0, Material.BYTE_SIZE);
-      this.$memory = new Uint8Array(buffer);
-      this.$address = data;
-    }
-
-    this.$view = new DataView(
-      this.$memory.buffer,
-      this.$memory.byteOffset,
-      this.$memory.byteLength
-    );
+  public constructor(data: BaseStructOptions) {
+    super(data);
 
     this.shader = new Shader(
       this.$memory.subarray(
@@ -42,18 +25,6 @@ export class Material {
         ByteOffset.shader + Shader.BYTE_SIZE
       )
     );
-  }
-
-  public static allocMemory() {
-    return new Uint8Array(this.BYTE_SIZE);
-  }
-
-  public static create(data?: StructInit<InstanceType<typeof this>>) {
-    const instance = new this(this.allocMemory());
-
-    if (data) Object.assign(instance, data);
-
-    return instance;
   }
 
   public get maps_ptr() {

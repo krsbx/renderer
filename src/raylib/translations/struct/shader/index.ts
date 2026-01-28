@@ -1,48 +1,15 @@
-import type { StructInit } from '@/types/shared';
+import { BaseStruct } from '@/utility/base-struct';
 import { toArrayBuffer, type Pointer } from 'bun:ffi';
 import { ByteOffset } from './constant';
 
 // raylib defines MAX_SHADER_LOCATIONS = 32
 const MAX_SHADER_LOCATIONS = 32;
 
-export class Shader {
-  public static readonly BYTE_SIZE = 16;
-
-  public $address: Pointer | Uint8Array;
-  public $memory: Uint8Array;
-  public $view: DataView;
+export class Shader extends BaseStruct {
+  public static override readonly BYTE_SIZE = 16;
 
   private $locs: number[] | null = null;
   private $locsView: DataView | null = null;
-
-  public constructor(data: Pointer | Uint8Array) {
-    if (data instanceof Uint8Array) {
-      this.$memory = data;
-      this.$address = data;
-    } else {
-      const buffer = toArrayBuffer(data, 0, Shader.BYTE_SIZE);
-      this.$memory = new Uint8Array(buffer);
-      this.$address = data;
-    }
-
-    this.$view = new DataView(
-      this.$memory.buffer,
-      this.$memory.byteOffset,
-      this.$memory.byteLength
-    );
-  }
-
-  public static allocMemory() {
-    return new Uint8Array(this.BYTE_SIZE);
-  }
-
-  public static create(data?: StructInit<InstanceType<typeof this>>) {
-    const instance = new this(this.allocMemory());
-
-    if (data) Object.assign(instance, data);
-
-    return instance;
-  }
 
   public get id() {
     return this.$view.getUint32(ByteOffset.id, true);

@@ -1,47 +1,14 @@
-import type { StructInit } from '@/types/shared';
+import { BaseStruct } from '@/utility/base-struct';
 import { toArrayBuffer, type Pointer } from 'bun:ffi';
 import { AutomationEvent } from '../automation-event';
 import { ByteOffset } from './constant';
 
-export class AutomationEventList {
-  public static readonly BYTE_SIZE = 16;
-
-  public $address: Pointer | Uint8Array;
-  public $memory: Uint8Array;
-  public $view: DataView;
+export class AutomationEventList extends BaseStruct {
+  public static override readonly BYTE_SIZE = 16;
 
   // Cached events array
   private $events: AutomationEvent[] | null = null;
   private $eventsMemory: Uint8Array | null = null;
-
-  public constructor(data: Pointer | Uint8Array) {
-    if (data instanceof Uint8Array) {
-      this.$memory = data;
-      this.$address = data;
-    } else {
-      const buffer = toArrayBuffer(data, 0, AutomationEventList.BYTE_SIZE);
-      this.$memory = new Uint8Array(buffer);
-      this.$address = data;
-    }
-
-    this.$view = new DataView(
-      this.$memory.buffer,
-      this.$memory.byteOffset,
-      this.$memory.byteLength
-    );
-  }
-
-  public static allocMemory() {
-    return new Uint8Array(this.BYTE_SIZE);
-  }
-
-  public static create(data?: StructInit<InstanceType<typeof this>>) {
-    const instance = new this(this.allocMemory());
-
-    if (data) Object.assign(instance, data);
-
-    return instance;
-  }
 
   public get capacity() {
     return this.$view.getUint32(ByteOffset.capacity, true);

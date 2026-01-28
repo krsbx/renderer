@@ -1,45 +1,12 @@
-import type { StructInit } from '@/types/shared';
+import { BaseStruct } from '@/utility/base-struct';
 import { CString, toArrayBuffer, type Pointer } from 'bun:ffi';
 import { ByteOffset } from './constant';
 
-export class FilePathList {
-  public static readonly BYTE_SIZE = 16;
-
-  public $address: Pointer | Uint8Array;
-  public $memory: Uint8Array;
-  public $view: DataView;
+export class FilePathList extends BaseStruct {
+  public static override readonly BYTE_SIZE = 16;
 
   // Cached paths
   private $paths: string[] | null = null;
-
-  public constructor(data: Pointer | Uint8Array) {
-    if (data instanceof Uint8Array) {
-      this.$memory = data;
-      this.$address = data;
-    } else {
-      const buffer = toArrayBuffer(data, 0, FilePathList.BYTE_SIZE);
-      this.$memory = new Uint8Array(buffer);
-      this.$address = data;
-    }
-
-    this.$view = new DataView(
-      this.$memory.buffer,
-      this.$memory.byteOffset,
-      this.$memory.byteLength
-    );
-  }
-
-  public static allocMemory() {
-    return new Uint8Array(this.BYTE_SIZE);
-  }
-
-  public static create(data?: StructInit<InstanceType<typeof this>>) {
-    const instance = new this(this.allocMemory());
-
-    if (data) Object.assign(instance, data);
-
-    return instance;
-  }
 
   public get count() {
     return this.$view.getUint32(ByteOffset.count, true);

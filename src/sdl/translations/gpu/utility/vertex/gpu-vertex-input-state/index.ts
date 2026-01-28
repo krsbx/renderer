@@ -76,21 +76,16 @@ export class GPUVertexInputState {
       return;
     }
 
-    const buffer = new Uint8Array(
-      GPUVertexBufferDescription.BYTE_SIZE * this.vertexBufferCount
+    const { address, buffer } = CStruct.writeArray(
+      value,
+      GPUVertexBufferDescription.BYTE_SIZE
     );
-
-    for (let i = 0; i < this.vertexBufferCount; i++) {
-      const offset = i * GPUVertexBufferDescription.BYTE_SIZE;
-
-      buffer.set(value[i]!.$memory, offset);
-    }
 
     this.$vertexBufferDescBuffer = buffer;
 
     this.$view.setBigUint64(
       ByteOffset.vertex_buffer_descriptions,
-      BigInt(ptr(this.$vertexBufferDescBuffer)),
+      BigInt(address),
       true
     );
   }
@@ -131,21 +126,16 @@ export class GPUVertexInputState {
       return;
     }
 
-    const buffer = new Uint8Array(
-      GPUVertexAttribute.BYTE_SIZE * this.vertexAttributeCount
+    const { address, buffer } = CStruct.writeArray(
+      value,
+      GPUVertexAttribute.BYTE_SIZE
     );
-
-    for (let i = 0; i < this.vertexAttributeCount; i++) {
-      const offset = i * GPUVertexAttribute.BYTE_SIZE;
-
-      buffer.set(value[i]!.$memory, offset);
-    }
 
     this.$vertexAttributesBuffer = buffer;
 
     this.$view.setBigUint64(
       ByteOffset.vertex_attributes,
-      BigInt(ptr(this.$vertexAttributesBuffer)),
+      BigInt(address),
       true
     );
   }

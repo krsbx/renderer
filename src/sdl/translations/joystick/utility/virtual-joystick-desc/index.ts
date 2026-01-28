@@ -4,7 +4,6 @@ import { stringToCString } from '@utility/common';
 import {
   CString,
   linkSymbols,
-  ptr,
   toArrayBuffer,
   type FFIFunction,
   type Pointer,
@@ -227,23 +226,14 @@ export class VirtualJoystickDesc {
       return;
     }
 
-    const buffer = new Uint8Array(
-      VirtualJoystickTouchpadDesc.BYTE_SIZE * this.touchpadCount
+    const { address, buffer } = CStruct.writeArray(
+      value,
+      VirtualJoystickTouchpadDesc.BYTE_SIZE
     );
-
-    for (let i = 0; i < this.touchpadCount; i++) {
-      const offset = i * VirtualJoystickTouchpadDesc.BYTE_SIZE;
-
-      buffer.set(value[i]!.$memory, offset);
-    }
 
     this.$touchpadsBuffer = buffer;
 
-    this.$view.setBigUint64(
-      ByteOffset.touchpads,
-      BigInt(ptr(this.$touchpadsBuffer)),
-      true
-    );
+    this.$view.setBigUint64(ByteOffset.touchpads, BigInt(address), true);
   }
 
   public get sensors() {
@@ -271,23 +261,14 @@ export class VirtualJoystickDesc {
       return;
     }
 
-    const buffer = new Uint8Array(
-      VirtualJoystickSensorDesc.BYTE_SIZE * this.sensorCount
+    const { address, buffer } = CStruct.writeArray(
+      value,
+      VirtualJoystickSensorDesc.BYTE_SIZE
     );
-
-    for (let i = 0; i < this.sensorCount; i++) {
-      const offset = i * VirtualJoystickSensorDesc.BYTE_SIZE;
-
-      buffer.set(value[i]!.$memory, offset);
-    }
 
     this.$sensorsBuffer = buffer;
 
-    this.$view.setBigUint64(
-      ByteOffset.sensors,
-      BigInt(ptr(this.$sensorsBuffer)),
-      true
-    );
+    this.$view.setBigUint64(ByteOffset.sensors, BigInt(address), true);
   }
 
   public get userdata() {

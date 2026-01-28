@@ -137,23 +137,14 @@ export class MessageBoxData {
       return;
     }
 
-    const buffer = new Uint8Array(
-      MessageBoxButtonData.BYTE_SIZE * this.buttonCount
+    const { address, buffer } = CStruct.writeArray(
+      value,
+      MessageBoxButtonData.BYTE_SIZE
     );
-
-    for (let i = 0; i < this.buttonCount; i++) {
-      const offset = i * MessageBoxButtonData.BYTE_SIZE;
-
-      buffer.set(value[i]!.$memory, offset);
-    }
 
     this.$buttonsBuffer = buffer;
 
-    this.$view.setBigUint64(
-      ByteOffset.buttons,
-      BigInt(ptr(this.$buttonsBuffer)),
-      true
-    );
+    this.$view.setBigUint64(ByteOffset.buttons, BigInt(address), true);
   }
 
   public get colorScheme() {

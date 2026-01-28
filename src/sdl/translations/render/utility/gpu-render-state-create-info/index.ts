@@ -96,23 +96,14 @@ export class GPURenderStateCreateInfo {
       return;
     }
 
-    const buffer = new Uint8Array(
-      GPUTextureSamplerBinding.BYTE_SIZE * this.samplerBindingCount
+    const { address, buffer } = CStruct.writeArray(
+      value,
+      GPUTextureSamplerBinding.BYTE_SIZE
     );
-
-    for (let i = 0; i < this.samplerBindingCount; i++) {
-      const offset = i * GPUTextureSamplerBinding.BYTE_SIZE;
-
-      buffer.set(value[i]!.$memory, offset);
-    }
 
     this.$samplerBindingBuffer = buffer;
 
-    this.$view.setBigUint64(
-      ByteOffset.sampler_bindings,
-      BigInt(ptr(this.$samplerBindingBuffer)),
-      true
-    );
+    this.$view.setBigUint64(ByteOffset.sampler_bindings, BigInt(address), true);
   }
 
   public get storageTextureCount() {

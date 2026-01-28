@@ -1,6 +1,6 @@
 import type { StructInit } from '@/types/shared';
 import { CStruct } from '@/utility/cstruct';
-import { ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
+import { toArrayBuffer, type Pointer } from 'bun:ffi';
 import type { GPUTextureFormat } from '../../../../../ffi/gpu/constant';
 import { GPUColorTargetDescription } from '../../color-target';
 import { ByteOffset } from './constant';
@@ -82,21 +82,16 @@ export class GPUGraphicsPipelineTargetInfo {
       return;
     }
 
-    const buffer = new Uint8Array(
-      GPUColorTargetDescription.BYTE_SIZE * this.colorTargetsCount
+    const { address, buffer } = CStruct.writeArray(
+      value,
+      GPUColorTargetDescription.BYTE_SIZE
     );
-
-    for (let i = 0; i < this.colorTargetsCount; i++) {
-      const offset = i * GPUColorTargetDescription.BYTE_SIZE;
-
-      buffer.set(value[i]!.$memory, offset);
-    }
 
     this.$colorTargetDescBuffer = buffer;
 
     this.$view.setBigUint64(
       ByteOffset.color_target_descriptions,
-      BigInt(ptr(buffer)),
+      BigInt(address),
       true
     );
   }

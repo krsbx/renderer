@@ -1,6 +1,6 @@
 import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
-import { getStructAddress, getStructMemoryAddress } from '@utility/common';
+import { getStructMemoryAddress } from '@utility/common';
 import { type Pointer } from 'bun:ffi';
 import type { Colorspace, PixelFormat } from '../../../ffi/pixels/constant';
 import { Rect } from '../../rect/utility';
@@ -103,7 +103,7 @@ export function premultiplySurfaceAlpha(
   }
 ) {
   return this.symbols.SDL_PremultiplySurfaceAlpha(
-    getStructAddress(options.surface),
+    options.surface.$address,
     options.linear
   );
 }
@@ -121,7 +121,7 @@ export function clearSurface(
   }
 ) {
   return this.symbols.SDL_ClearSurface(
-    getStructAddress(options.surface),
+    options.surface.$address,
     options.r,
     options.g,
     options.b,
@@ -138,8 +138,8 @@ export function fillSurfaceRect(
   }
 ) {
   return this.symbols.SDL_FillSurfaceRect(
-    getStructAddress(options.dst),
-    options.rect ? getStructAddress(options.rect) : null,
+    options.dst.$address,
+    options.rect?.$address ?? null,
     options.color
   );
 }
@@ -156,7 +156,7 @@ export function fillSurfaceRects(
   const { buffer } = CStruct.writeArray(options.rects, Rect.BYTE_SIZE);
 
   return this.symbols.SDL_FillSurfaceRects(
-    getStructAddress(options.dst),
+    options.dst.$address,
     buffer,
     options.count,
     options.color
@@ -175,7 +175,7 @@ export function mapSurfaceRGB(
   }
 ) {
   return this.symbols.SDL_MapSurfaceRGB(
-    getStructAddress(options.surface),
+    options.surface.$address,
     options.r,
     options.g,
     options.b
@@ -193,7 +193,7 @@ export function mapSurfaceRGBA(
   }
 ) {
   return this.symbols.SDL_MapSurfaceRGBA(
-    getStructAddress(options.surface),
+    options.surface.$address,
     options.r,
     options.g,
     options.b,
@@ -217,7 +217,7 @@ export function readSurfacePixel(
   const aStruct = new CStruct({ length: CStruct.BYTE_SIZE.u8 });
 
   const success = this.symbols.SDL_ReadSurfacePixel(
-    getStructAddress(options.surface),
+    options.surface.$address,
     options.x,
     options.y,
     rStruct.$address,
@@ -250,7 +250,7 @@ export function readSurfacePixelFloat(
   const aStruct = new CStruct({ length: CStruct.BYTE_SIZE.f32 });
 
   const success = this.symbols.SDL_ReadSurfacePixelFloat(
-    getStructAddress(options.surface),
+    options.surface.$address,
     options.x,
     options.y,
     rStruct.$address,
@@ -284,7 +284,7 @@ export function writeSurfacePixel(
   }
 ) {
   return this.symbols.SDL_WriteSurfacePixel(
-    getStructAddress(options.surface),
+    options.surface.$address,
     options.x,
     options.y,
     options.r,
@@ -307,7 +307,7 @@ export function writeSurfacePixelFloat(
   }
 ) {
   return this.symbols.SDL_WriteSurfacePixelFloat(
-    getStructAddress(options.surface),
+    options.surface.$address,
     options.x,
     options.y,
     options.r,

@@ -1,18 +1,17 @@
 import type { SDL } from '@/sdl';
-import { getStructAddress } from '@utility/common';
 import type { Pointer } from 'bun:ffi';
 import { AtomicInt, AtomicU32, SpinLock } from '../utility';
 
 export function tryLockSpinlock(this: SDL, lock: SpinLock) {
-  return this.symbols.SDL_TryLockSpinlock(getStructAddress(lock));
+  return this.symbols.SDL_TryLockSpinlock(lock.$address);
 }
 
 export function lockSpinlock(this: SDL, lock: SpinLock) {
-  this.symbols.SDL_LockSpinlock(getStructAddress(lock));
+  this.symbols.SDL_LockSpinlock(lock.$address);
 }
 
 export function unlockSpinlock(this: SDL, lock: SpinLock) {
-  this.symbols.SDL_UnlockSpinlock(getStructAddress(lock));
+  this.symbols.SDL_UnlockSpinlock(lock.$address);
 }
 
 export function memoryBarrierReleaseFunction(this: SDL) {
@@ -32,7 +31,7 @@ export function compareAndSwapAtomicInt(
   }
 ) {
   return this.symbols.SDL_CompareAndSwapAtomicInt(
-    getStructAddress(options.a),
+    options.a.$address,
     options.oldval,
     options.newval
   );
@@ -45,11 +44,11 @@ export function setAtomicInt(
     v: number;
   }
 ) {
-  return this.symbols.SDL_SetAtomicInt(getStructAddress(options.a), options.v);
+  return this.symbols.SDL_SetAtomicInt(options.a.$address, options.v);
 }
 
 export function getAtomicInt(this: SDL, a: AtomicInt) {
-  return this.symbols.SDL_GetAtomicInt(getStructAddress(a));
+  return this.symbols.SDL_GetAtomicInt(a.$address);
 }
 
 export function addAtomicInt(
@@ -59,7 +58,7 @@ export function addAtomicInt(
     v: number;
   }
 ) {
-  return this.symbols.SDL_AddAtomicInt(getStructAddress(options.a), options.v);
+  return this.symbols.SDL_AddAtomicInt(options.a.$address, options.v);
 }
 
 export function atomicIncRef(this: SDL, a: AtomicInt) {
@@ -87,7 +86,7 @@ export function compareAndSwapAtomicU32(
   }
 ) {
   return this.symbols.SDL_CompareAndSwapAtomicU32(
-    getStructAddress(options.a),
+    options.a.$address,
     options.oldval,
     options.newval
   );
@@ -100,11 +99,11 @@ export function setAtomicU32(
     v: number;
   }
 ) {
-  return this.symbols.SDL_SetAtomicU32(getStructAddress(options.a), options.v);
+  return this.symbols.SDL_SetAtomicU32(options.a.$address, options.v);
 }
 
 export function getAtomicU32(this: SDL, a: AtomicU32) {
-  return this.symbols.SDL_GetAtomicU32(getStructAddress(a));
+  return this.symbols.SDL_GetAtomicU32(a.$address);
 }
 
 export function addAtomicU32(
@@ -114,7 +113,7 @@ export function addAtomicU32(
     v: number;
   }
 ) {
-  return this.symbols.SDL_AddAtomicU32(getStructAddress(options.a), options.v);
+  return this.symbols.SDL_AddAtomicU32(options.a.$address, options.v);
 }
 
 export function compareAndSwapAtomicPointer(

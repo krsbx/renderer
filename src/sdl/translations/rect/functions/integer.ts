@@ -1,6 +1,5 @@
 import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
-import { getStructAddress } from '@utility/common';
 import { Point, Rect } from '../utility';
 
 export function hasRectIntersection(
@@ -11,8 +10,8 @@ export function hasRectIntersection(
   }
 ) {
   return this.symbols.SDL_HasRectIntersection(
-    getStructAddress(options.a),
-    getStructAddress(options.b)
+    options.a.$address,
+    options.b.$address
   );
 }
 
@@ -26,8 +25,8 @@ export function getRectIntersection(
   const result = Rect.create();
 
   const success = this.symbols.SDL_GetRectIntersection(
-    getStructAddress(options.a),
-    getStructAddress(options.b),
+    options.a.$address,
+    options.b.$address,
     result.$address
   );
 
@@ -46,8 +45,8 @@ export function getRectUnion(
   const result = Rect.create();
 
   const success = this.symbols.SDL_GetRectUnion(
-    getStructAddress(options.a),
-    getStructAddress(options.b),
+    options.a.$address,
+    options.b.$address,
     result.$address
   );
 
@@ -67,9 +66,9 @@ export function getRectEnclosingPoints(
   const result = Rect.create();
 
   const success = this.symbols.SDL_GetRectEnclosingPoints(
-    getStructAddress(options.points),
+    options.points.$address,
     options.count,
-    options.clip ? getStructAddress(options.clip) : null,
+    options.clip?.$address ?? null,
     result.$address
   );
 
@@ -105,7 +104,7 @@ export function getRectAndLineIntersection(
   }).setValue(0, options.y2, 'i32');
 
   const success = this.symbols.SDL_GetRectAndLineIntersection(
-    getStructAddress(options.rect),
+    options.rect.$address,
     x1Struct.$address,
     y1Struct.$address,
     x2Struct.$address,

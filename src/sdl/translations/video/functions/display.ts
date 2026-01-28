@@ -1,6 +1,5 @@
 import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
-import { getStructAddress } from '@utility/common';
 import type { Pointer } from 'bun:ffi';
 import type {
   DisplayOrientation,
@@ -156,11 +155,11 @@ export function getCurrentDisplayMode(this: SDL, displayID: number) {
 }
 
 export function getDisplayForPoint(this: SDL, point: Point) {
-  return this.symbols.SDL_GetDisplayForPoint(getStructAddress(point));
+  return this.symbols.SDL_GetDisplayForPoint(point.$address);
 }
 
 export function getDisplayForRect(this: SDL, rect: Rect) {
-  return this.symbols.SDL_GetDisplayForRect(getStructAddress(rect));
+  return this.symbols.SDL_GetDisplayForRect(rect.$address);
 }
 
 export function getDisplayForWindow(this: SDL, window: Pointer) {

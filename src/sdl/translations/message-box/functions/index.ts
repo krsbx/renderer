@@ -1,6 +1,6 @@
 import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
-import { getStructAddress, stringToCString } from '@utility/common';
+import { stringToCString } from '@utility/common';
 import type { Pointer } from 'bun:ffi';
 import type { MessageBoxFlags } from '../../../ffi/message-box/constant';
 import { MessageBoxData } from '../utility';
@@ -9,7 +9,7 @@ export function showMessageBox(this: SDL, messageboxdata: MessageBoxData) {
   const struct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
   const success = this.symbols.SDL_ShowMessageBox(
-    getStructAddress(messageboxdata),
+    messageboxdata.$address,
     struct.$address
   );
 

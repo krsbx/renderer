@@ -1,5 +1,4 @@
 import type { SDL } from '@/sdl';
-import { getStructAddress } from '@utility/common';
 import type { Pointer } from 'bun:ffi';
 import type {
   GPUSampleCount,
@@ -32,10 +31,7 @@ export function blitGPUTexture(
     info: GPUBlitInfo;
   }
 ) {
-  this.symbols.SDL_BlitGPUTexture(
-    options.commandBuffer,
-    getStructAddress(options.info)
-  );
+  this.symbols.SDL_BlitGPUTexture(options.commandBuffer, options.info.$address);
 }
 
 // Texture Format Utilities

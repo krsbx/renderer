@@ -1,6 +1,5 @@
 import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
-import { getStructAddress } from '@utility/common';
 import { type Pointer } from 'bun:ffi';
 import type {
   CameraPermissionState,
@@ -143,10 +142,7 @@ export function releaseCameraFrame(
     surface: Surface;
   }
 ) {
-  this.symbols.SDL_ReleaseCameraFrame(
-    options.camera,
-    getStructAddress(options.surface)
-  );
+  this.symbols.SDL_ReleaseCameraFrame(options.camera, options.surface.$address);
 }
 
 export function closeCamera(this: SDL, camera: Pointer) {

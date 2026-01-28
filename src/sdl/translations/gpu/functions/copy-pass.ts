@@ -1,5 +1,4 @@
 import type { SDL } from '@/sdl';
-import { getStructAddress } from '@utility/common';
 import type { Pointer } from 'bun:ffi';
 import {
   GPUBufferLocation,
@@ -63,8 +62,8 @@ export function uploadToGPUTexture(
 ) {
   this.symbols.SDL_UploadToGPUTexture(
     options.copyPass,
-    getStructAddress(options.source),
-    getStructAddress(options.destination),
+    options.source.$address,
+    options.destination.$address,
     options.cycle ?? false
   );
 }
@@ -83,8 +82,8 @@ export function uploadToGPUBuffer(
 ) {
   this.symbols.SDL_UploadToGPUBuffer(
     options.copyPass,
-    getStructAddress(options.source),
-    getStructAddress(options.destination),
+    options.source.$address,
+    options.destination.$address,
     options.cycle ?? false
   );
 }
@@ -106,8 +105,8 @@ export function copyGPUTextureToTexture(
 ) {
   this.symbols.SDL_CopyGPUTextureToTexture(
     options.copyPass,
-    getStructAddress(options.source),
-    getStructAddress(options.destination),
+    options.source.$address,
+    options.destination.$address,
     options.w,
     options.h,
     options.d,
@@ -130,8 +129,8 @@ export function copyGPUBufferToBuffer(
 ) {
   this.symbols.SDL_CopyGPUBufferToBuffer(
     options.copyPass,
-    getStructAddress(options.source),
-    getStructAddress(options.destination),
+    options.source.$address,
+    options.destination.$address,
     options.size,
     options.cycle ?? false
   );
@@ -147,8 +146,8 @@ export function downloadFromGPUTexture(
 ) {
   this.symbols.SDL_DownloadFromGPUTexture(
     options.copyPass,
-    getStructAddress(options.source),
-    getStructAddress(options.destination)
+    options.source.$address,
+    options.destination.$address
   );
 }
 
@@ -162,8 +161,8 @@ export function downloadFromGPUBuffer(
 ) {
   this.symbols.SDL_DownloadFromGPUBuffer(
     options.copyPass,
-    getStructAddress(options.source),
-    getStructAddress(options.destination)
+    options.source.$address,
+    options.destination.$address
   );
 }
 

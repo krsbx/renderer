@@ -1,6 +1,5 @@
 import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
-import { getStructAddress } from '@utility/common';
 import type { Pointer } from 'bun:ffi';
 import type { RendererLogicalPresentation } from '../../../ffi/render/constant';
 import { Event } from '../../events/utility';
@@ -143,7 +142,7 @@ export function convertEventToRenderCoordinates(
 ) {
   return this.symbols.SDL_ConvertEventToRenderCoordinates(
     options.renderer,
-    getStructAddress(options.event)
+    options.event.$address
   );
 }
 
@@ -158,7 +157,7 @@ export function setRenderViewport(
 ) {
   return this.symbols.SDL_SetRenderViewport(
     options.renderer,
-    options.rect ? getStructAddress(options.rect) : null
+    options.rect?.$address ?? null
   );
 }
 
@@ -197,7 +196,7 @@ export function setRenderClipRect(
 ) {
   return this.symbols.SDL_SetRenderClipRect(
     options.renderer,
-    options.rect ? getStructAddress(options.rect) : null
+    options.rect?.$address ?? null
   );
 }
 

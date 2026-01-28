@@ -1,5 +1,4 @@
 import type { SDL } from '@/sdl';
-import { CStruct } from '@cstruct';
 import type { Pointer } from 'bun:ffi';
 import type { SensorType } from '../../../ffi/sensor/constant';
 
@@ -59,15 +58,14 @@ export function getGamepadSensorData(
     numValues: number;
   }
 ) {
-  const dataSize = options.numValues * CStruct.BYTE_SIZE.f32;
-  const struct = new CStruct({ length: dataSize });
+  const data = new Float32Array(options.numValues);
 
   const success = this.symbols.SDL_GetGamepadSensorData(
     options.gamepad,
     options.type,
-    struct.$address,
+    data,
     options.numValues
   );
 
-  return success ? struct : null;
+  return success ? data : null;
 }

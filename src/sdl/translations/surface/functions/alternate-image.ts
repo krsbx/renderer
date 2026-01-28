@@ -1,6 +1,5 @@
 import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
-import { getStructAddress } from '@utility/common';
 import { Surface } from '../utility';
 
 // Alternate Images
@@ -13,20 +12,20 @@ export function addSurfaceAlternateImage(
   }
 ) {
   return this.symbols.SDL_AddSurfaceAlternateImage(
-    getStructAddress(options.surface),
-    getStructAddress(options.image)
+    options.surface.$address,
+    options.image.$address
   );
 }
 
 export function surfaceHasAlternateImages(this: SDL, surface: Surface) {
-  return this.symbols.SDL_SurfaceHasAlternateImages(getStructAddress(surface));
+  return this.symbols.SDL_SurfaceHasAlternateImages(surface.$address);
 }
 
 export function getSurfaceImages(this: SDL, surface: Surface) {
   const countStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
   const listPtr = this.symbols.SDL_GetSurfaceImages(
-    getStructAddress(surface),
+    surface.$address,
     countStruct.$address
   );
 
@@ -42,5 +41,5 @@ export function getSurfaceImages(this: SDL, surface: Surface) {
 }
 
 export function removeSurfaceAlternateImages(this: SDL, surface: Surface) {
-  this.symbols.SDL_RemoveSurfaceAlternateImages(getStructAddress(surface));
+  this.symbols.SDL_RemoveSurfaceAlternateImages(surface.$address);
 }

@@ -1,6 +1,5 @@
 import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
-import { getStructMemoryAddress } from '@utility/common';
 import { type Pointer } from 'bun:ffi';
 import type { TextureAddressMode } from '../../../ffi/render/constant';
 import { FColor } from '../../pixels/utility';
@@ -12,7 +11,7 @@ export function renderGeometry(
     renderer: Pointer;
     texture?: Pointer | null;
     vertices: Vertex[];
-    indices?: CStruct | Uint8Array | null;
+    indices?: Uint8Array | null;
     numIndices?: number;
   }
 ) {
@@ -31,7 +30,7 @@ export function renderGeometry(
     options.texture ?? null,
     buffer,
     options.vertices.length,
-    options.indices ? getStructMemoryAddress(options.indices) : null,
+    options.indices ?? null,
     numIndices
   );
 }
@@ -41,14 +40,14 @@ export function renderGeometryRaw(
   options: {
     renderer: Pointer;
     texture?: Pointer | null;
-    xy: CStruct | Uint8Array;
+    xy: Uint8Array;
     xyStride: number;
-    color: FColor | Uint8Array;
+    color: FColor;
     colorStride: number;
-    uv: CStruct | Uint8Array;
+    uv: Uint8Array;
     uvStride: number;
     numVertices: number;
-    indices?: CStruct | Uint8Array | null;
+    indices?: Uint8Array | null;
     numIndices: number;
     sizeIndices: number;
   }
@@ -56,14 +55,14 @@ export function renderGeometryRaw(
   return this.symbols.SDL_RenderGeometryRaw(
     options.renderer,
     options.texture ?? null,
-    getStructMemoryAddress(options.xy),
+    options.xy,
     options.xyStride,
-    getStructMemoryAddress(options.color),
+    options.color.$address,
     options.colorStride,
-    getStructMemoryAddress(options.uv),
+    options.uv,
     options.uvStride,
     options.numVertices,
-    options.indices ? getStructMemoryAddress(options.indices) : null,
+    options.indices ?? null,
     options.numIndices,
     options.sizeIndices
   );

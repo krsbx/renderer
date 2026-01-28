@@ -1,6 +1,4 @@
 import type { SDL } from '@/sdl';
-import { CStruct } from '@cstruct';
-import { getStructMemoryAddress } from '@utility/common';
 import { type Pointer } from 'bun:ffi';
 
 export function acquireGPUCommandBuffer(this: SDL, device: Pointer) {
@@ -12,14 +10,14 @@ export function pushGPUVertexUniformData(
   options: {
     commandBuffer: Pointer;
     slotIndex: number;
-    data: CStruct | Uint8Array;
+    data: Uint8Array;
     length: number;
   }
 ) {
   this.symbols.SDL_PushGPUVertexUniformData(
     options.commandBuffer,
     options.slotIndex,
-    getStructMemoryAddress(options.data),
+    options.data,
     options.length
   );
 }
@@ -29,14 +27,14 @@ export function pushGPUFragmentUniformData(
   options: {
     commandBuffer: Pointer;
     slotIndex: number;
-    data: CStruct | Uint8Array;
+    data: Uint8Array;
     length: number;
   }
 ) {
   this.symbols.SDL_PushGPUFragmentUniformData(
     options.commandBuffer,
     options.slotIndex,
-    getStructMemoryAddress(options.data),
+    options.data,
     options.length
   );
 }
@@ -46,14 +44,14 @@ export function pushGPUComputeUniformData(
   options: {
     commandBuffer: Pointer;
     slotIndex: number;
-    data: CStruct | Uint8Array;
+    data: Uint8Array;
     length: number;
   }
 ) {
   this.symbols.SDL_PushGPUComputeUniformData(
     options.commandBuffer,
     options.slotIndex,
-    getStructMemoryAddress(options.data),
+    options.data,
     options.length
   );
 }

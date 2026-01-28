@@ -1,5 +1,4 @@
 import type { SDL } from '@/sdl';
-import { getStructAddress } from '@utility/common';
 import type { Pointer } from 'bun:ffi';
 import type { GPUIndexElementSize } from '../../../ffi/gpu/constant';
 import { FColor } from '../../pixels/utility';
@@ -25,11 +24,9 @@ export function beginGPURenderPass(
 ) {
   return this.symbols.SDL_BeginGPURenderPass(
     options.commandBuffer,
-    getStructAddress(options.colorTargetInfos),
+    options.colorTargetInfos.$address,
     options.numColorTargets,
-    options.depthStencilTargetInfo
-      ? getStructAddress(options.depthStencilTargetInfo)
-      : null
+    options.depthStencilTargetInfo?.$address ?? null
   );
 }
 
@@ -55,7 +52,7 @@ export function setGPUViewport(
 ) {
   this.symbols.SDL_SetGPUViewport(
     options.renderPass,
-    getStructAddress(options.viewport)
+    options.viewport.$address
   );
 }
 
@@ -66,10 +63,7 @@ export function setGPUScissor(
     scissor: Rect;
   }
 ) {
-  this.symbols.SDL_SetGPUScissor(
-    options.renderPass,
-    getStructAddress(options.scissor)
-  );
+  this.symbols.SDL_SetGPUScissor(options.renderPass, options.scissor.$address);
 }
 
 export function setGPUBlendConstants(
@@ -81,7 +75,7 @@ export function setGPUBlendConstants(
 ) {
   this.symbols.SDL_SetGPUBlendConstants(
     options.renderPass,
-    getStructAddress(options.blendConstants)
+    options.blendConstants.$address
   );
 }
 
@@ -112,7 +106,7 @@ export function bindGPUVertexBuffers(
   this.symbols.SDL_BindGPUVertexBuffers(
     options.renderPass,
     options.firstSlot,
-    getStructAddress(options.bindings),
+    options.bindings.$address,
     options.numBindings
   );
 }
@@ -127,7 +121,7 @@ export function bindGPUIndexBuffer(
 ) {
   this.symbols.SDL_BindGPUIndexBuffer(
     options.renderPass,
-    getStructAddress(options.binding),
+    options.binding.$address,
     options.indexElementSize
   );
 }
@@ -146,7 +140,7 @@ export function bindGPUVertexSamplers(
   this.symbols.SDL_BindGPUVertexSamplers(
     options.renderPass,
     options.firstSlot,
-    getStructAddress(options.textureSamplerBindings),
+    options.textureSamplerBindings.$address,
     options.numBindings
   );
 }
@@ -199,7 +193,7 @@ export function bindGPUFragmentSamplers(
   this.symbols.SDL_BindGPUFragmentSamplers(
     options.renderPass,
     options.firstSlot,
-    getStructAddress(options.textureSamplerBindings),
+    options.textureSamplerBindings.$address,
     options.numBindings
   );
 }

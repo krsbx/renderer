@@ -1,6 +1,5 @@
 import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
-import { getStructAddress } from '@utility/common';
 import type { PixelFormat } from '../../../ffi/pixels/constant';
 import { Color, Palette, PixelFormatDetails } from '../utility';
 
@@ -80,15 +79,15 @@ export function setPaletteColors(
   }
 ) {
   return this.symbols.SDL_SetPaletteColors(
-    getStructAddress(options.palette),
-    getStructAddress(options.colors),
+    options.palette.$address,
+    options.colors.$address,
     options.firstcolor,
     options.ncolors
   );
 }
 
 export function destroyPalette(this: SDL, palette: Palette) {
-  this.symbols.SDL_DestroyPalette(getStructAddress(palette));
+  this.symbols.SDL_DestroyPalette(palette.$address);
 }
 
 export function mapRGB(
@@ -102,8 +101,8 @@ export function mapRGB(
   }
 ) {
   return this.symbols.SDL_MapRGB(
-    getStructAddress(options.format),
-    options.palette ? getStructAddress(options.palette) : null,
+    options.format.$address,
+    options.palette?.$address ?? null,
     options.r,
     options.g,
     options.b
@@ -122,8 +121,8 @@ export function mapRGBA(
   }
 ) {
   return this.symbols.SDL_MapRGBA(
-    getStructAddress(options.format),
-    options.palette ? getStructAddress(options.palette) : null,
+    options.format.$address,
+    options.palette?.$address ?? null,
     options.r,
     options.g,
     options.b,
@@ -145,8 +144,8 @@ export function getRGB(
 
   this.symbols.SDL_GetRGB(
     options.pixel,
-    getStructAddress(options.format),
-    options.palette ? getStructAddress(options.palette) : null,
+    options.format.$address,
+    options.palette?.$address ?? null,
     rStruct.$address,
     gStruct.$address,
     bStruct.$address
@@ -174,8 +173,8 @@ export function getRGBA(
 
   this.symbols.SDL_GetRGBA(
     options.pixel,
-    getStructAddress(options.format),
-    options.palette ? getStructAddress(options.palette) : null,
+    options.format.$address,
+    options.palette?.$address ?? null,
     rStruct.$address,
     gStruct.$address,
     bStruct.$address,

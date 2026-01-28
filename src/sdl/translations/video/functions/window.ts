@@ -1,6 +1,6 @@
 import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
-import { getStructAddress, stringToCString } from '@utility/common';
+import { stringToCString } from '@utility/common';
 import type { JSCallback, Pointer } from 'bun:ffi';
 import type { PixelFormat } from '../../../ffi/pixels/constant';
 import type {
@@ -29,7 +29,7 @@ export function setWindowFullscreenMode(
 ) {
   return this.symbols.SDL_SetWindowFullscreenMode(
     options.window,
-    getStructAddress(options.mode)
+    options.mode.$address
   );
 }
 
@@ -659,7 +659,7 @@ export function setWindowShape(
 ) {
   return this.symbols.SDL_SetWindowShape(
     options.window,
-    getStructAddress(options.shape)
+    options.shape.$address
   );
 }
 

@@ -1,6 +1,6 @@
 import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
-import { getStructAddress, stringToCString } from '@utility/common';
+import { stringToCString } from '@utility/common';
 import { type JSCallback, type Pointer } from 'bun:ffi';
 import type { TrayEntryFlags } from '../../../ffi/tray/constant';
 import { Surface } from '../../surface/utility';
@@ -13,7 +13,7 @@ export function createTray(
   }
 ) {
   return this.symbols.SDL_CreateTray(
-    options.icon ? getStructAddress(options.icon) : null,
+    options.icon?.$address ?? null,
     stringToCString(options.tooltip).ptr
   );
 }
@@ -25,10 +25,7 @@ export function setTrayIcon(
     icon: Surface | null;
   }
 ) {
-  this.symbols.SDL_SetTrayIcon(
-    options.tray,
-    options.icon ? getStructAddress(options.icon) : null
-  );
+  this.symbols.SDL_SetTrayIcon(options.tray, options.icon?.$address ?? null);
 }
 
 export function setTrayTooltip(

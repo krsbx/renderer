@@ -1,5 +1,4 @@
 import type { SDL } from '@/sdl';
-import { getStructAddress } from '@utility/common';
 import type { Pointer } from 'bun:ffi';
 import {
   GPUBufferCreateInfo,
@@ -22,7 +21,7 @@ export function createGPUComputePipeline(
 ) {
   return this.symbols.SDL_CreateGPUComputePipeline(
     options.device,
-    getStructAddress(options.createInfo)
+    options.createInfo.$address
   );
 }
 
@@ -35,7 +34,7 @@ export function createGPUGraphicsPipeline(
 ) {
   return this.symbols.SDL_CreateGPUGraphicsPipeline(
     options.device,
-    getStructAddress(options.createInfo)
+    options.createInfo.$address
   );
 }
 
@@ -48,7 +47,7 @@ export function createGPUSampler(
 ) {
   return this.symbols.SDL_CreateGPUSampler(
     options.device,
-    getStructAddress(options.createInfo)
+    options.createInfo.$address
   );
 }
 
@@ -61,7 +60,7 @@ export function createGPUShader(
 ) {
   return this.symbols.SDL_CreateGPUShader(
     options.device,
-    getStructAddress(options.createInfo)
+    options.createInfo.$address
   );
 }
 
@@ -76,7 +75,7 @@ export function createGPUTexture(
 ) {
   return this.symbols.SDL_CreateGPUTexture(
     options.device,
-    getStructAddress(options.createInfo)
+    options.createInfo.$address
   );
 }
 
@@ -89,7 +88,7 @@ export function createGPUBuffer(
 ) {
   return this.symbols.SDL_CreateGPUBuffer(
     options.device,
-    getStructAddress(options.createInfo)
+    options.createInfo.$address
   );
 }
 
@@ -102,7 +101,7 @@ export function createGPUTransferBuffer(
 ) {
   return this.symbols.SDL_CreateGPUTransferBuffer(
     options.device,
-    getStructAddress(options.createInfo)
+    options.createInfo.$address
   );
 }
 

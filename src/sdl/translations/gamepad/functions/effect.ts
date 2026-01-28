@@ -1,6 +1,4 @@
 import type { SDL } from '@/sdl';
-import { CStruct } from '@cstruct';
-import { getStructMemoryAddress } from '@utility/common';
 import { type Pointer } from 'bun:ffi';
 
 export function rumbleGamepad(
@@ -58,13 +56,13 @@ export function sendGamepadEffect(
   this: SDL,
   options: {
     gamepad: Pointer;
-    data: CStruct | Uint8Array;
+    data: Uint8Array;
     size: number;
   }
 ) {
   return this.symbols.SDL_SendGamepadEffect(
     options.gamepad,
-    getStructMemoryAddress(options.data),
+    options.data,
     options.size
   );
 }

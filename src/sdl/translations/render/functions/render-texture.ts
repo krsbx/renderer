@@ -1,5 +1,4 @@
 import type { SDL } from '@/sdl';
-import { getStructAddress } from '@utility/common';
 import type { Pointer } from 'bun:ffi';
 import type { FlipMode } from '../../../ffi/surface/constant';
 import { FPoint, FRect } from '../../rect/utility';
@@ -19,10 +18,10 @@ export function renderTextureRotated(
   return this.symbols.SDL_RenderTextureRotated(
     options.renderer,
     options.texture,
-    options.srcRect ? getStructAddress(options.srcRect) : null,
-    options.dstRect ? getStructAddress(options.dstRect) : null,
+    options.srcRect?.$address ?? null,
+    options.dstRect?.$address ?? null,
     options.angle,
-    options.center ? getStructAddress(options.center) : null,
+    options.center?.$address ?? null,
     options.flip
   );
 }
@@ -41,10 +40,10 @@ export function renderTextureAffine(
   return this.symbols.SDL_RenderTextureAffine(
     options.renderer,
     options.texture,
-    options.srcRect ? getStructAddress(options.srcRect) : null,
-    options.origin ? getStructAddress(options.origin) : null,
-    options.right ? getStructAddress(options.right) : null,
-    options.down ? getStructAddress(options.down) : null
+    options.srcRect?.$address ?? null,
+    options.origin?.$address ?? null,
+    options.right?.$address ?? null,
+    options.down?.$address ?? null
   );
 }
 
@@ -61,9 +60,9 @@ export function renderTextureTiled(
   return this.symbols.SDL_RenderTextureTiled(
     options.renderer,
     options.texture,
-    options.srcRect ? getStructAddress(options.srcRect) : null,
+    options.srcRect?.$address ?? null,
     options.scale,
-    options.dstRect ? getStructAddress(options.dstRect) : null
+    options.dstRect?.$address ?? null
   );
 }
 
@@ -84,13 +83,13 @@ export function renderTexture9Grid(
   return this.symbols.SDL_RenderTexture9Grid(
     options.renderer,
     options.texture,
-    options.srcRect ? getStructAddress(options.srcRect) : null,
+    options.srcRect?.$address ?? null,
     options.leftWidth,
     options.rightWidth,
     options.topHeight,
     options.bottomHeight,
     options.scale,
-    options.dstRect ? getStructAddress(options.dstRect) : null
+    options.dstRect?.$address ?? null
   );
 }
 
@@ -112,13 +111,13 @@ export function renderTexture9GridTiled(
   return this.symbols.SDL_RenderTexture9GridTiled(
     options.renderer,
     options.texture,
-    options.srcRect ? getStructAddress(options.srcRect) : null,
+    options.srcRect?.$address ?? null,
     options.leftWidth,
     options.rightWidth,
     options.topHeight,
     options.bottomHeight,
     options.scale,
-    options.dstRect ? getStructAddress(options.dstRect) : null,
+    options.dstRect?.$address ?? null,
     options.tileScale
   );
 }

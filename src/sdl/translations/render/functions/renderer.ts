@@ -1,6 +1,6 @@
 import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
-import { getStructAddress, stringToCString } from '@utility/common';
+import { stringToCString } from '@utility/common';
 import type { Pointer } from 'bun:ffi';
 import type { WindowFlags } from '../../../ffi/video/constant';
 import { Surface } from '../../surface/utility';
@@ -66,7 +66,7 @@ export function getGPURendererDevice(this: SDL, renderer: Pointer) {
 }
 
 export function createSoftwareRenderer(this: SDL, surface: Surface) {
-  return this.symbols.SDL_CreateSoftwareRenderer(getStructAddress(surface));
+  return this.symbols.SDL_CreateSoftwareRenderer(surface.$address);
 }
 
 export function getRenderer(this: SDL, window: Pointer) {

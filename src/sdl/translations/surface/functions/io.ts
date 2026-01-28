@@ -1,5 +1,5 @@
 import type { SDL } from '@/sdl';
-import { getStructAddress, stringToCString } from '@utility/common';
+import { stringToCString } from '@utility/common';
 import type { Pointer } from 'bun:ffi';
 import { Surface } from '../utility';
 
@@ -62,7 +62,7 @@ export function saveBMPIO(
   }
 ) {
   return this.symbols.SDL_SaveBMP_IO(
-    getStructAddress(options.surface),
+    options.surface.$address,
     options.dst,
     options.closeio
   );
@@ -76,7 +76,7 @@ export function saveBMP(
   }
 ) {
   return this.symbols.SDL_SaveBMP(
-    getStructAddress(options.surface),
+    options.surface.$address,
     stringToCString(options.file).ptr
   );
 }
@@ -116,7 +116,7 @@ export function savePNGIO(
   }
 ) {
   return this.symbols.SDL_SavePNG_IO(
-    getStructAddress(options.surface),
+    options.surface.$address,
     options.dst,
     options.closeio
   );
@@ -130,7 +130,7 @@ export function savePNG(
   }
 ) {
   return this.symbols.SDL_SavePNG(
-    getStructAddress(options.surface),
+    options.surface.$address,
     stringToCString(options.file).ptr
   );
 }

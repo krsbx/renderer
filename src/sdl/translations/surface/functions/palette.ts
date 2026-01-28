@@ -1,14 +1,11 @@
 import type { SDL } from '@/sdl';
-import { getStructAddress } from '@utility/common';
 import { Palette } from '../../pixels/utility';
 import { Surface } from '../utility';
 
 // Palette
 
 export function createSurfacePalette(this: SDL, surface: Surface) {
-  const palettePtr = this.symbols.SDL_CreateSurfacePalette(
-    getStructAddress(surface)
-  );
+  const palettePtr = this.symbols.SDL_CreateSurfacePalette(surface.$address);
 
   if (!palettePtr) return null;
 
@@ -23,15 +20,13 @@ export function setSurfacePalette(
   }
 ) {
   return this.symbols.SDL_SetSurfacePalette(
-    getStructAddress(options.surface),
-    getStructAddress(options.palette)
+    options.surface.$address,
+    options.palette.$address
   );
 }
 
 export function getSurfacePalette(this: SDL, surface: Surface) {
-  const palettePtr = this.symbols.SDL_GetSurfacePalette(
-    getStructAddress(surface)
-  );
+  const palettePtr = this.symbols.SDL_GetSurfacePalette(surface.$address);
 
   if (!palettePtr) return null;
 

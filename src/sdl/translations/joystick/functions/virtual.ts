@@ -1,12 +1,10 @@
 import type { SDL } from '@/sdl';
-import { CStruct } from '@cstruct';
-import { getStructAddress, getStructMemoryAddress } from '@utility/common';
 import { type Pointer } from 'bun:ffi';
 import type { SensorType } from '../../../ffi/sensor/constant';
 import { VirtualJoystickDesc } from '../utility';
 
 export function attachVirtualJoystick(this: SDL, desc: VirtualJoystickDesc) {
-  return this.symbols.SDL_AttachVirtualJoystick(getStructAddress(desc));
+  return this.symbols.SDL_AttachVirtualJoystick(desc.$address);
 }
 
 export function detachVirtualJoystick(this: SDL, instanceId: number) {
@@ -108,15 +106,14 @@ export function sendJoystickVirtualSensorData(
     joystick: Pointer;
     type: SensorType;
     sensorTimestamp: bigint;
-    data: CStruct | Uint8Array;
-    numValues: number;
+    data: Float32Array;
   }
 ) {
   return this.symbols.SDL_SendJoystickVirtualSensorData(
     options.joystick,
     options.type,
     options.sensorTimestamp,
-    getStructMemoryAddress(options.data),
-    options.numValues
+    options.data,
+    options.data.length
   );
 }

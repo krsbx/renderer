@@ -1,5 +1,4 @@
 import type { SDL } from '@/sdl';
-import { getStructAddress } from '@utility/common';
 import type { Colorspace, PixelFormat } from '../../../ffi/pixels/constant';
 import type { FlipMode, ScaleMode } from '../../../ffi/surface/constant';
 import { Palette } from '../../pixels/utility';
@@ -14,10 +13,7 @@ export function flipSurface(
     flip: FlipMode;
   }
 ) {
-  return this.symbols.SDL_FlipSurface(
-    getStructAddress(options.surface),
-    options.flip
-  );
+  return this.symbols.SDL_FlipSurface(options.surface.$address, options.flip);
 }
 
 // Rotate
@@ -30,7 +26,7 @@ export function rotateSurface(
   }
 ) {
   const surface = this.symbols.SDL_RotateSurface(
-    getStructAddress(options.surface),
+    options.surface.$address,
     options.angle
   );
 
@@ -42,9 +38,7 @@ export function rotateSurface(
 // Duplicate
 
 export function duplicateSurface(this: SDL, surface: Surface) {
-  const newSurfacePtr = this.symbols.SDL_DuplicateSurface(
-    getStructAddress(surface)
-  );
+  const newSurfacePtr = this.symbols.SDL_DuplicateSurface(surface.$address);
 
   if (!newSurfacePtr) return null;
 
@@ -63,7 +57,7 @@ export function scaleSurface(
   }
 ) {
   const surface = this.symbols.SDL_ScaleSurface(
-    getStructAddress(options.surface),
+    options.surface.$address,
     options.width,
     options.height,
     options.scaleMode
@@ -84,7 +78,7 @@ export function convertSurface(
   }
 ) {
   const surface = this.symbols.SDL_ConvertSurface(
-    getStructAddress(options.surface),
+    options.surface.$address,
     options.format
   );
 
@@ -104,9 +98,9 @@ export function convertSurfaceAndColorspace(
   }
 ) {
   const surface = this.symbols.SDL_ConvertSurfaceAndColorspace(
-    getStructAddress(options.surface),
+    options.surface.$address,
     options.format,
-    options.palette ? getStructAddress(options.palette) : null,
+    options.palette?.$address ?? null,
     options.colorspace,
     options.props ?? 0
   );

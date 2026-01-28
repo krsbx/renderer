@@ -1,5 +1,4 @@
 import type { SDL } from '@/sdl';
-import { getStructAddress } from '@utility/common';
 import type { Pointer } from 'bun:ffi';
 import {
   GPUStorageBufferReadWriteBinding,
@@ -21,13 +20,9 @@ export function beginGPUComputePass(
 ) {
   return this.symbols.SDL_BeginGPUComputePass(
     options.commandBuffer,
-    options.storageTextureBindings
-      ? getStructAddress(options.storageTextureBindings)
-      : null,
+    options.storageTextureBindings?.$address ?? null,
     options.numStorageTextureBindings,
-    options.storageBufferBindings
-      ? getStructAddress(options.storageBufferBindings)
-      : null,
+    options.storageBufferBindings?.$address ?? null,
     options.numStorageBufferBindings
   );
 }
@@ -57,7 +52,7 @@ export function bindGPUComputeSamplers(
   this.symbols.SDL_BindGPUComputeSamplers(
     options.computePass,
     options.firstSlot,
-    getStructAddress(options.textureSamplerBindings),
+    options.textureSamplerBindings.$address,
     options.numBindings
   );
 }

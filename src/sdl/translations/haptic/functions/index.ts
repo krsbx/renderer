@@ -1,6 +1,6 @@
 import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
-import { getStructAddress, getStructMemoryAddress } from '@utility/common';
+import { getStructMemoryAddress } from '@utility/common';
 import { type Pointer } from 'bun:ffi';
 import { HapticEffect } from '../utility';
 
@@ -84,7 +84,7 @@ export function hapticEffectSupported(
 ) {
   return this.symbols.SDL_HapticEffectSupported(
     options.haptic,
-    getStructAddress(options.effect)
+    options.effect.$address
   );
 }
 
@@ -97,7 +97,7 @@ export function createHapticEffect(
 ) {
   return this.symbols.SDL_CreateHapticEffect(
     options.haptic,
-    getStructAddress(options.effect)
+    options.effect.$address
   );
 }
 

@@ -1,6 +1,6 @@
 import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
-import { getStructAddress, stringToCString } from '@utility/common';
+import { stringToCString } from '@utility/common';
 import type { Pointer } from 'bun:ffi';
 import type { Keycode, Keymod } from '../../../ffi/keycode/constant';
 import type { Scancode } from '../../../ffi/scancode/constant';
@@ -158,7 +158,7 @@ export function setTextInputArea(
 ) {
   return this.symbols.SDL_SetTextInputArea(
     options.window,
-    getStructAddress(options.rect),
+    options.rect.$address,
     options.cursor
   );
 }

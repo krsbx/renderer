@@ -1,6 +1,5 @@
 import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
-import { getStructAddress } from '@utility/common';
 import { FPoint, FRect } from '../utility';
 
 export function hasRectIntersectionFloat(
@@ -11,8 +10,8 @@ export function hasRectIntersectionFloat(
   }
 ) {
   return this.symbols.SDL_HasRectIntersectionFloat(
-    getStructAddress(options.a),
-    getStructAddress(options.b)
+    options.a.$address,
+    options.b.$address
   );
 }
 
@@ -26,8 +25,8 @@ export function getRectIntersectionFloat(
   const result = FRect.create();
 
   const success = this.symbols.SDL_GetRectIntersectionFloat(
-    getStructAddress(options.a),
-    getStructAddress(options.b),
+    options.a.$address,
+    options.b.$address,
     result.$address
   );
 
@@ -46,8 +45,8 @@ export function getRectUnionFloat(
   const result = FRect.create();
 
   const success = this.symbols.SDL_GetRectUnionFloat(
-    getStructAddress(options.a),
-    getStructAddress(options.b),
+    options.a.$address,
+    options.b.$address,
     result.$address
   );
 
@@ -67,9 +66,9 @@ export function getRectEnclosingPointsFloat(
   const result = FRect.create();
 
   const success = this.symbols.SDL_GetRectEnclosingPointsFloat(
-    getStructAddress(options.points),
+    options.points.$address,
     options.count,
-    options.clip ? getStructAddress(options.clip) : null,
+    options.clip?.$address ?? null,
     result.$address
   );
 
@@ -105,7 +104,7 @@ export function getRectAndLineIntersectionFloat(
   }).setValue(0, options.y2, 'f32');
 
   const success = this.symbols.SDL_GetRectAndLineIntersectionFloat(
-    getStructAddress(options.rect),
+    options.rect.$address,
     x1Struct.$address,
     y1Struct.$address,
     x2Struct.$address,

@@ -1,6 +1,6 @@
 import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
-import { getStructAddress, stringToCString } from '@utility/common';
+import { stringToCString } from '@utility/common';
 import { CString, ptr } from 'bun:ffi';
 import { GUID } from '../utility';
 
@@ -11,7 +11,7 @@ export function guidToString(this: SDL, guid: GUID) {
   const buffer = new CStruct({ length: GUID_STRING_SIZE });
 
   this.symbols.SDL_GUIDToString(
-    getStructAddress(guid),
+    guid.$address,
     buffer.$address,
     GUID_STRING_SIZE
   );

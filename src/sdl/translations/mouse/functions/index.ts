@@ -1,6 +1,6 @@
 import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
-import { getStructAddress, getStructMemoryAddress } from '@utility/common';
+import { getStructMemoryAddress } from '@utility/common';
 import { type JSCallback, type Pointer } from 'bun:ffi';
 import type {
   MouseButtonFlags,
@@ -169,7 +169,7 @@ export function createColorCursor(
   }
 ) {
   return this.symbols.SDL_CreateColorCursor(
-    getStructAddress(options.surface),
+    options.surface.$address,
     options.hotX,
     options.hotY
   );
@@ -185,7 +185,7 @@ export function createAnimatedCursor(
   }
 ) {
   return this.symbols.SDL_CreateAnimatedCursor(
-    getStructAddress(options.frames),
+    options.frames.$address,
     options.frameCount,
     options.hotX,
     options.hotY

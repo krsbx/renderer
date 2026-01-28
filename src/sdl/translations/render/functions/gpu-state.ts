@@ -1,6 +1,4 @@
 import type { SDL } from '@/sdl';
-import { CStruct } from '@cstruct';
-import { getStructAddress, getStructMemoryAddress } from '@utility/common';
 import { type Pointer } from 'bun:ffi';
 import { GPURenderStateCreateInfo } from '../utility';
 
@@ -13,7 +11,7 @@ export function createGPURenderState(
 ) {
   return this.symbols.SDL_CreateGPURenderState(
     options.renderer,
-    getStructAddress(options.createInfo)
+    options.createInfo.$address
   );
 }
 
@@ -22,14 +20,14 @@ export function setGPURenderStateFragmentUniforms(
   options: {
     state: Pointer;
     slotIndex: number;
-    data: CStruct | Uint8Array;
+    data: Uint8Array;
     length: number;
   }
 ) {
   return this.symbols.SDL_SetGPURenderStateFragmentUniforms(
     options.state,
     options.slotIndex,
-    getStructMemoryAddress(options.data),
+    options.data,
     options.length
   );
 }

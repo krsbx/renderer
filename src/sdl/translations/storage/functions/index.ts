@@ -1,6 +1,6 @@
 import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
-import { getStructAddress, stringToCString } from '@utility/common';
+import { stringToCString } from '@utility/common';
 import { CString, ptr, type JSCallback, type Pointer } from 'bun:ffi';
 import type { GlobFlags } from '../../../ffi/file-system/constant';
 import { PathInfo } from '../../file-system/utility';
@@ -46,7 +46,7 @@ export function openStorage(
   }
 ) {
   return this.symbols.SDL_OpenStorage(
-    getStructAddress(options.iface),
+    options.iface.$address,
     options.userdata ?? null
   );
 }

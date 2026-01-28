@@ -1,5 +1,4 @@
 import type { SDL } from '@/sdl';
-import { getStructAddress } from '@utility/common';
 import type { Pointer } from 'bun:ffi';
 import { InitState } from '../utility';
 
@@ -127,11 +126,11 @@ export function waitConditionTimeout(
 }
 
 export function shouldInit(this: SDL, state: InitState) {
-  return this.symbols.SDL_ShouldInit(getStructAddress(state));
+  return this.symbols.SDL_ShouldInit(state.$address);
 }
 
 export function shouldQuit(this: SDL, state: InitState) {
-  return this.symbols.SDL_ShouldQuit(getStructAddress(state));
+  return this.symbols.SDL_ShouldQuit(state.$address);
 }
 
 export function setInitialized(
@@ -141,8 +140,5 @@ export function setInitialized(
     initialized: boolean;
   }
 ) {
-  this.symbols.SDL_SetInitialized(
-    getStructAddress(options.state),
-    options.initialized
-  );
+  this.symbols.SDL_SetInitialized(options.state.$address, options.initialized);
 }

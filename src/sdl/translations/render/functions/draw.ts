@@ -1,6 +1,5 @@
 import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
-import { getStructAddress } from '@utility/common';
 import type { Pointer } from 'bun:ffi';
 import { FPoint, FRect } from '../../rect/utility';
 
@@ -87,7 +86,7 @@ export function renderRect(
 ) {
   return this.symbols.SDL_RenderRect(
     options.renderer,
-    options.rect ? getStructAddress(options.rect) : null
+    options.rect?.$address ?? null
   );
 }
 
@@ -118,7 +117,7 @@ export function renderFillRect(
 ) {
   return this.symbols.SDL_RenderFillRect(
     options.renderer,
-    options.rect ? getStructAddress(options.rect) : null
+    options.rect?.$address ?? null
   );
 }
 
@@ -152,7 +151,7 @@ export function renderTexture(
   return this.symbols.SDL_RenderTexture(
     options.renderer,
     options.texture,
-    options.srcRect ? getStructAddress(options.srcRect) : null,
-    options.dstRect ? getStructAddress(options.dstRect) : null
+    options.srcRect?.$address ?? null,
+    options.dstRect?.$address ?? null
   );
 }

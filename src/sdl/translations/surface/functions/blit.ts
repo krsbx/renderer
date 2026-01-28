@@ -1,5 +1,4 @@
 import type { SDL } from '@/sdl';
-import { getStructAddress } from '@utility/common';
 import type { ScaleMode } from '../../../ffi/surface/constant';
 import { Rect } from '../../rect/utility';
 import { Surface } from '../utility';
@@ -14,10 +13,10 @@ export function blitSurface(
   }
 ) {
   return this.symbols.SDL_BlitSurface(
-    getStructAddress(options.src),
-    options.srcrect ? getStructAddress(options.srcrect) : null,
-    getStructAddress(options.dst),
-    options.dstrect ? getStructAddress(options.dstrect) : null
+    options.src.$address,
+    options.srcrect?.$address ?? null,
+    options.dst.$address,
+    options.dstrect?.$address ?? null
   );
 }
 
@@ -31,10 +30,10 @@ export function blitSurfaceUnchecked(
   }
 ) {
   return this.symbols.SDL_BlitSurfaceUnchecked(
-    getStructAddress(options.src),
-    options.srcrect ? getStructAddress(options.srcrect) : null,
-    getStructAddress(options.dst),
-    options.dstrect ? getStructAddress(options.dstrect) : null
+    options.src.$address,
+    options.srcrect?.$address ?? null,
+    options.dst.$address,
+    options.dstrect?.$address ?? null
   );
 }
 
@@ -49,10 +48,10 @@ export function blitSurfaceScaled(
   }
 ) {
   return this.symbols.SDL_BlitSurfaceScaled(
-    getStructAddress(options.src),
-    options.srcrect ? getStructAddress(options.srcrect) : null,
-    getStructAddress(options.dst),
-    options.dstrect ? getStructAddress(options.dstrect) : null,
+    options.src.$address,
+    options.srcrect?.$address ?? null,
+    options.dst.$address,
+    options.dstrect?.$address ?? null,
     options.scaleMode
   );
 }
@@ -68,10 +67,10 @@ export function blitSurfaceUncheckedScaled(
   }
 ) {
   return this.symbols.SDL_BlitSurfaceUncheckedScaled(
-    getStructAddress(options.src),
-    options.srcrect ? getStructAddress(options.srcrect) : null,
-    getStructAddress(options.dst),
-    options.dstrect ? getStructAddress(options.dstrect) : null,
+    options.src.$address,
+    options.srcrect?.$address ?? null,
+    options.dst.$address,
+    options.dstrect?.$address ?? null,
     options.scaleMode
   );
 }
@@ -87,10 +86,10 @@ export function stretchSurface(
   }
 ) {
   return this.symbols.SDL_StretchSurface(
-    getStructAddress(options.src),
-    options.srcrect ? getStructAddress(options.srcrect) : null,
-    getStructAddress(options.dst),
-    options.dstrect ? getStructAddress(options.dstrect) : null,
+    options.src.$address,
+    options.srcrect?.$address ?? null,
+    options.dst.$address,
+    options.dstrect?.$address ?? null,
     options.scaleMode
   );
 }
@@ -105,10 +104,10 @@ export function blitSurfaceTiled(
   }
 ) {
   return this.symbols.SDL_BlitSurfaceTiled(
-    getStructAddress(options.src),
-    options.srcrect ? getStructAddress(options.srcrect) : null,
-    getStructAddress(options.dst),
-    options.dstrect ? getStructAddress(options.dstrect) : null
+    options.src.$address,
+    options.srcrect?.$address ?? null,
+    options.dst.$address,
+    options.dstrect?.$address ?? null
   );
 }
 
@@ -124,12 +123,12 @@ export function blitSurfaceTiledWithScale(
   }
 ) {
   return this.symbols.SDL_BlitSurfaceTiledWithScale(
-    getStructAddress(options.src),
-    options.srcrect ? getStructAddress(options.srcrect) : null,
+    options.src.$address,
+    options.srcrect?.$address ?? null,
     options.scale,
     options.scaleMode,
-    getStructAddress(options.dst),
-    options.dstrect ? getStructAddress(options.dstrect) : null
+    options.dst.$address,
+    options.dstrect?.$address ?? null
   );
 }
 
@@ -149,15 +148,15 @@ export function blitSurface9Grid(
   }
 ) {
   return this.symbols.SDL_BlitSurface9Grid(
-    getStructAddress(options.src),
-    options.srcrect ? getStructAddress(options.srcrect) : null,
+    options.src.$address,
+    options.srcrect?.$address ?? null,
     options.leftWidth,
     options.rightWidth,
     options.topHeight,
     options.bottomHeight,
     options.scale,
     options.scaleMode,
-    getStructAddress(options.dst),
-    options.dstrect ? getStructAddress(options.dstrect) : null
+    options.dst.$address,
+    options.dstrect?.$address ?? null
   );
 }

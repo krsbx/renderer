@@ -1,5 +1,5 @@
 import type { SDL } from '@/sdl';
-import { getStructAddress, stringToCString } from '@utility/common';
+import { stringToCString } from '@utility/common';
 import { type Pointer } from 'bun:ffi';
 import { AsyncIOOutcome } from '../utility';
 
@@ -113,7 +113,7 @@ export function waitAsyncIOResult(
 ) {
   return this.symbols.SDL_WaitAsyncIOResult(
     options.queue,
-    getStructAddress(options.outcome),
+    options.outcome.$address,
     options.timeoutMS
   );
 }

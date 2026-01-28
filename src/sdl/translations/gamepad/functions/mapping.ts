@@ -1,6 +1,6 @@
 import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
-import { getStructAddress, stringToCString } from '@utility/common';
+import { stringToCString } from '@utility/common';
 import { CString, type Pointer } from 'bun:ffi';
 import { GUID } from '../../guid/utility';
 
@@ -46,7 +46,7 @@ export function getGamepadMappings(this: SDL) {
 }
 
 export function getGamepadMappingForGUID(this: SDL, guid: GUID) {
-  const ptr = this.symbols.SDL_GetGamepadMappingForGUID(getStructAddress(guid));
+  const ptr = this.symbols.SDL_GetGamepadMappingForGUID(guid.$address);
 
   if (!ptr) return null;
 

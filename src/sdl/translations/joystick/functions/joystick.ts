@@ -1,6 +1,5 @@
 import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
-import { getStructAddress } from '@utility/common';
 import type { Pointer } from 'bun:ffi';
 import type {
   JoystickConnectionState,
@@ -164,7 +163,7 @@ export function getJoystickGUIDInfo(this: SDL, guid: GUID) {
   const crc16Struct = new CStruct({ length: CStruct.BYTE_SIZE.u16 });
 
   this.symbols.SDL_GetJoystickGUIDInfo(
-    getStructAddress(guid),
+    guid.$address,
     vendorStruct.$address,
     productStruct.$address,
     versionStruct.$address,

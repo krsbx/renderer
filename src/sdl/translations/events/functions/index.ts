@@ -1,6 +1,5 @@
 import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
-import { getStructAddress } from '@utility/common';
 import { CString, ptr, type JSCallback, type Pointer } from 'bun:ffi';
 import { type EventAction, type EventType } from '../../../ffi/events/constant';
 import { Event } from '../utility';
@@ -20,7 +19,7 @@ export function peepEvents(
   }
 ) {
   return this.symbols.SDL_PeepEvents(
-    getStructAddress(options.events),
+    options.events.$address,
     options.numevents,
     options.action,
     options.minType,
@@ -93,7 +92,7 @@ export function waitEventTimeout(
 }
 
 export function pushEvent(this: SDL, event: Event) {
-  return this.symbols.SDL_PushEvent(getStructAddress(event));
+  return this.symbols.SDL_PushEvent(event.$address);
 }
 
 export function setEventFilter(
@@ -178,7 +177,7 @@ export function registerEvents(this: SDL, numevents: number) {
 }
 
 export function getWindowFromEvent(this: SDL, event: Event) {
-  return this.symbols.SDL_GetWindowFromEvent(getStructAddress(event));
+  return this.symbols.SDL_GetWindowFromEvent(event.$address);
 }
 
 export function getEventDescription(this: SDL, event: Event) {
@@ -188,7 +187,7 @@ export function getEventDescription(this: SDL, event: Event) {
   const buffer = new CStruct({ length: buflen });
 
   const length = this.symbols.SDL_GetEventDescription(
-    getStructAddress(event),
+    event.$address,
     buffer.$address,
     buflen
   );

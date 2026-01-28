@@ -1,5 +1,5 @@
 import type { SDL } from '@/sdl';
-import { getStructAddress, getStructMemoryAddress } from '@utility/common';
+import { getStructMemoryAddress } from '@utility/common';
 import { type Pointer } from 'bun:ffi';
 import type { Colorspace, PixelFormat } from '../../../ffi/pixels/constant';
 import { Surface } from '../utility';
@@ -49,13 +49,13 @@ export function createSurfaceFrom(
 }
 
 export function destroySurface(this: SDL, surface: Surface) {
-  this.symbols.SDL_DestroySurface(getStructAddress(surface));
+  this.symbols.SDL_DestroySurface(surface.$address);
 }
 
 // Properties
 
 export function getSurfaceProperties(this: SDL, surface: Surface) {
-  return this.symbols.SDL_GetSurfaceProperties(getStructAddress(surface));
+  return this.symbols.SDL_GetSurfaceProperties(surface.$address);
 }
 
 // Colorspace
@@ -68,23 +68,21 @@ export function setSurfaceColorspace(
   }
 ) {
   return this.symbols.SDL_SetSurfaceColorspace(
-    getStructAddress(options.surface),
+    options.surface.$address,
     options.colorspace
   );
 }
 
 export function getSurfaceColorspace(this: SDL, surface: Surface) {
-  return this.symbols.SDL_GetSurfaceColorspace(
-    getStructAddress(surface)
-  ) as Colorspace;
+  return this.symbols.SDL_GetSurfaceColorspace(surface.$address) as Colorspace;
 }
 
 // Lock/Unlock
 
 export function lockSurface(this: SDL, surface: Surface) {
-  return this.symbols.SDL_LockSurface(getStructAddress(surface));
+  return this.symbols.SDL_LockSurface(surface.$address);
 }
 
 export function unlockSurface(this: SDL, surface: Surface) {
-  this.symbols.SDL_UnlockSurface(getStructAddress(surface));
+  this.symbols.SDL_UnlockSurface(surface.$address);
 }

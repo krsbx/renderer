@@ -1,6 +1,5 @@
 import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
-import { getStructAddress, getStructMemoryAddress } from '@utility/common';
 import { type Pointer } from 'bun:ffi';
 import type { BlendMode } from '../../../ffi/blend-mode/constant';
 import type { PixelFormat } from '../../../ffi/pixels/constant';
@@ -38,7 +37,7 @@ export function createTextureFromSurface(
 ) {
   return this.symbols.SDL_CreateTextureFromSurface(
     options.renderer,
-    getStructAddress(options.surface)
+    options.surface.$address
   );
 }
 
@@ -90,7 +89,7 @@ export function setTexturePalette(
 ) {
   return this.symbols.SDL_SetTexturePalette(
     options.texture,
-    getStructAddress(options.palette)
+    options.palette.$address
   );
 }
 
@@ -284,14 +283,14 @@ export function updateTexture(
   options: {
     texture: Pointer;
     rect?: Rect | null;
-    pixels: CStruct | Uint8Array;
+    pixels: Uint8Array;
     pitch: number;
   }
 ) {
   return this.symbols.SDL_UpdateTexture(
     options.texture,
-    options.rect ? getStructAddress(options.rect) : null,
-    getStructMemoryAddress(options.pixels),
+    options.rect?.$address ?? null,
+    options.pixels,
     options.pitch
   );
 }
@@ -301,22 +300,22 @@ export function updateYUVTexture(
   options: {
     texture: Pointer;
     rect?: Rect | null;
-    yPlane: CStruct | Uint8Array;
+    yPlane: Uint8Array;
     yPitch: number;
-    uPlane: CStruct | Uint8Array;
+    uPlane: Uint8Array;
     uPitch: number;
-    vPlane: CStruct | Uint8Array;
+    vPlane: Uint8Array;
     vPitch: number;
   }
 ) {
   return this.symbols.SDL_UpdateYUVTexture(
     options.texture,
-    options.rect ? getStructAddress(options.rect) : null,
-    getStructMemoryAddress(options.yPlane),
+    options.rect?.$address ?? null,
+    options.yPlane,
     options.yPitch,
-    getStructMemoryAddress(options.uPlane),
+    options.uPlane,
     options.uPitch,
-    getStructMemoryAddress(options.vPlane),
+    options.vPlane,
     options.vPitch
   );
 }
@@ -326,18 +325,18 @@ export function updateNVTexture(
   options: {
     texture: Pointer;
     rect?: Rect | null;
-    yPlane: CStruct | Uint8Array;
+    yPlane: Uint8Array;
     yPitch: number;
-    uvPlane: CStruct | Uint8Array;
+    uvPlane: Uint8Array;
     uvPitch: number;
   }
 ) {
   return this.symbols.SDL_UpdateNVTexture(
     options.texture,
-    options.rect ? getStructAddress(options.rect) : null,
-    getStructMemoryAddress(options.yPlane),
+    options.rect?.$address ?? null,
+    options.yPlane,
     options.yPitch,
-    getStructMemoryAddress(options.uvPlane),
+    options.uvPlane,
     options.uvPitch
   );
 }
@@ -354,7 +353,7 @@ export function lockTexture(
 
   const success = this.symbols.SDL_LockTexture(
     options.texture,
-    options.rect ? getStructAddress(options.rect) : null,
+    options.rect?.$address ?? null,
     pixelsStruct.$address,
     pitchStruct.$address
   );
@@ -378,7 +377,7 @@ export function lockTextureToSurface(
 
   const success = this.symbols.SDL_LockTextureToSurface(
     options.texture,
-    options.rect ? getStructAddress(options.rect) : null,
+    options.rect?.$address ?? null,
     surfaceStruct.$address
   );
 

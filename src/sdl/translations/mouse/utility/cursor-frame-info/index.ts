@@ -1,32 +1,14 @@
-import type { StructInit } from '@/types/shared';
-import { toArrayBuffer, type Pointer } from 'bun:ffi';
+import { BaseStruct, type BaseStructOptions } from '@/utility/base-struct';
 import { Surface } from '../../../surface/utility';
 import { ByteOffset } from './constant';
 
-export class CursorFrameInfo {
-  public static readonly BYTE_SIZE = 16;
-
-  public $address: Pointer | Uint8Array;
-  public $memory: Uint8Array;
-  public $view: DataView;
+export class CursorFrameInfo extends BaseStruct {
+  public static override readonly BYTE_SIZE = 16;
 
   public readonly surface: Surface;
 
-  public constructor(data: Pointer | Uint8Array) {
-    if (data instanceof Uint8Array) {
-      this.$memory = data;
-      this.$address = data;
-    } else {
-      const buffer = toArrayBuffer(data, 0, CursorFrameInfo.BYTE_SIZE);
-      this.$memory = new Uint8Array(buffer);
-      this.$address = data;
-    }
-
-    this.$view = new DataView(
-      this.$memory.buffer,
-      this.$memory.byteOffset,
-      this.$memory.byteLength
-    );
+  public constructor(data: BaseStructOptions) {
+    super(data);
 
     this.surface = new Surface(
       this.$memory.subarray(
@@ -34,20 +16,6 @@ export class CursorFrameInfo {
         ByteOffset.surface + Surface.BYTE_SIZE
       )
     );
-  }
-
-  public static allocMemory() {
-    const buffer = new Uint8Array(this.BYTE_SIZE);
-
-    return buffer;
-  }
-
-  public static create(data?: StructInit<InstanceType<typeof this>>) {
-    const instance = new this(this.allocMemory());
-
-    if (data) Object.assign(instance, data);
-
-    return instance;
   }
 
   public get duration() {

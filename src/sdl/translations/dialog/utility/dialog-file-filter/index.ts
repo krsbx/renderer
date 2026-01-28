@@ -1,51 +1,15 @@
-import type { StructInit } from '@/types/shared';
+import { BaseStruct } from '@/utility/base-struct';
 import { stringToCString } from '@utility/common';
-import { CString, toArrayBuffer, type Pointer } from 'bun:ffi';
+import { CString, type Pointer } from 'bun:ffi';
 import { ByteOffset } from './constant';
 
-export class DialogFileFilter {
-  public static readonly BYTE_SIZE = 16;
-
-  public $address: Pointer | Uint8Array;
-  public $memory: Uint8Array;
-  public $view: DataView;
+export class DialogFileFilter extends BaseStruct {
+  public static override readonly BYTE_SIZE = 16;
 
   private $cache: Partial<{
     name: CString;
     pattern: CString;
-  }>;
-
-  public constructor(data: Pointer | Uint8Array) {
-    if (data instanceof Uint8Array) {
-      this.$memory = data;
-      this.$address = data;
-    } else {
-      const buffer = toArrayBuffer(data, 0, DialogFileFilter.BYTE_SIZE);
-      this.$memory = new Uint8Array(buffer);
-      this.$address = data;
-    }
-
-    this.$view = new DataView(
-      this.$memory.buffer,
-      this.$memory.byteOffset,
-      this.$memory.byteLength
-    );
-    this.$cache = {};
-  }
-
-  public static allocMemory() {
-    const buffer = new Uint8Array(this.BYTE_SIZE);
-
-    return buffer;
-  }
-
-  public static create(data?: StructInit<InstanceType<typeof this>>) {
-    const instance = new this(this.allocMemory());
-
-    if (data) Object.assign(instance, data);
-
-    return instance;
-  }
+  }> = {};
 
   public get name() {
     const nameAddr = this.$view.getBigUint64(ByteOffset.name, true);

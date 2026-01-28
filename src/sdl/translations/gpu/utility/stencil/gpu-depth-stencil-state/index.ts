@@ -1,34 +1,16 @@
-import type { StructInit } from '@/types/shared';
-import { toArrayBuffer, type Pointer } from 'bun:ffi';
+import { BaseStruct, type BaseStructOptions } from '@/utility/base-struct';
 import type { GPUCompareOp } from '../../../../../ffi/gpu/constant';
 import { GPUStencilOpState } from '../gpu-stencil-op-state';
 import { ByteOffset } from './constant';
 
-export class GPUDepthStencilState {
-  public static readonly BYTE_SIZE = 44;
-
-  public $address: Pointer | Uint8Array;
-  public $memory: Uint8Array;
-  public $view: DataView;
+export class GPUDepthStencilState extends BaseStruct {
+  public static override readonly BYTE_SIZE = 44;
 
   public readonly backStencilState: GPUStencilOpState;
   public readonly frontStencilState: GPUStencilOpState;
 
-  public constructor(data: Pointer | Uint8Array) {
-    if (data instanceof Uint8Array) {
-      this.$memory = data;
-      this.$address = data;
-    } else {
-      const buffer = toArrayBuffer(data, 0, GPUDepthStencilState.BYTE_SIZE);
-      this.$memory = new Uint8Array(buffer);
-      this.$address = data;
-    }
-
-    this.$view = new DataView(
-      this.$memory.buffer,
-      this.$memory.byteOffset,
-      this.$memory.byteLength
-    );
+  public constructor(data: BaseStructOptions) {
+    super(data);
 
     this.backStencilState = new GPUStencilOpState(
       this.$memory.subarray(
@@ -42,20 +24,6 @@ export class GPUDepthStencilState {
         ByteOffset.front_stencil_state + GPUStencilOpState.BYTE_SIZE
       )
     );
-  }
-
-  public static allocMemory() {
-    const buffer = new Uint8Array(this.BYTE_SIZE);
-
-    return buffer;
-  }
-
-  public static create(data?: StructInit<InstanceType<typeof this>>) {
-    const instance = new this(this.allocMemory());
-
-    if (data) Object.assign(instance, data);
-
-    return instance;
   }
 
   public get compareOp() {

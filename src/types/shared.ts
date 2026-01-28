@@ -39,7 +39,12 @@ export type TupleRange<
     >;
 
 export type PublicStructProperties<T> = {
-  [K in keyof T as K extends `$${string}` ? never : K]: T[K];
+  [K in keyof T as K extends `$${string}`
+    ? never
+    : // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      T[K] extends (...args: any[]) => any
+      ? never
+      : K]: T[K];
 };
 
 export type StructInit<T> = Partial<PublicStructProperties<T>>;

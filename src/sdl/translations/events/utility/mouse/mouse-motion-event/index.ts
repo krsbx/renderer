@@ -1,46 +1,10 @@
-import type { StructInit } from '@/types/shared';
-import { toArrayBuffer, type Pointer } from 'bun:ffi';
+import { BaseStruct } from '@/utility/base-struct';
 import type { MouseButtonFlags } from '../../../../../ffi/mouse/constant';
 import { ByteOffset } from './constant';
 import type { MouseMotionEventType } from './types';
 
-export class MouseMotionEvent {
-  public static readonly BYTE_SIZE = 48;
-
-  public $address: Pointer | Uint8Array;
-  public $memory: Uint8Array;
-  public $view: DataView;
-
-  public constructor(data: Pointer | Uint8Array) {
-    if (data instanceof Uint8Array) {
-      this.$memory = data;
-      this.$address = data;
-    } else {
-      const buffer = toArrayBuffer(data, 0, MouseMotionEvent.BYTE_SIZE);
-      this.$memory = new Uint8Array(buffer);
-      this.$address = data;
-    }
-
-    this.$view = new DataView(
-      this.$memory.buffer,
-      this.$memory.byteOffset,
-      this.$memory.byteLength
-    );
-  }
-
-  public static allocMemory() {
-    const buffer = new Uint8Array(this.BYTE_SIZE);
-
-    return buffer;
-  }
-
-  public static create(data?: StructInit<InstanceType<typeof this>>) {
-    const instance = new this(this.allocMemory());
-
-    if (data) Object.assign(instance, data);
-
-    return instance;
-  }
+export class MouseMotionEvent extends BaseStruct {
+  public static override readonly BYTE_SIZE = 48;
 
   public get type() {
     return this.$view.getUint32(ByteOffset.type, true) as MouseMotionEventType;

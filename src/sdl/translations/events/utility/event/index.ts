@@ -1,5 +1,4 @@
-import type { StructInit } from '@/types/shared';
-import { toArrayBuffer, type Pointer } from 'bun:ffi';
+import { BaseStruct, type BaseStructOptions } from '@/utility/base-struct';
 import type { EventType } from '../../../../ffi/events/constant';
 import {
   AudioDeviceEvent,
@@ -52,12 +51,8 @@ import {
 } from '../text';
 import { ByteOffset } from './constant';
 
-export class Event {
-  public static readonly BYTE_SIZE = 128;
-
-  public $address: Pointer | Uint8Array;
-  public $memory: Uint8Array;
-  public $view: DataView;
+export class Event extends BaseStruct {
+  public static override readonly BYTE_SIZE = 128;
 
   public readonly common: CommonEvent;
   public readonly display: DisplayEvent;
@@ -98,21 +93,8 @@ export class Event {
   public readonly drop: DropEvent;
   public readonly clipboard: ClipboardEvent;
 
-  public constructor(data: Pointer | Uint8Array) {
-    if (data instanceof Uint8Array) {
-      this.$memory = data;
-      this.$address = data;
-    } else {
-      const buffer = toArrayBuffer(data, 0, Event.BYTE_SIZE);
-      this.$memory = new Uint8Array(buffer);
-      this.$address = data;
-    }
-
-    this.$view = new DataView(
-      this.$memory.buffer,
-      this.$memory.byteOffset,
-      this.$memory.byteLength
-    );
+  public constructor(data: BaseStructOptions) {
+    super(data);
 
     this.common = new CommonEvent(this.$memory);
     this.display = new DisplayEvent(this.$memory);
@@ -152,20 +134,6 @@ export class Event {
     this.render = new RenderEvent(this.$memory);
     this.drop = new DropEvent(this.$memory);
     this.clipboard = new ClipboardEvent(this.$memory);
-  }
-
-  public static allocMemory() {
-    const buffer = new Uint8Array(this.BYTE_SIZE);
-
-    return buffer;
-  }
-
-  public static create(data?: StructInit<InstanceType<typeof this>>) {
-    const instance = new this(this.allocMemory());
-
-    if (data) Object.assign(instance, data);
-
-    return instance;
   }
 
   public get type() {

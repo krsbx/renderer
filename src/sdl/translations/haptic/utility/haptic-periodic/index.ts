@@ -1,33 +1,15 @@
-import type { StructInit } from '@/types/shared';
-import { toArrayBuffer, type Pointer } from 'bun:ffi';
+import { BaseStruct, type BaseStructOptions } from '@/utility/base-struct';
 import type { HapticEffectType } from '../../../../ffi/haptic/constant';
 import { HapticDirection } from '../haptic-direction';
 import { ByteOffset } from './constant';
 
-export class HapticPeriodic {
-  public static readonly BYTE_SIZE = 48;
-
-  public $address: Pointer | Uint8Array;
-  public $memory: Uint8Array;
-  public $view: DataView;
+export class HapticPeriodic extends BaseStruct {
+  public static override readonly BYTE_SIZE = 48;
 
   public readonly direction: HapticDirection;
 
-  public constructor(data: Pointer | Uint8Array) {
-    if (data instanceof Uint8Array) {
-      this.$memory = data;
-      this.$address = data;
-    } else {
-      const buffer = toArrayBuffer(data, 0, HapticPeriodic.BYTE_SIZE);
-      this.$memory = new Uint8Array(buffer);
-      this.$address = data;
-    }
-
-    this.$view = new DataView(
-      this.$memory.buffer,
-      this.$memory.byteOffset,
-      this.$memory.byteLength
-    );
+  public constructor(data: BaseStructOptions) {
+    super(data);
 
     this.direction = new HapticDirection(
       this.$memory.subarray(
@@ -35,20 +17,6 @@ export class HapticPeriodic {
         HapticDirection.BYTE_SIZE + ByteOffset.direction
       )
     );
-  }
-
-  public static allocMemory() {
-    const buffer = new Uint8Array(this.BYTE_SIZE);
-
-    return buffer;
-  }
-
-  public static create(data?: StructInit<InstanceType<typeof this>>) {
-    const instance = new this(this.allocMemory());
-
-    if (data) Object.assign(instance, data);
-
-    return instance;
   }
 
   public get type() {

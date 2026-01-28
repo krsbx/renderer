@@ -1,58 +1,21 @@
-import type { StructInit } from '@/types/shared';
+import { BaseStruct } from '@/utility/base-struct';
 import { CStruct } from '@/utility/cstruct';
 import { stringToCString } from '@utility/common';
-import { CString, ptr, toArrayBuffer, type Pointer } from 'bun:ffi';
+import { CString, ptr, type Pointer } from 'bun:ffi';
 import type { MessageBoxFlags } from '../../../../ffi/message-box/constant';
 import { MessageBoxButtonData } from '../message-box-button-data';
 import { MessageBoxColorScheme } from '../message-box-color-scheme';
 import { ByteOffset } from './constant';
 
-export class MessageBoxData {
-  public static readonly BYTE_SIZE = 56;
+export class MessageBoxData extends BaseStruct {
+  public static override readonly BYTE_SIZE = 56;
 
-  public $address: Pointer | Uint8Array;
-  public $memory: Uint8Array;
-  public $view: DataView;
-
-  public $buttonsBuffer: Uint8Array | null;
+  public $buttonsBuffer: Uint8Array | null = null;
 
   private $cache: Partial<{
     title: CString;
     message: CString;
-  }>;
-
-  public constructor(data: Pointer | Uint8Array) {
-    if (data instanceof Uint8Array) {
-      this.$memory = data;
-      this.$address = data;
-    } else {
-      const buffer = toArrayBuffer(data, 0, MessageBoxData.BYTE_SIZE);
-      this.$memory = new Uint8Array(buffer);
-      this.$address = data;
-    }
-
-    this.$view = new DataView(
-      this.$memory.buffer,
-      this.$memory.byteOffset,
-      this.$memory.byteLength
-    );
-    this.$buttonsBuffer = null;
-    this.$cache = {};
-  }
-
-  public static allocMemory() {
-    const buffer = new Uint8Array(this.BYTE_SIZE);
-
-    return buffer;
-  }
-
-  public static create(data?: StructInit<InstanceType<typeof this>>) {
-    const instance = new this(this.allocMemory());
-
-    if (data) Object.assign(instance, data);
-
-    return instance;
-  }
+  }> = {};
 
   public get flags() {
     return this.$view.getUint32(ByteOffset.flags, true) as MessageBoxFlags;

@@ -1,54 +1,15 @@
-import type { StructInit } from '@/types/shared';
+import { BaseStruct } from '@/utility/base-struct';
 import { CStruct } from '@/utility/cstruct';
-import { ptr, read, toArrayBuffer, type Pointer } from 'bun:ffi';
+import { ptr, read, type Pointer } from 'bun:ffi';
 import { GPUTextureSamplerBinding } from '../../../gpu/utility';
 import { ByteOffset } from './constant';
 
-export class GPURenderStateCreateInfo {
-  public static readonly BYTE_SIZE = 64;
+export class GPURenderStateCreateInfo extends BaseStruct {
+  public static override readonly BYTE_SIZE = 64;
 
-  public $address: Pointer | Uint8Array;
-  public $memory: Uint8Array;
-  public $view: DataView;
-
-  public $samplerBindingBuffer: Uint8Array | null;
-  public $storageTextureBuffer: Uint8Array | null;
-  public $storageBufferBuffer: Uint8Array | null;
-
-  public constructor(data: Pointer | Uint8Array) {
-    if (data instanceof Uint8Array) {
-      this.$memory = data;
-      this.$address = data;
-    } else {
-      const buffer = toArrayBuffer(data, 0, GPURenderStateCreateInfo.BYTE_SIZE);
-      this.$memory = new Uint8Array(buffer);
-      this.$address = data;
-    }
-
-    this.$view = new DataView(
-      this.$memory.buffer,
-      this.$memory.byteOffset,
-      this.$memory.byteLength
-    );
-
-    this.$samplerBindingBuffer = null;
-    this.$storageTextureBuffer = null;
-    this.$storageBufferBuffer = null;
-  }
-
-  public static allocMemory() {
-    const buffer = new Uint8Array(this.BYTE_SIZE);
-
-    return buffer;
-  }
-
-  public static create(data?: StructInit<InstanceType<typeof this>>) {
-    const instance = new this(this.allocMemory());
-
-    if (data) Object.assign(instance, data);
-
-    return instance;
-  }
+  public $samplerBindingBuffer: Uint8Array | null = null;
+  public $storageTextureBuffer: Uint8Array | null = null;
+  public $storageBufferBuffer: Uint8Array | null = null;
 
   public get fragmentShader() {
     const addr = this.$view.getBigUint64(ByteOffset.fragment_shader, true);

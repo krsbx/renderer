@@ -1,17 +1,13 @@
-import type { StructInit } from '@/types/shared';
-import { toArrayBuffer, type Pointer } from 'bun:ffi';
+import { BaseStruct, type BaseStructOptions } from '@/utility/base-struct';
+import type { Pointer } from 'bun:ffi';
 import { GPUMultisampleState, GPURasterizerState } from '../../common';
 import { GPUDepthStencilState } from '../../stencil';
 import { GPUVertexInputState } from '../../vertex';
 import { GPUGraphicsPipelineTargetInfo } from '../gpu-graphics-pipeline-target-info';
 import { ByteOffset } from './constant';
 
-export class GPUGraphicsPipelineCreateInfo {
-  public static readonly BYTE_SIZE = 168;
-
-  public $address: Pointer | Uint8Array;
-  public $memory: Uint8Array;
-  public $view: DataView;
+export class GPUGraphicsPipelineCreateInfo extends BaseStruct {
+  public static override readonly BYTE_SIZE = 168;
 
   public readonly vertexInputState: GPUVertexInputState;
   public readonly rasterizerState: GPURasterizerState;
@@ -19,25 +15,8 @@ export class GPUGraphicsPipelineCreateInfo {
   public readonly depthStencilState: GPUDepthStencilState;
   public readonly targetInfo: GPUGraphicsPipelineTargetInfo;
 
-  public constructor(data: Pointer | Uint8Array) {
-    if (data instanceof Uint8Array) {
-      this.$memory = data;
-      this.$address = data;
-    } else {
-      const buffer = toArrayBuffer(
-        data,
-        0,
-        GPUGraphicsPipelineCreateInfo.BYTE_SIZE
-      );
-      this.$memory = new Uint8Array(buffer);
-      this.$address = data;
-    }
-
-    this.$view = new DataView(
-      this.$memory.buffer,
-      this.$memory.byteOffset,
-      this.$memory.byteLength
-    );
+  public constructor(data: BaseStructOptions) {
+    super(data);
 
     this.vertexInputState = new GPUVertexInputState(
       this.$memory.subarray(
@@ -69,20 +48,6 @@ export class GPUGraphicsPipelineCreateInfo {
         GPUGraphicsPipelineTargetInfo.BYTE_SIZE + ByteOffset.target_info
       )
     );
-  }
-
-  public static allocMemory() {
-    const buffer = new Uint8Array(this.BYTE_SIZE);
-
-    return buffer;
-  }
-
-  public static create(data?: StructInit<InstanceType<typeof this>>) {
-    const instance = new this(this.allocMemory());
-
-    if (data) Object.assign(instance, data);
-
-    return instance;
   }
 
   public get vertexShader() {

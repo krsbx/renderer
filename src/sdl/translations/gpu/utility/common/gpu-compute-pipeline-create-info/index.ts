@@ -1,4 +1,4 @@
-import { BaseStruct, type BaseStructOptions } from '@/utility/base-struct';
+import { BaseStruct } from '@/utility/base-struct';
 import { stringToCString } from '@utility/common';
 import { CString, type Pointer } from 'bun:ffi';
 import type { GPUShaderFormat } from '../../../../../ffi/gpu/constant';
@@ -9,12 +9,7 @@ export class GPUComputePipelineCreateInfo extends BaseStruct {
 
   private $cache: Partial<{
     entrypoint: CString;
-  }>;
-
-  public constructor(data: BaseStructOptions) {
-    super(data);
-    this.$cache = {};
-  }
+  }> = {};
 
   public get codeSize() {
     return this.$view.getBigUint64(ByteOffset.code_size, true);

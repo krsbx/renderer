@@ -1,4 +1,4 @@
-import { BaseStruct, type BaseStructOptions } from '@/utility/base-struct';
+import { BaseStruct } from '@/utility/base-struct';
 import { CStruct } from '@/utility/cstruct';
 import type { Pointer } from 'bun:ffi';
 import { GPUVertexAttribute } from '../gpu-vertex-attribute';
@@ -10,12 +10,6 @@ export class GPUVertexInputState extends BaseStruct {
 
   public $vertexBufferDescBuffer: Uint8Array | null = null;
   public $vertexAttributesBuffer: Uint8Array | null = null;
-
-  public constructor(data: BaseStructOptions) {
-    super(data);
-    this.$vertexBufferDescBuffer = null;
-    this.$vertexAttributesBuffer = null;
-  }
 
   public get vertexBufferDescriptions() {
     if (!this.vertexBufferCount) return [];

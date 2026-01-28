@@ -1,4 +1,4 @@
-import { BaseStruct, type BaseStructOptions } from '@/utility/base-struct';
+import { BaseStruct } from '@/utility/base-struct';
 import { CStruct } from '@/utility/cstruct';
 import type { Pointer } from 'bun:ffi';
 import type { GPUTextureFormat } from '../../../../../ffi/gpu/constant';
@@ -8,13 +8,7 @@ import { ByteOffset } from './constant';
 export class GPUGraphicsPipelineTargetInfo extends BaseStruct {
   public static override readonly BYTE_SIZE = 24;
 
-  public $colorTargetDescBuffer: Uint8Array | null;
-
-  public constructor(data: BaseStructOptions) {
-    super(data);
-
-    this.$colorTargetDescBuffer = null;
-  }
+  public $colorTargetDescBuffer: Uint8Array | null = null;
 
   public get colorTargetDescriptions() {
     if (!this.colorTargetsCount) return [];

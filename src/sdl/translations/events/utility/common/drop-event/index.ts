@@ -1,4 +1,4 @@
-import { BaseStruct, type BaseStructOptions } from '@/utility/base-struct';
+import { BaseStruct } from '@/utility/base-struct';
 import { stringToCString } from '@utility/common';
 import { CString, type Pointer } from 'bun:ffi';
 import { ByteOffset } from './constant';
@@ -10,12 +10,7 @@ export class DropEvent extends BaseStruct {
   private $cache: Partial<{
     source: CString;
     data: CString;
-  }>;
-
-  public constructor(data: BaseStructOptions) {
-    super(data);
-    this.$cache = {};
-  }
+  }> = {};
 
   public get type() {
     return this.$view.getUint32(ByteOffset.type, true) as DropEventType;

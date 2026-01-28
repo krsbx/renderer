@@ -48,8 +48,8 @@ export class IOStreamInterface {
     return buffer;
   }
 
-  public static create(data?: StructInit<IOStreamInterface>) {
-    const instance = new IOStreamInterface(IOStreamInterface.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

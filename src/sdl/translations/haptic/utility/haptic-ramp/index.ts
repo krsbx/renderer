@@ -43,8 +43,8 @@ export class HapticRamp {
     return buffer;
   }
 
-  public static create(data?: StructInit<HapticRamp>) {
-    const instance = new HapticRamp(HapticRamp.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

@@ -33,8 +33,8 @@ export class UserEvent {
     return buffer;
   }
 
-  public static create(data?: StructInit<UserEvent>) {
-    const instance = new UserEvent(UserEvent.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

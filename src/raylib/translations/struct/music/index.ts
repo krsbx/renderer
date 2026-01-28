@@ -40,8 +40,8 @@ export class Music {
     return new Uint8Array(this.BYTE_SIZE);
   }
 
-  public static create(data?: StructInit<Music>) {
-    const instance = new Music(Music.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

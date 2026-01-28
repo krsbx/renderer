@@ -33,8 +33,8 @@ export class DisplayEvent {
     return buffer;
   }
 
-  public static create(data?: StructInit<DisplayEvent>) {
-    const instance = new DisplayEvent(DisplayEvent.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

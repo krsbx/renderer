@@ -32,8 +32,8 @@ export class GPUTextureRegion {
     return buffer;
   }
 
-  public static create(data?: StructInit<GPUTextureRegion>) {
-    const instance = new GPUTextureRegion(GPUTextureRegion.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

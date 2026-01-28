@@ -33,8 +33,8 @@ export class CameraSpec {
     return buffer;
   }
 
-  public static create(data?: StructInit<CameraSpec>) {
-    const instance = new CameraSpec(CameraSpec.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

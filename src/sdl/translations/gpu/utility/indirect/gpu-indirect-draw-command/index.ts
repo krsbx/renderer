@@ -32,10 +32,8 @@ export class GPUIndirectDrawCommand {
     return buffer;
   }
 
-  public static create(data?: StructInit<GPUIndirectDrawCommand>) {
-    const instance = new GPUIndirectDrawCommand(
-      GPUIndirectDrawCommand.allocMemory()
-    );
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

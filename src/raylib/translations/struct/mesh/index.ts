@@ -62,8 +62,8 @@ export class Mesh {
     return new Uint8Array(this.BYTE_SIZE);
   }
 
-  public static create(data?: StructInit<Mesh>) {
-    const instance = new Mesh(Mesh.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

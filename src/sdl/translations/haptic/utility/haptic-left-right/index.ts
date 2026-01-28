@@ -33,8 +33,8 @@ export class HapticLeftRight {
     return buffer;
   }
 
-  public static create(data?: StructInit<HapticLeftRight>) {
-    const instance = new HapticLeftRight(HapticLeftRight.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

@@ -38,8 +38,8 @@ export class TextEditingEvent {
     return buffer;
   }
 
-  public static create(data?: StructInit<TextEditingEvent>) {
-    const instance = new TextEditingEvent(TextEditingEvent.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

@@ -33,8 +33,8 @@ export class TouchFingerEvent {
     return buffer;
   }
 
-  public static create(data?: StructInit<TouchFingerEvent>) {
-    const instance = new TouchFingerEvent(TouchFingerEvent.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

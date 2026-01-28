@@ -38,8 +38,8 @@ export class TextInputEvent {
     return buffer;
   }
 
-  public static create(data?: StructInit<TextInputEvent>) {
-    const instance = new TextInputEvent(TextInputEvent.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

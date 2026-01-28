@@ -34,8 +34,8 @@ export class Surface {
     return buffer;
   }
 
-  public static create(data?: StructInit<Surface>) {
-    const instance = new Surface(Surface.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

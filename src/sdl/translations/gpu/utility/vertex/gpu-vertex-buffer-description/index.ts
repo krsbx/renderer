@@ -37,10 +37,8 @@ export class GPUVertexBufferDescription {
     return buffer;
   }
 
-  public static create(data?: StructInit<GPUVertexBufferDescription>) {
-    const instance = new GPUVertexBufferDescription(
-      GPUVertexBufferDescription.allocMemory()
-    );
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

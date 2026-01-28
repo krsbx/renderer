@@ -42,8 +42,8 @@ export class CursorFrameInfo {
     return buffer;
   }
 
-  public static create(data?: StructInit<CursorFrameInfo>) {
-    const instance = new CursorFrameInfo(CursorFrameInfo.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

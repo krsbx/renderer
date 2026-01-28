@@ -39,8 +39,8 @@ export class DropEvent {
     return buffer;
   }
 
-  public static create(data?: StructInit<DropEvent>) {
-    const instance = new DropEvent(DropEvent.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

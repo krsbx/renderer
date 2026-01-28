@@ -33,8 +33,8 @@ export class RenderEvent {
     return buffer;
   }
 
-  public static create(data?: StructInit<RenderEvent>) {
-    const instance = new RenderEvent(RenderEvent.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

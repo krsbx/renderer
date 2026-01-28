@@ -39,8 +39,8 @@ export class GPUVertexInputState {
     return buffer;
   }
 
-  public static create(data?: StructInit<GPUVertexInputState>) {
-    const instance = new GPUVertexInputState(GPUVertexInputState.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

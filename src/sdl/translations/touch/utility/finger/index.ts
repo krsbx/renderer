@@ -32,8 +32,8 @@ export class Finger {
     return buffer;
   }
 
-  public static create(data?: StructInit<Finger>) {
-    const instance = new Finger(Finger.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

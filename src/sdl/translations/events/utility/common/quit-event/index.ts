@@ -33,8 +33,8 @@ export class QuitEvent {
     return buffer;
   }
 
-  public static create(data?: StructInit<QuitEvent>) {
-    const instance = new QuitEvent(QuitEvent.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

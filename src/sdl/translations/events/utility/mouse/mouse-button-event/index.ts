@@ -34,8 +34,8 @@ export class MouseButtonEvent {
     return buffer;
   }
 
-  public static create(data?: StructInit<MouseButtonEvent>) {
-    const instance = new MouseButtonEvent(MouseButtonEvent.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

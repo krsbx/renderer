@@ -32,8 +32,8 @@ export class Rectangle {
     return buffer;
   }
 
-  public static create(data?: StructInit<Rectangle>) {
-    const instance = new Rectangle(Rectangle.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

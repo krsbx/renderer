@@ -59,8 +59,8 @@ export class VirtualJoystickDesc {
     return buffer;
   }
 
-  public static create(data?: StructInit<VirtualJoystickDesc>) {
-    const instance = new VirtualJoystickDesc(VirtualJoystickDesc.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

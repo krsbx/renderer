@@ -59,8 +59,8 @@ export class GPUBlitInfo {
     return buffer;
   }
 
-  public static create(data?: StructInit<GPUBlitInfo>) {
-    const instance = new GPUBlitInfo(GPUBlitInfo.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

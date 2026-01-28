@@ -33,8 +33,8 @@ export class GamepadButtonEvent {
     return buffer;
   }
 
-  public static create(data?: StructInit<GamepadButtonEvent>) {
-    const instance = new GamepadButtonEvent(GamepadButtonEvent.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

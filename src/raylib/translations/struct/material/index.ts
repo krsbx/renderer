@@ -48,8 +48,8 @@ export class Material {
     return new Uint8Array(this.BYTE_SIZE);
   }
 
-  public static create(data?: StructInit<Material>) {
-    const instance = new Material(Material.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

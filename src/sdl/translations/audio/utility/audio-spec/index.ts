@@ -33,8 +33,8 @@ export class AudioSpec {
     return buffer;
   }
 
-  public static create(data?: StructInit<AudioSpec>) {
-    const instance = new AudioSpec(AudioSpec.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

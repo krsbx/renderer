@@ -39,8 +39,8 @@ export class DialogFileFilter {
     return buffer;
   }
 
-  public static create(data?: StructInit<DialogFileFilter>) {
-    const instance = new DialogFileFilter(DialogFileFilter.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

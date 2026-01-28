@@ -34,8 +34,8 @@ export class JoyBatteryEvent {
     return buffer;
   }
 
-  public static create(data?: StructInit<JoyBatteryEvent>) {
-    const instance = new JoyBatteryEvent(JoyBatteryEvent.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

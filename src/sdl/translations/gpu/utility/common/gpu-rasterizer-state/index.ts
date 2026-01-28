@@ -37,8 +37,8 @@ export class GPURasterizerState {
     return buffer;
   }
 
-  public static create(data?: StructInit<GPURasterizerState>) {
-    const instance = new GPURasterizerState(GPURasterizerState.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

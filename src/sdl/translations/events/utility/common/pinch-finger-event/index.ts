@@ -33,8 +33,8 @@ export class PinchFingerEvent {
     return buffer;
   }
 
-  public static create(data?: StructInit<PinchFingerEvent>) {
-    const instance = new PinchFingerEvent(PinchFingerEvent.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

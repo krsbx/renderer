@@ -37,10 +37,8 @@ export class GPUTransferBufferCreateInfo {
     return buffer;
   }
 
-  public static create(data?: StructInit<GPUTransferBufferCreateInfo>) {
-    const instance = new GPUTransferBufferCreateInfo(
-      GPUTransferBufferCreateInfo.allocMemory()
-    );
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

@@ -39,8 +39,8 @@ export class Locale {
     return buffer;
   }
 
-  public static create(data?: StructInit<Locale>) {
-    const instance = new Locale(Locale.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

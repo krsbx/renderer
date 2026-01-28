@@ -32,8 +32,8 @@ export class GPUBlitRegion {
     return buffer;
   }
 
-  public static create(data?: StructInit<GPUBlitRegion>) {
-    const instance = new GPUBlitRegion(GPUBlitRegion.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

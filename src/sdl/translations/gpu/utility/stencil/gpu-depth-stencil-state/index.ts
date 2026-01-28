@@ -50,10 +50,8 @@ export class GPUDepthStencilState {
     return buffer;
   }
 
-  public static create(data?: StructInit<GPUDepthStencilState>) {
-    const instance = new GPUDepthStencilState(
-      GPUDepthStencilState.allocMemory()
-    );
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

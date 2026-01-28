@@ -47,10 +47,8 @@ export class GPUColorTargetDescription {
     return buffer;
   }
 
-  public static create(data?: StructInit<GPUColorTargetDescription>) {
-    const instance = new GPUColorTargetDescription(
-      GPUColorTargetDescription.allocMemory()
-    );
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

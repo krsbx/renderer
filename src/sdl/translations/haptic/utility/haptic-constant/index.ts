@@ -43,8 +43,8 @@ export class HapticConstant {
     return buffer;
   }
 
-  public static create(data?: StructInit<HapticConstant>) {
-    const instance = new HapticConstant(HapticConstant.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

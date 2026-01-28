@@ -33,8 +33,8 @@ export class PenProximityEvent {
     return buffer;
   }
 
-  public static create(data?: StructInit<PenProximityEvent>) {
-    const instance = new PenProximityEvent(PenProximityEvent.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

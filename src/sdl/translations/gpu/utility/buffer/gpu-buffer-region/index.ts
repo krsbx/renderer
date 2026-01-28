@@ -32,8 +32,8 @@ export class GPUBufferRegion {
     return buffer;
   }
 
-  public static create(data?: StructInit<GPUBufferRegion>) {
-    const instance = new GPUBufferRegion(GPUBufferRegion.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

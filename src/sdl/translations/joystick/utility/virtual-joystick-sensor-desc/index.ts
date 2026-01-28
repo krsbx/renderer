@@ -37,10 +37,8 @@ export class VirtualJoystickSensorDesc {
     return buffer;
   }
 
-  public static create(data?: StructInit<VirtualJoystickSensorDesc>) {
-    const instance = new VirtualJoystickSensorDesc(
-      VirtualJoystickSensorDesc.allocMemory()
-    );
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

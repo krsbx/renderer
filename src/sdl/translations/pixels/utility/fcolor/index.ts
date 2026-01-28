@@ -32,8 +32,8 @@ export class FColor {
     return buffer;
   }
 
-  public static create(data?: StructInit<FColor>) {
-    const instance = new FColor(FColor.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

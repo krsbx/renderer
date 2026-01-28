@@ -37,8 +37,8 @@ export class HapticDirection {
     return buffer;
   }
 
-  public static create(data?: StructInit<HapticDirection>) {
-    const instance = new HapticDirection(HapticDirection.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

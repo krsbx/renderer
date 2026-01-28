@@ -124,8 +124,8 @@ export class GamepadBinding {
     return buffer;
   }
 
-  public static create(data?: StructInit<GamepadBinding>) {
-    const instance = new GamepadBinding(GamepadBinding.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

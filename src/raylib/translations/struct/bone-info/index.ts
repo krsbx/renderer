@@ -30,8 +30,8 @@ export class BoneInfo {
     return new Uint8Array(this.BYTE_SIZE);
   }
 
-  public static create(data?: StructInit<BoneInfo>) {
-    const instance = new BoneInfo(BoneInfo.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

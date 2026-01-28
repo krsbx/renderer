@@ -33,8 +33,8 @@ export class FilePathList {
     return new Uint8Array(this.BYTE_SIZE);
   }
 
-  public static create(data?: StructInit<FilePathList>) {
-    const instance = new FilePathList(FilePathList.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

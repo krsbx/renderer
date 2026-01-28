@@ -33,8 +33,8 @@ export class JoyAxisEvent {
     return buffer;
   }
 
-  public static create(data?: StructInit<JoyAxisEvent>) {
-    const instance = new JoyAxisEvent(JoyAxisEvent.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

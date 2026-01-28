@@ -32,8 +32,8 @@ export class AtomicInt {
     return buffer;
   }
 
-  public static create(data?: StructInit<AtomicInt>) {
-    const instance = new AtomicInt(AtomicInt.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

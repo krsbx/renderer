@@ -36,8 +36,8 @@ export class AsyncIOOutcome {
     return buffer;
   }
 
-  public static create(data?: StructInit<AsyncIOOutcome>) {
-    const instance = new AsyncIOOutcome(AsyncIOOutcome.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

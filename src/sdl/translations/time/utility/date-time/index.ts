@@ -32,8 +32,8 @@ export class DateTime {
     return buffer;
   }
 
-  public static create(data?: StructInit<DateTime>) {
-    const instance = new DateTime(DateTime.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

@@ -36,10 +36,8 @@ export class VirtualJoystickTouchpadDesc {
     return buffer;
   }
 
-  public static create(data?: StructInit<VirtualJoystickTouchpadDesc>) {
-    const instance = new VirtualJoystickTouchpadDesc(
-      VirtualJoystickTouchpadDesc.allocMemory()
-    );
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

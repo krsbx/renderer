@@ -33,8 +33,8 @@ export class GPUBufferCreateInfo {
     return buffer;
   }
 
-  public static create(data?: StructInit<GPUBufferCreateInfo>) {
-    const instance = new GPUBufferCreateInfo(GPUBufferCreateInfo.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

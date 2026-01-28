@@ -55,8 +55,8 @@ export class Transform {
     return new Uint8Array(this.BYTE_SIZE);
   }
 
-  public static create(data?: StructInit<Transform>) {
-    const instance = new Transform(Transform.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

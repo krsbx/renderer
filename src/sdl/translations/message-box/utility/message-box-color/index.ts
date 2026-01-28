@@ -32,8 +32,8 @@ export class MessageBoxColor {
     return buffer;
   }
 
-  public static create(data?: StructInit<MessageBoxColor>) {
-    const instance = new MessageBoxColor(MessageBoxColor.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

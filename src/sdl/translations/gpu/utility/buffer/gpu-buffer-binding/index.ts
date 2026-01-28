@@ -32,8 +32,8 @@ export class GPUBufferBinding {
     return buffer;
   }
 
-  public static create(data?: StructInit<GPUBufferBinding>) {
-    const instance = new GPUBufferBinding(GPUBufferBinding.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

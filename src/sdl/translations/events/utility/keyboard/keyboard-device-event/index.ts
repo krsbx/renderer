@@ -34,9 +34,9 @@ export class KeyboardDeviceEvent {
   }
 
   public static create(
-    data: StructInit<KeyboardDeviceEvent> | undefined | null = null
+    data: StructInit<InstanceType<typeof this>> | undefined | null = null
   ) {
-    const instance = new KeyboardDeviceEvent(KeyboardDeviceEvent.allocMemory());
+    const instance = new this(this.allocMemory());
 
     if (data) {
       Object.assign(instance, data);

@@ -34,8 +34,8 @@ export class PenButtonEvent {
     return buffer;
   }
 
-  public static create(data?: StructInit<PenButtonEvent>) {
-    const instance = new PenButtonEvent(PenButtonEvent.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

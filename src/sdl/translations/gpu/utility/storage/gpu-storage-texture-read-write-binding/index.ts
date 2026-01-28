@@ -36,10 +36,8 @@ export class GPUStorageTextureReadWriteBinding {
     return buffer;
   }
 
-  public static create(data?: StructInit<GPUStorageTextureReadWriteBinding>) {
-    const instance = new GPUStorageTextureReadWriteBinding(
-      GPUStorageTextureReadWriteBinding.allocMemory()
-    );
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

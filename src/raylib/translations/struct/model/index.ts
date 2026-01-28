@@ -56,8 +56,8 @@ export class Model {
     return new Uint8Array(this.BYTE_SIZE);
   }
 
-  public static create(data?: StructInit<Model>) {
-    const instance = new Model(Model.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

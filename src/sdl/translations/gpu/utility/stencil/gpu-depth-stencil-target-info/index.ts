@@ -37,10 +37,8 @@ export class GPUDepthStencilTargetInfo {
     return buffer;
   }
 
-  public static create(data?: StructInit<GPUDepthStencilTargetInfo>) {
-    const instance = new GPUDepthStencilTargetInfo(
-      GPUDepthStencilTargetInfo.allocMemory()
-    );
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

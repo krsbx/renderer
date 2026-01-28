@@ -31,8 +31,8 @@ export class SpinLock {
     return buffer;
   }
 
-  public static create(data?: StructInit<SpinLock>) {
-    const instance = new SpinLock(SpinLock.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

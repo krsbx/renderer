@@ -32,10 +32,8 @@ export class GPUColorTargetBlendState {
     return buffer;
   }
 
-  public static create(data?: StructInit<GPUColorTargetBlendState>) {
-    const instance = new GPUColorTargetBlendState(
-      GPUColorTargetBlendState.allocMemory()
-    );
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

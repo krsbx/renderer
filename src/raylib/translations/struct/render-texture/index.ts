@@ -49,8 +49,8 @@ export class RenderTexture {
     return buffer;
   }
 
-  public static create(data?: StructInit<RenderTexture>) {
-    const instance = new RenderTexture(RenderTexture.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

@@ -35,6 +35,20 @@ export class GPURenderStateCreateInfo {
     this.$storageBufferBuffer = null;
   }
 
+  public static allocMemory() {
+    const buffer = new Uint8Array(this.BYTE_SIZE);
+
+    return buffer;
+  }
+
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
+
+    if (data) Object.assign(instance, data);
+
+    return instance;
+  }
+
   public get fragmentShader() {
     const addr = this.$view.getBigUint64(ByteOffset.fragment_shader, true);
 
@@ -208,21 +222,5 @@ export class GPURenderStateCreateInfo {
       BigInt(ptr(this.$storageBufferBuffer)),
       true
     );
-  }
-
-  public static allocMemory() {
-    const buffer = new Uint8Array(this.BYTE_SIZE);
-
-    return buffer;
-  }
-
-  public static create(data?: StructInit<GPURenderStateCreateInfo>) {
-    const instance = new GPURenderStateCreateInfo(
-      GPURenderStateCreateInfo.allocMemory()
-    );
-
-    if (data) Object.assign(instance, data);
-
-    return instance;
   }
 }

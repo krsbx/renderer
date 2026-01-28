@@ -34,8 +34,8 @@ export class MouseMotionEvent {
     return buffer;
   }
 
-  public static create(data?: StructInit<MouseMotionEvent>) {
-    const instance = new MouseMotionEvent(MouseMotionEvent.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

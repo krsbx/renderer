@@ -33,8 +33,8 @@ export class WindowEvent {
     return buffer;
   }
 
-  public static create(data?: StructInit<WindowEvent>) {
-    const instance = new WindowEvent(WindowEvent.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

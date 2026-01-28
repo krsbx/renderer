@@ -34,8 +34,8 @@ export class PenTouchEvent {
     return buffer;
   }
 
-  public static create(data?: StructInit<PenTouchEvent>) {
-    const instance = new PenTouchEvent(PenTouchEvent.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

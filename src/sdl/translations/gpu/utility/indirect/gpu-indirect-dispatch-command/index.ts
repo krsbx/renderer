@@ -36,10 +36,8 @@ export class GPUIndirectDispatchCommand {
     return buffer;
   }
 
-  public static create(data?: StructInit<GPUIndirectDispatchCommand>) {
-    const instance = new GPUIndirectDispatchCommand(
-      GPUIndirectDispatchCommand.allocMemory()
-    );
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

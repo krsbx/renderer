@@ -32,8 +32,8 @@ export class GPUViewport {
     return buffer;
   }
 
-  public static create(data?: StructInit<GPUViewport>) {
-    const instance = new GPUViewport(GPUViewport.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

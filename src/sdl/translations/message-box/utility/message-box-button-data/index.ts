@@ -39,10 +39,8 @@ export class MessageBoxButtonData {
     return buffer;
   }
 
-  public static create(data?: StructInit<MessageBoxButtonData>) {
-    const instance = new MessageBoxButtonData(
-      MessageBoxButtonData.allocMemory()
-    );
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

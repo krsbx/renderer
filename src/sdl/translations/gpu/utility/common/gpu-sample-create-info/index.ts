@@ -33,10 +33,8 @@ export class GPUSamplerCreateInfo {
     return buffer;
   }
 
-  public static create(data?: StructInit<GPUSamplerCreateInfo>) {
-    const instance = new GPUSamplerCreateInfo(
-      GPUSamplerCreateInfo.allocMemory()
-    );
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

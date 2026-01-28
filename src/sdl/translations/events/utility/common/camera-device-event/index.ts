@@ -33,8 +33,8 @@ export class CameraDeviceEvent {
     return buffer;
   }
 
-  public static create(data?: StructInit<CameraDeviceEvent>) {
-    const instance = new CameraDeviceEvent(CameraDeviceEvent.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

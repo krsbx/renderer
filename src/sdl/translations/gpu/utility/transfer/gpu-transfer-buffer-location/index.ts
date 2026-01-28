@@ -36,7 +36,7 @@ export class GPUTransferBufferLocation {
     return buffer;
   }
 
-  public static create(data?: StructInit<GPUTransferBufferLocation>) {
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
     const instance = new GPUTransferBufferLocation(
       GPUTransferBufferLocation.allocMemory()
     );

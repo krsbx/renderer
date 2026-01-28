@@ -46,10 +46,8 @@ export class TextEditingCandidatesEvent {
     return buffer;
   }
 
-  public static create(data?: StructInit<TextEditingCandidatesEvent>) {
-    const instance = new TextEditingCandidatesEvent(
-      TextEditingCandidatesEvent.allocMemory()
-    );
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

@@ -42,8 +42,8 @@ export class InitState {
     return buffer;
   }
 
-  public static create(data?: StructInit<InitState>) {
-    const instance = new InitState(InitState.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

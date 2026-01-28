@@ -32,8 +32,8 @@ export class AlignmentTest {
     return buffer;
   }
 
-  public static create(data?: StructInit<AlignmentTest>) {
-    const instance = new AlignmentTest(AlignmentTest.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

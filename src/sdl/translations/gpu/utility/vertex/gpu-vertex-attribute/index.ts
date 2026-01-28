@@ -33,8 +33,8 @@ export class GPUVertexAttribute {
     return buffer;
   }
 
-  public static create(data?: StructInit<GPUVertexAttribute>) {
-    const instance = new GPUVertexAttribute(GPUVertexAttribute.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

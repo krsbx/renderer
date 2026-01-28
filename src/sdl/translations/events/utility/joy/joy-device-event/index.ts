@@ -33,8 +33,8 @@ export class JoyDeviceEvent {
     return buffer;
   }
 
-  public static create(data?: StructInit<JoyDeviceEvent>) {
-    const instance = new JoyDeviceEvent(JoyDeviceEvent.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

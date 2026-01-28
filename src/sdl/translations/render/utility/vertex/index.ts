@@ -57,8 +57,8 @@ export class Vertex {
     return buffer;
   }
 
-  public static create(data?: StructInit<Vertex>) {
-    const instance = new Vertex(Vertex.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

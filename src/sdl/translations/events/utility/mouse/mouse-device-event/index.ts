@@ -33,8 +33,8 @@ export class MouseDeviceEvent {
     return buffer;
   }
 
-  public static create(data?: StructInit<MouseDeviceEvent>) {
-    const instance = new MouseDeviceEvent(MouseDeviceEvent.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

@@ -32,8 +32,8 @@ export class Rect {
     return buffer;
   }
 
-  public static create(data?: StructInit<Rect>) {
-    const instance = new Rect(Rect.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

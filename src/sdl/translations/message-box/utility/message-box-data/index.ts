@@ -45,8 +45,8 @@ export class MessageBoxData {
     return buffer;
   }
 
-  public static create(data?: StructInit<MessageBoxData>) {
-    const instance = new MessageBoxData(MessageBoxData.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

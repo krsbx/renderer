@@ -33,8 +33,8 @@ export class AudioDeviceEvent {
     return buffer;
   }
 
-  public static create(data?: StructInit<AudioDeviceEvent>) {
-    const instance = new AudioDeviceEvent(AudioDeviceEvent.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

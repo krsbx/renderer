@@ -32,8 +32,8 @@ export class Vector2 {
     return buffer;
   }
 
-  public static create(data?: StructInit<Vector2>) {
-    const instance = new Vector2(Vector2.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

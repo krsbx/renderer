@@ -33,8 +33,8 @@ export class GamepadDeviceEvent {
     return buffer;
   }
 
-  public static create(data?: StructInit<GamepadDeviceEvent>) {
-    const instance = new GamepadDeviceEvent(GamepadDeviceEvent.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

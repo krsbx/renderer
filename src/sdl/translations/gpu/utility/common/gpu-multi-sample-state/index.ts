@@ -32,8 +32,8 @@ export class GPUMultisampleState {
     return buffer;
   }
 
-  public static create(data?: StructInit<GPUMultisampleState>) {
-    const instance = new GPUMultisampleState(GPUMultisampleState.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

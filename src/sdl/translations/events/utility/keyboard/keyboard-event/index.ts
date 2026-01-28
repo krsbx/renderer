@@ -33,8 +33,8 @@ export class KeyboardEvent {
     return buffer;
   }
 
-  public static create(data?: StructInit<KeyboardEvent>) {
-    const instance = new KeyboardEvent(KeyboardEvent.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

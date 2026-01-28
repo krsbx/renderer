@@ -42,8 +42,8 @@ export class ClipboardEvent {
     return buffer;
   }
 
-  public static create(data?: StructInit<ClipboardEvent>) {
-    const instance = new ClipboardEvent(ClipboardEvent.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

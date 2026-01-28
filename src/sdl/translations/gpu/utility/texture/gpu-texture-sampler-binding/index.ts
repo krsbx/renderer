@@ -32,10 +32,8 @@ export class GPUTextureSamplerBinding {
     return buffer;
   }
 
-  public static create(data?: StructInit<GPUTextureSamplerBinding>) {
-    const instance = new GPUTextureSamplerBinding(
-      GPUTextureSamplerBinding.allocMemory()
-    );
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

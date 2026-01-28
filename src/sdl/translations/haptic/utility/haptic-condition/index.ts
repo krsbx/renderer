@@ -100,8 +100,8 @@ export class HapticCondition {
     return buffer;
   }
 
-  public static create(data?: StructInit<HapticCondition>) {
-    const instance = new HapticCondition(HapticCondition.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

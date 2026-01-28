@@ -33,8 +33,8 @@ export class GPUStencilOpState {
     return buffer;
   }
 
-  public static create(data?: StructInit<GPUStencilOpState>) {
-    const instance = new GPUStencilOpState(GPUStencilOpState.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

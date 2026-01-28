@@ -56,8 +56,8 @@ export class Font {
     return buffer;
   }
 
-  public static create(data?: StructInit<Font>) {
-    const instance = new Font(Font.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

@@ -32,8 +32,8 @@ export class Matrix {
     return buffer;
   }
 
-  public static create(data?: StructInit<Matrix>) {
-    const instance = new Matrix(Matrix.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

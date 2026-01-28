@@ -32,8 +32,8 @@ export class GPUTextureLocation {
     return buffer;
   }
 
-  public static create(data?: StructInit<GPUTextureLocation>) {
-    const instance = new GPUTextureLocation(GPUTextureLocation.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

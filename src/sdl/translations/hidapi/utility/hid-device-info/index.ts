@@ -40,8 +40,8 @@ export class HIDDeviceInfo {
     return buffer;
   }
 
-  public static create(data?: StructInit<HIDDeviceInfo>) {
-    const instance = new HIDDeviceInfo(HIDDeviceInfo.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

@@ -32,8 +32,8 @@ export class AtomicU32 {
     return buffer;
   }
 
-  public static create(data?: StructInit<AtomicU32>) {
-    const instance = new AtomicU32(AtomicU32.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

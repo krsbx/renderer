@@ -32,8 +32,8 @@ export class DisplayMode {
     return buffer;
   }
 
-  public static create(data?: StructInit<DisplayMode>) {
-    const instance = new DisplayMode(DisplayMode.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

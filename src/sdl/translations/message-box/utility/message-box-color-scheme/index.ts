@@ -48,10 +48,8 @@ export class MessageBoxColorScheme {
     return buffer;
   }
 
-  public static create(data?: StructInit<MessageBoxColorScheme>) {
-    const instance = new MessageBoxColorScheme(
-      MessageBoxColorScheme.allocMemory()
-    );
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

@@ -42,8 +42,8 @@ export class Palette {
     return buffer;
   }
 
-  public static create(data?: StructInit<Palette>) {
-    const instance = new Palette(Palette.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

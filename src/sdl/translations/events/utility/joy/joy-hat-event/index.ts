@@ -34,8 +34,8 @@ export class JoyHatEvent {
     return buffer;
   }
 
-  public static create(data?: StructInit<JoyHatEvent>) {
-    const instance = new JoyHatEvent(JoyHatEvent.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

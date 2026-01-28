@@ -42,8 +42,8 @@ export class GlyphInfo {
     return buffer;
   }
 
-  public static create(data?: StructInit<GlyphInfo>) {
-    const instance = new GlyphInfo(GlyphInfo.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

@@ -34,8 +34,8 @@ export class MouseWheelEvent {
     return buffer;
   }
 
-  public static create(data?: StructInit<MouseWheelEvent>) {
-    const instance = new MouseWheelEvent(MouseWheelEvent.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

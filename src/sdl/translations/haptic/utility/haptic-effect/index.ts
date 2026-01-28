@@ -52,8 +52,8 @@ export class HapticEffect {
     return buffer;
   }
 
-  public static create(data?: StructInit<HapticEffect>) {
-    const instance = new HapticEffect(HapticEffect.allocMemory());
+  public static create(data?: StructInit<InstanceType<typeof this>>) {
+    const instance = new this(this.allocMemory());
 
     if (data) Object.assign(instance, data);
 

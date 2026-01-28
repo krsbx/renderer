@@ -50,7 +50,7 @@ export const ModelManagementDefinition = {
       FFIType.ptr,
       FFIType.f32,
       FFIType.ptr,
-      FFIType.u32,
+      FFIType.ptr,
     ],
     returns: FFIType.void,
   },

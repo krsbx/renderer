@@ -95,7 +95,7 @@ export class StorageInterface extends BaseStruct {
   }
 
   public info(options: InfoOptions) {
-    const info = new PathInfo(PathInfo.allocMemory());
+    const info = PathInfo.create();
 
     const success = this.invoke<boolean>(
       ByteOffset.info,

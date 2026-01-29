@@ -1,7 +1,5 @@
 import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
-import { getStructMemoryAddress } from '@utility/common';
-import { type Pointer } from 'bun:ffi';
 import type { Colorspace, PixelFormat } from '../../../ffi/pixels/constant';
 import { Rect } from '../../rect/utility';
 import { Surface } from '../utility';
@@ -14,10 +12,10 @@ export function convertPixels(
     width: number;
     height: number;
     srcFormat: PixelFormat;
-    src: Pointer | Uint8Array;
+    src: Uint8Array;
     srcPitch: number;
     dstFormat: PixelFormat;
-    dst: Pointer | Uint8Array;
+    dst: Uint8Array;
     dstPitch: number;
   }
 ) {
@@ -25,10 +23,10 @@ export function convertPixels(
     options.width,
     options.height,
     options.srcFormat,
-    getStructMemoryAddress(options.src),
+    options.src,
     options.srcPitch,
     options.dstFormat,
-    getStructMemoryAddress(options.dst),
+    options.dst,
     options.dstPitch
   );
 }
@@ -41,12 +39,12 @@ export function convertPixelsAndColorspace(
     srcFormat: PixelFormat;
     srcColorspace: Colorspace;
     srcProperties?: number;
-    src: Pointer | Uint8Array;
+    src: Uint8Array;
     srcPitch: number;
     dstFormat: PixelFormat;
     dstColorspace: Colorspace;
     dstProperties?: number;
-    dst: Pointer | Uint8Array;
+    dst: Uint8Array;
     dstPitch: number;
   }
 ) {
@@ -56,12 +54,12 @@ export function convertPixelsAndColorspace(
     options.srcFormat,
     options.srcColorspace,
     options.srcProperties ?? 0,
-    getStructMemoryAddress(options.src),
+    options.src,
     options.srcPitch,
     options.dstFormat,
     options.dstColorspace,
     options.dstProperties ?? 0,
-    getStructMemoryAddress(options.dst),
+    options.dst,
     options.dstPitch
   );
 }
@@ -74,10 +72,10 @@ export function premultiplyAlpha(
     width: number;
     height: number;
     srcFormat: PixelFormat;
-    src: Pointer | Uint8Array;
+    src: Uint8Array;
     srcPitch: number;
     dstFormat: PixelFormat;
-    dst: Pointer | Uint8Array;
+    dst: Uint8Array;
     dstPitch: number;
     linear: boolean;
   }
@@ -86,10 +84,10 @@ export function premultiplyAlpha(
     options.width,
     options.height,
     options.srcFormat,
-    getStructMemoryAddress(options.src),
+    options.src,
     options.srcPitch,
     options.dstFormat,
-    getStructMemoryAddress(options.dst),
+    options.dst,
     options.dstPitch,
     options.linear
   );

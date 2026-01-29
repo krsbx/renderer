@@ -1,6 +1,6 @@
 import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
-import { getStructMemoryAddress, stringToCString } from '@utility/common';
+import { stringToCString } from '@utility/common';
 import { type Pointer } from 'bun:ffi';
 
 export function ioprintf(
@@ -63,25 +63,21 @@ export function loadFile(this: SDL, file: string) {
 
   this.symbols.SDL_free(dataPtr);
 
-  return {
-    data,
-    size,
-  };
+  return data;
 }
 
 export function saveFileIO(
   this: SDL,
   options: {
     src: Pointer;
-    data: Pointer | Uint8Array;
-    datasize: number;
+    data: Uint8Array;
     closeio: boolean;
   }
 ) {
   return this.symbols.SDL_SaveFile_IO(
     options.src,
-    getStructMemoryAddress(options.data),
-    options.datasize,
+    options.data,
+    options.data.byteLength,
     options.closeio
   );
 }
@@ -90,13 +86,12 @@ export function saveFile(
   this: SDL,
   options: {
     file: string;
-    data: Pointer | Uint8Array;
-    datasize: number;
+    data: Uint8Array;
   }
 ) {
   return this.symbols.SDL_SaveFile(
     stringToCString(options.file).ptr,
-    getStructMemoryAddress(options.data),
-    options.datasize
+    options.data,
+    options.data.byteLength
   );
 }

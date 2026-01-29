@@ -1,6 +1,5 @@
 import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
-import { getStructMemoryAddress } from '@utility/common';
 import { type JSCallback, type Pointer } from 'bun:ffi';
 import type {
   MouseButtonFlags,
@@ -142,8 +141,8 @@ export function captureMouse(this: SDL, enabled: boolean) {
 export function createCursor(
   this: SDL,
   options: {
-    data: Pointer | Uint8Array;
-    mask: Pointer | Uint8Array;
+    data: Uint8Array;
+    mask: Uint8Array;
     w: number;
     h: number;
     hotX: number;
@@ -151,8 +150,8 @@ export function createCursor(
   }
 ) {
   return this.symbols.SDL_CreateCursor(
-    getStructMemoryAddress(options.data),
-    getStructMemoryAddress(options.mask),
+    options.data,
+    options.mask,
     options.w,
     options.h,
     options.hotX,

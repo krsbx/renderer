@@ -1,6 +1,4 @@
 import type { SDL } from '@/sdl';
-import { getStructMemoryAddress } from '@utility/common';
-import { type Pointer } from 'bun:ffi';
 import type { Colorspace, PixelFormat } from '../../../ffi/pixels/constant';
 import { Surface } from '../utility';
 
@@ -31,7 +29,7 @@ export function createSurfaceFrom(
     width: number;
     height: number;
     format: PixelFormat;
-    pixels: Pointer | Uint8Array;
+    pixels: Uint8Array;
     pitch: number;
   }
 ) {
@@ -39,7 +37,7 @@ export function createSurfaceFrom(
     options.width,
     options.height,
     options.format,
-    getStructMemoryAddress(options.pixels),
+    options.pixels,
     options.pitch
   );
 

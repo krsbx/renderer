@@ -1,20 +1,18 @@
 import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
-import { getStructMemoryAddress } from '@utility/common';
 import { type Pointer } from 'bun:ffi';
 
 export function readIO(
   this: SDL,
   options: {
     context: Pointer;
-    ptr: Pointer | Uint8Array;
-    size: number;
+    ptr: Uint8Array;
   }
 ) {
   return this.symbols.SDL_ReadIO(
     options.context,
-    getStructMemoryAddress(options.ptr),
-    options.size
+    options.ptr,
+    options.ptr.byteLength
   );
 }
 

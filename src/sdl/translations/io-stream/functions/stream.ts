@@ -1,5 +1,5 @@
 import type { SDL } from '@/sdl';
-import { getStructMemoryAddress, stringToCString } from '@utility/common';
+import { stringToCString } from '@utility/common';
 import { type Pointer } from 'bun:ffi';
 import { type IOStatus, type IOWhence } from '../../../ffi/io-stream/constant';
 import { IOStreamInterface } from '../utility';
@@ -17,30 +17,12 @@ export function ioFromFile(
   );
 }
 
-export function ioFromMem(
-  this: SDL,
-  options: {
-    mem: Pointer | Uint8Array;
-    size: number;
-  }
-) {
-  return this.symbols.SDL_IOFromMem(
-    getStructMemoryAddress(options.mem),
-    options.size
-  );
+export function ioFromMem(this: SDL, mem: Uint8Array) {
+  return this.symbols.SDL_IOFromMem(mem, mem.byteLength);
 }
 
-export function ioFromConstMem(
-  this: SDL,
-  options: {
-    mem: Pointer | Uint8Array;
-    size: number;
-  }
-) {
-  return this.symbols.SDL_IOFromConstMem(
-    getStructMemoryAddress(options.mem),
-    options.size
-  );
+export function ioFromConstMem(this: SDL, mem: Uint8Array) {
+  return this.symbols.SDL_IOFromConstMem(mem, mem.byteLength);
 }
 
 export function ioFromDynamicMem(this: SDL) {

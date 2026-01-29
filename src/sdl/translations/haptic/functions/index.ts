@@ -1,6 +1,5 @@
 import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
-import { getStructMemoryAddress } from '@utility/common';
 import { type Pointer } from 'bun:ffi';
 import { HapticEffect } from '../utility';
 
@@ -106,13 +105,13 @@ export function updateHapticEffect(
   options: {
     haptic: Pointer;
     effect: number;
-    data: HapticEffect | Uint8Array;
+    data: HapticEffect;
   }
 ) {
   return this.symbols.SDL_UpdateHapticEffect(
     options.haptic,
     options.effect,
-    getStructMemoryAddress(options.data)
+    options.data.$address
   );
 }
 

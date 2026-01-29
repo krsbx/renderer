@@ -57,12 +57,11 @@ export function sendJoystickEffect(
   options: {
     joystick: Pointer;
     data: Uint8Array;
-    size: number;
   }
 ) {
   return this.symbols.SDL_SendJoystickEffect(
     options.joystick,
     options.data,
-    options.size
+    options.data.byteLength
   );
 }

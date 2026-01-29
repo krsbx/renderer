@@ -57,12 +57,11 @@ export function sendGamepadEffect(
   options: {
     gamepad: Pointer;
     data: Uint8Array;
-    size: number;
   }
 ) {
   return this.symbols.SDL_SendGamepadEffect(
     options.gamepad,
     options.data,
-    options.size
+    options.data.byteLength
   );
 }

@@ -113,15 +113,14 @@ export function writeStorageFile(
   options: {
     storage: Pointer;
     path: string;
-    source: Pointer | Uint8Array;
-    length: bigint;
+    source: Uint8Array;
   }
 ) {
   return this.symbols.SDL_WriteStorageFile(
     options.storage,
     stringToCString(options.path).ptr,
     options.source,
-    options.length
+    BigInt(options.source.byteLength)
   );
 }
 

@@ -1,19 +1,17 @@
 import type { SDL } from '@/sdl';
-import { getStructMemoryAddress } from '@utility/common';
 import { type Pointer } from 'bun:ffi';
 
 export function writeIO(
   this: SDL,
   options: {
     context: Pointer;
-    ptr: Pointer | Uint8Array;
-    size: number;
+    ptr: Uint8Array;
   }
 ) {
   return this.symbols.SDL_WriteIO(
     options.context,
-    getStructMemoryAddress(options.ptr),
-    options.size
+    options.ptr,
+    options.ptr.byteLength
   );
 }
 

@@ -1,3 +1,4 @@
+import { AudioDefinition } from './audio/definition';
 import { CoreDefinition } from './core/definition';
 import { ModelDefinition } from './models/definition';
 import { ShapeDefinition } from './shapes/definition';
@@ -11,6 +12,7 @@ export const FFIDefinition = {
   ...TextureDefinition,
   ...TextDefinition,
   ...ModelDefinition,
+  ...AudioDefinition,
 } as const;
 
 // Shim definitions are separate - loaded via cc() at runtime

@@ -345,14 +345,13 @@ export function putAudioStreamData(
   this: SDL,
   options: {
     stream: Pointer;
-    buf: Pointer;
-    len: number;
+    buf: Uint8Array;
   }
 ) {
   return this.symbols.SDL_PutAudioStreamData(
     options.stream,
     options.buf,
-    options.len
+    options.buf.byteLength
   );
 }
 
@@ -394,12 +393,15 @@ export function putAudioStreamPlanarData(
 
 export function getAudioStreamData(
   this: SDL,
-  options: { stream: Pointer; buf: Pointer; len: number }
+  options: {
+    stream: Pointer;
+    buf: Uint8Array;
+  }
 ) {
   return this.symbols.SDL_GetAudioStreamData(
     options.stream,
     options.buf,
-    options.len
+    options.buf.byteLength
   );
 }
 

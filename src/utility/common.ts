@@ -1,4 +1,4 @@
-import { CString, ptr, type Pointer } from 'bun:ffi';
+import { CString, ptr } from 'bun:ffi';
 import { IS_WINDOWS, WIDE_STRING_CHAR_SIZE } from './constant';
 import { CWideString } from './cwstring';
 
@@ -41,9 +41,8 @@ export function combineBitwise<T>(...values: T[]): T {
   return values.reduce((acc, value) => acc | value, 0 as T);
 }
 
-export function cloneCString(value: string | CString) {
-  const finalValue = typeof value === 'string' ? value : value.toString();
-  const buffer = toCStringBuffer(finalValue);
+export function stringToCString(value: string) {
+  const buffer = toCStringBuffer(value);
   const address = ptr(buffer);
 
   const clone = new CString(address);
@@ -52,37 +51,12 @@ export function cloneCString(value: string | CString) {
   return clone as CString & { $buffer: Uint8Array };
 }
 
-export function cloneCWideString(value: string | CWideString) {
-  const finalValue = typeof value === 'string' ? value : value.toString();
-  const buffer = toCWideStringBuffer(finalValue);
+export function stringToCWideString(value: string) {
+  const buffer = toCWideStringBuffer(value);
   const address = ptr(buffer);
 
   const clone = new CWideString(address);
   (clone as CWideString & { $buffer: Uint8Array }).$buffer = buffer;
 
   return clone as CWideString & { $buffer: Uint8Array };
-}
-
-export function stringToCString(value: string) {
-  return cloneCString(value);
-}
-
-export function stringToCWideString(value: string) {
-  return cloneCWideString(value);
-}
-
-export function getStructAddress<
-  T extends { $address: Pointer | Uint8Array } | Pointer,
->(struct: T) {
-  if (typeof struct === 'object') return struct.$address;
-
-  return struct as Pointer;
-}
-
-export function getStructMemoryAddress<
-  T extends Parameters<typeof getStructAddress>[0] | NodeJS.TypedArray,
->(struct: T) {
-  if ('buffer' in struct) return struct as unknown as Pointer;
-
-  return getStructAddress(struct);
 }

@@ -22,8 +22,8 @@ export function closeWindow(this: RayLib) {
   this.symbols.CloseWindow();
 }
 
-export function windowShoudClose(this: RayLib) {
-  this.symbols.WindowShouldClose();
+export function windowShouldClose(this: RayLib) {
+  return this.symbols.WindowShouldClose();
 }
 
 export function isWindowReady(this: RayLib) {

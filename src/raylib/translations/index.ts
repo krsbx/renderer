@@ -1,4 +1,3 @@
-import { ModelDefinition } from '../ffi/models/definition';
 import { AudioTranslation } from './audio';
 import { CoreTranslations } from './core';
 import { ModelsTranslations } from './models';
@@ -12,7 +11,6 @@ export const Translations = {
   ...ShapesTranslations,
   ...TexturesTranslation,
   ...TextTranslation,
-  ...ModelDefinition,
   ...AudioTranslation,
 } as const;
 

@@ -35,4 +35,8 @@ export class Color extends BaseStruct {
   public set a(value: number) {
     this.$view.setUint8(ByteOffset.a, value);
   }
+
+  public toNumber() {
+    return (this.r << 24) | (this.g << 16) | (this.b << 8) | (this.a << 0);
+  }
 }

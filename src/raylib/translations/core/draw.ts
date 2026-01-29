@@ -1,14 +1,17 @@
 import type { RayLib } from '@/raylib';
-import type {
-  Camera2D,
-  Camera3D,
-  RenderTexture2D,
-  Shader,
-  VrStereoConfig,
+import {
+  Color,
+  type Camera2D,
+  type Camera3D,
+  type RenderTexture2D,
+  type Shader,
+  type VrStereoConfig,
 } from '../struct';
 
-export function clearBackground(this: RayLib, color: number) {
-  this.symbols.ClearBackground(color);
+export function clearBackground(this: RayLib, color: Color | number) {
+  this.symbols.ClearBackground(
+    color instanceof Color ? color.toNumber() : color
+  );
 }
 
 export function beginDrawing(this: RayLib) {

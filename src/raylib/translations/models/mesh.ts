@@ -1,7 +1,6 @@
 import type { RayLib } from '@/raylib';
 import { stringToCString } from '@/utility/common';
 import { CStruct } from '@/utility/cstruct';
-import { type Pointer } from 'bun:ffi';
 import { BoundingBox, Vector3 } from '../struct';
 import { Image } from '../struct/image';
 import { Material } from '../struct/material';
@@ -23,8 +22,7 @@ export function updateMeshBuffer(
   options: {
     mesh: Mesh;
     index: number;
-    data: Pointer | Uint8Array;
-    dataSize: number;
+    data: Uint8Array;
     offset: number;
   }
 ) {
@@ -32,7 +30,7 @@ export function updateMeshBuffer(
     options.mesh.$address,
     options.index,
     options.data,
-    options.dataSize,
+    options.data.byteLength,
     options.offset
   );
 }

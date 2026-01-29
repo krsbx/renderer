@@ -1,7 +1,6 @@
 import type { RayLib } from '@/raylib';
 import { stringToCString } from '@/utility/common';
 import { CStruct } from '@/utility/cstruct';
-import { toArrayBuffer } from 'bun:ffi';
 import { Image, Texture2D } from '../struct';
 
 export function loadImage(this: RayLib, fileName: string) {
@@ -65,7 +64,7 @@ export function loadImageAnimFromMemory(
   this.symbols.LoadImageAnimFromMemory(
     stringToCString(options.fileType).ptr,
     options.fileData,
-    options.fileData.length,
+    options.fileData.byteLength,
     framesOut.$address,
     image.$address
   );
@@ -88,7 +87,7 @@ export function loadImageFromMemory(
   this.symbols.LoadImageFromMemory(
     stringToCString(options.fileType).ptr,
     options.fileData,
-    options.fileData.length,
+    options.fileData.byteLength,
     image.$address
   );
 
@@ -153,7 +152,14 @@ export function exportImageToMemory(
     return null;
   }
 
-  return new Uint8Array(toArrayBuffer(ptr, 0, fileSize));
+  const data = new CStruct({
+    address: ptr,
+    length: fileSize,
+  }).clone().$memory;
+
+  this.symbols.UnloadFileData(ptr);
+
+  return data;
 }
 
 export function exportImageAsCode(

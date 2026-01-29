@@ -77,7 +77,7 @@ export function loadFontFromMemory(
   this.symbols.LoadFontFromMemory(
     stringToCString(options.fileType).ptr,
     options.fileData,
-    options.fileData.length,
+    options.fileData.byteLength,
     options.fontSize,
     options.codepoints ?? null,
     codepointCount,
@@ -104,7 +104,7 @@ export function loadFontData(
 
   const glyphsPtr = this.symbols.LoadFontData(
     options.fileData,
-    options.fileData.length,
+    options.fileData.byteLength,
     options.fontSize,
     options.codepoints ?? null,
     codepointCount,

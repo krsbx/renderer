@@ -16,8 +16,7 @@ export function loadWaveFromMemory(
   this: RayLib,
   options: {
     fileType: string;
-    data: Pointer;
-    dataSize: number;
+    data: Uint8Array;
   }
 ) {
   const wave = Wave.create();
@@ -25,7 +24,7 @@ export function loadWaveFromMemory(
   this.symbols.LoadWaveFromMemory(
     stringToCString(options.fileType).ptr,
     options.data,
-    options.dataSize,
+    options.data.byteLength,
     wave.$address
   );
 
@@ -109,18 +108,15 @@ export function waveFormat(
 export function loadWaveSamples(this: RayLib, wave: Wave) {
   const ptr = this.symbols.LoadWaveSamples(wave.$address);
 
-  if (!ptr)
-    return {
-      samples: new Float32Array(0),
-      ptr: null,
-    };
+  if (!ptr) return null;
 
   const sampleCount = wave.frameCount * wave.channels;
 
-  return {
-    samples: CStruct.readArrayPrimitive(ptr, sampleCount, 'f32'),
-    ptr,
-  };
+  const samples = CStruct.readArrayPrimitive(ptr, sampleCount, 'f32').slice();
+
+  this.symbols.UnloadWaveSamples(ptr);
+
+  return samples;
 }
 
 export function unloadWaveSamples(this: RayLib, samples: Pointer) {

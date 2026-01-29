@@ -1,7 +1,4 @@
 import type { RayLib } from '@/raylib';
-import { getStructMemoryAddress } from '@/utility/common';
-import type { CStruct } from '@/utility/cstruct';
-import type { Pointer } from 'bun:ffi';
 import { Color, Vector3, Vector4 } from '../struct';
 
 export function fade(
@@ -185,17 +182,13 @@ export function getColor(this: RayLib, hex: number) {
 export function getPixelColor(
   this: RayLib,
   options: {
-    srcPtr: Uint8Array | Pointer | CStruct;
+    srcPtr: Uint8Array;
     format: number;
   }
 ) {
   const color = Color.create();
 
-  this.symbols.GetPixelColor(
-    getStructMemoryAddress(options.srcPtr),
-    color.$address,
-    options.format
-  );
+  this.symbols.GetPixelColor(options.srcPtr, color.$address, options.format);
 
   return color;
 }
@@ -220,13 +213,13 @@ export function colorToInt(this: RayLib, color: Color) {
 export function setPixelColor(
   this: RayLib,
   options: {
-    dstPtr: Uint8Array | Pointer | CStruct;
+    dstPtr: Uint8Array;
     color: Color;
     format: number;
   }
 ) {
   this.symbols.SetPixelColor(
-    getStructMemoryAddress(options.dstPtr),
+    options.dstPtr,
     options.color.$address,
     options.format
   );

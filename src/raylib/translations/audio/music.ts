@@ -1,6 +1,5 @@
 import type { RayLib } from '@/raylib';
 import { stringToCString } from '@/utility/common';
-import { type Pointer } from 'bun:ffi';
 import { Music } from '../struct';
 
 export function loadMusicStream(this: RayLib, fileName: string) {
@@ -15,8 +14,7 @@ export function loadMusicStreamFromMemory(
   this: RayLib,
   options: {
     fileType: string;
-    data: Pointer;
-    dataSize: number;
+    data: Uint8Array;
   }
 ) {
   const music = Music.create();
@@ -24,7 +22,7 @@ export function loadMusicStreamFromMemory(
   this.symbols.LoadMusicStreamFromMemory(
     stringToCString(options.fileType).ptr,
     options.data,
-    options.dataSize,
+    options.data.byteLength,
     music.$address
   );
 

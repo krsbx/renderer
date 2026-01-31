@@ -1,5 +1,5 @@
-import { BaseStruct, type BaseStructOptions } from '@/utility/base-struct';
-import { Surface } from '../../../surface/utility';
+import { BaseStruct, type BaseStructOptions } from '@basestruct';
+import { Surface } from '../../../surface/struct';
 import { ByteOffset } from './constant';
 
 export class CursorFrameInfo extends BaseStruct {

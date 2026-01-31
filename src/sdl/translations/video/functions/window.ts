@@ -8,9 +8,9 @@ import type {
   ProgressState,
   WindowFlags,
 } from '../../../ffi/video/constant';
-import { Rect } from '../../rect/utility';
-import { Surface } from '../../surface/utility';
-import { DisplayMode } from '../utility';
+import { Rect } from '../../rect/struct';
+import { Surface } from '../../surface/struct';
+import { DisplayMode } from '../struct';
 
 export function getWindowPixelDensity(this: SDL, window: Pointer) {
   return this.symbols.SDL_GetWindowPixelDensity(window);

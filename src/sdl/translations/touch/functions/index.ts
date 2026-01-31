@@ -1,7 +1,7 @@
 import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
 import type { TouchDeviceType } from '../../../ffi/touch/constant';
-import { Finger } from '../utility';
+import { Finger } from '../struct';
 
 export function getTouchDevices(this: SDL) {
   const countStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });

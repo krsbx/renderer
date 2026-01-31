@@ -1,4 +1,4 @@
-import { BaseStruct } from '@/utility/base-struct';
+import { BaseStruct } from '@basestruct';
 import { stringToCString } from '@utility/common';
 import {
   linkSymbols,
@@ -7,7 +7,7 @@ import {
   type Library,
   type Pointer,
 } from 'bun:ffi';
-import { PathInfo } from '../../../file-system/utility';
+import { PathInfo } from '../../../file-system/struct';
 import { ByteOffset } from './constant';
 import { StorageInterfaceDefinition } from './definition';
 import type {

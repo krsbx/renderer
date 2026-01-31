@@ -3,8 +3,8 @@ import { CStruct } from '@cstruct';
 import { stringToCString } from '@utility/common';
 import { ptr, type JSCallback, type Pointer } from 'bun:ffi';
 import type { GlobFlags } from '../../../ffi/file-system/constant';
-import { PathInfo } from '../../file-system/utility';
-import { StorageInterface } from '../utility';
+import { PathInfo } from '../../file-system/struct';
+import { StorageInterface } from '../struct';
 
 export function openTitleStorage(
   this: SDL,

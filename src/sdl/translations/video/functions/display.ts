@@ -5,8 +5,8 @@ import type {
   DisplayOrientation,
   SystemTheme,
 } from '../../../ffi/video/constant';
-import { Point, Rect } from '../../rect/utility';
-import { DisplayMode } from '../utility';
+import { Point, Rect } from '../../rect/struct';
+import { DisplayMode } from '../struct';
 
 export function getNumVideoDrivers(this: SDL) {
   return this.symbols.SDL_GetNumVideoDrivers();

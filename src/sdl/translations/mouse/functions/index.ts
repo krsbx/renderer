@@ -5,8 +5,8 @@ import type {
   MouseButtonFlags,
   SystemCursor,
 } from '../../../ffi/mouse/constant';
-import { Surface } from '../../surface/utility';
-import { CursorFrameInfo } from '../utility';
+import { Surface } from '../../surface/struct';
+import { CursorFrameInfo } from '../struct';
 
 export function hasMouse(this: SDL) {
   return this.symbols.SDL_HasMouse();

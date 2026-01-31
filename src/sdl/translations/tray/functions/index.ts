@@ -3,7 +3,7 @@ import { CStruct } from '@cstruct';
 import { stringToCString } from '@utility/common';
 import { type JSCallback, type Pointer } from 'bun:ffi';
 import type { TrayEntryFlags } from '../../../ffi/tray/constant';
-import { Surface } from '../../surface/utility';
+import { Surface } from '../../surface/struct';
 
 export function createTray(
   this: SDL,

@@ -1,7 +1,8 @@
 import type { SDL } from '@/sdl';
+import type { Gamepad, Joystick } from '@/sdl/types/definition';
 import { CStruct } from '@cstruct';
 import { stringToCString } from '@utility/common';
-import { CString, type Pointer } from 'bun:ffi';
+import { CString } from 'bun:ffi';
 import {
   type GamepadAxis,
   type GamepadButton,
@@ -89,49 +90,49 @@ export function getGamepadMappingForID(this: SDL, instanceId: number) {
 }
 
 export function openGamepad(this: SDL, instanceId: number) {
-  return this.symbols.SDL_OpenGamepad(instanceId);
+  return this.symbols.SDL_OpenGamepad(instanceId) as Gamepad;
 }
 
 export function getGamepadFromID(this: SDL, instanceId: number) {
-  return this.symbols.SDL_GetGamepadFromID(instanceId);
+  return this.symbols.SDL_GetGamepadFromID(instanceId) as Gamepad;
 }
 
 export function getGamepadFromPlayerIndex(this: SDL, playerIndex: number) {
-  return this.symbols.SDL_GetGamepadFromPlayerIndex(playerIndex);
+  return this.symbols.SDL_GetGamepadFromPlayerIndex(playerIndex) as Gamepad;
 }
 
-export function getGamepadProperties(this: SDL, gamepad: Pointer) {
+export function getGamepadProperties(this: SDL, gamepad: Gamepad) {
   return this.symbols.SDL_GetGamepadProperties(gamepad);
 }
 
-export function getGamepadID(this: SDL, gamepad: Pointer) {
+export function getGamepadID(this: SDL, gamepad: Gamepad) {
   return this.symbols.SDL_GetGamepadID(gamepad);
 }
 
-export function getGamepadName(this: SDL, gamepad: Pointer) {
+export function getGamepadName(this: SDL, gamepad: Gamepad) {
   return this.symbols.SDL_GetGamepadName(gamepad).toString();
 }
 
-export function getGamepadPath(this: SDL, gamepad: Pointer) {
+export function getGamepadPath(this: SDL, gamepad: Gamepad) {
   return this.symbols.SDL_GetGamepadPath(gamepad).toString();
 }
 
-export function getGamepadType(this: SDL, gamepad: Pointer) {
+export function getGamepadType(this: SDL, gamepad: Gamepad) {
   return this.symbols.SDL_GetGamepadType(gamepad) as GamepadType;
 }
 
-export function getRealGamepadType(this: SDL, gamepad: Pointer) {
+export function getRealGamepadType(this: SDL, gamepad: Gamepad) {
   return this.symbols.SDL_GetRealGamepadType(gamepad) as GamepadType;
 }
 
-export function getGamepadPlayerIndex(this: SDL, gamepad: Pointer) {
+export function getGamepadPlayerIndex(this: SDL, gamepad: Gamepad) {
   return this.symbols.SDL_GetGamepadPlayerIndex(gamepad);
 }
 
 export function setGamepadPlayerIndex(
   this: SDL,
   options: {
-    gamepad: Pointer;
+    gamepad: Gamepad;
     playerIndex: number;
   }
 ) {
@@ -141,37 +142,37 @@ export function setGamepadPlayerIndex(
   );
 }
 
-export function getGamepadVendor(this: SDL, gamepad: Pointer) {
+export function getGamepadVendor(this: SDL, gamepad: Gamepad) {
   return this.symbols.SDL_GetGamepadVendor(gamepad);
 }
 
-export function getGamepadProduct(this: SDL, gamepad: Pointer) {
+export function getGamepadProduct(this: SDL, gamepad: Gamepad) {
   return this.symbols.SDL_GetGamepadProduct(gamepad);
 }
 
-export function getGamepadProductVersion(this: SDL, gamepad: Pointer) {
+export function getGamepadProductVersion(this: SDL, gamepad: Gamepad) {
   return this.symbols.SDL_GetGamepadProductVersion(gamepad);
 }
 
-export function getGamepadFirmwareVersion(this: SDL, gamepad: Pointer) {
+export function getGamepadFirmwareVersion(this: SDL, gamepad: Gamepad) {
   return this.symbols.SDL_GetGamepadFirmwareVersion(gamepad);
 }
 
-export function getGamepadSerial(this: SDL, gamepad: Pointer) {
+export function getGamepadSerial(this: SDL, gamepad: Gamepad) {
   return this.symbols.SDL_GetGamepadSerial(gamepad).toString();
 }
 
-export function getGamepadSteamHandle(this: SDL, gamepad: Pointer) {
+export function getGamepadSteamHandle(this: SDL, gamepad: Gamepad) {
   return this.symbols.SDL_GetGamepadSteamHandle(gamepad);
 }
 
-export function getGamepadConnectionState(this: SDL, gamepad: Pointer) {
+export function getGamepadConnectionState(this: SDL, gamepad: Gamepad) {
   return this.symbols.SDL_GetGamepadConnectionState(
     gamepad
   ) as JoystickConnectionState;
 }
 
-export function getGamepadPowerInfo(this: SDL, gamepad: Pointer) {
+export function getGamepadPowerInfo(this: SDL, gamepad: Gamepad) {
   const struct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
   const state = this.symbols.SDL_GetGamepadPowerInfo(
@@ -186,12 +187,12 @@ export function getGamepadPowerInfo(this: SDL, gamepad: Pointer) {
   };
 }
 
-export function gamepadConnected(this: SDL, gamepad: Pointer) {
+export function gamepadConnected(this: SDL, gamepad: Gamepad) {
   return this.symbols.SDL_GamepadConnected(gamepad);
 }
 
-export function getGamepadJoystick(this: SDL, gamepad: Pointer) {
-  return this.symbols.SDL_GetGamepadJoystick(gamepad);
+export function getGamepadJoystick(this: SDL, gamepad: Gamepad) {
+  return this.symbols.SDL_GetGamepadJoystick(gamepad) as Joystick;
 }
 
 export function setGamepadEventsEnabled(this: SDL, enabled: boolean) {
@@ -202,7 +203,7 @@ export function gamepadEventsEnabled(this: SDL) {
   return this.symbols.SDL_GamepadEventsEnabled();
 }
 
-export function getGamepadBindings(this: SDL, gamepad: Pointer) {
+export function getGamepadBindings(this: SDL, gamepad: Gamepad) {
   const struct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
   const listPtr = this.symbols.SDL_GetGamepadBindings(gamepad, struct.$address);
@@ -232,14 +233,14 @@ export function getGamepadStringForType(this: SDL, type: GamepadType) {
   return this.symbols.SDL_GetGamepadStringForType(type).toString();
 }
 
-export function closeGamepad(this: SDL, gamepad: Pointer) {
+export function closeGamepad(this: SDL, gamepad: Gamepad) {
   this.symbols.SDL_CloseGamepad(gamepad);
 }
 
 export function getGamepadAppleSFSymbolsNameForButton(
   this: SDL,
   options: {
-    gamepad: Pointer;
+    gamepad: Gamepad;
     button: GamepadButton;
   }
 ) {
@@ -251,11 +252,14 @@ export function getGamepadAppleSFSymbolsNameForButton(
 export function getGamepadAppleSFSymbolsNameForAxis(
   this: SDL,
   options: {
-    gamepad: Pointer;
+    gamepad: Gamepad;
     axis: GamepadAxis;
   }
 ) {
-  return this.symbols
-    .SDL_GetGamepadAppleSFSymbolsNameForAxis(options.gamepad, options.axis)
-    .toString();
+  const name = this.symbols.SDL_GetGamepadAppleSFSymbolsNameForAxis(
+    options.gamepad,
+    options.axis
+  );
+
+  return name.toString();
 }

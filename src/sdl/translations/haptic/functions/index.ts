@@ -1,6 +1,6 @@
 import type { SDL } from '@/sdl';
+import type { Haptic, Joystick } from '@/sdl/types/definition';
 import { CStruct } from '@cstruct';
-import { type Pointer } from 'bun:ffi';
 import { HapticEffect } from '../struct';
 
 export function getHaptics(this: SDL) {
@@ -23,18 +23,18 @@ export function getHapticNameForID(this: SDL, instanceId: number) {
 }
 
 export function openHaptic(this: SDL, instanceId: number) {
-  return this.symbols.SDL_OpenHaptic(instanceId);
+  return this.symbols.SDL_OpenHaptic(instanceId) as Haptic;
 }
 
 export function getHapticFromID(this: SDL, instanceId: number) {
-  return this.symbols.SDL_GetHapticFromID(instanceId);
+  return this.symbols.SDL_GetHapticFromID(instanceId) as Haptic;
 }
 
-export function getHapticID(this: SDL, haptic: Pointer) {
+export function getHapticID(this: SDL, haptic: Haptic) {
   return this.symbols.SDL_GetHapticID(haptic);
 }
 
-export function getHapticName(this: SDL, haptic: Pointer) {
+export function getHapticName(this: SDL, haptic: Haptic) {
   return this.symbols.SDL_GetHapticName(haptic).toString();
 }
 
@@ -43,41 +43,41 @@ export function isMouseHaptic(this: SDL) {
 }
 
 export function openHapticFromMouse(this: SDL) {
-  return this.symbols.SDL_OpenHapticFromMouse();
+  return this.symbols.SDL_OpenHapticFromMouse() as Haptic;
 }
 
-export function isJoystickHaptic(this: SDL, joystick: Pointer) {
+export function isJoystickHaptic(this: SDL, joystick: Joystick) {
   return this.symbols.SDL_IsJoystickHaptic(joystick);
 }
 
-export function openHapticFromJoystick(this: SDL, joystick: Pointer) {
+export function openHapticFromJoystick(this: SDL, joystick: Joystick) {
   return this.symbols.SDL_OpenHapticFromJoystick(joystick);
 }
 
-export function closeHaptic(this: SDL, haptic: Pointer) {
+export function closeHaptic(this: SDL, haptic: Haptic) {
   this.symbols.SDL_CloseHaptic(haptic);
 }
 
-export function getMaxHapticEffects(this: SDL, haptic: Pointer) {
+export function getMaxHapticEffects(this: SDL, haptic: Haptic) {
   return this.symbols.SDL_GetMaxHapticEffects(haptic);
 }
 
-export function getMaxHapticEffectsPlaying(this: SDL, haptic: Pointer) {
+export function getMaxHapticEffectsPlaying(this: SDL, haptic: Haptic) {
   return this.symbols.SDL_GetMaxHapticEffectsPlaying(haptic);
 }
 
-export function getHapticFeatures(this: SDL, haptic: Pointer) {
+export function getHapticFeatures(this: SDL, haptic: Haptic) {
   return this.symbols.SDL_GetHapticFeatures(haptic);
 }
 
-export function getNumHapticAxes(this: SDL, haptic: Pointer) {
+export function getNumHapticAxes(this: SDL, haptic: Haptic) {
   return this.symbols.SDL_GetNumHapticAxes(haptic);
 }
 
 export function hapticEffectSupported(
   this: SDL,
   options: {
-    haptic: Pointer;
+    haptic: Haptic;
     effect: HapticEffect;
   }
 ) {
@@ -90,7 +90,7 @@ export function hapticEffectSupported(
 export function createHapticEffect(
   this: SDL,
   options: {
-    haptic: Pointer;
+    haptic: Haptic;
     effect: HapticEffect;
   }
 ) {
@@ -103,7 +103,7 @@ export function createHapticEffect(
 export function updateHapticEffect(
   this: SDL,
   options: {
-    haptic: Pointer;
+    haptic: Haptic;
     effect: number;
     data: HapticEffect;
   }
@@ -118,7 +118,7 @@ export function updateHapticEffect(
 export function runHapticEffect(
   this: SDL,
   options: {
-    haptic: Pointer;
+    haptic: Haptic;
     effect: number;
     iterations: number;
   }
@@ -133,7 +133,7 @@ export function runHapticEffect(
 export function stopHapticEffect(
   this: SDL,
   options: {
-    haptic: Pointer;
+    haptic: Haptic;
     effect: number;
   }
 ) {
@@ -143,7 +143,7 @@ export function stopHapticEffect(
 export function destroyHapticEffect(
   this: SDL,
   options: {
-    haptic: Pointer;
+    haptic: Haptic;
     effect: number;
   }
 ) {
@@ -153,7 +153,7 @@ export function destroyHapticEffect(
 export function getHapticEffectStatus(
   this: SDL,
   options: {
-    haptic: Pointer;
+    haptic: Haptic;
     effect: number;
   }
 ) {
@@ -163,7 +163,7 @@ export function getHapticEffectStatus(
 export function setHapticGain(
   this: SDL,
   options: {
-    haptic: Pointer;
+    haptic: Haptic;
     gain: number;
   }
 ) {
@@ -173,7 +173,7 @@ export function setHapticGain(
 export function setHapticAutocenter(
   this: SDL,
   options: {
-    haptic: Pointer;
+    haptic: Haptic;
     autocenter: number;
   }
 ) {
@@ -183,30 +183,30 @@ export function setHapticAutocenter(
   );
 }
 
-export function pauseHaptic(this: SDL, haptic: Pointer) {
+export function pauseHaptic(this: SDL, haptic: Haptic) {
   return this.symbols.SDL_PauseHaptic(haptic);
 }
 
-export function resumeHaptic(this: SDL, haptic: Pointer) {
+export function resumeHaptic(this: SDL, haptic: Haptic) {
   return this.symbols.SDL_ResumeHaptic(haptic);
 }
 
-export function stopHapticEffects(this: SDL, haptic: Pointer) {
+export function stopHapticEffects(this: SDL, haptic: Haptic) {
   return this.symbols.SDL_StopHapticEffects(haptic);
 }
 
-export function hapticRumbleSupported(this: SDL, haptic: Pointer) {
+export function hapticRumbleSupported(this: SDL, haptic: Haptic) {
   return this.symbols.SDL_HapticRumbleSupported(haptic);
 }
 
-export function initHapticRumble(this: SDL, haptic: Pointer) {
+export function initHapticRumble(this: SDL, haptic: Haptic) {
   return this.symbols.SDL_InitHapticRumble(haptic);
 }
 
 export function playHapticRumble(
   this: SDL,
   options: {
-    haptic: Pointer;
+    haptic: Haptic;
     strength: number;
     length: number;
   }
@@ -218,6 +218,6 @@ export function playHapticRumble(
   );
 }
 
-export function stopHapticRumble(this: SDL, haptic: Pointer) {
+export function stopHapticRumble(this: SDL, haptic: Haptic) {
   return this.symbols.SDL_StopHapticRumble(haptic);
 }

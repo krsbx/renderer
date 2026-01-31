@@ -1,9 +1,11 @@
 import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
 import { stringToCString } from '@utility/common';
-import { CString, type JSCallback, type Pointer } from 'bun:ffi';
+import { CString } from 'bun:ffi';
 import type { Folder, GlobFlags } from '../../../ffi/file-system/constant';
 import { PathInfo } from '../struct';
+import type { EnumerateDirectoryCallbackFn } from '../types/callback';
+import { createEnumerateCallback } from '../utility/callback';
 
 export function getBasePath(this: SDL) {
   return this.symbols.SDL_GetBasePath().toString();
@@ -42,15 +44,20 @@ export function enumerateDirectory(
   this: SDL,
   options: {
     path: string;
-    callback: JSCallback;
-    userdata?: Pointer | null;
+    callback: EnumerateDirectoryCallbackFn;
   }
 ) {
-  return this.symbols.SDL_EnumerateDirectory(
+  const cb = createEnumerateCallback(options.callback);
+
+  const success = this.symbols.SDL_EnumerateDirectory(
     stringToCString(options.path).ptr,
-    options.callback.ptr,
-    options.userdata ?? null
+    cb.ptr,
+    null
   );
+
+  cb.close();
+
+  return success;
 }
 
 export function removePath(this: SDL, path: string) {

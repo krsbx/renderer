@@ -1,15 +1,15 @@
 import type { SDL } from '@/sdl';
+import type { Gamepad } from '@/sdl/types/definition';
 import { CStruct } from '@cstruct';
-import type { Pointer } from 'bun:ffi';
 
-export function getNumGamepadTouchpads(this: SDL, gamepad: Pointer) {
+export function getNumGamepadTouchpads(this: SDL, gamepad: Gamepad) {
   return this.symbols.SDL_GetNumGamepadTouchpads(gamepad);
 }
 
 export function getNumGamepadTouchpadFingers(
   this: SDL,
   options: {
-    gamepad: Pointer;
+    gamepad: Gamepad;
     touchpad: number;
   }
 ) {
@@ -22,7 +22,7 @@ export function getNumGamepadTouchpadFingers(
 export function getGamepadTouchpadFinger(
   this: SDL,
   options: {
-    gamepad: Pointer;
+    gamepad: Gamepad;
     touchpad: number;
     finger: number;
   }

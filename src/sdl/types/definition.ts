@@ -17,6 +17,15 @@ export type AudioStream = SDLOpaque<'AudioStream'>;
 // Camera
 export type Camera = SDLOpaque<'Camera'>;
 
+// Gamepad
+export type Gamepad = SDLOpaque<'Gamepad'>;
+
+// Haptic
+export type Haptic = SDLOpaque<'Haptic'>;
+
+// Joystick
+export type Joystick = SDLOpaque<'Joystick'>;
+
 // IO Stream
 export type IOStream = SDLOpaque<'IOStream'>;
 

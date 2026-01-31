@@ -1,7 +1,6 @@
 import type { SDL } from '@/sdl';
 import type { AsyncIO, AsyncIOQueue } from '@/sdl/types/definition';
 import { stringToCString } from '@utility/common';
-import { type Pointer } from 'bun:ffi';
 import { AsyncIOOutcome } from '../struct';
 
 export function asyncIOFromFile(
@@ -26,7 +25,6 @@ export function readAsyncIO(
     offset: number | bigint;
     size: number | bigint;
     queue?: AsyncIOQueue | null;
-    userdata?: Pointer | null;
   }
 ) {
   return this.symbols.SDL_ReadAsyncIO(
@@ -35,7 +33,7 @@ export function readAsyncIO(
     BigInt(options.offset),
     BigInt(options.size),
     options.queue ?? null,
-    options.userdata ?? null
+    null
   );
 }
 
@@ -47,7 +45,6 @@ export function writeAsyncIO(
     offset: number | bigint;
     size: number | bigint;
     queue?: AsyncIOQueue | null;
-    userdata?: Pointer | null;
   }
 ) {
   return this.symbols.SDL_WriteAsyncIO(
@@ -56,7 +53,7 @@ export function writeAsyncIO(
     BigInt(options.offset),
     BigInt(options.size),
     options.queue ?? null,
-    options.userdata ?? null
+    null
   );
 }
 
@@ -66,14 +63,13 @@ export function closeAsyncIO(
     asyncio: AsyncIO;
     flush: boolean;
     queue?: AsyncIOQueue | null;
-    userdata?: Pointer | null;
   }
 ) {
   return this.symbols.SDL_CloseAsyncIO(
     options.asyncio,
     options.flush,
     options.queue ?? null,
-    options.userdata ?? null
+    null
   );
 }
 
@@ -130,12 +126,11 @@ export function loadFileAsync(
   options: {
     file: string;
     queue: AsyncIOQueue;
-    userdata?: Pointer | null;
   }
 ) {
   return this.symbols.SDL_LoadFileAsync(
     stringToCString(options.file).ptr,
     options.queue,
-    options.userdata ?? null
+    null
   );
 }

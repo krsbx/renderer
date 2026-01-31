@@ -1,10 +1,10 @@
 import type { SDL } from '@/sdl';
-import { type Pointer } from 'bun:ffi';
+import type { Gamepad } from '@/sdl/types/definition';
 
 export function rumbleGamepad(
   this: SDL,
   options: {
-    gamepad: Pointer;
+    gamepad: Gamepad;
     lowFrequencyRumble: number;
     highFrequencyRumble: number;
     durationMs: number;
@@ -21,7 +21,7 @@ export function rumbleGamepad(
 export function rumbleGamepadTriggers(
   this: SDL,
   options: {
-    gamepad: Pointer;
+    gamepad: Gamepad;
     leftRumble: number;
     rightRumble: number;
     durationMs: number;
@@ -38,7 +38,7 @@ export function rumbleGamepadTriggers(
 export function setGamepadLED(
   this: SDL,
   options: {
-    gamepad: Pointer;
+    gamepad: Gamepad;
     red: number;
     green: number;
     blue: number;
@@ -55,7 +55,7 @@ export function setGamepadLED(
 export function sendGamepadEffect(
   this: SDL,
   options: {
-    gamepad: Pointer;
+    gamepad: Gamepad;
     data: Uint8Array;
   }
 ) {

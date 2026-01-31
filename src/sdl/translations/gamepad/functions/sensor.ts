@@ -1,11 +1,11 @@
 import type { SDL } from '@/sdl';
-import type { Pointer } from 'bun:ffi';
+import type { Gamepad } from '@/sdl/types/definition';
 import type { SensorType } from '../../../ffi/sensor/constant';
 
 export function gamepadHasSensor(
   this: SDL,
   options: {
-    gamepad: Pointer;
+    gamepad: Gamepad;
     type: SensorType;
   }
 ) {
@@ -15,7 +15,7 @@ export function gamepadHasSensor(
 export function setGamepadSensorEnabled(
   this: SDL,
   options: {
-    gamepad: Pointer;
+    gamepad: Gamepad;
     type: SensorType;
     enabled: boolean;
   }
@@ -30,7 +30,7 @@ export function setGamepadSensorEnabled(
 export function gamepadSensorEnabled(
   this: SDL,
   options: {
-    gamepad: Pointer;
+    gamepad: Gamepad;
     type: SensorType;
   }
 ) {
@@ -40,7 +40,7 @@ export function gamepadSensorEnabled(
 export function getGamepadSensorDataRate(
   this: SDL,
   options: {
-    gamepad: Pointer;
+    gamepad: Gamepad;
     type: SensorType;
   }
 ) {
@@ -53,7 +53,7 @@ export function getGamepadSensorDataRate(
 export function getGamepadSensorData(
   this: SDL,
   options: {
-    gamepad: Pointer;
+    gamepad: Gamepad;
     type: SensorType;
     numValues: number;
   }

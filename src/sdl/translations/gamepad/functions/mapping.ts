@@ -1,7 +1,8 @@
 import type { SDL } from '@/sdl';
+import type { Gamepad, IOStream } from '@/sdl/types/definition';
 import { CStruct } from '@cstruct';
 import { stringToCString } from '@utility/common';
-import { CString, type Pointer } from 'bun:ffi';
+import { CString } from 'bun:ffi';
 import { GUID } from '../../guid/struct';
 
 export function addGamepadMapping(this: SDL, mapping: string) {
@@ -11,7 +12,7 @@ export function addGamepadMapping(this: SDL, mapping: string) {
 export function addGamepadMappingsFromIO(
   this: SDL,
   options: {
-    src: Pointer;
+    src: IOStream;
     closeio: boolean;
   }
 ) {
@@ -56,7 +57,7 @@ export function getGamepadMappingForGUID(this: SDL, guid: GUID) {
   return mapping.toString();
 }
 
-export function getGamepadMapping(this: SDL, gamepad: Pointer) {
+export function getGamepadMapping(this: SDL, gamepad: Gamepad) {
   const ptr = this.symbols.SDL_GetGamepadMapping(gamepad);
 
   if (!ptr) return null;

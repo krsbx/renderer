@@ -1,6 +1,6 @@
 import type { SDL } from '@/sdl';
+import type { Gamepad } from '@/sdl/types/definition';
 import { stringToCString } from '@utility/common';
-import { type Pointer } from 'bun:ffi';
 import {
   GamepadButtonLabel,
   type GamepadButton,
@@ -20,7 +20,7 @@ export function getGamepadStringForButton(this: SDL, button: GamepadButton) {
 export function gamepadHasButton(
   this: SDL,
   options: {
-    gamepad: Pointer;
+    gamepad: Gamepad;
     button: GamepadButton;
   }
 ) {
@@ -30,7 +30,7 @@ export function gamepadHasButton(
 export function getGamepadButton(
   this: SDL,
   options: {
-    gamepad: Pointer;
+    gamepad: Gamepad;
     button: GamepadButton;
   }
 ) {
@@ -53,7 +53,7 @@ export function getGamepadButtonLabelForType(
 export function getGamepadButtonLabel(
   this: SDL,
   options: {
-    gamepad: Pointer;
+    gamepad: Gamepad;
     button: GamepadButton;
   }
 ) {

@@ -6,7 +6,7 @@ import {
 import {
   Translations,
   type Translations as TranslationsType,
-} from './translations/index';
+} from './translations';
 
 export class BaseSDL implements Library<FFIDefinitionType> {
   /** Close the SDL library */

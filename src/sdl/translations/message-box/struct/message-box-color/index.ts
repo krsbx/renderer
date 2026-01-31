@@ -1,8 +1,8 @@
-import { BaseStruct } from '@/utility/base-struct';
+import { BaseStruct } from '@basestruct';
 import { ByteOffset } from './constant';
 
-export class Color extends BaseStruct {
-  public static override readonly BYTE_SIZE = 4;
+export class MessageBoxColor extends BaseStruct {
+  public static override readonly BYTE_SIZE = 3;
 
   public get r() {
     return this.$view.getUint8(ByteOffset.r);
@@ -26,13 +26,5 @@ export class Color extends BaseStruct {
 
   public set b(value: number) {
     this.$view.setUint8(ByteOffset.b, value);
-  }
-
-  public get a() {
-    return this.$view.getUint8(ByteOffset.a);
-  }
-
-  public set a(value: number) {
-    this.$view.setUint8(ByteOffset.a, value);
   }
 }

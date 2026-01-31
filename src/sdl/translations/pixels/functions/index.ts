@@ -1,7 +1,7 @@
 import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
 import type { PixelFormat } from '../../../ffi/pixels/constant';
-import { Color, Palette, PixelFormatDetails } from '../utility';
+import { Color, Palette, PixelFormatDetails } from '../struct';
 
 export function getPixelFormatName(this: SDL, format: PixelFormat) {
   return this.symbols.SDL_GetPixelFormatName(format).toString();

@@ -1,5 +1,5 @@
+import type { Scancode } from '@sdl/ffi/constant/scancode';
 import { read, type Pointer } from 'bun:ffi';
-import type { Scancode } from '../../../../ffi/scancode/constant';
 
 /**
  * Wrapper for SDL keyboard state array.

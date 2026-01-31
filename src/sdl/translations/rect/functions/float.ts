@@ -1,6 +1,6 @@
 import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
-import { FPoint, FRect } from '../utility';
+import { FPoint, FRect } from '../struct';
 
 export function hasRectIntersectionFloat(
   this: SDL,

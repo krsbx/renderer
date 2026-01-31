@@ -1,7 +1,7 @@
-import { BaseStruct } from '@/utility/base-struct';
+import { BaseStruct } from '@basestruct';
+import type { MessageBoxButtonFlags } from '@sdl/ffi/constant/message-box';
 import { stringToCString } from '@utility/common';
 import { CString, type Pointer } from 'bun:ffi';
-import type { MessageBoxButtonFlags } from '../../../../ffi/message-box/constant';
 import { ByteOffset } from './constant';
 
 export class MessageBoxButtonData extends BaseStruct {

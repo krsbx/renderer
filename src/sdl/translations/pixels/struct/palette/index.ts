@@ -1,4 +1,4 @@
-import { BaseStruct, type BaseStructOptions } from '@/utility/base-struct';
+import { BaseStruct, type BaseStructOptions } from '@basestruct';
 import { Color } from '../color';
 import { ByteOffset } from './constant';
 

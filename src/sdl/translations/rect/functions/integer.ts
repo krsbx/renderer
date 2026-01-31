@@ -1,6 +1,6 @@
 import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
-import { Point, Rect } from '../utility';
+import { Point, Rect } from '../struct';
 
 export function hasRectIntersection(
   this: SDL,

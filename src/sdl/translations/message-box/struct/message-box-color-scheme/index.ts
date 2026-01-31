@@ -1,5 +1,5 @@
-import { BaseStruct, type BaseStructOptions } from '@/utility/base-struct';
-import { MessageBoxColorType } from '../../../../ffi/message-box/constant';
+import { BaseStruct, type BaseStructOptions } from '@basestruct';
+import { MessageBoxColorType } from '@sdl/ffi/constant/message-box';
 import { MessageBoxColor } from '../message-box-color';
 
 export class MessageBoxColorScheme extends BaseStruct {

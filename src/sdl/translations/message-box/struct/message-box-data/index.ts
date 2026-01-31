@@ -1,8 +1,8 @@
-import { BaseStruct } from '@/utility/base-struct';
-import { CStruct } from '@/utility/cstruct';
+import { BaseStruct } from '@basestruct';
+import type { MessageBoxFlags } from '@sdl/ffi/constant/message-box';
 import { stringToCString } from '@utility/common';
+import { CStruct } from '@utility/cstruct';
 import { CString, ptr, type Pointer } from 'bun:ffi';
-import type { MessageBoxFlags } from '../../../../ffi/message-box/constant';
 import { MessageBoxButtonData } from '../message-box-button-data';
 import { MessageBoxColorScheme } from '../message-box-color-scheme';
 import { ByteOffset } from './constant';

@@ -4,8 +4,8 @@ import { stringToCString } from '@utility/common';
 import type { Pointer } from 'bun:ffi';
 import type { Keycode, Keymod } from '../../../ffi/keycode/constant';
 import type { Scancode } from '../../../ffi/scancode/constant';
-import { Rect } from '../../rect/utility';
-import { KeyboardState } from '../utility';
+import { Rect } from '../../rect/struct';
+import { KeyboardState } from '../struct';
 
 export function hasKeyboard(this: SDL) {
   return this.symbols.SDL_HasKeyboard();

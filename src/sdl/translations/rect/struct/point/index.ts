@@ -1,4 +1,4 @@
-import { BaseStruct } from '@/utility/base-struct';
+import { BaseStruct } from '@basestruct';
 import { ByteOffset } from './constant';
 
 export class Point extends BaseStruct {

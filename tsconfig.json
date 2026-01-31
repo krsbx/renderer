@@ -29,6 +29,8 @@
       "@/*": ["./src/*"],
       "@cstruct": ["./src/utility/cstruct/index.ts"],
       "@cwstring": ["./src/utility/cwstring.ts"],
+      "@basestruct": ["./src/utility/base-struct.ts"],
+      "@sdl/ffi/constant/*": ["./src/sdl/ffi/*/constant.ts"],
       "@constant": ["./src/utility/constant.ts"],
       "@utility/*": ["./src/utility/*"],
     },

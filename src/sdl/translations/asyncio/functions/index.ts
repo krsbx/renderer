@@ -1,7 +1,7 @@
 import type { SDL } from '@/sdl';
 import { stringToCString } from '@utility/common';
 import { type Pointer } from 'bun:ffi';
-import { AsyncIOOutcome } from '../utility';
+import { AsyncIOOutcome } from '../struct';
 
 export function asyncIOFromFile(
   this: SDL,

@@ -2,7 +2,7 @@ import type { SDL } from '@/sdl';
 import { stringToCString } from '@utility/common';
 import { type Pointer } from 'bun:ffi';
 import type { AssertState } from '../../../ffi/assert/constant';
-import { AssertData } from '../utility';
+import { AssertData } from '../struct';
 
 export function reportAssertion(
   this: SDL,

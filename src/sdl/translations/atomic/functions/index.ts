@@ -1,6 +1,6 @@
 import type { SDL } from '@/sdl';
 import type { Pointer } from 'bun:ffi';
-import { AtomicInt, AtomicU32, SpinLock } from '../utility';
+import { AtomicInt, AtomicU32, SpinLock } from '../struct';
 
 export function tryLockSpinlock(this: SDL, lock: SpinLock) {
   return this.symbols.SDL_TryLockSpinlock(lock.$address);

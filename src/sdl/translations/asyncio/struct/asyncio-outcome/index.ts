@@ -1,9 +1,6 @@
-import { BaseStruct } from '@/utility/base-struct';
+import { BaseStruct } from '@basestruct';
+import type { AsyncIOResult, AsyncIOTaskType } from '@sdl/ffi/constant/asyncio';
 import { type Pointer } from 'bun:ffi';
-import type {
-  AsyncIOResult,
-  AsyncIOTaskType,
-} from '../../../../ffi/asyncio/constant';
 import { ByteOffset } from './constant';
 
 export class AsyncIOOutcome extends BaseStruct {

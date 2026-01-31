@@ -1,6 +1,6 @@
 import type { SDL } from '@/sdl';
 import type { Pointer } from 'bun:ffi';
-import { InitState } from '../utility';
+import { InitState } from '../struct';
 
 export function createMutex(this: SDL) {
   return this.symbols.SDL_CreateMutex();

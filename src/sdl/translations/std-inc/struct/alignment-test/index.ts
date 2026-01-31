@@ -1,4 +1,4 @@
-import { BaseStruct } from '@/utility/base-struct';
+import { BaseStruct } from '@basestruct';
 import { type Pointer } from 'bun:ffi';
 import { ByteOffset } from './constant';
 

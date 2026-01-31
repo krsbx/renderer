@@ -1,6 +1,6 @@
-import { BaseStruct, type BaseStructOptions } from '@/utility/base-struct';
+import { BaseStruct, type BaseStructOptions } from '@basestruct';
 import { type Pointer } from 'bun:ffi';
-import { AtomicInt } from '../../../atomic/utility';
+import { AtomicInt } from '../../../atomic/struct';
 import { ByteOffset } from './constant';
 
 export class InitState extends BaseStruct {

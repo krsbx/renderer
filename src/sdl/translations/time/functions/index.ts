@@ -1,7 +1,7 @@
 import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
 import type { DateFormat, TimeFormat } from '../../../ffi/time/constant';
-import { DateTime } from '../utility';
+import { DateTime } from '../struct';
 
 export function getDateTimeLocalePreferences(this: SDL) {
   const dateFormatStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });

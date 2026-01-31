@@ -1,8 +1,8 @@
-import { BaseStruct } from '@/utility/base-struct';
+import { BaseStruct } from '@basestruct';
 import { CWideString } from '@cwstring';
+import type { HIDBusType } from '@sdl/ffi/constant/hidapi';
 import { stringToCString } from '@utility/common';
 import { CString, type Pointer } from 'bun:ffi';
-import type { HIDBusType } from '../../../../ffi/hidapi/constant';
 import { ByteOffset } from './constant';
 
 export class HIDDeviceInfo extends BaseStruct {

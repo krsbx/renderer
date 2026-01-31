@@ -2,7 +2,7 @@ import type { SDL } from '@/sdl';
 import { stringToCString } from '@utility/common';
 import { type Pointer } from 'bun:ffi';
 import { type IOStatus, type IOWhence } from '../../../ffi/io-stream/constant';
-import { IOStreamInterface } from '../utility';
+import { IOStreamInterface } from '../struct';
 
 export function ioFromFile(
   this: SDL,

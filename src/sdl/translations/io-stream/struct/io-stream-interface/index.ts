@@ -1,12 +1,12 @@
-import { BaseStruct } from '@/utility/base-struct';
+import { BaseStruct } from '@basestruct';
 import { CStruct } from '@cstruct';
+import type { IOStatus } from '@sdl/ffi/constant/io-stream';
 import {
   linkSymbols,
   type FFIFunction,
   type Library,
   type Pointer,
 } from 'bun:ffi';
-import type { IOStatus } from '../../../../ffi/io-stream/constant';
 import { ByteOffset } from './constant';
 import { IOStreamInterfaceDefinition } from './definition';
 import type { ReadOptions, SeekOptions, WriteOptions } from './types';

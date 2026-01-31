@@ -1,5 +1,5 @@
-import { BaseStruct } from '@/utility/base-struct';
-import type { HapticEffectType } from '../../../../ffi/haptic/constant';
+import { BaseStruct } from '@basestruct';
+import type { HapticEffectType } from '@sdl/ffi/constant/haptic';
 import { ByteOffset } from './constant';
 
 export class HapticLeftRight extends BaseStruct {

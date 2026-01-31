@@ -1,6 +1,6 @@
 import type { BuildTuple } from '@/types/shared';
-import { BaseStruct } from '@/utility/base-struct';
-import type { HapticDirectionType } from '../../../../ffi/haptic/constant';
+import { BaseStruct } from '@basestruct';
+import type { HapticDirectionType } from '@sdl/ffi/constant/haptic';
 import { ByteOffset } from './constant';
 
 export class HapticDirection extends BaseStruct {

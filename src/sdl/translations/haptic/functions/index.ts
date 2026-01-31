@@ -1,7 +1,7 @@
 import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
 import { type Pointer } from 'bun:ffi';
-import { HapticEffect } from '../utility';
+import { HapticEffect } from '../struct';
 
 export function getHaptics(this: SDL) {
   const struct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });

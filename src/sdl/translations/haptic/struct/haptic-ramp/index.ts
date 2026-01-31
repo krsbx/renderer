@@ -1,11 +1,10 @@
-import { BaseStruct, type BaseStructOptions } from '@/utility/base-struct';
-import { toArrayBuffer, type Pointer } from 'bun:ffi';
-import type { HapticEffectType } from '../../../../ffi/haptic/constant';
+import { BaseStruct, type BaseStructOptions } from '@basestruct';
+import type { HapticEffectType } from '@sdl/ffi/constant/haptic';
 import { HapticDirection } from '../haptic-direction';
 import { ByteOffset } from './constant';
 
-export class HapticCustom extends BaseStruct {
-  public static override readonly BYTE_SIZE = 64;
+export class HapticRamp extends BaseStruct {
+  public static override readonly BYTE_SIZE = 44;
 
   public readonly direction: HapticDirection;
 
@@ -60,53 +59,20 @@ export class HapticCustom extends BaseStruct {
     this.$view.setUint16(ByteOffset.interval, value, true);
   }
 
-  public get channels() {
-    return this.$view.getUint8(ByteOffset.channels);
+  public get start() {
+    return this.$view.getInt16(ByteOffset.start, true);
   }
 
-  public set channels(value: number) {
-    this.$view.setUint8(ByteOffset.channels, value);
+  public set start(value: number) {
+    this.$view.setInt16(ByteOffset.start, value, true);
   }
 
-  public get period() {
-    return this.$view.getUint16(ByteOffset.period, true);
+  public get end() {
+    return this.$view.getInt16(ByteOffset.end, true);
   }
 
-  public set period(value: number) {
-    this.$view.setUint16(ByteOffset.period, value, true);
-  }
-
-  public get samples() {
-    return this.$view.getUint16(ByteOffset.samples, true);
-  }
-
-  public set samples(value: number) {
-    this.$view.setUint16(ByteOffset.samples, value, true);
-  }
-
-  public get data_ptr() {
-    const dataAddr = this.$view.getBigUint64(ByteOffset.data, true);
-    const dataPtr = Number(dataAddr) as Pointer;
-
-    return dataPtr;
-  }
-
-  public set data_ptr(value: Pointer) {
-    this.$view.setBigUint64(ByteOffset.data, BigInt(value), true);
-  }
-
-  public get data() {
-    const ptr = this.data_ptr;
-
-    if (!ptr) return null;
-
-    const count = this.channels * this.samples;
-
-    if (!count) return null;
-
-    const buffer = toArrayBuffer(ptr, 0, count * 2);
-
-    return new Uint16Array(buffer);
+  public set end(value: number) {
+    this.$view.setInt16(ByteOffset.end, value, true);
   }
 
   public get attackLength() {

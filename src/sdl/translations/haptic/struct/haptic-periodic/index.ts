@@ -1,10 +1,10 @@
-import { BaseStruct, type BaseStructOptions } from '@/utility/base-struct';
-import type { HapticEffectType } from '../../../../ffi/haptic/constant';
+import { BaseStruct, type BaseStructOptions } from '@basestruct';
+import type { HapticEffectType } from '@sdl/ffi/constant/haptic';
 import { HapticDirection } from '../haptic-direction';
 import { ByteOffset } from './constant';
 
-export class HapticConstant extends BaseStruct {
-  public static override readonly BYTE_SIZE = 40;
+export class HapticPeriodic extends BaseStruct {
+  public static override readonly BYTE_SIZE = 48;
 
   public readonly direction: HapticDirection;
 
@@ -59,12 +59,20 @@ export class HapticConstant extends BaseStruct {
     this.$view.setUint16(ByteOffset.interval, value, true);
   }
 
-  public get level() {
-    return this.$view.getInt16(ByteOffset.level, true);
+  public get period() {
+    return this.$view.getInt16(ByteOffset.period, true);
   }
 
-  public set level(value: number) {
-    this.$view.setInt16(ByteOffset.level, value, true);
+  public set period(value: number) {
+    this.$view.setInt16(ByteOffset.period, value, true);
+  }
+
+  public get magnitude() {
+    return this.$view.getInt16(ByteOffset.magnitude, true);
+  }
+
+  public set magnitude(value: number) {
+    this.$view.setInt16(ByteOffset.magnitude, value, true);
   }
 
   public get attackLength() {

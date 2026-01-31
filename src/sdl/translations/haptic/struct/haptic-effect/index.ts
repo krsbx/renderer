@@ -1,5 +1,5 @@
-import { BaseStruct, type BaseStructOptions } from '@/utility/base-struct';
-import type { HapticEffectType } from '../../../../ffi/haptic/constant';
+import { BaseStruct, type BaseStructOptions } from '@basestruct';
+import type { HapticEffectType } from '@sdl/ffi/constant/haptic';
 import { HapticCondition } from '../haptic-condition';
 import { HapticConstant } from '../haptic-constant';
 import { HapticCustom } from '../haptic-custom';

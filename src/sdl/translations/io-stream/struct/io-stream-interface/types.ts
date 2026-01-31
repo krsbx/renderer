@@ -1,5 +1,5 @@
+import type { IOWhence } from '@sdl/ffi/constant/io-stream';
 import { type Pointer } from 'bun:ffi';
-import type { IOWhence } from '../../../../ffi/io-stream/constant';
 
 export interface SeekOptions {
   userdata?: Pointer | null;

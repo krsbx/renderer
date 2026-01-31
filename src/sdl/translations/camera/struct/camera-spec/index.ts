@@ -1,5 +1,5 @@
-import { BaseStruct } from '@/utility/base-struct';
-import type { Colorspace, PixelFormat } from '../../../../ffi/pixels/constant';
+import { BaseStruct } from '@basestruct';
+import type { Colorspace, PixelFormat } from '@sdl/ffi/constant/pixels';
 import { ByteOffset } from './constant';
 
 export class CameraSpec extends BaseStruct {

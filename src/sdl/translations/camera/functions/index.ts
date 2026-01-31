@@ -5,8 +5,8 @@ import type {
   CameraPermissionState,
   CameraPosition,
 } from '../../../ffi/camera/constant';
-import { Surface } from '../../surface/utility';
-import { CameraSpec } from '../utility';
+import { Surface } from '../../surface/struct';
+import { CameraSpec } from '../struct';
 
 export function getNumCameraDrivers(this: SDL) {
   return this.symbols.SDL_GetNumCameraDrivers();

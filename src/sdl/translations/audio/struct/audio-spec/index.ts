@@ -1,5 +1,5 @@
-import { BaseStruct } from '@/utility/base-struct';
-import type { AudioFormat } from '../../../../ffi/audio/constant';
+import { BaseStruct } from '@basestruct';
+import type { AudioFormat } from '@sdl/ffi/constant/audio';
 import { ByteOffset } from './constant';
 
 export class AudioSpec extends BaseStruct {

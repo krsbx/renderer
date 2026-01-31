@@ -3,7 +3,7 @@ import { CStruct } from '@cstruct';
 import { stringToCString } from '@utility/common';
 import { type JSCallback, type Pointer } from 'bun:ffi';
 import type { FileDialogType } from '../../../ffi/dialog/constant';
-import { DialogFileFilter } from '../utility';
+import { DialogFileFilter } from '../struct';
 
 function constructFilters(
   filter: DialogFileFilter | DialogFileFilter[] | null | undefined

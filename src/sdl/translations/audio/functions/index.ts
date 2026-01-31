@@ -2,7 +2,7 @@ import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
 import { stringToCString } from '@utility/common';
 import type { Pointer } from 'bun:ffi';
-import { AudioBuffer, AudioSpec } from '../utility';
+import { AudioBuffer, AudioSpec } from '../struct';
 
 export function getNumAudioDrivers(this: SDL) {
   return this.symbols.SDL_GetNumAudioDrivers();

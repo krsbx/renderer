@@ -1,3 +1,4 @@
+import type { Window } from '@/sdl/types/definition';
 import { BaseStruct } from '@basestruct';
 import type { MessageBoxFlags } from '@sdl/ffi/constant/message-box';
 import { stringToCString } from '@utility/common';
@@ -30,7 +31,11 @@ export class MessageBoxData extends BaseStruct {
 
     if (!addr || addr === 0n) return null;
 
-    return Number(addr) as Pointer;
+    return Number(addr) as Window;
+  }
+
+  public set window(value: Window | null) {
+    this.$view.setBigUint64(ByteOffset.window, BigInt(value ?? 0), true);
   }
 
   public get title() {

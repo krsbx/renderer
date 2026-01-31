@@ -1,20 +1,33 @@
-import { BaseStruct, type BaseStructOptions } from '@basestruct';
+import { BaseStruct } from '@basestruct';
+import { ptr, type Pointer } from 'bun:ffi';
 import { Surface } from '../../../surface/struct';
 import { ByteOffset } from './constant';
 
 export class CursorFrameInfo extends BaseStruct {
   public static override readonly BYTE_SIZE = 16;
 
-  public readonly surface: Surface;
+  public get surface() {
+    const addr = this.$view.getBigUint64(ByteOffset.surface, true);
 
-  public constructor(data: BaseStructOptions) {
-    super(data);
+    if (!addr || addr === 0n) return null;
 
-    this.surface = new Surface(
-      this.$memory.subarray(
-        ByteOffset.surface,
-        ByteOffset.surface + Surface.BYTE_SIZE
-      )
+    return new Surface(Number(addr) as Pointer);
+  }
+
+  public set surface(value: Surface | null) {
+    if (!value) {
+      this.$view.setBigUint64(ByteOffset.surface, 0n, true);
+      return;
+    }
+
+    this.$view.setBigUint64(
+      ByteOffset.surface,
+      BigInt(
+        typeof value.$address === 'number'
+          ? value.$address
+          : ptr(value.$address)
+      ),
+      true
     );
   }
 

@@ -1,7 +1,12 @@
 import type { SDL } from '@/sdl';
+import { CallbackManager } from '@/sdl/utility';
 import { stringToCString } from '@utility/common';
-import type { JSCallback, Pointer } from 'bun:ffi';
 import type { HintsPriority } from '../../../ffi/hints/constant';
+import type { HintCallbackFn } from '../types/callback';
+import {
+  createHintCallback,
+  getHintCallbackRegistryKey,
+} from '../utility/callback';
 
 export function setHintWithPriority(
   this: SDL,
@@ -60,28 +65,34 @@ export function addHintCallback(
   this: SDL,
   options: {
     name: string;
-    callback: JSCallback;
-    userdata?: Pointer | null;
+    callback: HintCallbackFn;
   }
 ) {
-  return this.symbols.SDL_AddHintCallback(
+  const key = getHintCallbackRegistryKey(options.name);
+  const cb = createHintCallback(options.callback);
+
+  const success = this.symbols.SDL_AddHintCallback(
     stringToCString(options.name).ptr,
-    options.callback.ptr,
-    options.userdata ?? null
+    cb.ptr,
+    null
   );
+
+  if (!success) {
+    cb.close();
+  } else {
+    CallbackManager.register(key, cb);
+  }
+
+  return success;
 }
 
-export function removeHintCallback(
-  this: SDL,
-  options: {
-    name: string;
-    callback: JSCallback;
-    userdata?: Pointer | null;
-  }
-) {
-  return this.symbols.SDL_RemoveHintCallback(
-    stringToCString(options.name).ptr,
-    options.callback.ptr,
-    options.userdata ?? null
-  );
+export function removeHintCallback(this: SDL, name: string) {
+  const key = getHintCallbackRegistryKey(name);
+  const cb = CallbackManager.get(key);
+
+  if (!cb) return;
+
+  this.symbols.SDL_RemoveHintCallback(stringToCString(name).ptr, cb.ptr, null);
+
+  CallbackManager.unregister(key);
 }

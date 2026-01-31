@@ -1,7 +1,7 @@
 import type { SDL } from '@/sdl';
+import type { Window } from '@/sdl/types/definition';
 import { CStruct } from '@cstruct';
 import { stringToCString } from '@utility/common';
-import type { Pointer } from 'bun:ffi';
 import type { MessageBoxFlags } from '../../../ffi/message-box/constant';
 import { MessageBoxData } from '../struct';
 
@@ -24,7 +24,7 @@ export function showSimpleMessageBox(
     flags: MessageBoxFlags;
     title: string;
     message: string;
-    window?: Pointer | null;
+    window?: Window | null;
   }
 ) {
   return this.symbols.SDL_ShowSimpleMessageBox(

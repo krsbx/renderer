@@ -51,7 +51,7 @@ export function isJoystickHaptic(this: SDL, joystick: Joystick) {
 }
 
 export function openHapticFromJoystick(this: SDL, joystick: Joystick) {
-  return this.symbols.SDL_OpenHapticFromJoystick(joystick);
+  return this.symbols.SDL_OpenHapticFromJoystick(joystick) as Haptic;
 }
 
 export function closeHaptic(this: SDL, haptic: Haptic) {

@@ -29,5 +29,11 @@ export type Joystick = SDLOpaque<'Joystick'>;
 // IO Stream
 export type IOStream = SDLOpaque<'IOStream'>;
 
+// Metal
+export type MetalView = SDLOpaque<'MetalView'>;
+
+// Mouse
+export type Cursor = SDLOpaque<'Cursor'>;
+
 // Window
 export type Window = SDLOpaque<'Window'>;

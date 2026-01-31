@@ -1,12 +1,18 @@
 import type { SDL } from '@/sdl';
+import type { Cursor, Window } from '@/sdl/types/definition';
+import { CallbackManager } from '@/sdl/utility';
 import { CStruct } from '@cstruct';
-import { type JSCallback, type Pointer } from 'bun:ffi';
 import type {
   MouseButtonFlags,
   SystemCursor,
 } from '../../../ffi/mouse/constant';
 import { Surface } from '../../surface/struct';
 import { CursorFrameInfo } from '../struct';
+import type { MouseMotionTransformCallbackFn } from '../types/callback';
+import {
+  createMouseMotionTransformCallback,
+  MouseMotionTransformCallbackRegistryKey,
+} from '../utility/callback';
 
 export function hasMouse(this: SDL) {
   return this.symbols.SDL_HasMouse();
@@ -32,7 +38,7 @@ export function getMouseNameForID(this: SDL, instanceId: number) {
 }
 
 export function getMouseFocus(this: SDL) {
-  return this.symbols.SDL_GetMouseFocus();
+  return this.symbols.SDL_GetMouseFocus() as Window;
 }
 
 export function getMouseState(this: SDL) {
@@ -86,7 +92,7 @@ export function getRelativeMouseState(this: SDL) {
 export function warpMouseInWindow(
   this: SDL,
   options: {
-    window: Pointer;
+    window: Window;
     x: number;
     y: number;
   }
@@ -106,21 +112,30 @@ export function warpMouseGlobal(
 
 export function setRelativeMouseTransform(
   this: SDL,
-  options: {
-    callback: JSCallback | null;
-    userdata?: Pointer | null;
-  }
+  callback: MouseMotionTransformCallbackFn | null
 ) {
-  return this.symbols.SDL_SetRelativeMouseTransform(
-    options.callback?.ptr ?? null,
-    options.userdata ?? null
-  );
+  if (!callback) {
+    CallbackManager.unregister(MouseMotionTransformCallbackRegistryKey);
+    return this.symbols.SDL_SetRelativeMouseTransform(null, null);
+  }
+
+  const cb = createMouseMotionTransformCallback(callback);
+
+  const success = this.symbols.SDL_SetRelativeMouseTransform(cb.ptr, null);
+
+  if (!success) {
+    cb.close();
+  } else {
+    CallbackManager.register(MouseMotionTransformCallbackRegistryKey, cb);
+  }
+
+  return success;
 }
 
 export function setWindowRelativeMouseMode(
   this: SDL,
   options: {
-    window: Pointer;
+    window: Window;
     enabled: boolean;
   }
 ) {
@@ -130,7 +145,7 @@ export function setWindowRelativeMouseMode(
   );
 }
 
-export function getWindowRelativeMouseMode(this: SDL, window: Pointer) {
+export function getWindowRelativeMouseMode(this: SDL, window: Window) {
   return this.symbols.SDL_GetWindowRelativeMouseMode(window);
 }
 
@@ -156,7 +171,7 @@ export function createCursor(
     options.h,
     options.hotX,
     options.hotY
-  );
+  ) as Cursor;
 }
 
 export function createColorCursor(
@@ -171,43 +186,47 @@ export function createColorCursor(
     options.surface.$address,
     options.hotX,
     options.hotY
-  );
+  ) as Cursor;
 }
 
 export function createAnimatedCursor(
   this: SDL,
   options: {
-    frames: CursorFrameInfo;
-    frameCount: number;
+    frames: CursorFrameInfo[];
     hotX: number;
     hotY: number;
   }
 ) {
+  const { buffer: frames } = CStruct.writeArray(
+    options.frames,
+    CursorFrameInfo.BYTE_SIZE
+  );
+
   return this.symbols.SDL_CreateAnimatedCursor(
-    options.frames.$address,
-    options.frameCount,
+    frames,
+    options.frames.length,
     options.hotX,
     options.hotY
-  );
+  ) as Cursor;
 }
 
 export function createSystemCursor(this: SDL, id: SystemCursor) {
-  return this.symbols.SDL_CreateSystemCursor(id);
+  return this.symbols.SDL_CreateSystemCursor(id) as Cursor;
 }
 
-export function setCursor(this: SDL, cursor: Pointer) {
+export function setCursor(this: SDL, cursor: Cursor) {
   return this.symbols.SDL_SetCursor(cursor);
 }
 
 export function getCursor(this: SDL) {
-  return this.symbols.SDL_GetCursor();
+  return this.symbols.SDL_GetCursor() as Cursor;
 }
 
 export function getDefaultCursor(this: SDL) {
-  return this.symbols.SDL_GetDefaultCursor();
+  return this.symbols.SDL_GetDefaultCursor() as Cursor;
 }
 
-export function destroyCursor(this: SDL, cursor: Pointer) {
+export function destroyCursor(this: SDL, cursor: Cursor) {
   this.symbols.SDL_DestroyCursor(cursor);
 }
 

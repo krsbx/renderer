@@ -26,7 +26,7 @@ export class MessageBoxButtonData extends BaseStruct {
     return this.$view.getInt32(ByteOffset.buttonID, true);
   }
 
-  public set buttonID(value: number) {
+  public set buttonId(value: number) {
     this.$view.setInt32(ByteOffset.buttonID, value, true);
   }
 

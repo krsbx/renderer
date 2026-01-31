@@ -1,7 +1,13 @@
 import type { SDL } from '@/sdl';
+import { CallbackManager } from '@/sdl/utility';
 import { stringToCString } from '@utility/common';
-import type { JSCallback, Pointer } from 'bun:ffi';
 import type { InitFlags } from '../../../ffi/init/constant';
+import type { MainThreadCallbackFn } from '../types/callback';
+import {
+  createMainThreadCallback,
+  createMainThreadCallbackOneShot,
+  getMainThreadCallbackKey,
+} from '../utility/callback';
 
 export function init(this: SDL, flags: InitFlags) {
   return this.symbols.SDL_Init(flags);
@@ -30,30 +36,37 @@ export function isMainThread(this: SDL) {
 export function runOnMainThread(
   this: SDL,
   options: {
-    callback: JSCallback;
-    userdata?: Pointer | null;
+    callback: MainThreadCallbackFn;
     waitComplete: boolean;
   }
 ) {
-  return this.symbols.SDL_RunOnMainThread(
-    options.callback.ptr,
-    options.userdata ?? null,
-    options.waitComplete
-  );
+  if (options.waitComplete) {
+    // Synchronous - callback runs immediately, no GC risk
+    const cb = createMainThreadCallback(options.callback);
+    const result = this.symbols.SDL_RunOnMainThread(cb.ptr, null, true);
+    cb.close();
+    return result;
+  }
+
+  // Async - use one-shot wrapper to prevent GC and auto-cleanup
+  const key = getMainThreadCallbackKey();
+  const cb = createMainThreadCallbackOneShot(options.callback, key);
+  CallbackManager.register(key, cb);
+  return this.symbols.SDL_RunOnMainThread(cb.ptr, null, false);
 }
 
 export function setAppMetadata(
   this: SDL,
   options: {
-    name: string;
-    version: string;
-    identifier: string;
+    name?: string | null;
+    version?: string | null;
+    identifier?: string | null;
   }
 ) {
   return this.symbols.SDL_SetAppMetadata(
-    stringToCString(options.name).ptr,
-    stringToCString(options.version).ptr,
-    stringToCString(options.identifier).ptr
+    options.name ? stringToCString(options.name).ptr : null,
+    options.version ? stringToCString(options.version).ptr : null,
+    options.identifier ? stringToCString(options.identifier).ptr : null
   );
 }
 
@@ -61,12 +74,12 @@ export function setAppMetadataProperty(
   this: SDL,
   options: {
     name: string;
-    value: string;
+    value: string | null;
   }
 ) {
   return this.symbols.SDL_SetAppMetadataProperty(
     stringToCString(options.name).ptr,
-    stringToCString(options.value).ptr
+    options.value ? stringToCString(options.value).ptr : null
   );
 }
 

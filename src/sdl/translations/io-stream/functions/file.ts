@@ -1,12 +1,12 @@
 import type { SDL } from '@/sdl';
+import type { IOStream } from '@/sdl/types/definition';
 import { CStruct } from '@cstruct';
 import { stringToCString } from '@utility/common';
-import { type Pointer } from 'bun:ffi';
 
 export function ioprintf(
   this: SDL,
   options: {
-    context: Pointer;
+    context: IOStream;
     fmt: string;
   }
 ) {
@@ -23,7 +23,7 @@ export function iovprintf(this: SDL) {
 export function loadFileIO(
   this: SDL,
   options: {
-    src: Pointer;
+    src: IOStream;
     closeio: boolean;
   }
 ) {
@@ -69,7 +69,7 @@ export function loadFile(this: SDL, file: string) {
 export function saveFileIO(
   this: SDL,
   options: {
-    src: Pointer;
+    src: IOStream;
     data: Uint8Array;
     closeio: boolean;
   }

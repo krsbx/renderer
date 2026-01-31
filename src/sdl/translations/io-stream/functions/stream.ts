@@ -1,4 +1,5 @@
 import type { SDL } from '@/sdl';
+import type { IOStream } from '@/sdl/types/definition';
 import { stringToCString } from '@utility/common';
 import { type Pointer } from 'bun:ffi';
 import { type IOStatus, type IOWhence } from '../../../ffi/io-stream/constant';
@@ -14,19 +15,19 @@ export function ioFromFile(
   return this.symbols.SDL_IOFromFile(
     stringToCString(options.file).ptr,
     stringToCString(options.mode).ptr
-  );
+  ) as IOStream;
 }
 
 export function ioFromMem(this: SDL, mem: Uint8Array) {
-  return this.symbols.SDL_IOFromMem(mem, mem.byteLength);
+  return this.symbols.SDL_IOFromMem(mem, mem.byteLength) as IOStream;
 }
 
 export function ioFromConstMem(this: SDL, mem: Uint8Array) {
-  return this.symbols.SDL_IOFromConstMem(mem, mem.byteLength);
+  return this.symbols.SDL_IOFromConstMem(mem, mem.byteLength) as IOStream;
 }
 
 export function ioFromDynamicMem(this: SDL) {
-  return this.symbols.SDL_IOFromDynamicMem();
+  return this.symbols.SDL_IOFromDynamicMem() as IOStream;
 }
 
 export function openIO(
@@ -39,29 +40,29 @@ export function openIO(
   return this.symbols.SDL_OpenIO(
     options.iface.$address,
     options.userdata ?? null
-  );
+  ) as IOStream;
 }
 
-export function closeIO(this: SDL, context: Pointer) {
+export function closeIO(this: SDL, context: IOStream) {
   return this.symbols.SDL_CloseIO(context);
 }
 
-export function getIOProperties(this: SDL, context: Pointer) {
+export function getIOProperties(this: SDL, context: IOStream) {
   return this.symbols.SDL_GetIOProperties(context);
 }
 
-export function getIOStatus(this: SDL, context: Pointer) {
+export function getIOStatus(this: SDL, context: IOStream) {
   return this.symbols.SDL_GetIOStatus(context) as IOStatus;
 }
 
-export function getIOSize(this: SDL, context: Pointer) {
+export function getIOSize(this: SDL, context: IOStream) {
   return this.symbols.SDL_GetIOSize(context);
 }
 
 export function seekIO(
   this: SDL,
   options: {
-    context: Pointer;
+    context: IOStream;
     offset: number | bigint;
     whence: IOWhence;
   }
@@ -73,10 +74,10 @@ export function seekIO(
   );
 }
 
-export function tellIO(this: SDL, context: Pointer) {
+export function tellIO(this: SDL, context: IOStream) {
   return this.symbols.SDL_TellIO(context);
 }
 
-export function flushIO(this: SDL, context: Pointer) {
+export function flushIO(this: SDL, context: IOStream) {
   return this.symbols.SDL_FlushIO(context);
 }

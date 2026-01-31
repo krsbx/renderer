@@ -1,11 +1,11 @@
 import type { SDL } from '@/sdl';
+import type { Joystick } from '@/sdl/types/definition';
 import { CStruct } from '@cstruct';
-import type { Pointer } from 'bun:ffi';
 
 export function getJoystickAxis(
   this: SDL,
   options: {
-    joystick: Pointer;
+    joystick: Joystick;
     axis: number;
   }
 ) {
@@ -15,7 +15,7 @@ export function getJoystickAxis(
 export function getJoystickAxisInitialState(
   this: SDL,
   options: {
-    joystick: Pointer;
+    joystick: Joystick;
     axis: number;
   }
 ) {
@@ -35,7 +35,7 @@ export function getJoystickAxisInitialState(
 export function getJoystickBall(
   this: SDL,
   options: {
-    joystick: Pointer;
+    joystick: Joystick;
     ball: number;
   }
 ) {
@@ -60,7 +60,7 @@ export function getJoystickBall(
 export function getJoystickHat(
   this: SDL,
   options: {
-    joystick: Pointer;
+    joystick: Joystick;
     hat: number;
   }
 ) {
@@ -70,7 +70,7 @@ export function getJoystickHat(
 export function getJoystickButton(
   this: SDL,
   options: {
-    joystick: Pointer;
+    joystick: Joystick;
     button: number;
   }
 ) {

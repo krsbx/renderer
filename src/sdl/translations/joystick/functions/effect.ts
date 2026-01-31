@@ -1,10 +1,10 @@
 import type { SDL } from '@/sdl';
-import { type Pointer } from 'bun:ffi';
+import type { Joystick } from '@/sdl/types/definition';
 
 export function rumbleJoystick(
   this: SDL,
   options: {
-    joystick: Pointer;
+    joystick: Joystick;
     lowFrequencyRumble: number;
     highFrequencyRumble: number;
     durationMs: number;
@@ -21,7 +21,7 @@ export function rumbleJoystick(
 export function rumbleJoystickTriggers(
   this: SDL,
   options: {
-    joystick: Pointer;
+    joystick: Joystick;
     leftRumble: number;
     rightRumble: number;
     durationMs: number;
@@ -38,7 +38,7 @@ export function rumbleJoystickTriggers(
 export function setJoystickLED(
   this: SDL,
   options: {
-    joystick: Pointer;
+    joystick: Joystick;
     red: number;
     green: number;
     blue: number;
@@ -55,7 +55,7 @@ export function setJoystickLED(
 export function sendJoystickEffect(
   this: SDL,
   options: {
-    joystick: Pointer;
+    joystick: Joystick;
     data: Uint8Array;
   }
 ) {

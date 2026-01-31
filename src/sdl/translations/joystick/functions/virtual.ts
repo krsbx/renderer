@@ -1,5 +1,5 @@
 import type { SDL } from '@/sdl';
-import { type Pointer } from 'bun:ffi';
+import type { Joystick } from '@/sdl/types/definition';
 import type { SensorType } from '../../../ffi/sensor/constant';
 import { VirtualJoystickDesc } from '../struct';
 
@@ -18,7 +18,7 @@ export function isJoystickVirtual(this: SDL, instanceId: number) {
 export function setJoystickVirtualAxis(
   this: SDL,
   options: {
-    joystick: Pointer;
+    joystick: Joystick;
     axis: number;
     value: number;
   }
@@ -33,7 +33,7 @@ export function setJoystickVirtualAxis(
 export function setJoystickVirtualBall(
   this: SDL,
   options: {
-    joystick: Pointer;
+    joystick: Joystick;
     ball: number;
     xrel: number;
     yrel: number;
@@ -50,7 +50,7 @@ export function setJoystickVirtualBall(
 export function setJoystickVirtualButton(
   this: SDL,
   options: {
-    joystick: Pointer;
+    joystick: Joystick;
     button: number;
     down: boolean;
   }
@@ -65,7 +65,7 @@ export function setJoystickVirtualButton(
 export function setJoystickVirtualHat(
   this: SDL,
   options: {
-    joystick: Pointer;
+    joystick: Joystick;
     hat: number;
     value: number;
   }
@@ -80,7 +80,7 @@ export function setJoystickVirtualHat(
 export function setJoystickVirtualTouchpad(
   this: SDL,
   options: {
-    joystick: Pointer;
+    joystick: Joystick;
     touchpad: number;
     finger: number;
     down: boolean;
@@ -103,7 +103,7 @@ export function setJoystickVirtualTouchpad(
 export function sendJoystickVirtualSensorData(
   this: SDL,
   options: {
-    joystick: Pointer;
+    joystick: Joystick;
     type: SensorType;
     sensorTimestamp: bigint;
     data: Float32Array;

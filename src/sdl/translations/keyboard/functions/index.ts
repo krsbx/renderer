@@ -1,7 +1,7 @@
 import type { SDL } from '@/sdl';
+import type { Window } from '@/sdl/types/definition';
 import { CStruct } from '@cstruct';
 import { stringToCString } from '@utility/common';
-import type { Pointer } from 'bun:ffi';
 import type { Keycode, Keymod } from '../../../ffi/keycode/constant';
 import type { Scancode } from '../../../ffi/scancode/constant';
 import { Rect } from '../../rect/struct';
@@ -31,7 +31,7 @@ export function getKeyboardNameForID(this: SDL, instanceId: number) {
 }
 
 export function getKeyboardFocus(this: SDL) {
-  return this.symbols.SDL_GetKeyboardFocus();
+  return this.symbols.SDL_GetKeyboardFocus() as Window;
 }
 
 export function getKeyboardState(this: SDL) {
@@ -119,14 +119,14 @@ export function getKeyFromName(this: SDL, name: string) {
   return this.symbols.SDL_GetKeyFromName(stringToCString(name).ptr) as Keycode;
 }
 
-export function startTextInput(this: SDL, window: Pointer) {
+export function startTextInput(this: SDL, window: Window) {
   return this.symbols.SDL_StartTextInput(window);
 }
 
 export function startTextInputWithProperties(
   this: SDL,
   options: {
-    window: Pointer;
+    window: Window;
     props: number;
   }
 ) {
@@ -136,22 +136,22 @@ export function startTextInputWithProperties(
   );
 }
 
-export function textInputActive(this: SDL, window: Pointer) {
+export function textInputActive(this: SDL, window: Window) {
   return this.symbols.SDL_TextInputActive(window);
 }
 
-export function stopTextInput(this: SDL, window: Pointer) {
+export function stopTextInput(this: SDL, window: Window) {
   return this.symbols.SDL_StopTextInput(window);
 }
 
-export function clearComposition(this: SDL, window: Pointer) {
+export function clearComposition(this: SDL, window: Window) {
   return this.symbols.SDL_ClearComposition(window);
 }
 
 export function setTextInputArea(
   this: SDL,
   options: {
-    window: Pointer;
+    window: Window;
     rect: Rect;
     cursor: number;
   }
@@ -163,7 +163,7 @@ export function setTextInputArea(
   );
 }
 
-export function getTextInputArea(this: SDL, window: Pointer) {
+export function getTextInputArea(this: SDL, window: Window) {
   const rect = Rect.create();
   const cursorStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
@@ -185,6 +185,6 @@ export function hasScreenKeyboardSupport(this: SDL) {
   return this.symbols.SDL_HasScreenKeyboardSupport();
 }
 
-export function screenKeyboardShown(this: SDL, window: Pointer) {
+export function screenKeyboardShown(this: SDL, window: Window) {
   return this.symbols.SDL_ScreenKeyboardShown(window);
 }

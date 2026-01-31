@@ -1,6 +1,6 @@
 import type { SDL } from '@/sdl';
+import type { Joystick } from '@/sdl/types/definition';
 import { CStruct } from '@cstruct';
-import type { Pointer } from 'bun:ffi';
 import type {
   JoystickConnectionState,
   JoystickType,
@@ -80,41 +80,41 @@ export function getJoystickTypeForID(this: SDL, instanceId: number) {
 // Open/Get Joystick
 
 export function openJoystick(this: SDL, instanceId: number) {
-  return this.symbols.SDL_OpenJoystick(instanceId);
+  return this.symbols.SDL_OpenJoystick(instanceId) as Joystick;
 }
 
 export function getJoystickFromID(this: SDL, instanceId: number) {
-  return this.symbols.SDL_GetJoystickFromID(instanceId);
+  return this.symbols.SDL_GetJoystickFromID(instanceId) as Joystick;
 }
 
 export function getJoystickFromPlayerIndex(this: SDL, playerIndex: number) {
-  return this.symbols.SDL_GetJoystickFromPlayerIndex(playerIndex);
+  return this.symbols.SDL_GetJoystickFromPlayerIndex(playerIndex) as Joystick;
 }
 
 // Properties
 
-export function getJoystickProperties(this: SDL, joystick: Pointer) {
+export function getJoystickProperties(this: SDL, joystick: Joystick) {
   return this.symbols.SDL_GetJoystickProperties(joystick);
 }
 
 // Info by Joystick Pointer
 
-export function getJoystickName(this: SDL, joystick: Pointer) {
+export function getJoystickName(this: SDL, joystick: Joystick) {
   return this.symbols.SDL_GetJoystickName(joystick).toString();
 }
 
-export function getJoystickPath(this: SDL, joystick: Pointer) {
+export function getJoystickPath(this: SDL, joystick: Joystick) {
   return this.symbols.SDL_GetJoystickPath(joystick).toString();
 }
 
-export function getJoystickPlayerIndex(this: SDL, joystick: Pointer) {
+export function getJoystickPlayerIndex(this: SDL, joystick: Joystick) {
   return this.symbols.SDL_GetJoystickPlayerIndex(joystick);
 }
 
 export function setJoystickPlayerIndex(
   this: SDL,
   options: {
-    joystick: Pointer;
+    joystick: Joystick;
     playerIndex: number;
   }
 ) {
@@ -124,7 +124,7 @@ export function setJoystickPlayerIndex(
   );
 }
 
-export function getJoystickGUID(this: SDL, joystick: Pointer) {
+export function getJoystickGUID(this: SDL, joystick: Joystick) {
   const guid = this.symbols.SDL_GetJoystickGUID(joystick);
 
   if (!guid) return null;
@@ -132,27 +132,27 @@ export function getJoystickGUID(this: SDL, joystick: Pointer) {
   return new GUID(guid);
 }
 
-export function getJoystickVendor(this: SDL, joystick: Pointer) {
+export function getJoystickVendor(this: SDL, joystick: Joystick) {
   return this.symbols.SDL_GetJoystickVendor(joystick);
 }
 
-export function getJoystickProduct(this: SDL, joystick: Pointer) {
+export function getJoystickProduct(this: SDL, joystick: Joystick) {
   return this.symbols.SDL_GetJoystickProduct(joystick);
 }
 
-export function getJoystickProductVersion(this: SDL, joystick: Pointer) {
+export function getJoystickProductVersion(this: SDL, joystick: Joystick) {
   return this.symbols.SDL_GetJoystickProductVersion(joystick);
 }
 
-export function getJoystickFirmwareVersion(this: SDL, joystick: Pointer) {
+export function getJoystickFirmwareVersion(this: SDL, joystick: Joystick) {
   return this.symbols.SDL_GetJoystickFirmwareVersion(joystick);
 }
 
-export function getJoystickSerial(this: SDL, joystick: Pointer) {
+export function getJoystickSerial(this: SDL, joystick: Joystick) {
   return this.symbols.SDL_GetJoystickSerial(joystick).toString();
 }
 
-export function getJoystickType(this: SDL, joystick: Pointer) {
+export function getJoystickType(this: SDL, joystick: Joystick) {
   return this.symbols.SDL_GetJoystickType(joystick) as JoystickType;
 }
 
@@ -180,29 +180,29 @@ export function getJoystickGUIDInfo(this: SDL, guid: GUID) {
 
 // Status
 
-export function joystickConnected(this: SDL, joystick: Pointer) {
+export function joystickConnected(this: SDL, joystick: Joystick) {
   return this.symbols.SDL_JoystickConnected(joystick);
 }
 
-export function getJoystickID(this: SDL, joystick: Pointer) {
+export function getJoystickID(this: SDL, joystick: Joystick) {
   return this.symbols.SDL_GetJoystickID(joystick);
 }
 
 // Counts
 
-export function getNumJoystickAxes(this: SDL, joystick: Pointer) {
+export function getNumJoystickAxes(this: SDL, joystick: Joystick) {
   return this.symbols.SDL_GetNumJoystickAxes(joystick);
 }
 
-export function getNumJoystickBalls(this: SDL, joystick: Pointer) {
+export function getNumJoystickBalls(this: SDL, joystick: Joystick) {
   return this.symbols.SDL_GetNumJoystickBalls(joystick);
 }
 
-export function getNumJoystickHats(this: SDL, joystick: Pointer) {
+export function getNumJoystickHats(this: SDL, joystick: Joystick) {
   return this.symbols.SDL_GetNumJoystickHats(joystick);
 }
 
-export function getNumJoystickButtons(this: SDL, joystick: Pointer) {
+export function getNumJoystickButtons(this: SDL, joystick: Joystick) {
   return this.symbols.SDL_GetNumJoystickButtons(joystick);
 }
 
@@ -222,19 +222,19 @@ export function updateJoysticks(this: SDL) {
 
 // Close
 
-export function closeJoystick(this: SDL, joystick: Pointer) {
+export function closeJoystick(this: SDL, joystick: Joystick) {
   this.symbols.SDL_CloseJoystick(joystick);
 }
 
 // Connection/Power State
 
-export function getJoystickConnectionState(this: SDL, joystick: Pointer) {
+export function getJoystickConnectionState(this: SDL, joystick: Joystick) {
   return this.symbols.SDL_GetJoystickConnectionState(
     joystick
   ) as JoystickConnectionState;
 }
 
-export function getJoystickPowerInfo(this: SDL, joystick: Pointer) {
+export function getJoystickPowerInfo(this: SDL, joystick: Joystick) {
   const percentStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
   const state = this.symbols.SDL_GetJoystickPowerInfo(

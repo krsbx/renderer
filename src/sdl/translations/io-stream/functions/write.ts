@@ -1,10 +1,10 @@
 import type { SDL } from '@/sdl';
-import { type Pointer } from 'bun:ffi';
+import type { IOStream } from '@/sdl/types/definition';
 
 export function writeIO(
   this: SDL,
   options: {
-    context: Pointer;
+    context: IOStream;
     ptr: Uint8Array;
   }
 ) {
@@ -18,7 +18,7 @@ export function writeIO(
 export function writeU8(
   this: SDL,
   options: {
-    dst: Pointer;
+    dst: IOStream;
     value: number;
   }
 ) {
@@ -28,7 +28,7 @@ export function writeU8(
 export function writeS8(
   this: SDL,
   options: {
-    dst: Pointer;
+    dst: IOStream;
     value: number;
   }
 ) {
@@ -38,7 +38,7 @@ export function writeS8(
 export function writeU16LE(
   this: SDL,
   options: {
-    dst: Pointer;
+    dst: IOStream;
     value: number;
   }
 ) {
@@ -48,7 +48,7 @@ export function writeU16LE(
 export function writeS16LE(
   this: SDL,
   options: {
-    dst: Pointer;
+    dst: IOStream;
     value: number;
   }
 ) {
@@ -58,7 +58,7 @@ export function writeS16LE(
 export function writeU16BE(
   this: SDL,
   options: {
-    dst: Pointer;
+    dst: IOStream;
     value: number;
   }
 ) {
@@ -68,7 +68,7 @@ export function writeU16BE(
 export function writeS16BE(
   this: SDL,
   options: {
-    dst: Pointer;
+    dst: IOStream;
     value: number;
   }
 ) {
@@ -78,7 +78,7 @@ export function writeS16BE(
 export function writeU32LE(
   this: SDL,
   options: {
-    dst: Pointer;
+    dst: IOStream;
     value: number;
   }
 ) {
@@ -88,7 +88,7 @@ export function writeU32LE(
 export function writeS32LE(
   this: SDL,
   options: {
-    dst: Pointer;
+    dst: IOStream;
     value: number;
   }
 ) {
@@ -98,7 +98,7 @@ export function writeS32LE(
 export function writeU32BE(
   this: SDL,
   options: {
-    dst: Pointer;
+    dst: IOStream;
     value: number;
   }
 ) {
@@ -108,7 +108,7 @@ export function writeU32BE(
 export function writeS32BE(
   this: SDL,
   options: {
-    dst: Pointer;
+    dst: IOStream;
     value: number;
   }
 ) {
@@ -118,7 +118,7 @@ export function writeS32BE(
 export function writeU64LE(
   this: SDL,
   options: {
-    dst: Pointer;
+    dst: IOStream;
     value: number | bigint;
   }
 ) {
@@ -128,7 +128,7 @@ export function writeU64LE(
 export function writeS64LE(
   this: SDL,
   options: {
-    dst: Pointer;
+    dst: IOStream;
     value: number | bigint;
   }
 ) {
@@ -138,7 +138,7 @@ export function writeS64LE(
 export function writeU64BE(
   this: SDL,
   options: {
-    dst: Pointer;
+    dst: IOStream;
     value: number | bigint;
   }
 ) {
@@ -148,7 +148,7 @@ export function writeU64BE(
 export function writeS64BE(
   this: SDL,
   options: {
-    dst: Pointer;
+    dst: IOStream;
     value: number | bigint;
   }
 ) {

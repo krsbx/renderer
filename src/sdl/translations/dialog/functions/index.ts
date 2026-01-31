@@ -29,7 +29,7 @@ export function showOpenFileDialog(
   this: SDL,
   options: {
     callback: DialogFileCallbackFn;
-    window: Window | null;
+    window?: Window | null;
     filters?: DialogFileFilter | DialogFileFilter[] | null;
     defaultLocation?: string | null;
     allowMany?: boolean | null;
@@ -43,7 +43,7 @@ export function showOpenFileDialog(
   this.symbols.SDL_ShowOpenFileDialog(
     cb.ptr,
     null,
-    options.window,
+    options.window ?? null,
     filterCount > 0 ? filtersAddress : null,
     filterCount,
     options.defaultLocation
@@ -57,7 +57,7 @@ export function showSaveFileDialog(
   this: SDL,
   options: {
     callback: DialogFileCallbackFn;
-    window: Window;
+    window?: Window | null;
     filters?: DialogFileFilter | DialogFileFilter[] | null;
     defaultLocation?: string | null;
   }
@@ -70,7 +70,7 @@ export function showSaveFileDialog(
   this.symbols.SDL_ShowSaveFileDialog(
     cb.ptr,
     null,
-    options.window,
+    options.window ?? null,
     filterCount > 0 ? filtersAddress : null,
     filterCount,
     options.defaultLocation
@@ -83,7 +83,7 @@ export function showOpenFolderDialog(
   this: SDL,
   options: {
     callback: DialogFileCallbackFn;
-    window: Window;
+    window?: Window | null;
     defaultLocation?: string | null;
     allowMany?: boolean | null;
   }
@@ -93,7 +93,7 @@ export function showOpenFolderDialog(
   this.symbols.SDL_ShowOpenFolderDialog(
     cb.ptr,
     null,
-    options.window,
+    options.window ?? null,
     options.defaultLocation
       ? stringToCString(options.defaultLocation).ptr
       : null,

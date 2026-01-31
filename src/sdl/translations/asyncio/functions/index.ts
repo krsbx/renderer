@@ -10,7 +10,7 @@ export function asyncIOFromFile(
   return this.symbols.SDL_AsyncIOFromFile(
     stringToCString(options.file).ptr,
     stringToCString(options.mode).ptr
-  );
+  ) as AsyncIO;
 }
 
 export function getAsyncIOSize(this: SDL, asyncio: AsyncIO) {
@@ -24,7 +24,7 @@ export function readAsyncIO(
     ptr: Uint8Array;
     offset: number | bigint;
     size: number | bigint;
-    queue?: AsyncIOQueue | null;
+    queue: AsyncIOQueue;
   }
 ) {
   return this.symbols.SDL_ReadAsyncIO(
@@ -32,7 +32,7 @@ export function readAsyncIO(
     options.ptr,
     BigInt(options.offset),
     BigInt(options.size),
-    options.queue ?? null,
+    options.queue,
     null
   );
 }
@@ -44,7 +44,7 @@ export function writeAsyncIO(
     ptr: Uint8Array;
     offset: number | bigint;
     size: number | bigint;
-    queue?: AsyncIOQueue | null;
+    queue: AsyncIOQueue;
   }
 ) {
   return this.symbols.SDL_WriteAsyncIO(
@@ -52,7 +52,7 @@ export function writeAsyncIO(
     options.ptr,
     BigInt(options.offset),
     BigInt(options.size),
-    options.queue ?? null,
+    options.queue,
     null
   );
 }
@@ -62,13 +62,13 @@ export function closeAsyncIO(
   options: {
     asyncio: AsyncIO;
     flush: boolean;
-    queue?: AsyncIOQueue | null;
+    queue: AsyncIOQueue;
   }
 ) {
   return this.symbols.SDL_CloseAsyncIO(
     options.asyncio,
     options.flush,
-    options.queue ?? null,
+    options.queue,
     null
   );
 }
@@ -110,11 +110,15 @@ export function waitAsyncIOResult(
 ) {
   const outcome = options.outcome ?? AsyncIOOutcome.create();
 
-  return this.symbols.SDL_WaitAsyncIOResult(
+  const success = this.symbols.SDL_WaitAsyncIOResult(
     options.queue,
     outcome.$address,
     options.timeoutMS
   );
+
+  if (!success) return null;
+
+  return outcome;
 }
 
 export function signalAsyncIOQueue(this: SDL, queue: AsyncIOQueue) {

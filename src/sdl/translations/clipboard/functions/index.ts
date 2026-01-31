@@ -57,7 +57,7 @@ export function setClipboardData(
   this: SDL,
   options: {
     callback: ClipboardDataCallbackFn;
-    cleanup: ClipboardCleanupCallbackFn | null;
+    cleanup?: ClipboardCleanupCallbackFn | null;
     mimeTypes: string[];
   }
 ) {

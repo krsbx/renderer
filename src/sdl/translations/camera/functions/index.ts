@@ -70,15 +70,15 @@ export function openCamera(
     spec?: CameraSpec | null;
   }
 ) {
-  const spec = options.spec ?? CameraSpec.create();
-  const camera = this.symbols.SDL_OpenCamera(options.cameraId, spec.$address);
+  const spec = options.spec ?? null;
+  const camera = this.symbols.SDL_OpenCamera(
+    options.cameraId,
+    spec?.$address ?? null
+  );
 
   if (!camera) return null;
 
-  return {
-    camera,
-    spec: spec,
-  };
+  return camera as Camera;
 }
 
 export function getCameraPermissionState(this: SDL, camera: Camera) {

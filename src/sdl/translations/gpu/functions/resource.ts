@@ -8,7 +8,7 @@ import {
   GPUShaderCreateInfo,
   GPUTextureCreateInfo,
   GPUTransferBufferCreateInfo,
-} from '../utility';
+} from '../struct';
 
 // Create Pipeline/Shader/Sampler
 

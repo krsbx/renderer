@@ -7,7 +7,7 @@ import type {
   GPUTextureUsageFlags,
 } from '../../../ffi/gpu/constant';
 import type { PixelFormat } from '../../../ffi/pixels/constant';
-import { GPUBlitInfo } from '../utility';
+import { GPUBlitInfo } from '../struct';
 
 // Texture Operations
 

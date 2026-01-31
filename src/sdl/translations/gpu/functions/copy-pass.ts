@@ -7,7 +7,7 @@ import {
   GPUTextureRegion,
   GPUTextureTransferInfo,
   GPUTransferBufferLocation,
-} from '../utility';
+} from '../struct';
 
 // Transfer Buffer
 

@@ -1,15 +1,15 @@
 import type { SDL } from '@/sdl';
 import type { Pointer } from 'bun:ffi';
 import type { GPUIndexElementSize } from '../../../ffi/gpu/constant';
-import { FColor } from '../../pixels/utility';
-import { Rect } from '../../rect/utility';
+import { FColor } from '../../pixels/struct';
+import { Rect } from '../../rect/struct';
 import {
   GPUBufferBinding,
   GPUColorTargetInfo,
   GPUDepthStencilTargetInfo,
   GPUTextureSamplerBinding,
   GPUViewport,
-} from '../utility';
+} from '../struct';
 
 // Render Pass
 

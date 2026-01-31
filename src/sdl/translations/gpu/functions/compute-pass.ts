@@ -4,7 +4,7 @@ import {
   GPUStorageBufferReadWriteBinding,
   GPUStorageTextureReadWriteBinding,
   GPUTextureSamplerBinding,
-} from '../utility';
+} from '../struct';
 
 // Compute Pass
 

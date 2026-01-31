@@ -118,15 +118,27 @@ export function addAtomicU32(
 
 export function compareAndSwapAtomicPointer(
   this: SDL,
-  a: Pointer,
-  oldval: Pointer,
-  newval: Pointer
+  options: {
+    a: Pointer;
+    oldval: Pointer;
+    newval: Pointer;
+  }
 ) {
-  return this.symbols.SDL_CompareAndSwapAtomicPointer(a, oldval, newval);
+  return this.symbols.SDL_CompareAndSwapAtomicPointer(
+    options.a,
+    options.oldval,
+    options.newval
+  );
 }
 
-export function setAtomicPointer(this: SDL, a: Pointer, v: Pointer) {
-  return this.symbols.SDL_SetAtomicPointer(a, v);
+export function setAtomicPointer(
+  this: SDL,
+  options: {
+    a: Pointer;
+    v: Pointer;
+  }
+) {
+  return this.symbols.SDL_SetAtomicPointer(options.a, options.v);
 }
 
 export function getAtomicPointer(this: SDL, a: Pointer) {

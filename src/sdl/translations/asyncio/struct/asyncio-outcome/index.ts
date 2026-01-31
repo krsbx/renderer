@@ -1,3 +1,4 @@
+import type { AsyncIO } from '@/sdl/types/definition';
 import { BaseStruct } from '@basestruct';
 import type { AsyncIOResult, AsyncIOTaskType } from '@sdl/ffi/constant/asyncio';
 import { type Pointer } from 'bun:ffi';
@@ -8,12 +9,12 @@ export class AsyncIOOutcome extends BaseStruct {
 
   public get asyncio() {
     const asyncioAddr = this.$view.getBigUint64(ByteOffset.asyncio, true);
-    const asyncioPtr = Number(asyncioAddr) as Pointer;
+    const asyncioPtr = Number(asyncioAddr) as AsyncIO;
 
     return asyncioPtr;
   }
 
-  public set asyncio(value: Pointer) {
+  public set asyncio(value: AsyncIO) {
     this.$view.setBigUint64(ByteOffset.asyncio, BigInt(value), true);
   }
 

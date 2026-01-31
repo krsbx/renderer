@@ -1,8 +1,10 @@
 import type { SDL } from '@/sdl';
+import { CallbackManager } from '@/sdl/utility';
 import { stringToCString } from '@utility/common';
-import { type Pointer } from 'bun:ffi';
+import { FFIType, JSCallback, type Pointer } from 'bun:ffi';
 import type { AssertState } from '../../../ffi/assert/constant';
 import { AssertData } from '../struct';
+import type { AssertionHandlerFn } from './types';
 
 export function reportAssertion(
   this: SDL,
@@ -25,12 +27,30 @@ export function reportAssertion(
 
 export function setAssertionHandler(
   this: SDL,
-  options: {
-    handler: Pointer;
-    userdata: Pointer;
-  }
+  handler: AssertionHandlerFn | null
 ) {
-  this.symbols.SDL_SetAssertionHandler(options.handler, options.userdata);
+  const key = 'assert:handler';
+
+  if (!handler) {
+    CallbackManager.unregister(key);
+    this.symbols.SDL_SetAssertionHandler(null, null);
+    return;
+  }
+
+  const cb = new JSCallback(
+    (dataPtr: Pointer) => {
+      const data = new AssertData(dataPtr);
+
+      return handler(data);
+    },
+    {
+      args: [FFIType.ptr, FFIType.ptr],
+      returns: FFIType.i32,
+    }
+  );
+
+  CallbackManager.register(key, cb);
+  this.symbols.SDL_SetAssertionHandler(cb.ptr, null);
 }
 
 export function getDefaultAssertionHandler(this: SDL) {

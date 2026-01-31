@@ -1,8 +1,22 @@
 import type { SDL } from '@/sdl';
+import type { AudioStream, IOStream } from '@/sdl/types/definition';
+import { CallbackManager } from '@/sdl/utility';
 import { CStruct } from '@cstruct';
 import { stringToCString } from '@utility/common';
-import type { Pointer } from 'bun:ffi';
+import { ptr } from 'bun:ffi';
 import { AudioBuffer, AudioSpec } from '../struct';
+import type {
+  AudioPostmixCallbackFn,
+  AudioStreamCallbackFn,
+  AudioStreamDataCompleteCallbackFn,
+} from '../types/callback';
+import {
+  createNoCopyCallback,
+  createPostmixCallback,
+  createStreamCallback,
+  getPostmixRegistryKey,
+  getStreamRegistryKey,
+} from '../utility/callback';
 
 export function getNumAudioDrivers(this: SDL) {
   return this.symbols.SDL_GetNumAudioDrivers();
@@ -150,14 +164,15 @@ export function bindAudioStreams(
   this: SDL,
   options: {
     deviceId: number;
-    streams: Pointer;
-    streamsCount: number;
+    streams: AudioStream[];
   }
 ) {
+  const { address } = CStruct.writeArrayPointer(options.streams);
+
   return this.symbols.SDL_BindAudioStreams(
     options.deviceId,
-    options.streams,
-    options.streamsCount
+    address,
+    options.streams.length
   );
 }
 
@@ -165,27 +180,23 @@ export function bindAudioStream(
   this: SDL,
   options: {
     deviceId: number;
-    stream: Pointer;
+    stream: AudioStream;
   }
 ) {
   return this.symbols.SDL_BindAudioStream(options.deviceId, options.stream);
 }
 
-export function unbindAudioStreams(
-  this: SDL,
-  options: {
-    streams: Pointer;
-    streamsCount: number;
-  }
-) {
-  this.symbols.SDL_UnbindAudioStreams(options.streams, options.streamsCount);
+export function unbindAudioStreams(this: SDL, streams: AudioStream[]) {
+  const { address } = CStruct.writeArrayPointer(streams);
+
+  this.symbols.SDL_UnbindAudioStreams(address, streams.length);
 }
 
-export function unbindAudioStream(this: SDL, stream: Pointer) {
+export function unbindAudioStream(this: SDL, stream: AudioStream) {
   this.symbols.SDL_UnbindAudioStream(stream);
 }
 
-export function getAudioStreamDevice(this: SDL, stream: Pointer) {
+export function getAudioStreamDevice(this: SDL, stream: AudioStream) {
   return this.symbols.SDL_GetAudioStreamDevice(stream);
 }
 
@@ -199,17 +210,17 @@ export function createAudioStream(
   return this.symbols.SDL_CreateAudioStream(
     options.srcSpec.$address,
     options.dstSpec.$address
-  );
+  ) as AudioStream;
 }
 
-export function getAudioStreamProperties(this: SDL, stream: Pointer) {
+export function getAudioStreamProperties(this: SDL, stream: AudioStream) {
   return this.symbols.SDL_GetAudioStreamProperties(stream);
 }
 
 export function getAudioStreamFormat(
   this: SDL,
   options: {
-    stream: Pointer;
+    stream: AudioStream;
     srcSpec?: AudioSpec | null;
     dstSpec?: AudioSpec | null;
   }
@@ -234,7 +245,7 @@ export function getAudioStreamFormat(
 export function setAudioStreamFormat(
   this: SDL,
   options: {
-    stream: Pointer;
+    stream: AudioStream;
     srcSpec?: AudioSpec | null;
     dstSpec?: AudioSpec | null;
   }
@@ -246,14 +257,14 @@ export function setAudioStreamFormat(
   );
 }
 
-export function getAudioStreamFrequencyRatio(this: SDL, stream: Pointer) {
+export function getAudioStreamFrequencyRatio(this: SDL, stream: AudioStream) {
   return this.symbols.SDL_GetAudioStreamFrequencyRatio(stream);
 }
 
 export function setAudioStreamFrequencyRatio(
   this: SDL,
   options: {
-    stream: Pointer;
+    stream: AudioStream;
     ratio: number;
   }
 ) {
@@ -263,21 +274,21 @@ export function setAudioStreamFrequencyRatio(
   );
 }
 
-export function getAudioStreamGain(this: SDL, stream: Pointer) {
+export function getAudioStreamGain(this: SDL, stream: AudioStream) {
   return this.symbols.SDL_GetAudioStreamGain(stream);
 }
 
 export function setAudioStreamGain(
   this: SDL,
   options: {
-    stream: Pointer;
+    stream: AudioStream;
     gain: number;
   }
 ) {
   return this.symbols.SDL_SetAudioStreamGain(options.stream, options.gain);
 }
 
-export function getAudioStreamInputChannelMap(this: SDL, stream: Pointer) {
+export function getAudioStreamInputChannelMap(this: SDL, stream: AudioStream) {
   const struct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
   const listPtr = this.symbols.SDL_GetAudioStreamInputChannelMap(
     stream,
@@ -295,7 +306,7 @@ export function getAudioStreamInputChannelMap(this: SDL, stream: Pointer) {
   return channels;
 }
 
-export function getAudioStreamOutputChannelMap(this: SDL, stream: Pointer) {
+export function getAudioStreamOutputChannelMap(this: SDL, stream: AudioStream) {
   const struct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
   const listPtr = this.symbols.SDL_GetAudioStreamOutputChannelMap(
     stream,
@@ -316,7 +327,7 @@ export function getAudioStreamOutputChannelMap(this: SDL, stream: Pointer) {
 export function setAudioStreamInputChannelMap(
   this: SDL,
   options: {
-    stream: Pointer;
+    stream: AudioStream;
     chmap: Int32Array;
   }
 ) {
@@ -330,7 +341,7 @@ export function setAudioStreamInputChannelMap(
 export function setAudioStreamOutputChannelMap(
   this: SDL,
   options: {
-    stream: Pointer;
+    stream: AudioStream;
     chmap: Int32Array;
   }
 ) {
@@ -344,7 +355,7 @@ export function setAudioStreamOutputChannelMap(
 export function putAudioStreamData(
   this: SDL,
   options: {
-    stream: Pointer;
+    stream: AudioStream;
     buf: Uint8Array;
   }
 ) {
@@ -358,35 +369,56 @@ export function putAudioStreamData(
 export function putAudioStreamDataNoCopy(
   this: SDL,
   options: {
-    stream: Pointer;
-    buf: Pointer;
-    len: number;
-    callback: Pointer;
-    userdata: Pointer | null;
+    stream: AudioStream;
+    buf: Uint8Array;
+    callback: AudioStreamDataCompleteCallbackFn | null;
   }
 ) {
-  return this.symbols.SDL_PutAudioStreamDataNoCopy(
+  if (!options.callback) {
+    return this.symbols.SDL_PutAudioStreamDataNoCopy(
+      options.stream,
+      options.buf,
+      options.buf.byteLength,
+      null,
+      null
+    );
+  }
+
+  const { key, cb } = createNoCopyCallback(options.callback);
+
+  const result = this.symbols.SDL_PutAudioStreamDataNoCopy(
     options.stream,
     options.buf,
-    options.len,
-    options.callback,
-    options.userdata
+    options.buf.byteLength,
+    cb.ptr,
+    null
   );
+
+  if (!result) {
+    cb.close();
+  } else {
+    CallbackManager.register(key, cb);
+  }
+
+  return result;
 }
 
 export function putAudioStreamPlanarData(
   this: SDL,
   options: {
-    stream: Pointer;
-    channelBuffers: Pointer;
-    numChannels: number;
+    stream: AudioStream;
+    channelBuffers: Uint8Array[];
     numSamples: number;
   }
 ) {
+  // Convert array of Uint8Arrays to array of pointers
+  const pointers = options.channelBuffers.map((buf) => ptr(buf));
+  const { address } = CStruct.writeArrayPointer(pointers);
+
   return this.symbols.SDL_PutAudioStreamPlanarData(
     options.stream,
-    options.channelBuffers,
-    options.numChannels,
+    address,
+    options.channelBuffers.length,
     options.numSamples
   );
 }
@@ -394,76 +426,120 @@ export function putAudioStreamPlanarData(
 export function getAudioStreamData(
   this: SDL,
   options: {
-    stream: Pointer;
+    stream: AudioStream;
     buf: Uint8Array;
   }
 ) {
-  return this.symbols.SDL_GetAudioStreamData(
+  const bytesRead = this.symbols.SDL_GetAudioStreamData(
     options.stream,
     options.buf,
     options.buf.byteLength
   );
+
+  return {
+    success: bytesRead !== -1,
+    buffer: options.buf,
+    bytesRead,
+  };
 }
 
-export function getAudioStreamAvailable(this: SDL, stream: Pointer) {
-  return this.symbols.SDL_GetAudioStreamAvailable(stream);
+export function getAudioStreamAvailable(this: SDL, stream: AudioStream) {
+  const resampledBytes = this.symbols.SDL_GetAudioStreamAvailable(stream);
+
+  return {
+    success: resampledBytes !== -1,
+    bytesAvailable: resampledBytes,
+  };
 }
 
-export function getAudioStreamQueued(this: SDL, stream: Pointer) {
-  return this.symbols.SDL_GetAudioStreamQueued(stream);
+export function getAudioStreamQueued(this: SDL, stream: AudioStream) {
+  const bytesQueued = this.symbols.SDL_GetAudioStreamQueued(stream);
+
+  return {
+    success: bytesQueued !== -1,
+    bytesQueued,
+  };
 }
 
-export function flushAudioStream(this: SDL, stream: Pointer) {
+export function flushAudioStream(this: SDL, stream: AudioStream) {
   return this.symbols.SDL_FlushAudioStream(stream);
 }
 
-export function clearAudioStream(this: SDL, stream: Pointer) {
+export function clearAudioStream(this: SDL, stream: AudioStream) {
   return this.symbols.SDL_ClearAudioStream(stream);
 }
 
-export function pauseAudioStreamDevice(this: SDL, stream: Pointer) {
+export function pauseAudioStreamDevice(this: SDL, stream: AudioStream) {
   return this.symbols.SDL_PauseAudioStreamDevice(stream);
 }
 
-export function resumeAudioStreamDevice(this: SDL, stream: Pointer) {
+export function resumeAudioStreamDevice(this: SDL, stream: AudioStream) {
   return this.symbols.SDL_ResumeAudioStreamDevice(stream);
 }
 
-export function audioStreamDevicePaused(this: SDL, stream: Pointer) {
+export function audioStreamDevicePaused(this: SDL, stream: AudioStream) {
   return this.symbols.SDL_AudioStreamDevicePaused(stream);
 }
 
-export function lockAudioStream(this: SDL, stream: Pointer) {
+export function lockAudioStream(this: SDL, stream: AudioStream) {
   return this.symbols.SDL_LockAudioStream(stream);
 }
 
-export function unlockAudioStream(this: SDL, stream: Pointer) {
+export function unlockAudioStream(this: SDL, stream: AudioStream) {
   return this.symbols.SDL_UnlockAudioStream(stream);
 }
 
 export function setAudioStreamGetCallback(
   this: SDL,
-  options: { stream: Pointer; callback: Pointer; userdata: Pointer | null }
+  options: {
+    stream: AudioStream;
+    callback: AudioStreamCallbackFn;
+  }
 ) {
-  return this.symbols.SDL_SetAudioStreamGetCallback(
+  const key = getStreamRegistryKey(options.stream, 'get');
+  const cb = createStreamCallback(options.callback);
+
+  const success = this.symbols.SDL_SetAudioStreamGetCallback(
     options.stream,
-    options.callback,
-    options.userdata
+    cb.ptr,
+    null
   );
+
+  if (!success) {
+    cb.close();
+  } else {
+    CallbackManager.register(key, cb);
+  }
+
+  return success;
 }
 
 export function setAudioStreamPutCallback(
   this: SDL,
-  options: { stream: Pointer; callback: Pointer; userdata: Pointer | null }
+  options: {
+    stream: AudioStream;
+    callback: AudioStreamCallbackFn;
+  }
 ) {
-  return this.symbols.SDL_SetAudioStreamPutCallback(
+  const key = getStreamRegistryKey(options.stream, 'put');
+  const cb = createStreamCallback(options.callback);
+
+  const success = this.symbols.SDL_SetAudioStreamPutCallback(
     options.stream,
-    options.callback,
-    options.userdata
+    cb.ptr,
+    null
   );
+
+  if (!success) {
+    cb.close();
+  } else {
+    CallbackManager.register(key, cb);
+  }
+
+  return success;
 }
 
-export function destroyAudioStream(this: SDL, stream: Pointer) {
+export function destroyAudioStream(this: SDL, stream: AudioStream) {
   this.symbols.SDL_DestroyAudioStream(stream);
 }
 
@@ -472,32 +548,78 @@ export function openAudioDeviceStream(
   options: {
     deviceId: number;
     spec: AudioSpec | null;
-    callback: Pointer | null;
-    userdata: Pointer | null;
+    callback: AudioStreamCallbackFn | null;
   }
 ) {
-  return this.symbols.SDL_OpenAudioDeviceStream(
+  if (!options.callback) {
+    return this.symbols.SDL_OpenAudioDeviceStream(
+      options.deviceId,
+      options.spec?.$address ?? null,
+      null,
+      null
+    );
+  }
+
+  const cb = createStreamCallback(options.callback);
+
+  const stream = this.symbols.SDL_OpenAudioDeviceStream(
     options.deviceId,
     options.spec?.$address ?? null,
-    options.callback,
-    options.userdata ?? null
+    cb.ptr,
+    null
   );
+
+  if (!stream) {
+    cb.close();
+  } else {
+    const key = getStreamRegistryKey(stream, 'device');
+
+    CallbackManager.register(key, cb);
+  }
+
+  return stream;
 }
 
 export function setAudioPostmixCallback(
   this: SDL,
-  options: { deviceId: number; callback: Pointer; userdata: Pointer | null }
+  options: {
+    deviceId: number;
+    callback: AudioPostmixCallbackFn | null;
+  }
 ) {
-  return this.symbols.SDL_SetAudioPostmixCallback(
+  if (!options.callback) {
+    return this.symbols.SDL_SetAudioPostmixCallback(
+      options.deviceId,
+      null,
+      null
+    );
+  }
+
+  const key = getPostmixRegistryKey(options.deviceId);
+  const cb = createPostmixCallback(options.callback);
+
+  const success = this.symbols.SDL_SetAudioPostmixCallback(
     options.deviceId,
-    options.callback,
-    options.userdata
+    cb.ptr,
+    null
   );
+
+  if (!success) {
+    cb.close();
+  } else {
+    CallbackManager.register(key, cb);
+  }
+
+  return success;
 }
 
 export function loadWAV_IO(
   this: SDL,
-  options: { src: Pointer; closeio: boolean; spec?: AudioSpec | null }
+  options: {
+    src: IOStream;
+    closeio: boolean;
+    spec?: AudioSpec | null;
+  }
 ) {
   const specInstance = options.spec ?? AudioSpec.create();
   const audioBuf = new CStruct({ length: CStruct.BYTE_SIZE.ptr });
@@ -510,6 +632,7 @@ export function loadWAV_IO(
     audioBuf.$address,
     audioLen.$address
   );
+
   if (!success) return null;
 
   return new AudioBuffer({
@@ -551,10 +674,9 @@ export function loadWAV(
 export function mixAudio(
   this: SDL,
   options: {
-    dst: Pointer;
-    src: Pointer;
+    dst: Uint8Array;
+    src: Uint8Array;
     format: number;
-    len: number;
     volume: number;
   }
 ) {
@@ -562,7 +684,7 @@ export function mixAudio(
     options.dst,
     options.src,
     options.format,
-    options.len,
+    options.src.byteLength,
     options.volume
   );
 }
@@ -571,22 +693,18 @@ export function convertAudioSamples(
   this: SDL,
   options: {
     srcSpec: AudioSpec;
-    srcData: Pointer;
-    srcLen: number;
+    srcData: Uint8Array;
     dstSpec: AudioSpec;
   }
 ) {
-  const srcSpecAddr = options.srcSpec;
-  const dstSpecAddr = options.dstSpec;
-
   const dstData = new CStruct({ length: CStruct.BYTE_SIZE.ptr });
   const dstLen = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
   const success = this.symbols.SDL_ConvertAudioSamples(
-    srcSpecAddr.$address,
+    options.srcSpec.$address,
     options.srcData,
-    options.srcLen,
-    dstSpecAddr.$address,
+    options.srcData.byteLength,
+    options.dstSpec.$address,
     dstData.$address,
     dstLen.$address
   );

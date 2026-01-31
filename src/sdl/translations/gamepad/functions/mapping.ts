@@ -2,7 +2,7 @@ import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
 import { stringToCString } from '@utility/common';
 import { CString, type Pointer } from 'bun:ffi';
-import { GUID } from '../../guid/utility';
+import { GUID } from '../../guid/struct';
 
 export function addGamepadMapping(this: SDL, mapping: string) {
   return this.symbols.SDL_AddGamepadMapping(stringToCString(mapping).ptr);

@@ -3,7 +3,7 @@ import { CStruct } from '@cstruct';
 import { stringToCString } from '@utility/common';
 import { CString, type JSCallback, type Pointer } from 'bun:ffi';
 import type { Folder, GlobFlags } from '../../../ffi/file-system/constant';
-import { PathInfo } from '../utility';
+import { PathInfo } from '../struct';
 
 export function getBasePath(this: SDL) {
   return this.symbols.SDL_GetBasePath().toString();

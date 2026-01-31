@@ -1,4 +1,4 @@
-import { BaseStruct } from '@/utility/base-struct';
+import { BaseStruct } from '@basestruct';
 
 export class GUID extends BaseStruct {
   public static override readonly BYTE_SIZE = 16;

@@ -9,8 +9,8 @@ import {
 } from '../../../ffi/gamepad/constant';
 import type { JoystickConnectionState } from '../../../ffi/joystick/constant';
 import type { PowerState } from '../../../ffi/power/constant';
-import { GUID } from '../../guid/utility';
-import { GamepadBinding } from '../utility';
+import { GUID } from '../../guid/struct';
+import { GamepadBinding } from '../struct';
 
 export function hasGamepad(this: SDL) {
   return this.symbols.SDL_HasGamepad();

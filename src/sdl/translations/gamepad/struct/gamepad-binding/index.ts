@@ -1,8 +1,5 @@
-import { BaseStruct, type BaseStructOptions } from '@/utility/base-struct';
-import {
-  GamepadBindingType,
-  GamepadButton,
-} from '../../../../ffi/gamepad/constant';
+import { BaseStruct, type BaseStructOptions } from '@basestruct';
+import { GamepadBindingType, GamepadButton } from '@sdl/ffi/constant/gamepad';
 import { ByteOffset } from './constant';
 import type { GamepadInput, GamepadOutput } from './types';
 

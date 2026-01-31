@@ -2,7 +2,7 @@ import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
 import { stringToCString } from '@utility/common';
 import { CString, ptr } from 'bun:ffi';
-import { GUID } from '../utility';
+import { GUID } from '../struct';
 
 // GUID string format is 32 hex chars + null terminator = 33 bytes
 const GUID_STRING_SIZE = 33;

@@ -1,5 +1,5 @@
-import { BaseStruct } from '@/utility/base-struct';
-import type { PathType } from '../../../../ffi/file-system/constant';
+import { BaseStruct } from '@basestruct';
+import type { PathType } from '@sdl/ffi/constant/file-system';
 import { ByteOffset } from './constant';
 
 export class PathInfo extends BaseStruct {

@@ -1,4 +1,4 @@
-import type { GamepadButton } from '../../../../ffi/gamepad/constant';
+import type { GamepadButton } from '@sdl/ffi/constant/gamepad';
 
 export interface GamepadAxis {
   axis: number;

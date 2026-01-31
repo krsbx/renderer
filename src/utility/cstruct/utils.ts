@@ -167,8 +167,25 @@ export function readArrayPrimitive(
   return new TypedArrayClass(buffer);
 }
 
-export function readArrayString(address: Pointer, count: number) {
-  const pointers = CStruct.readArrayPrimitive(address, count, 'ptr');
+export function readArrayString(address: Pointer, count: number | null) {
+  let pointers: Pointer[] = [];
+
+  if (count !== null) {
+    pointers = CStruct.readArrayPrimitive(address, count, 'ptr');
+  } else {
+    let offset = 0;
+    const size = CStruct.BYTE_SIZE.ptr;
+
+    while (true) {
+      const buffer = toArrayBuffer(address, offset, size);
+      const ptr = Number(new DataView(buffer).getBigUint64(0, true)) as Pointer;
+
+      if (!ptr) break;
+
+      pointers.push(ptr);
+      offset += size;
+    }
+  }
 
   return pointers.map((ptr) => new CString(ptr).toString());
 }

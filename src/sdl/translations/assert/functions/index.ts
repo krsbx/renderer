@@ -1,10 +1,14 @@
 import type { SDL } from '@/sdl';
 import { CallbackManager } from '@/sdl/utility';
+import type { AssertState } from '@sdl/ffi/constant/assert';
 import { stringToCString } from '@utility/common';
-import { FFIType, JSCallback, type Pointer } from 'bun:ffi';
-import type { AssertState } from '../../../ffi/assert/constant';
+import { type Pointer } from 'bun:ffi';
 import { AssertData } from '../struct';
-import type { AssertionHandlerFn } from './types';
+import type { AssertionHandlerFn } from '../types/callback';
+import {
+  AssertionHandlerRegisterKey,
+  createAssertionHandler,
+} from '../utility/callback';
 
 export function reportAssertion(
   this: SDL,
@@ -29,27 +33,15 @@ export function setAssertionHandler(
   this: SDL,
   handler: AssertionHandlerFn | null
 ) {
-  const key = 'assert:handler';
-
   if (!handler) {
-    CallbackManager.unregister(key);
+    CallbackManager.unregister(AssertionHandlerRegisterKey);
     this.symbols.SDL_SetAssertionHandler(null, null);
     return;
   }
 
-  const cb = new JSCallback(
-    (dataPtr: Pointer) => {
-      const data = new AssertData(dataPtr);
+  const cb = createAssertionHandler(handler);
 
-      return handler(data);
-    },
-    {
-      args: [FFIType.ptr, FFIType.ptr],
-      returns: FFIType.i32,
-    }
-  );
-
-  CallbackManager.register(key, cb);
+  CallbackManager.register(AssertionHandlerRegisterKey, cb);
   this.symbols.SDL_SetAssertionHandler(cb.ptr, null);
 }
 

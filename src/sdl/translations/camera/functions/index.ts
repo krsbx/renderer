@@ -1,10 +1,10 @@
 import type { SDL } from '@/sdl';
+import type { Camera } from '@/sdl/types/definition';
 import { CStruct } from '@cstruct';
-import { type Pointer } from 'bun:ffi';
 import type {
   CameraPermissionState,
   CameraPosition,
-} from '../../../ffi/camera/constant';
+} from '@sdl/ffi/constant/camera';
 import { Surface } from '../../surface/struct';
 import { CameraSpec } from '../struct';
 
@@ -70,53 +70,50 @@ export function openCamera(
     spec?: CameraSpec | null;
   }
 ) {
-  const specInstance = options.spec ?? CameraSpec.create();
-  const camera = this.symbols.SDL_OpenCamera(
-    options.cameraId,
-    specInstance.$address
-  );
+  const spec = options.spec ?? CameraSpec.create();
+  const camera = this.symbols.SDL_OpenCamera(options.cameraId, spec.$address);
 
   if (!camera) return null;
 
   return {
     camera,
-    spec: specInstance,
+    spec: spec,
   };
 }
 
-export function getCameraPermissionState(this: SDL, camera: Pointer) {
+export function getCameraPermissionState(this: SDL, camera: Camera) {
   return this.symbols.SDL_GetCameraPermissionState(
     camera
   ) as CameraPermissionState;
 }
 
-export function getCameraId(this: SDL, camera: Pointer) {
+export function getCameraId(this: SDL, camera: Camera) {
   return this.symbols.SDL_GetCameraID(camera);
 }
 
-export function getCameraProperties(this: SDL, camera: Pointer) {
+export function getCameraProperties(this: SDL, camera: Camera) {
   return this.symbols.SDL_GetCameraProperties(camera);
 }
 
 export function getCameraFormat(
   this: SDL,
   options: {
-    camera: Pointer;
+    camera: Camera;
     spec?: CameraSpec | null;
   }
 ) {
-  const specInstance = options.spec ?? CameraSpec.create();
+  const spec = options.spec ?? CameraSpec.create();
   const success = this.symbols.SDL_GetCameraFormat(
     options.camera,
-    specInstance.$address
+    spec.$address
   );
 
   if (!success) return null;
 
-  return specInstance;
+  return spec;
 }
 
-export function acquireCameraFrame(this: SDL, camera: Pointer) {
+export function acquireCameraFrame(this: SDL, camera: Camera) {
   const struct = new CStruct({ length: CStruct.BYTE_SIZE.u64 });
 
   const surfacePtr = this.symbols.SDL_AcquireCameraFrame(
@@ -138,13 +135,13 @@ export function acquireCameraFrame(this: SDL, camera: Pointer) {
 export function releaseCameraFrame(
   this: SDL,
   options: {
-    camera: Pointer;
+    camera: Camera;
     surface: Surface;
   }
 ) {
   this.symbols.SDL_ReleaseCameraFrame(options.camera, options.surface.$address);
 }
 
-export function closeCamera(this: SDL, camera: Pointer) {
+export function closeCamera(this: SDL, camera: Camera) {
   this.symbols.SDL_CloseCamera(camera);
 }

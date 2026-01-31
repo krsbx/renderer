@@ -1,7 +1,17 @@
 import type { SDL } from '@/sdl';
+import { CallbackManager } from '@/sdl/utility';
 import { CStruct } from '@cstruct';
 import { stringToCString } from '@utility/common';
-import { CString, type JSCallback, type Pointer } from 'bun:ffi';
+import { CString } from 'bun:ffi';
+import type {
+  ClipboardCleanupCallbackFn,
+  ClipboardDataCallbackFn,
+} from '../types/callback';
+import {
+  ClipboardDataPrefix,
+  createClipboardCleanupCallback,
+  createClipboardDataCallback,
+} from '../utility/callback';
 
 export function setClipboardText(this: SDL, text: string) {
   return this.symbols.SDL_SetClipboardText(stringToCString(text).ptr);
@@ -46,9 +56,8 @@ export function hasPrimarySelectionText(this: SDL) {
 export function setClipboardData(
   this: SDL,
   options: {
-    callback: JSCallback;
-    cleanup?: JSCallback | null;
-    userdata?: Pointer | null;
+    callback: ClipboardDataCallbackFn;
+    cleanup: ClipboardCleanupCallbackFn | null;
     mimeTypes: string[];
   }
 ) {
@@ -56,13 +65,30 @@ export function setClipboardData(
 
   const { buffer: mimeTypes } = CStruct.writeArrayString(options.mimeTypes);
 
-  return this.symbols.SDL_SetClipboardData(
-    options.callback.ptr,
-    options.cleanup?.ptr ?? null,
-    options.userdata ?? null,
+  const clipboardDataCb = createClipboardDataCallback(options.callback);
+  const cleanupDataCb = options.cleanup
+    ? createClipboardCleanupCallback(options.cleanup)
+    : null;
+
+  const success = this.symbols.SDL_SetClipboardData(
+    clipboardDataCb.ptr,
+    cleanupDataCb?.ptr ?? null,
+    null,
     mimeTypes,
     options.mimeTypes.length
   );
+
+  if (!success) {
+    clipboardDataCb.close();
+    cleanupDataCb?.close?.();
+  } else {
+    CallbackManager.register(ClipboardDataPrefix.data, clipboardDataCb);
+
+    if (cleanupDataCb)
+      CallbackManager.register(ClipboardDataPrefix.cleanup, cleanupDataCb);
+  }
+
+  return success;
 }
 
 export function clearClipboardData(this: SDL) {

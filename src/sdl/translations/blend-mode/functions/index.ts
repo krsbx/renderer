@@ -3,7 +3,7 @@ import type {
   BlendFactor,
   BlendMode,
   BlendOperation,
-} from '../../../ffi/blend-mode/constant';
+} from '@sdl/ffi/constant/blend-mode';
 
 export function composeCustomBlendMode(
   this: SDL,

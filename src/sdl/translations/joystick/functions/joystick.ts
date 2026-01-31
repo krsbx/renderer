@@ -6,7 +6,7 @@ import type {
   JoystickType,
 } from '../../../ffi/joystick/constant';
 import type { PowerState } from '../../../ffi/power/constant';
-import { GUID } from '../../guid/utility';
+import { GUID } from '../../guid/struct';
 
 // Lock/Unlock
 

@@ -3,7 +3,7 @@ import { CStruct } from '@cstruct';
 import { stringToCString } from '@utility/common';
 import type { Pointer } from 'bun:ffi';
 import type { WindowFlags } from '../../../ffi/video/constant';
-import { Surface } from '../../surface/utility';
+import { Surface } from '../../surface/struct';
 
 export function createWindowAndRenderer(
   this: SDL,

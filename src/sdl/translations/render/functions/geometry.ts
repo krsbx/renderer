@@ -2,8 +2,8 @@ import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
 import { type Pointer } from 'bun:ffi';
 import type { TextureAddressMode } from '../../../ffi/render/constant';
-import { FColor } from '../../pixels/utility';
-import { Vertex } from '../utility';
+import { FColor } from '../../pixels/struct';
+import { Vertex } from '../struct';
 
 export function renderGeometry(
   this: SDL,

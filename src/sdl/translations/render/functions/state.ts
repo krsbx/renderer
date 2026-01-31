@@ -2,8 +2,8 @@ import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
 import type { Pointer } from 'bun:ffi';
 import type { RendererLogicalPresentation } from '../../../ffi/render/constant';
-import { Event } from '../../events/utility';
-import { FRect, Rect } from '../../rect/utility';
+import { Event } from '../../events/struct';
+import { FRect, Rect } from '../../rect/struct';
 
 // Render Target
 

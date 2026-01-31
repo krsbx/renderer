@@ -1,7 +1,7 @@
 import type { SDL } from '@/sdl';
 import { type Pointer } from 'bun:ffi';
 import type { SensorType } from '../../../ffi/sensor/constant';
-import { VirtualJoystickDesc } from '../utility';
+import { VirtualJoystickDesc } from '../struct';
 
 export function attachVirtualJoystick(this: SDL, desc: VirtualJoystickDesc) {
   return this.symbols.SDL_AttachVirtualJoystick(desc.$address);

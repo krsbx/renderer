@@ -1,7 +1,7 @@
 import type { SDL } from '@/sdl';
 import type { ScaleMode } from '../../../ffi/surface/constant';
-import { Rect } from '../../rect/utility';
-import { Surface } from '../utility';
+import { Rect } from '../../rect/struct';
+import { Surface } from '../struct';
 
 export function blitSurface(
   this: SDL,

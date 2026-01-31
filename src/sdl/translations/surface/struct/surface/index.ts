@@ -1,7 +1,7 @@
-import { BaseStruct } from '@/utility/base-struct';
+import { BaseStruct } from '@basestruct';
+import type { PixelFormat } from '@sdl/ffi/constant/pixels';
+import type { SurfaceFlags } from '@sdl/ffi/constant/surface';
 import { type Pointer } from 'bun:ffi';
-import type { PixelFormat } from '../../../../ffi/pixels/constant';
-import type { SurfaceFlags } from '../../../../ffi/surface/constant';
 import { ByteOffset } from './constant';
 
 export class Surface extends BaseStruct {

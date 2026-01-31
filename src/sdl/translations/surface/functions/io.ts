@@ -1,7 +1,7 @@
 import type { SDL } from '@/sdl';
 import { stringToCString } from '@utility/common';
 import type { Pointer } from 'bun:ffi';
-import { Surface } from '../utility';
+import { Surface } from '../struct';
 
 // Load Surface (BMP or PNG)
 

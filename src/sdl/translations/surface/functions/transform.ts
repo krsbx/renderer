@@ -1,8 +1,8 @@
 import type { SDL } from '@/sdl';
 import type { Colorspace, PixelFormat } from '../../../ffi/pixels/constant';
 import type { FlipMode, ScaleMode } from '../../../ffi/surface/constant';
-import { Palette } from '../../pixels/utility';
-import { Surface } from '../utility';
+import { Palette } from '../../pixels/struct';
+import { Surface } from '../struct';
 
 // Flip
 

@@ -1,6 +1,6 @@
-import { BaseStruct } from '@/utility/base-struct';
-import { CStruct } from '@/utility/cstruct';
+import { BaseStruct } from '@basestruct';
 import { stringToCString } from '@utility/common';
+import { CStruct } from '@utility/cstruct';
 import { CString, linkSymbols, type FFIFunction, type Pointer } from 'bun:ffi';
 import { VirtualJoystickSensorDesc } from '../virtual-joystick-sensor-desc';
 import { VirtualJoystickTouchpadDesc } from '../virtual-joystick-touchpad-desc';

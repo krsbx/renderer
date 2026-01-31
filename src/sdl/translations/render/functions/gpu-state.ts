@@ -1,6 +1,6 @@
 import type { SDL } from '@/sdl';
 import { type Pointer } from 'bun:ffi';
-import { GPURenderStateCreateInfo } from '../utility';
+import { GPURenderStateCreateInfo } from '../struct';
 
 export function createGPURenderState(
   this: SDL,

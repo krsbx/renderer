@@ -1,6 +1,6 @@
-import { BaseStruct, type BaseStructOptions } from '@/utility/base-struct';
-import { FColor } from '../../../pixels/utility';
-import { FPoint } from '../../../rect/utility';
+import { BaseStruct, type BaseStructOptions } from '@basestruct';
+import { FColor } from '../../../pixels/struct';
+import { FPoint } from '../../../rect/struct';
 import { ByteOffset } from './constant';
 
 export class Vertex extends BaseStruct {

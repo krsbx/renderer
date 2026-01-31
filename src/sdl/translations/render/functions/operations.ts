@@ -1,7 +1,7 @@
 import type { SDL } from '@/sdl';
 import type { Pointer } from 'bun:ffi';
-import { Rect } from '../../rect/utility';
-import { Surface } from '../../surface/utility';
+import { Rect } from '../../rect/struct';
+import { Surface } from '../../surface/struct';
 
 // Read Pixels
 

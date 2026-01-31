@@ -1,6 +1,6 @@
 import type { SDL } from '@/sdl';
 import type { Colorspace, PixelFormat } from '../../../ffi/pixels/constant';
-import { Surface } from '../utility';
+import { Surface } from '../struct';
 
 // Create/Destroy
 

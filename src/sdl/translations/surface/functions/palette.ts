@@ -1,6 +1,6 @@
 import type { SDL } from '@/sdl';
-import { Palette } from '../../pixels/utility';
-import { Surface } from '../utility';
+import { Palette } from '../../pixels/struct';
+import { Surface } from '../struct';
 
 // Palette
 

@@ -1,7 +1,7 @@
 import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
 import type { Pointer } from 'bun:ffi';
-import { FPoint, FRect } from '../../rect/utility';
+import { FPoint, FRect } from '../../rect/struct';
 
 // Clear
 

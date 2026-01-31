@@ -1,7 +1,7 @@
-import { BaseStruct } from '@/utility/base-struct';
-import { CStruct } from '@/utility/cstruct';
+import { BaseStruct } from '@basestruct';
+import { CStruct } from '@utility/cstruct';
 import { type Pointer } from 'bun:ffi';
-import { GPUTextureSamplerBinding } from '../../../gpu/utility';
+import { GPUTextureSamplerBinding } from '../../../gpu/struct';
 import { ByteOffset } from './constant';
 
 export class GPURenderStateCreateInfo extends BaseStruct {

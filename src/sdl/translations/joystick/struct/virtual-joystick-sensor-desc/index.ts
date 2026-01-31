@@ -1,5 +1,5 @@
-import { BaseStruct } from '@/utility/base-struct';
-import type { SensorType } from '../../../../ffi/sensor/constant';
+import { BaseStruct } from '@basestruct';
+import type { SensorType } from '@sdl/ffi/constant/sensor';
 import { ByteOffset } from './constant';
 
 export class VirtualJoystickSensorDesc extends BaseStruct {

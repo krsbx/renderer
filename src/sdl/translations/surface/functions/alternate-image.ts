@@ -1,6 +1,6 @@
 import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
-import { Surface } from '../utility';
+import { Surface } from '../struct';
 
 // Alternate Images
 

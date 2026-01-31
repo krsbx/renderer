@@ -1,8 +1,8 @@
 import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
 import type { BlendMode } from '../../../ffi/blend-mode/constant';
-import { Rect } from '../../rect/utility';
-import { Surface } from '../utility';
+import { Rect } from '../../rect/struct';
+import { Surface } from '../struct';
 
 // RLE
 

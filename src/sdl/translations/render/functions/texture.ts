@@ -5,9 +5,9 @@ import type { BlendMode } from '../../../ffi/blend-mode/constant';
 import type { PixelFormat } from '../../../ffi/pixels/constant';
 import type { TextureAccess } from '../../../ffi/render/constant';
 import type { ScaleMode } from '../../../ffi/surface/constant';
-import { Palette } from '../../pixels/utility';
-import { Rect } from '../../rect/utility';
-import { Surface } from '../../surface/utility';
+import { Palette } from '../../pixels/struct';
+import { Rect } from '../../rect/struct';
+import { Surface } from '../../surface/struct';
 
 export function createTexture(
   this: SDL,

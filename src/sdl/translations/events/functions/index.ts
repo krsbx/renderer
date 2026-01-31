@@ -2,7 +2,7 @@ import type { SDL } from '@/sdl';
 import { CStruct } from '@cstruct';
 import { CString, ptr, type JSCallback, type Pointer } from 'bun:ffi';
 import { type EventAction, type EventType } from '../../../ffi/events/constant';
-import { Event } from '../utility';
+import { Event } from '../struct';
 
 export function pumpEvents(this: SDL) {
   this.symbols.SDL_PumpEvents();

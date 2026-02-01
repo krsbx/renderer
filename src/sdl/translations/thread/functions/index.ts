@@ -1,9 +1,14 @@
 import type { SDL } from '@/sdl';
 import type { Thread } from '@/sdl/types/definition';
 import { CStruct } from '@cstruct';
-import type { JSCallback, Pointer } from 'bun:ffi';
+import type { Pointer } from 'bun:ffi';
 import type { ThreadPriority, ThreadState } from '../../../ffi/thread/constant';
 import type { TLSID } from '../../exports';
+import type { TLSDestructorCallbackFn } from '../types/callback';
+import {
+  registerTLSDestructorCallback,
+  unregisterTLSDestructorCallback,
+} from '../utility/callback';
 
 export function getThreadName(this: SDL, thread: Thread) {
   return this.symbols.SDL_GetThreadName(thread).toString();
@@ -46,13 +51,24 @@ export function setTLS(
   options: {
     id: TLSID;
     value: Pointer | null;
-    destructor?: JSCallback | null;
+    destructor?: TLSDestructorCallbackFn | null;
   }
 ) {
+  const tlsId = options.id.value;
+  let destructorPtr = null;
+
+  // Unregister any existing destructor for this TLS ID
+  unregisterTLSDestructorCallback(tlsId);
+
+  if (options.destructor) {
+    const cb = registerTLSDestructorCallback(tlsId, options.destructor);
+    destructorPtr = cb.ptr;
+  }
+
   return this.symbols.SDL_SetTLS(
     options.id.$memory,
     options.value,
-    options.destructor?.ptr ?? null
+    destructorPtr
   );
 }
 

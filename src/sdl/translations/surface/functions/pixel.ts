@@ -150,11 +150,11 @@ export function fillSurfaceRects(
     color: number;
   }
 ) {
-  const { buffer } = CStruct.writeArray(options.rects, Rect.BYTE_SIZE);
+  const { buffer: rects } = CStruct.writeArray(options.rects, Rect.BYTE_SIZE);
 
   return this.symbols.SDL_FillSurfaceRects(
     options.dst.$address,
-    buffer,
+    rects,
     options.rects.length,
     options.color
   );

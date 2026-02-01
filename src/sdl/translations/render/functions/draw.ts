@@ -29,11 +29,14 @@ export function renderPoints(
     points: FPoint[];
   }
 ) {
-  const { buffer } = CStruct.writeArray(options.points, FPoint.BYTE_SIZE);
+  const { buffer: points } = CStruct.writeArray(
+    options.points,
+    FPoint.BYTE_SIZE
+  );
 
   return this.symbols.SDL_RenderPoints(
     options.renderer,
-    buffer,
+    points,
     options.points.length
   );
 }
@@ -66,11 +69,14 @@ export function renderLines(
     points: FPoint[];
   }
 ) {
-  const { buffer } = CStruct.writeArray(options.points, FPoint.BYTE_SIZE);
+  const { buffer: points } = CStruct.writeArray(
+    options.points,
+    FPoint.BYTE_SIZE
+  );
 
   return this.symbols.SDL_RenderLines(
     options.renderer,
-    buffer,
+    points,
     options.points.length
   );
 }
@@ -97,11 +103,11 @@ export function renderRects(
     rects: FRect[];
   }
 ) {
-  const { buffer } = CStruct.writeArray(options.rects, FRect.BYTE_SIZE);
+  const { buffer: rects } = CStruct.writeArray(options.rects, FRect.BYTE_SIZE);
 
   return this.symbols.SDL_RenderRects(
     options.renderer,
-    buffer,
+    rects,
     options.rects.length
   );
 }
@@ -128,11 +134,11 @@ export function renderFillRects(
     rects: FRect[];
   }
 ) {
-  const { buffer } = CStruct.writeArray(options.rects, FRect.BYTE_SIZE);
+  const { buffer: rects } = CStruct.writeArray(options.rects, FRect.BYTE_SIZE);
 
   return this.symbols.SDL_RenderFillRects(
     options.renderer,
-    buffer,
+    rects,
     options.rects.length
   );
 }

@@ -518,11 +518,11 @@ export function updateWindowSurfaceRects(
     rects: Rect[];
   }
 ) {
-  const { buffer } = CStruct.writeArray(options.rects, Rect.BYTE_SIZE);
+  const { buffer: rects } = CStruct.writeArray(options.rects, Rect.BYTE_SIZE);
 
   return this.symbols.SDL_UpdateWindowSurfaceRects(
     options.window,
-    buffer,
+    rects,
     options.rects.length
   );
 }

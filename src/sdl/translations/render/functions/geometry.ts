@@ -15,7 +15,10 @@ export function renderGeometry(
     numIndices?: number;
   }
 ) {
-  const { buffer } = CStruct.writeArray(options.vertices, Vertex.BYTE_SIZE);
+  const { buffer: vertices } = CStruct.writeArray(
+    options.vertices,
+    Vertex.BYTE_SIZE
+  );
 
   const numIndices = options.numIndices
     ? options.numIndices
@@ -28,7 +31,7 @@ export function renderGeometry(
   return this.symbols.SDL_RenderGeometry(
     options.renderer,
     options.texture ?? null,
-    buffer,
+    vertices,
     options.vertices.length,
     options.indices ?? null,
     numIndices

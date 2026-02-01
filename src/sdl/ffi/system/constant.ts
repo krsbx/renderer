@@ -1,11 +1,11 @@
 import type { Brand } from '@/types/shared';
 
 export const RawSandbox = {
-  SDL_SANDBOX_NONE: 0,
-  SDL_SANDBOX_UNKNOWN_CONTAINER: 1,
-  SDL_SANDBOX_FLATPAK: 2,
-  SDL_SANDBOX_SNAP: 3,
-  SDL_SANDBOX_MACOS: 4,
+  NONE: 0,
+  UNKNOWN_CONTAINER: 1,
+  FLATPAK: 2,
+  SNAP: 3,
+  MACOS: 4,
 } as const;
 
 export const SandBox = RawSandbox as Readonly<

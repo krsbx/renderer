@@ -1,4 +1,10 @@
 import type { SDL } from '@/sdl';
+import type {
+  VkInstance,
+  VkPhysicalDevice,
+  VkSurfaceKHR,
+  Window,
+} from '@/sdl/types/definition';
 import { CStruct } from '@cstruct';
 import { stringToCString } from '@utility/common';
 import { type Pointer } from 'bun:ffi';
@@ -35,8 +41,8 @@ export function vulkanGetInstanceExtensions(this: SDL) {
 export function vulkanCreateSurface(
   this: SDL,
   options: {
-    window: Pointer;
-    instance: Pointer;
+    window: Window;
+    instance: VkInstance;
     allocator?: Pointer | null;
   }
 ) {
@@ -57,8 +63,8 @@ export function vulkanCreateSurface(
 export function vulkanDestroySurface(
   this: SDL,
   options: {
-    instance: Pointer;
-    surface: Pointer;
+    instance: VkInstance;
+    surface: VkSurfaceKHR;
     allocator?: Pointer | null;
   }
 ) {
@@ -72,8 +78,8 @@ export function vulkanDestroySurface(
 export function vulkanGetPresentationSupport(
   this: SDL,
   options: {
-    instance: Pointer;
-    physicalDevice: Pointer;
+    instance: VkInstance;
+    physicalDevice: VkPhysicalDevice;
     queueFamilyIndex: number;
   }
 ) {

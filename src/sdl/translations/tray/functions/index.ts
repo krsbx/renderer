@@ -1,9 +1,16 @@
 import type { SDL } from '@/sdl';
+import type { Tray, TrayEntry, TrayMenu } from '@/sdl/types/definition';
 import { CStruct } from '@cstruct';
 import { stringToCString } from '@utility/common';
-import { type JSCallback, type Pointer } from 'bun:ffi';
+import { type Pointer } from 'bun:ffi';
 import type { TrayEntryFlags } from '../../../ffi/tray/constant';
 import { Surface } from '../../surface/struct';
+import type { TrayCallbackFn } from '../types/callback';
+import {
+  createTrayEntryCallback,
+  registerTrayEntryCallback,
+  unregisterTrayEntryCallback,
+} from '../utility/callback';
 
 export function createTray(
   this: SDL,
@@ -15,13 +22,13 @@ export function createTray(
   return this.symbols.SDL_CreateTray(
     options.icon?.$address ?? null,
     stringToCString(options.tooltip).ptr
-  );
+  ) as Tray;
 }
 
 export function setTrayIcon(
   this: SDL,
   options: {
-    tray: Pointer;
+    tray: Tray;
     icon: Surface | null;
   }
 ) {
@@ -31,7 +38,7 @@ export function setTrayIcon(
 export function setTrayTooltip(
   this: SDL,
   options: {
-    tray: Pointer;
+    tray: Tray;
     tooltip: string;
   }
 ) {
@@ -41,23 +48,23 @@ export function setTrayTooltip(
   );
 }
 
-export function createTrayMenu(this: SDL, tray: Pointer) {
-  return this.symbols.SDL_CreateTrayMenu(tray);
+export function createTrayMenu(this: SDL, tray: Tray) {
+  return this.symbols.SDL_CreateTrayMenu(tray) as TrayMenu;
 }
 
-export function createTraySubmenu(this: SDL, entry: Pointer) {
-  return this.symbols.SDL_CreateTraySubmenu(entry);
+export function createTraySubmenu(this: SDL, entry: TrayEntry) {
+  return this.symbols.SDL_CreateTraySubmenu(entry) as TrayMenu;
 }
 
-export function getTrayMenu(this: SDL, tray: Pointer) {
-  return this.symbols.SDL_GetTrayMenu(tray);
+export function getTrayMenu(this: SDL, tray: Tray) {
+  return this.symbols.SDL_GetTrayMenu(tray) as TrayMenu;
 }
 
-export function getTraySubmenu(this: SDL, entry: Pointer) {
-  return this.symbols.SDL_GetTraySubmenu(entry);
+export function getTraySubmenu(this: SDL, entry: TrayEntry) {
+  return this.symbols.SDL_GetTraySubmenu(entry) as TrayMenu;
 }
 
-export function getTrayEntries(this: SDL, menu: Pointer) {
+export function getTrayEntries(this: SDL, menu: TrayMenu) {
   const countStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
   const listPtr = this.symbols.SDL_GetTrayEntries(menu, countStruct.$address);
@@ -66,19 +73,25 @@ export function getTrayEntries(this: SDL, menu: Pointer) {
 
   const count = countStruct.getValue(0, 'i32');
 
-  const entries = CStruct.readArrayPrimitive(listPtr, count, 'ptr');
+  const entries = CStruct.readArrayPrimitive(
+    listPtr,
+    count,
+    'ptr'
+  ) as TrayEntry[];
 
   return entries;
 }
 
-export function removeTrayEntry(this: SDL, entry: Pointer) {
+export function removeTrayEntry(this: SDL, entry: TrayEntry) {
+  // Clean up callback before removing entry
+  unregisterTrayEntryCallback(entry);
   this.symbols.SDL_RemoveTrayEntry(entry);
 }
 
 export function insertTrayEntryAt(
   this: SDL,
   options: {
-    menu: Pointer;
+    menu: TrayMenu;
     pos: number;
     label: string;
     flags: TrayEntryFlags;
@@ -89,13 +102,13 @@ export function insertTrayEntryAt(
     options.pos,
     stringToCString(options.label).ptr,
     options.flags
-  );
+  ) as TrayEntry;
 }
 
 export function setTrayEntryLabel(
   this: SDL,
   options: {
-    entry: Pointer;
+    entry: TrayEntry;
     label: string;
   }
 ) {
@@ -105,71 +118,86 @@ export function setTrayEntryLabel(
   );
 }
 
-export function getTrayEntryLabel(this: SDL, entry: Pointer) {
+export function getTrayEntryLabel(this: SDL, entry: TrayEntry) {
   return this.symbols.SDL_GetTrayEntryLabel(entry).toString();
 }
 
 export function setTrayEntryChecked(
   this: SDL,
   options: {
-    entry: Pointer;
+    entry: TrayEntry;
     checked: boolean;
   }
 ) {
   this.symbols.SDL_SetTrayEntryChecked(options.entry, options.checked);
 }
 
-export function getTrayEntryChecked(this: SDL, entry: Pointer) {
+export function getTrayEntryChecked(this: SDL, entry: TrayEntry) {
   return this.symbols.SDL_GetTrayEntryChecked(entry);
 }
 
 export function setTrayEntryEnabled(
   this: SDL,
   options: {
-    entry: Pointer;
+    entry: TrayEntry;
     enabled: boolean;
   }
 ) {
   this.symbols.SDL_SetTrayEntryEnabled(options.entry, options.enabled);
 }
 
-export function getTrayEntryEnabled(this: SDL, entry: Pointer) {
+export function getTrayEntryEnabled(this: SDL, entry: TrayEntry) {
   return this.symbols.SDL_GetTrayEntryEnabled(entry);
 }
 
 export function setTrayEntryCallback(
   this: SDL,
   options: {
-    entry: Pointer;
-    callback: JSCallback | null;
+    entry: TrayEntry;
+    callback: TrayCallbackFn | null;
     userdata?: Pointer | null;
   }
 ) {
+  // Unregister any existing callback for this entry
+  unregisterTrayEntryCallback(options.entry);
+
+  if (!options.callback) {
+    this.symbols.SDL_SetTrayEntryCallback(
+      options.entry,
+      null,
+      options.userdata ?? null
+    );
+    return;
+  }
+
+  const cb = createTrayEntryCallback(options.callback);
+  registerTrayEntryCallback(options.entry, cb);
+
   this.symbols.SDL_SetTrayEntryCallback(
     options.entry,
-    options.callback?.ptr ?? null,
+    cb.ptr,
     options.userdata ?? null
   );
 }
 
-export function clickTrayEntry(this: SDL, entry: Pointer) {
+export function clickTrayEntry(this: SDL, entry: TrayEntry) {
   this.symbols.SDL_ClickTrayEntry(entry);
 }
 
-export function destroyTray(this: SDL, tray: Pointer) {
+export function destroyTray(this: SDL, tray: Tray) {
   this.symbols.SDL_DestroyTray(tray);
 }
 
-export function getTrayEntryParent(this: SDL, entry: Pointer) {
-  return this.symbols.SDL_GetTrayEntryParent(entry);
+export function getTrayEntryParent(this: SDL, entry: TrayEntry) {
+  return this.symbols.SDL_GetTrayEntryParent(entry) as TrayMenu;
 }
 
-export function getTrayMenuParentEntry(this: SDL, menu: Pointer) {
-  return this.symbols.SDL_GetTrayMenuParentEntry(menu);
+export function getTrayMenuParentEntry(this: SDL, menu: TrayMenu) {
+  return this.symbols.SDL_GetTrayMenuParentEntry(menu) as TrayEntry;
 }
 
-export function getTrayMenuParentTray(this: SDL, menu: Pointer) {
-  return this.symbols.SDL_GetTrayMenuParentTray(menu);
+export function getTrayMenuParentTray(this: SDL, menu: TrayMenu) {
+  return this.symbols.SDL_GetTrayMenuParentTray(menu) as Tray;
 }
 
 export function updateTrays(this: SDL) {

@@ -67,5 +67,18 @@ export type Storage = SDLOpaque<'Storage'>;
 // Thread
 export type Thread = SDLOpaque<'Thread'>;
 
+// Tray
+export type Tray = SDLOpaque<'Tray'>;
+export type TrayMenu = SDLOpaque<'TrayMenu'>;
+export type TrayEntry = SDLOpaque<'TrayEntry'>;
+
+// Vulkan
+export type VkInstance = SDLOpaque<'VkInstance'>;
+export type VkSurfaceKHR = SDLOpaque<'VkSurfaceKHR'>;
+export type VkPhysicalDevice = SDLOpaque<'VkPhysicalDevice'>;
+
+// Video
+export type GLContext = SDLOpaque<'GLContext'>;
+
 // Window
 export type Window = SDLOpaque<'Window'>;

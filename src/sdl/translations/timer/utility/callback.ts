@@ -16,7 +16,10 @@ export function getNSTimerCallbackKey(timerID: number) {
 export function createTimerCallback(callback: TimerCallbackFn) {
   const cb = new JSCallback(
     (_: Pointer, timerID: number, interval: number) => {
-      const nextInterval = callback(timerID, interval);
+      const nextInterval = callback({
+        timerID,
+        interval,
+      });
 
       // If callback returns 0, timer is cancelled - unregister
       if (nextInterval === 0) {
@@ -37,7 +40,10 @@ export function createTimerCallback(callback: TimerCallbackFn) {
 export function createNSTimerCallback(callback: NSTimerCallbackFn) {
   const cb = new JSCallback(
     (_: Pointer, timerID: number, interval: bigint) => {
-      const nextInterval = callback(timerID, interval);
+      const nextInterval = callback({
+        timerID,
+        interval,
+      });
 
       // If callback returns 0n, timer is cancelled - unregister
       if (nextInterval === 0n) {

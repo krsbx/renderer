@@ -1,7 +1,7 @@
 import type { SDL } from '@/sdl';
+import type { Window } from '@/sdl/types/definition';
 import { CStruct } from '@cstruct';
 import { stringToCString } from '@utility/common';
-import type { JSCallback, Pointer } from 'bun:ffi';
 import type { PixelFormat } from '../../../ffi/pixels/constant';
 import type {
   FlashOperation,
@@ -11,19 +11,25 @@ import type {
 import { Rect } from '../../rect/struct';
 import { Surface } from '../../surface/struct';
 import { DisplayMode } from '../struct';
+import type { WindowHitTestCallbackFn } from '../types/callback';
+import {
+  createWindowHitTestCallback,
+  registerWindowHitTestCallback,
+  unregisterWindowHitTestCallback,
+} from '../utility/callback';
 
-export function getWindowPixelDensity(this: SDL, window: Pointer) {
+export function getWindowPixelDensity(this: SDL, window: Window) {
   return this.symbols.SDL_GetWindowPixelDensity(window);
 }
 
-export function getWindowDisplayScale(this: SDL, window: Pointer) {
+export function getWindowDisplayScale(this: SDL, window: Window) {
   return this.symbols.SDL_GetWindowDisplayScale(window);
 }
 
 export function setWindowFullscreenMode(
   this: SDL,
   options: {
-    window: Pointer;
+    window: Window;
     mode: DisplayMode;
   }
 ) {
@@ -33,7 +39,7 @@ export function setWindowFullscreenMode(
   );
 }
 
-export function getWindowFullscreenMode(this: SDL, window: Pointer) {
+export function getWindowFullscreenMode(this: SDL, window: Window) {
   const result = this.symbols.SDL_GetWindowFullscreenMode(window);
 
   if (!result) return null;
@@ -41,7 +47,7 @@ export function getWindowFullscreenMode(this: SDL, window: Pointer) {
   return new DisplayMode(result);
 }
 
-export function getWindowIccProfile(this: SDL, window: Pointer) {
+export function getWindowIccProfile(this: SDL, window: Window) {
   const sizeStruct = new CStruct({ length: CStruct.BYTE_SIZE.i64 });
 
   const memory = this.symbols.SDL_GetWindowICCProfile(
@@ -65,7 +71,7 @@ export function getWindowIccProfile(this: SDL, window: Pointer) {
   };
 }
 
-export function getWindowPixelFormat(this: SDL, window: Pointer) {
+export function getWindowPixelFormat(this: SDL, window: Window) {
   const result = this.symbols.SDL_GetWindowPixelFormat(window);
 
   return result as PixelFormat;
@@ -79,7 +85,7 @@ export function getWindows(this: SDL) {
   if (!listPtr) return [];
 
   const count = countStruct.getValue(0, 'i32');
-  const result = CStruct.readArrayPrimitive(listPtr, count, 'ptr');
+  const result = CStruct.readArrayPrimitive(listPtr, count, 'ptr') as Window[];
 
   this.symbols.SDL_free(listPtr);
 
@@ -100,13 +106,13 @@ export function createWindow(
     options.w,
     options.h,
     options.flags
-  );
+  ) as Window;
 }
 
 export function createPopupWindow(
   this: SDL,
   options: {
-    parent: Pointer;
+    parent: Window;
     x: number;
     y: number;
     w: number;
@@ -121,37 +127,37 @@ export function createPopupWindow(
     options.w,
     options.h,
     options.flags
-  );
+  ) as Window;
 }
 
 export function createWindowWithProperties(this: SDL, props: number) {
-  return this.symbols.SDL_CreateWindowWithProperties(props);
+  return this.symbols.SDL_CreateWindowWithProperties(props) as Window;
 }
 
-export function getWindowId(this: SDL, window: Pointer) {
+export function getWindowId(this: SDL, window: Window) {
   return this.symbols.SDL_GetWindowID(window);
 }
 
 export function getWindowFromId(this: SDL, id: number) {
-  return this.symbols.SDL_GetWindowFromID(id);
+  return this.symbols.SDL_GetWindowFromID(id) as Window;
 }
 
-export function getWindowParent(this: SDL, window: Pointer) {
-  return this.symbols.SDL_GetWindowParent(window);
+export function getWindowParent(this: SDL, window: Window) {
+  return this.symbols.SDL_GetWindowParent(window) as Window;
 }
 
-export function getWindowProperties(this: SDL, window: Pointer) {
+export function getWindowProperties(this: SDL, window: Window) {
   return this.symbols.SDL_GetWindowProperties(window);
 }
 
-export function getWindowFlags(this: SDL, window: Pointer) {
+export function getWindowFlags(this: SDL, window: Window) {
   return this.symbols.SDL_GetWindowFlags(window) as WindowFlags;
 }
 
 export function setWindowTitle(
   this: SDL,
   options: {
-    window: Pointer;
+    window: Window;
     title: string;
   }
 ) {
@@ -161,14 +167,14 @@ export function setWindowTitle(
   );
 }
 
-export function getWindowTitle(this: SDL, window: Pointer) {
+export function getWindowTitle(this: SDL, window: Window) {
   return this.symbols.SDL_GetWindowTitle(window).toString();
 }
 
 export function setWindowIcon(
   this: SDL,
   options: {
-    window: Pointer;
+    window: Window;
     icon: Surface;
   }
 ) {
@@ -178,7 +184,7 @@ export function setWindowIcon(
 export function setWindowPosition(
   this: SDL,
   options: {
-    window: Pointer;
+    window: Window;
     x: number;
     y: number;
   }
@@ -190,7 +196,7 @@ export function setWindowPosition(
   );
 }
 
-export function getWindowPosition(this: SDL, window: Pointer) {
+export function getWindowPosition(this: SDL, window: Window) {
   const posXStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
   const posYStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
@@ -211,7 +217,7 @@ export function getWindowPosition(this: SDL, window: Pointer) {
 export function setWindowSize(
   this: SDL,
   options: {
-    window: Pointer;
+    window: Window;
     w: number;
     h: number;
   }
@@ -219,7 +225,7 @@ export function setWindowSize(
   return this.symbols.SDL_SetWindowSize(options.window, options.w, options.h);
 }
 
-export function getWindowSize(this: SDL, window: Pointer) {
+export function getWindowSize(this: SDL, window: Window) {
   const wStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
   const hStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
@@ -237,7 +243,7 @@ export function getWindowSize(this: SDL, window: Pointer) {
   };
 }
 
-export function getWindowSafeArea(this: SDL, window: Pointer) {
+export function getWindowSafeArea(this: SDL, window: Window) {
   const rect = Rect.create();
 
   const success = this.symbols.SDL_GetWindowSafeArea(window, rect.$address);
@@ -250,7 +256,7 @@ export function getWindowSafeArea(this: SDL, window: Pointer) {
 export function setWindowAspectRatio(
   this: SDL,
   options: {
-    window: Pointer;
+    window: Window;
     minAspect: number;
     maxAspect: number;
   }
@@ -262,7 +268,7 @@ export function setWindowAspectRatio(
   );
 }
 
-export function getWindowAspectRatio(this: SDL, window: Pointer) {
+export function getWindowAspectRatio(this: SDL, window: Window) {
   const minAspectStruct = new CStruct({ length: CStruct.BYTE_SIZE.f32 });
   const maxAspectStruct = new CStruct({ length: CStruct.BYTE_SIZE.f32 });
 
@@ -280,7 +286,7 @@ export function getWindowAspectRatio(this: SDL, window: Pointer) {
   };
 }
 
-export function getWindowBordersSize(this: SDL, window: Pointer) {
+export function getWindowBordersSize(this: SDL, window: Window) {
   const topStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
   const leftStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
   const bottomStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
@@ -304,7 +310,7 @@ export function getWindowBordersSize(this: SDL, window: Pointer) {
   };
 }
 
-export function getWindowSizeInPixels(this: SDL, window: Pointer) {
+export function getWindowSizeInPixels(this: SDL, window: Window) {
   const wStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
   const hStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
@@ -325,7 +331,7 @@ export function getWindowSizeInPixels(this: SDL, window: Pointer) {
 export function setWindowMinimumSize(
   this: SDL,
   options: {
-    window: Pointer;
+    window: Window;
     minW: number;
     minH: number;
   }
@@ -337,7 +343,7 @@ export function setWindowMinimumSize(
   );
 }
 
-export function getWindowMinimumSize(this: SDL, window: Pointer) {
+export function getWindowMinimumSize(this: SDL, window: Window) {
   const wStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
   const hStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
@@ -358,7 +364,7 @@ export function getWindowMinimumSize(this: SDL, window: Pointer) {
 export function setWindowMaximumSize(
   this: SDL,
   options: {
-    window: Pointer;
+    window: Window;
     maxW: number;
     maxH: number;
   }
@@ -370,7 +376,7 @@ export function setWindowMaximumSize(
   );
 }
 
-export function getWindowMaximumSize(this: SDL, window: Pointer) {
+export function getWindowMaximumSize(this: SDL, window: Window) {
   const wStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
   const hStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
@@ -391,7 +397,7 @@ export function getWindowMaximumSize(this: SDL, window: Pointer) {
 export function setWindowBordered(
   this: SDL,
   options: {
-    window: Pointer;
+    window: Window;
     bordered: boolean;
   }
 ) {
@@ -401,7 +407,7 @@ export function setWindowBordered(
 export function setWindowResizable(
   this: SDL,
   options: {
-    window: Pointer;
+    window: Window;
     resizable: boolean;
   }
 ) {
@@ -411,7 +417,7 @@ export function setWindowResizable(
 export function setWindowAlwaysOnTop(
   this: SDL,
   options: {
-    window: Pointer;
+    window: Window;
     onTop: boolean;
   }
 ) {
@@ -421,7 +427,7 @@ export function setWindowAlwaysOnTop(
 export function setWindowFillDocument(
   this: SDL,
   options: {
-    window: Pointer;
+    window: Window;
     fillDocument: boolean;
   }
 ) {
@@ -431,34 +437,34 @@ export function setWindowFillDocument(
   );
 }
 
-export function showWindow(this: SDL, window: Pointer) {
+export function showWindow(this: SDL, window: Window) {
   return this.symbols.SDL_ShowWindow(window);
 }
 
-export function hideWindow(this: SDL, window: Pointer) {
+export function hideWindow(this: SDL, window: Window) {
   return this.symbols.SDL_HideWindow(window);
 }
 
-export function raiseWindow(this: SDL, window: Pointer) {
+export function raiseWindow(this: SDL, window: Window) {
   return this.symbols.SDL_RaiseWindow(window);
 }
 
-export function maximizeWindow(this: SDL, window: Pointer) {
+export function maximizeWindow(this: SDL, window: Window) {
   return this.symbols.SDL_MaximizeWindow(window);
 }
 
-export function minimizeWindow(this: SDL, window: Pointer) {
+export function minimizeWindow(this: SDL, window: Window) {
   return this.symbols.SDL_MinimizeWindow(window);
 }
 
-export function restoreWindow(this: SDL, window: Pointer) {
+export function restoreWindow(this: SDL, window: Window) {
   return this.symbols.SDL_RestoreWindow(window);
 }
 
 export function setWindowFullscreen(
   this: SDL,
   options: {
-    window: Pointer;
+    window: Window;
     fullscreen: boolean;
   }
 ) {
@@ -468,29 +474,29 @@ export function setWindowFullscreen(
   );
 }
 
-export function syncWindow(this: SDL, window: Pointer) {
+export function syncWindow(this: SDL, window: Window) {
   return this.symbols.SDL_SyncWindow(window);
 }
 
-export function windowHasSurface(this: SDL, window: Pointer) {
+export function windowHasSurface(this: SDL, window: Window) {
   return this.symbols.SDL_WindowHasSurface(window);
 }
 
-export function getWindowSurface(this: SDL, window: Pointer) {
+export function getWindowSurface(this: SDL, window: Window) {
   return this.symbols.SDL_GetWindowSurface(window);
 }
 
 export function setWindowSurfaceVSync(
   this: SDL,
   options: {
-    window: Pointer;
+    window: Window;
     vsync: number;
   }
 ) {
   return this.symbols.SDL_SetWindowSurfaceVSync(options.window, options.vsync);
 }
 
-export function getWindowSurfaceVSync(this: SDL, window: Pointer) {
+export function getWindowSurfaceVSync(this: SDL, window: Window) {
   const vsyncStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
   const success = this.symbols.SDL_GetWindowSurfaceVSync(
@@ -501,14 +507,14 @@ export function getWindowSurfaceVSync(this: SDL, window: Pointer) {
   return success ? vsyncStruct.getValue(0, 'i32') : null;
 }
 
-export function updateWindowSurface(this: SDL, window: Pointer) {
+export function updateWindowSurface(this: SDL, window: Window) {
   return this.symbols.SDL_UpdateWindowSurface(window);
 }
 
 export function updateWindowSurfaceRects(
   this: SDL,
   options: {
-    window: Pointer;
+    window: Window;
     rects: Rect[];
   }
 ) {
@@ -521,14 +527,14 @@ export function updateWindowSurfaceRects(
   );
 }
 
-export function destroyWindowSurface(this: SDL, window: Pointer) {
+export function destroyWindowSurface(this: SDL, window: Window) {
   return this.symbols.SDL_DestroyWindowSurface(window);
 }
 
 export function setWindowKeyboardGrab(
   this: SDL,
   options: {
-    window: Pointer;
+    window: Window;
     grab: boolean;
   }
 ) {
@@ -538,29 +544,29 @@ export function setWindowKeyboardGrab(
 export function setWindowMouseGrab(
   this: SDL,
   options: {
-    window: Pointer;
+    window: Window;
     grab: boolean;
   }
 ) {
   return this.symbols.SDL_SetWindowMouseGrab(options.window, options.grab);
 }
 
-export function getWindowMouseGrab(this: SDL, window: Pointer) {
+export function getWindowMouseGrab(this: SDL, window: Window) {
   return this.symbols.SDL_GetWindowMouseGrab(window);
 }
 
-export function getWindowKeyboardGrab(this: SDL, window: Pointer) {
+export function getWindowKeyboardGrab(this: SDL, window: Window) {
   return this.symbols.SDL_GetWindowKeyboardGrab(window);
 }
 
 export function getGrabbedWindow(this: SDL) {
-  return this.symbols.SDL_GetGrabbedWindow();
+  return this.symbols.SDL_GetGrabbedWindow() as Window;
 }
 
 export function setWindowMouseRect(
   this: SDL,
   options: {
-    window: Pointer;
+    window: Window;
     rect: Rect;
   }
 ) {
@@ -570,7 +576,7 @@ export function setWindowMouseRect(
   );
 }
 
-export function getWindowMouseRect(this: SDL, window: Pointer) {
+export function getWindowMouseRect(this: SDL, window: Window) {
   const rect = this.symbols.SDL_GetWindowMouseRect(window);
 
   return rect ? new Rect(rect) : null;
@@ -579,22 +585,22 @@ export function getWindowMouseRect(this: SDL, window: Pointer) {
 export function setWindowOpacity(
   this: SDL,
   options: {
-    window: Pointer;
+    window: Window;
     opacity: number;
   }
 ) {
   return this.symbols.SDL_SetWindowOpacity(options.window, options.opacity);
 }
 
-export function getWindowOpacity(this: SDL, window: Pointer) {
+export function getWindowOpacity(this: SDL, window: Window) {
   return this.symbols.SDL_GetWindowOpacity(window);
 }
 
 export function setWindowParent(
   this: SDL,
   options: {
-    window: Pointer;
-    parent: Pointer;
+    window: Window;
+    parent: Window;
   }
 ) {
   return this.symbols.SDL_SetWindowParent(options.window, options.parent);
@@ -603,7 +609,7 @@ export function setWindowParent(
 export function setWindowModal(
   this: SDL,
   options: {
-    window: Pointer;
+    window: Window;
     modal: boolean;
   }
 ) {
@@ -613,7 +619,7 @@ export function setWindowModal(
 export function setWindowFocusable(
   this: SDL,
   options: {
-    window: Pointer;
+    window: Window;
     focusable: boolean;
   }
 ) {
@@ -623,7 +629,7 @@ export function setWindowFocusable(
 export function showWindowSystemMenu(
   this: SDL,
   options: {
-    window: Pointer;
+    window: Window;
     x: number;
     y: number;
   }
@@ -638,22 +644,27 @@ export function showWindowSystemMenu(
 export function setWindowHitTest(
   this: SDL,
   options: {
-    window: Pointer;
-    callback: JSCallback;
-    callbackData?: Pointer | null;
+    window: Window;
+    callback: WindowHitTestCallbackFn | null;
   }
 ) {
-  return this.symbols.SDL_SetWindowHitTest(
-    options.window,
-    options.callback.ptr,
-    options.callbackData ?? null
-  );
+  // Unregister any existing callback for this window
+  unregisterWindowHitTestCallback(options.window);
+
+  if (!options.callback) {
+    return this.symbols.SDL_SetWindowHitTest(options.window, null, null);
+  }
+
+  const cb = createWindowHitTestCallback(options.callback);
+  registerWindowHitTestCallback(options.window, cb);
+
+  return this.symbols.SDL_SetWindowHitTest(options.window, cb.ptr, null);
 }
 
 export function setWindowShape(
   this: SDL,
   options: {
-    window: Pointer;
+    window: Window;
     shape: Surface;
   }
 ) {
@@ -666,7 +677,7 @@ export function setWindowShape(
 export function flashWindow(
   this: SDL,
   options: {
-    window: Pointer;
+    window: Window;
     operation: FlashOperation;
   }
 ) {
@@ -676,31 +687,33 @@ export function flashWindow(
 export function setWindowProgressState(
   this: SDL,
   options: {
-    window: Pointer;
+    window: Window;
     state: ProgressState;
   }
 ) {
   return this.symbols.SDL_SetWindowProgressState(options.window, options.state);
 }
 
-export function getWindowProgressState(this: SDL, window: Pointer) {
+export function getWindowProgressState(this: SDL, window: Window) {
   return this.symbols.SDL_GetWindowProgressState(window) as ProgressState;
 }
 
 export function setWindowProgressValue(
   this: SDL,
   options: {
-    window: Pointer;
+    window: Window;
     value: number;
   }
 ) {
   return this.symbols.SDL_SetWindowProgressValue(options.window, options.value);
 }
 
-export function getWindowProgressValue(this: SDL, window: Pointer) {
+export function getWindowProgressValue(this: SDL, window: Window) {
   return this.symbols.SDL_GetWindowProgressValue(window);
 }
 
-export function destroyWindow(this: SDL, window: Pointer) {
+export function destroyWindow(this: SDL, window: Window) {
+  // Clean up hit test callback if any
+  unregisterWindowHitTestCallback(window);
   this.symbols.SDL_DestroyWindow(window);
 }

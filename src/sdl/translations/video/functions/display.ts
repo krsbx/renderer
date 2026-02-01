@@ -1,6 +1,6 @@
 import type { SDL } from '@/sdl';
+import type { Window } from '@/sdl/types/definition';
 import { CStruct } from '@cstruct';
-import type { Pointer } from 'bun:ffi';
 import type {
   DisplayOrientation,
   SystemTheme,
@@ -161,6 +161,6 @@ export function getDisplayForRect(this: SDL, rect: Rect) {
   return this.symbols.SDL_GetDisplayForRect(rect.$address);
 }
 
-export function getDisplayForWindow(this: SDL, window: Pointer) {
+export function getDisplayForWindow(this: SDL, window: Window) {
   return this.symbols.SDL_GetDisplayForWindow(window);
 }

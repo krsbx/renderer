@@ -1,8 +1,21 @@
 import type { BaseSDL } from '@/sdl';
+import type { GLContext, Window } from '@/sdl/types/definition';
+import { CallbackManager } from '@/sdl/utility';
 import { CStruct } from '@cstruct';
 import { stringToCString } from '@utility/common';
-import type { JSCallback, Pointer } from 'bun:ffi';
 import type { GLAttr } from '../../../ffi/video/constant';
+import type {
+  EGLIntArrayCallbackFn,
+  EGLPlatformAttribCallbackFn,
+} from '../types/callback';
+import {
+  createEGLContextAttribCallback,
+  createEGLPlatformAttribCallback,
+  createEGLSurfaceAttribCallback,
+  EGLContextAttribCallbackKey,
+  EGLPlatformAttribCallbackKey,
+  EGLSurfaceAttribCallbackKey,
+} from '../utility/callback';
 
 export function glLoadLibrary(this: BaseSDL, path: string) {
   return this.symbols.SDL_GL_LoadLibrary(stringToCString(path).ptr);
@@ -25,6 +38,11 @@ export function glExtensionSupported(this: BaseSDL, extension: string) {
 }
 
 export function glResetAttributes(this: BaseSDL) {
+  // SDL resets EGL attribute callbacks, so clean up our references
+  CallbackManager.unregister(EGLPlatformAttribCallbackKey);
+  CallbackManager.unregister(EGLSurfaceAttribCallbackKey);
+  CallbackManager.unregister(EGLContextAttribCallbackKey);
+
   return this.symbols.SDL_GL_ResetAttributes();
 }
 
@@ -46,22 +64,22 @@ export function glGetAttribute(this: BaseSDL, attr: GLAttr) {
   return success ? valueStruct.getValue(0, 'i32') : null;
 }
 
-export function glCreateContext(this: BaseSDL, window: Pointer) {
+export function glCreateContext(this: BaseSDL, window: Window) {
   return this.symbols.SDL_GL_CreateContext(window);
 }
 
 export function glMakeCurrent(
   this: BaseSDL,
   options: {
-    window: Pointer;
-    context: Pointer;
+    window: Window;
+    context: GLContext;
   }
 ) {
   return this.symbols.SDL_GL_MakeCurrent(options.window, options.context);
 }
 
 export function glGetCurrentWindow(this: BaseSDL) {
-  return this.symbols.SDL_GL_GetCurrentWindow();
+  return this.symbols.SDL_GL_GetCurrentWindow() as Window;
 }
 
 export function glGetCurrentContext(this: BaseSDL) {
@@ -76,24 +94,50 @@ export function eglGetCurrentConfig(this: BaseSDL) {
   return this.symbols.SDL_EGL_GetCurrentConfig();
 }
 
-export function eglGetWindowSurface(this: BaseSDL, window: Pointer) {
+export function eglGetWindowSurface(this: BaseSDL, window: Window) {
   return this.symbols.SDL_EGL_GetWindowSurface(window);
 }
 
 export function eglSetAttributeCallbacks(
   this: BaseSDL,
   options: {
-    platformAttribCallback: JSCallback;
-    surfaceAttribCallback: JSCallback;
-    contextAttribCallback: JSCallback;
-    userdata?: Pointer | null;
+    platformAttribCallback: EGLPlatformAttribCallbackFn | null;
+    surfaceAttribCallback: EGLIntArrayCallbackFn | null;
+    contextAttribCallback: EGLIntArrayCallbackFn | null;
   }
 ) {
+  // Unregister any existing callbacks
+  CallbackManager.unregister(EGLPlatformAttribCallbackKey);
+  CallbackManager.unregister(EGLSurfaceAttribCallbackKey);
+  CallbackManager.unregister(EGLContextAttribCallbackKey);
+
+  let platformCb = null;
+  let surfaceCb = null;
+  let contextCb = null;
+
+  if (options.platformAttribCallback) {
+    const cb = createEGLPlatformAttribCallback(options.platformAttribCallback);
+    CallbackManager.register(EGLPlatformAttribCallbackKey, cb);
+    platformCb = cb.ptr;
+  }
+
+  if (options.surfaceAttribCallback) {
+    const cb = createEGLSurfaceAttribCallback(options.surfaceAttribCallback);
+    CallbackManager.register(EGLSurfaceAttribCallbackKey, cb);
+    surfaceCb = cb.ptr;
+  }
+
+  if (options.contextAttribCallback) {
+    const cb = createEGLContextAttribCallback(options.contextAttribCallback);
+    CallbackManager.register(EGLContextAttribCallbackKey, cb);
+    contextCb = cb.ptr;
+  }
+
   this.symbols.SDL_EGL_SetAttributeCallbacks(
-    options.platformAttribCallback.ptr,
-    options.surfaceAttribCallback.ptr,
-    options.contextAttribCallback.ptr,
-    options.userdata ?? null
+    platformCb,
+    surfaceCb,
+    contextCb,
+    null
   );
 }
 
@@ -109,10 +153,10 @@ export function glGetSwapInterval(this: BaseSDL) {
   return success ? intervalStruct.getValue(0, 'i32') : null;
 }
 
-export function glSwapWindow(this: BaseSDL, window: Pointer) {
+export function glSwapWindow(this: BaseSDL, window: Window) {
   return this.symbols.SDL_GL_SwapWindow(window);
 }
 
-export function glDestroyContext(this: BaseSDL, context: Pointer) {
+export function glDestroyContext(this: BaseSDL, context: GLContext) {
   return this.symbols.SDL_GL_DestroyContext(context);
 }

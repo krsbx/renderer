@@ -1,6 +1,5 @@
 import type { SDL } from '@/sdl';
 import { CallbackManager } from '@/sdl/utility';
-import type { Pointer } from 'bun:ffi';
 import type { NSTimerCallbackFn, TimerCallbackFn } from '../types/callback';
 import {
   createNSTimerCallback,
@@ -42,16 +41,11 @@ export function addTimer(
   options: {
     interval: number;
     callback: TimerCallbackFn;
-    userdata?: Pointer | null;
   }
 ) {
   const cb = createTimerCallback(options.callback);
 
-  const timerID = this.symbols.SDL_AddTimer(
-    options.interval,
-    cb.ptr,
-    options.userdata ?? null
-  );
+  const timerID = this.symbols.SDL_AddTimer(options.interval, cb.ptr, null);
 
   if (timerID === 0) {
     cb.close();
@@ -70,16 +64,11 @@ export function addTimerNS(
   options: {
     interval: bigint;
     callback: NSTimerCallbackFn;
-    userdata?: Pointer | null;
   }
 ) {
   const cb = createNSTimerCallback(options.callback);
 
-  const timerID = this.symbols.SDL_AddTimerNS(
-    options.interval,
-    cb.ptr,
-    options.userdata ?? null
-  );
+  const timerID = this.symbols.SDL_AddTimerNS(options.interval, cb.ptr, null);
 
   if (timerID === 0) {
     cb.close();

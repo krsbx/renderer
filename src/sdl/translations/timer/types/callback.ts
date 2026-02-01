@@ -9,7 +9,7 @@
  * @returns The next callback interval in ms, or 0 to cancel the timer
  */
 export interface TimerCallbackFn {
-  (timerID: number, interval: number): number;
+  (options: { timerID: number; interval: number }): number;
 }
 
 /**
@@ -23,5 +23,5 @@ export interface TimerCallbackFn {
  * @returns The next callback interval in ns, or 0n to cancel the timer
  */
 export interface NSTimerCallbackFn {
-  (timerID: number, interval: bigint): bigint;
+  (options: { timerID: number; interval: bigint }): bigint;
 }

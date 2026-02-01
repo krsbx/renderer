@@ -185,3 +185,22 @@ export const GLContextResetNotification =
 
 export type GLContextResetNotification =
   (typeof GLContextResetNotification)[keyof typeof GLContextResetNotification];
+
+export const RawHitTestResult = {
+  NORMAL: 0 /**< Region is normal. No special properties. */,
+  DRAGGABLE: 1 /**< Region can drag entire window. */,
+  RESIZE_TOPLEFT: 2 /**< Region is the resizable top-left corner border. */,
+  RESIZE_TOP: 3 /**< Region is the resizable top border. */,
+  RESIZE_TOPRIGHT: 4 /**< Region is the resizable top-right corner border. */,
+  RESIZE_RIGHT: 5 /**< Region is the resizable right border. */,
+  RESIZE_BOTTOMRIGHT: 6 /**< Region is the resizable bottom-right corner border. */,
+  RESIZE_BOTTOM: 0 /**< Region is the resizable bottom border. */,
+  RESIZE_BOTTOMLEFT: 7 /**< Region is the resizable bottom-left corner border. */,
+  RESIZE_LEFT: 8 /**< Region is the resizable left border. */,
+} as const;
+
+export const HitTestResult = RawHitTestResult as Readonly<
+  Record<keyof typeof RawHitTestResult, Brand<number, 'HitTestResult'>>
+>;
+
+export type HitTestResult = (typeof HitTestResult)[keyof typeof HitTestResult];

@@ -413,7 +413,7 @@ export const GPUDefinition = {
   },
   // bool SDL_AcquireGPUSwapchainTexture(SDL_GPUCommandBuffer *command_buffer, SDL_Window *window, SDL_GPUTexture **swapchain_texture, Uint32 *swapchain_texture_width, Uint32 *swapchain_texture_height);                                                                                                     // Acquire a texture to use in presentation.
   SDL_AcquireGPUSwapchainTexture: {
-    args: [FFIType.ptr, FFIType.ptr, FFIType.ptr, FFIType.ptr],
+    args: [FFIType.ptr, FFIType.ptr, FFIType.ptr, FFIType.ptr, FFIType.ptr],
     returns: FFIType.bool,
   },
   // bool SDL_WaitForGPUSwapchain(SDL_GPUDevice *device, SDL_Window *window);                                                                                                                                                                                                                                  // Blocks the thread until a swapchain texture is available to be acquired.
@@ -423,7 +423,7 @@ export const GPUDefinition = {
   },
   // bool SDL_WaitAndAcquireGPUSwapchainTexture(SDL_GPUCommandBuffer *command_buffer, SDL_Window *window, SDL_GPUTexture **swapchain_texture, Uint32 *swapchain_texture_width, Uint32 *swapchain_texture_height);                                                                                              // Blocks the thread until a swapchain texture is available to be acquired, and then acquires it.
   SDL_WaitAndAcquireGPUSwapchainTexture: {
-    args: [FFIType.ptr, FFIType.ptr, FFIType.ptr, FFIType.ptr],
+    args: [FFIType.ptr, FFIType.ptr, FFIType.ptr, FFIType.ptr, FFIType.ptr],
     returns: FFIType.bool,
   },
   // bool SDL_SubmitGPUCommandBuffer(SDL_GPUCommandBuffer *command_buffer);                                                                                                                                                                                                                                    // Submits a command buffer so its commands can be processed on the GPU.

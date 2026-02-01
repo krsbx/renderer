@@ -127,7 +127,8 @@ export function acquireGPUSwapchainTexture(
     options.commandBuffer,
     options.window,
     swapchainTextureStruct.$memory,
-    widthStruct.$memory
+    widthStruct.$memory,
+    heightStruct.$memory
   );
 
   if (!success) return null;
@@ -166,7 +167,8 @@ export function waitAndAcquireGPUSwapchainTexture(
     options.commandBuffer,
     options.window,
     swapchainTextureStruct.$memory,
-    widthStruct.$memory
+    widthStruct.$memory,
+    heightStruct.$memory
   );
 
   if (!success) return null;

@@ -1,6 +1,6 @@
 import type { SDL } from '@/sdl';
+import type { Renderer, Texture } from '@/sdl/types/definition';
 import { CStruct } from '@cstruct';
-import { type Pointer } from 'bun:ffi';
 import type { TextureAddressMode } from '../../../ffi/render/constant';
 import { FColor } from '../../pixels/struct';
 import { Vertex } from '../struct';
@@ -8,8 +8,8 @@ import { Vertex } from '../struct';
 export function renderGeometry(
   this: SDL,
   options: {
-    renderer: Pointer;
-    texture?: Pointer | null;
+    renderer: Renderer;
+    texture?: Texture | null;
     vertices: Vertex[];
     indices?: Uint8Array | null;
     numIndices?: number;
@@ -38,8 +38,8 @@ export function renderGeometry(
 export function renderGeometryRaw(
   this: SDL,
   options: {
-    renderer: Pointer;
-    texture?: Pointer | null;
+    renderer: Renderer;
+    texture?: Texture | null;
     xy: Uint8Array;
     xyStride: number;
     color: FColor;
@@ -73,7 +73,7 @@ export function renderGeometryRaw(
 export function setRenderTextureAddressMode(
   this: SDL,
   options: {
-    renderer: Pointer;
+    renderer: Renderer;
     uMode: TextureAddressMode;
     vMode: TextureAddressMode;
   }
@@ -85,7 +85,7 @@ export function setRenderTextureAddressMode(
   );
 }
 
-export function getRenderTextureAddressMode(this: SDL, renderer: Pointer) {
+export function getRenderTextureAddressMode(this: SDL, renderer: Renderer) {
   const uModeStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
   const vModeStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 

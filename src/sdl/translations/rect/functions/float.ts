@@ -58,16 +58,19 @@ export function getRectUnionFloat(
 export function getRectEnclosingPointsFloat(
   this: SDL,
   options: {
-    points: FPoint;
-    count: number;
+    points: FPoint[];
     clip?: FRect | null;
   }
 ) {
   const result = FRect.create();
+  const { buffer: points } = CStruct.writeArray(
+    options.points,
+    FPoint.BYTE_SIZE
+  );
 
   const success = this.symbols.SDL_GetRectEnclosingPointsFloat(
-    options.points.$address,
-    options.count,
+    points,
+    options.points.length,
     options.clip?.$address ?? null,
     result.$address
   );

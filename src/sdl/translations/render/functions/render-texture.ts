@@ -1,13 +1,13 @@
 import type { SDL } from '@/sdl';
-import type { Pointer } from 'bun:ffi';
+import type { Renderer, Texture } from '@/sdl/types/definition';
 import type { FlipMode } from '../../../ffi/surface/constant';
 import { FPoint, FRect } from '../../rect/struct';
 
 export function renderTextureRotated(
   this: SDL,
   options: {
-    renderer: Pointer;
-    texture: Pointer;
+    renderer: Renderer;
+    texture: Texture;
     srcRect?: FRect | null;
     dstRect?: FRect | null;
     angle: number;
@@ -29,8 +29,8 @@ export function renderTextureRotated(
 export function renderTextureAffine(
   this: SDL,
   options: {
-    renderer: Pointer;
-    texture: Pointer;
+    renderer: Renderer;
+    texture: Texture;
     srcRect?: FRect | null;
     origin?: FPoint | null;
     right?: FPoint | null;
@@ -50,8 +50,8 @@ export function renderTextureAffine(
 export function renderTextureTiled(
   this: SDL,
   options: {
-    renderer: Pointer;
-    texture: Pointer;
+    renderer: Renderer;
+    texture: Texture;
     srcRect?: FRect | null;
     scale: number;
     dstRect?: FRect | null;
@@ -69,8 +69,8 @@ export function renderTextureTiled(
 export function renderTexture9Grid(
   this: SDL,
   options: {
-    renderer: Pointer;
-    texture: Pointer;
+    renderer: Renderer;
+    texture: Texture;
     srcRect?: FRect | null;
     leftWidth: number;
     rightWidth: number;
@@ -96,8 +96,8 @@ export function renderTexture9Grid(
 export function renderTexture9GridTiled(
   this: SDL,
   options: {
-    renderer: Pointer;
-    texture: Pointer;
+    renderer: Renderer;
+    texture: Texture;
     srcRect?: FRect | null;
     leftWidth: number;
     rightWidth: number;

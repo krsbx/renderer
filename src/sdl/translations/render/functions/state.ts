@@ -1,6 +1,6 @@
 import type { SDL } from '@/sdl';
+import type { Renderer, Texture } from '@/sdl/types/definition';
 import { CStruct } from '@cstruct';
-import type { Pointer } from 'bun:ffi';
 import type { RendererLogicalPresentation } from '../../../ffi/render/constant';
 import { Event } from '../../events/struct';
 import { FRect, Rect } from '../../rect/struct';
@@ -10,8 +10,8 @@ import { FRect, Rect } from '../../rect/struct';
 export function setRenderTarget(
   this: SDL,
   options: {
-    renderer: Pointer;
-    texture?: Pointer | null;
+    renderer: Renderer;
+    texture?: Texture | null;
   }
 ) {
   return this.symbols.SDL_SetRenderTarget(
@@ -20,8 +20,8 @@ export function setRenderTarget(
   );
 }
 
-export function getRenderTarget(this: SDL, renderer: Pointer) {
-  return this.symbols.SDL_GetRenderTarget(renderer);
+export function getRenderTarget(this: SDL, renderer: Renderer) {
+  return this.symbols.SDL_GetRenderTarget(renderer) as Texture;
 }
 
 // Logical Presentation
@@ -29,7 +29,7 @@ export function getRenderTarget(this: SDL, renderer: Pointer) {
 export function setRenderLogicalPresentation(
   this: SDL,
   options: {
-    renderer: Pointer;
+    renderer: Renderer;
     w: number;
     h: number;
     mode: RendererLogicalPresentation;
@@ -43,7 +43,7 @@ export function setRenderLogicalPresentation(
   );
 }
 
-export function getRenderLogicalPresentation(this: SDL, renderer: Pointer) {
+export function getRenderLogicalPresentation(this: SDL, renderer: Renderer) {
   const wStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
   const hStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
   const modeStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
@@ -64,7 +64,10 @@ export function getRenderLogicalPresentation(this: SDL, renderer: Pointer) {
   };
 }
 
-export function getRenderLogicalPresentationRect(this: SDL, renderer: Pointer) {
+export function getRenderLogicalPresentationRect(
+  this: SDL,
+  renderer: Renderer
+) {
   const rect = FRect.create();
 
   const success = this.symbols.SDL_GetRenderLogicalPresentationRect(
@@ -82,7 +85,7 @@ export function getRenderLogicalPresentationRect(this: SDL, renderer: Pointer) {
 export function renderCoordinatesFromWindow(
   this: SDL,
   options: {
-    renderer: Pointer;
+    renderer: Renderer;
     windowX: number;
     windowY: number;
   }
@@ -109,7 +112,7 @@ export function renderCoordinatesFromWindow(
 export function renderCoordinatesToWindow(
   this: SDL,
   options: {
-    renderer: Pointer;
+    renderer: Renderer;
     x: number;
     y: number;
   }
@@ -136,7 +139,7 @@ export function renderCoordinatesToWindow(
 export function convertEventToRenderCoordinates(
   this: SDL,
   options: {
-    renderer: Pointer;
+    renderer: Renderer;
     event: Event;
   }
 ) {
@@ -151,7 +154,7 @@ export function convertEventToRenderCoordinates(
 export function setRenderViewport(
   this: SDL,
   options: {
-    renderer: Pointer;
+    renderer: Renderer;
     rect?: Rect | null;
   }
 ) {
@@ -161,7 +164,7 @@ export function setRenderViewport(
   );
 }
 
-export function getRenderViewport(this: SDL, renderer: Pointer) {
+export function getRenderViewport(this: SDL, renderer: Renderer) {
   const rect = Rect.create();
 
   const success = this.symbols.SDL_GetRenderViewport(renderer, rect.$address);
@@ -171,11 +174,11 @@ export function getRenderViewport(this: SDL, renderer: Pointer) {
   return rect;
 }
 
-export function renderViewportSet(this: SDL, renderer: Pointer) {
+export function renderViewportSet(this: SDL, renderer: Renderer) {
   return this.symbols.SDL_RenderViewportSet(renderer);
 }
 
-export function getRenderSafeArea(this: SDL, renderer: Pointer) {
+export function getRenderSafeArea(this: SDL, renderer: Renderer) {
   const rect = Rect.create();
 
   const success = this.symbols.SDL_GetRenderSafeArea(renderer, rect.$address);
@@ -190,7 +193,7 @@ export function getRenderSafeArea(this: SDL, renderer: Pointer) {
 export function setRenderClipRect(
   this: SDL,
   options: {
-    renderer: Pointer;
+    renderer: Renderer;
     rect?: Rect | null;
   }
 ) {
@@ -200,7 +203,7 @@ export function setRenderClipRect(
   );
 }
 
-export function getRenderClipRect(this: SDL, renderer: Pointer) {
+export function getRenderClipRect(this: SDL, renderer: Renderer) {
   const rect = Rect.create();
 
   const success = this.symbols.SDL_GetRenderClipRect(renderer, rect.$address);
@@ -210,7 +213,7 @@ export function getRenderClipRect(this: SDL, renderer: Pointer) {
   return rect;
 }
 
-export function renderClipEnabled(this: SDL, renderer: Pointer) {
+export function renderClipEnabled(this: SDL, renderer: Renderer) {
   return this.symbols.SDL_RenderClipEnabled(renderer);
 }
 
@@ -219,7 +222,7 @@ export function renderClipEnabled(this: SDL, renderer: Pointer) {
 export function setRenderScale(
   this: SDL,
   options: {
-    renderer: Pointer;
+    renderer: Renderer;
     scaleX: number;
     scaleY: number;
   }
@@ -231,7 +234,7 @@ export function setRenderScale(
   );
 }
 
-export function getRenderScale(this: SDL, renderer: Pointer) {
+export function getRenderScale(this: SDL, renderer: Renderer) {
   const scaleXStruct = new CStruct({ length: CStruct.BYTE_SIZE.f32 });
   const scaleYStruct = new CStruct({ length: CStruct.BYTE_SIZE.f32 });
 

@@ -58,16 +58,19 @@ export function getRectUnion(
 export function getRectEnclosingPoints(
   this: SDL,
   options: {
-    points: Point;
-    count: number;
+    points: Point[];
     clip?: Rect | null;
   }
 ) {
   const result = Rect.create();
+  const { buffer: points } = CStruct.writeArray(
+    options.points,
+    Point.BYTE_SIZE
+  );
 
   const success = this.symbols.SDL_GetRectEnclosingPoints(
-    options.points.$address,
-    options.count,
+    points,
+    options.points.length,
     options.clip?.$address ?? null,
     result.$address
   );

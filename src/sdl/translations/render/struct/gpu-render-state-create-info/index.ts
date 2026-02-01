@@ -1,3 +1,4 @@
+import type { GPUBuffer, GPUShader, GPUTexture } from '@/sdl/types/definition';
 import { BaseStruct } from '@basestruct';
 import { CStruct } from '@utility/cstruct';
 import { type Pointer } from 'bun:ffi';
@@ -14,10 +15,10 @@ export class GPURenderStateCreateInfo extends BaseStruct {
   public get fragmentShader() {
     const addr = this.$view.getBigUint64(ByteOffset.fragment_shader, true);
 
-    return Number(addr) as Pointer;
+    return Number(addr) as GPUShader;
   }
 
-  public set fragmentShader(value: Pointer) {
+  public set fragmentShader(value: GPUShader) {
     this.$view.setBigUint64(ByteOffset.fragment_shader, BigInt(value), true);
   }
 
@@ -83,10 +84,14 @@ export class GPURenderStateCreateInfo extends BaseStruct {
 
     const texturePtr = Number(addr) as Pointer;
 
-    return CStruct.readArrayPrimitive(texturePtr, numTextures, 'ptr');
+    return CStruct.readArrayPrimitive(
+      texturePtr,
+      numTextures,
+      'ptr'
+    ) as GPUTexture[];
   }
 
-  public set storageTextures(value: Pointer[]) {
+  public set storageTextures(value: GPUTexture[]) {
     this.storageTextureCount = value.length;
 
     if (this.storageTextureCount === 0) {
@@ -118,10 +123,14 @@ export class GPURenderStateCreateInfo extends BaseStruct {
 
     const bufferPtr = Number(addr) as Pointer;
 
-    return CStruct.readArrayPrimitive(bufferPtr, numBuffers, 'ptr');
+    return CStruct.readArrayPrimitive(
+      bufferPtr,
+      numBuffers,
+      'ptr'
+    ) as GPUBuffer[];
   }
 
-  public set storageBuffers(value: Pointer[]) {
+  public set storageBuffers(value: GPUBuffer[]) {
     this.storageBufferCount = value.length;
 
     if (this.storageBufferCount === 0) {

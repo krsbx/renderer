@@ -1,110 +1,115 @@
 import type { SDL } from '@/sdl';
-import type { Pointer } from 'bun:ffi';
+import type {
+  Condition,
+  Mutex,
+  RWLock,
+  Semaphore,
+} from '@/sdl/types/definition';
 import { InitState } from '../struct';
 
 export function createMutex(this: SDL) {
-  return this.symbols.SDL_CreateMutex();
+  return this.symbols.SDL_CreateMutex() as Mutex;
 }
 
-export function lockMutex(this: SDL, mutex: Pointer) {
+export function lockMutex(this: SDL, mutex: Mutex) {
   this.symbols.SDL_LockMutex(mutex);
 }
 
-export function tryLockMutex(this: SDL, mutex: Pointer) {
+export function tryLockMutex(this: SDL, mutex: Mutex) {
   return this.symbols.SDL_TryLockMutex(mutex);
 }
 
-export function unlockMutex(this: SDL, mutex: Pointer) {
+export function unlockMutex(this: SDL, mutex: Mutex) {
   this.symbols.SDL_UnlockMutex(mutex);
 }
 
-export function destroyMutex(this: SDL, mutex: Pointer) {
+export function destroyMutex(this: SDL, mutex: Mutex) {
   this.symbols.SDL_DestroyMutex(mutex);
 }
 
 export function createRWLock(this: SDL) {
-  return this.symbols.SDL_CreateRWLock();
+  return this.symbols.SDL_CreateRWLock() as RWLock;
 }
 
-export function lockRWLockForReading(this: SDL, rwlock: Pointer) {
+export function lockRWLockForReading(this: SDL, rwlock: RWLock) {
   this.symbols.SDL_LockRWLockForReading(rwlock);
 }
 
-export function lockRWLockForWriting(this: SDL, rwlock: Pointer) {
+export function lockRWLockForWriting(this: SDL, rwlock: RWLock) {
   this.symbols.SDL_LockRWLockForWriting(rwlock);
 }
 
-export function tryLockRWLockForReading(this: SDL, rwlock: Pointer) {
+export function tryLockRWLockForReading(this: SDL, rwlock: RWLock) {
   return this.symbols.SDL_TryLockRWLockForReading(rwlock);
 }
 
-export function tryLockRWLockForWriting(this: SDL, rwlock: Pointer) {
+export function tryLockRWLockForWriting(this: SDL, rwlock: RWLock) {
   return this.symbols.SDL_TryLockRWLockForWriting(rwlock);
 }
 
-export function unlockRWLock(this: SDL, rwlock: Pointer) {
+export function unlockRWLock(this: SDL, rwlock: RWLock) {
   this.symbols.SDL_UnlockRWLock(rwlock);
 }
 
-export function destroyRWLock(this: SDL, rwlock: Pointer) {
+export function destroyRWLock(this: SDL, rwlock: RWLock) {
   this.symbols.SDL_DestroyRWLock(rwlock);
 }
 
 export function createSemaphore(this: SDL, initialValue: number) {
-  return this.symbols.SDL_CreateSemaphore(initialValue);
+  return this.symbols.SDL_CreateSemaphore(initialValue) as Semaphore;
 }
 
-export function destroySemaphore(this: SDL, sem: Pointer) {
+export function destroySemaphore(this: SDL, sem: Semaphore) {
   this.symbols.SDL_DestroySemaphore(sem);
 }
 
-export function waitSemaphore(this: SDL, sem: Pointer) {
+export function waitSemaphore(this: SDL, sem: Semaphore) {
   this.symbols.SDL_WaitSemaphore(sem);
 }
 
-export function tryWaitSemaphore(this: SDL, sem: Pointer) {
+export function tryWaitSemaphore(this: SDL, sem: Semaphore) {
   return this.symbols.SDL_TryWaitSemaphore(sem);
 }
 
 export function waitSemaphoreTimeout(
   this: SDL,
   options: {
-    sem: Pointer;
+    sem: Semaphore;
     timeoutMS: number;
   }
 ) {
   return this.symbols.SDL_WaitSemaphoreTimeout(options.sem, options.timeoutMS);
 }
 
-export function signalSemaphore(this: SDL, sem: Pointer) {
+export function signalSemaphore(this: SDL, sem: Semaphore) {
   this.symbols.SDL_SignalSemaphore(sem);
 }
 
-export function getSemaphoreValue(this: SDL, sem: Pointer) {
+export function getSemaphoreValue(this: SDL, sem: Semaphore) {
   return this.symbols.SDL_GetSemaphoreValue(sem);
 }
 
 export function createCondition(this: SDL) {
-  return this.symbols.SDL_CreateCondition();
+  return this.symbols.SDL_CreateCondition() as Condition;
 }
 
-export function destroyCondition(this: SDL, cond: Pointer) {
+export function destroyCondition(this: SDL, cond: Condition) {
   this.symbols.SDL_DestroyCondition(cond);
 }
 
-export function signalCondition(this: SDL, cond: Pointer) {
+export function signalCondition(this: SDL, cond: Condition) {
   this.symbols.SDL_SignalCondition(cond);
 }
 
-export function broadcastCondition(this: SDL, cond: Pointer) {
+export function broadcastCondition(this: SDL, cond: Condition) {
   this.symbols.SDL_BroadcastCondition(cond);
 }
 
 export function waitCondition(
   this: SDL,
   options: {
-    cond: Pointer;
-    mutex: Pointer;
+    cond: Condition;
+    mutex: Mutex;
   }
 ) {
   this.symbols.SDL_WaitCondition(options.cond, options.mutex);
@@ -113,8 +118,8 @@ export function waitCondition(
 export function waitConditionTimeout(
   this: SDL,
   options: {
-    cond: Pointer;
-    mutex: Pointer;
+    cond: Condition;
+    mutex: Mutex;
     timeoutMS: number;
   }
 ) {

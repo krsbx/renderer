@@ -1,6 +1,6 @@
 import type { SDL } from '@/sdl';
+import type { Renderer } from '@/sdl/types/definition';
 import { CStruct } from '@cstruct';
-import type { Pointer } from 'bun:ffi';
 import type { BlendMode } from '../../../ffi/blend-mode/constant';
 
 // Draw Color
@@ -8,7 +8,7 @@ import type { BlendMode } from '../../../ffi/blend-mode/constant';
 export function setRenderDrawColor(
   this: SDL,
   options: {
-    renderer: Pointer;
+    renderer: Renderer;
     r: number;
     g: number;
     b: number;
@@ -27,7 +27,7 @@ export function setRenderDrawColor(
 export function setRenderDrawColorFloat(
   this: SDL,
   options: {
-    renderer: Pointer;
+    renderer: Renderer;
     r: number;
     g: number;
     b: number;
@@ -43,7 +43,7 @@ export function setRenderDrawColorFloat(
   );
 }
 
-export function getRenderDrawColor(this: SDL, renderer: Pointer) {
+export function getRenderDrawColor(this: SDL, renderer: Renderer) {
   const rStruct = new CStruct({ length: CStruct.BYTE_SIZE.u8 });
   const gStruct = new CStruct({ length: CStruct.BYTE_SIZE.u8 });
   const bStruct = new CStruct({ length: CStruct.BYTE_SIZE.u8 });
@@ -67,7 +67,7 @@ export function getRenderDrawColor(this: SDL, renderer: Pointer) {
   };
 }
 
-export function getRenderDrawColorFloat(this: SDL, renderer: Pointer) {
+export function getRenderDrawColorFloat(this: SDL, renderer: Renderer) {
   const rStruct = new CStruct({ length: CStruct.BYTE_SIZE.f32 });
   const gStruct = new CStruct({ length: CStruct.BYTE_SIZE.f32 });
   const bStruct = new CStruct({ length: CStruct.BYTE_SIZE.f32 });
@@ -96,14 +96,14 @@ export function getRenderDrawColorFloat(this: SDL, renderer: Pointer) {
 export function setRenderColorScale(
   this: SDL,
   options: {
-    renderer: Pointer;
+    renderer: Renderer;
     scale: number;
   }
 ) {
   return this.symbols.SDL_SetRenderColorScale(options.renderer, options.scale);
 }
 
-export function getRenderColorScale(this: SDL, renderer: Pointer) {
+export function getRenderColorScale(this: SDL, renderer: Renderer) {
   const scaleStruct = new CStruct({ length: CStruct.BYTE_SIZE.f32 });
 
   const success = this.symbols.SDL_GetRenderColorScale(
@@ -121,7 +121,7 @@ export function getRenderColorScale(this: SDL, renderer: Pointer) {
 export function setRenderDrawBlendMode(
   this: SDL,
   options: {
-    renderer: Pointer;
+    renderer: Renderer;
     blendMode: BlendMode;
   }
 ) {
@@ -131,7 +131,7 @@ export function setRenderDrawBlendMode(
   );
 }
 
-export function getRenderDrawBlendMode(this: SDL, renderer: Pointer) {
+export function getRenderDrawBlendMode(this: SDL, renderer: Renderer) {
   const blendModeStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
   const success = this.symbols.SDL_GetRenderDrawBlendMode(

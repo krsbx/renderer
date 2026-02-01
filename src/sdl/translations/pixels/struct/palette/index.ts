@@ -1,22 +1,13 @@
-import { BaseStruct, type BaseStructOptions } from '@basestruct';
+import { CStruct } from '@/utility/cstruct';
+import { BaseStruct } from '@basestruct';
+import type { Pointer } from 'bun:ffi';
 import { Color } from '../color';
 import { ByteOffset } from './constant';
 
 export class Palette extends BaseStruct {
   public static override readonly BYTE_SIZE = 24;
 
-  public readonly colors: Color[];
-
-  public constructor(data: BaseStructOptions) {
-    super(data);
-
-    this.colors = Array.from({ length: this.colorCount }, (_, i) => {
-      const start = i * Color.BYTE_SIZE;
-      const end = start + Color.BYTE_SIZE;
-
-      return new Color(this.$memory.subarray(start, end));
-    });
-  }
+  private $colorsBuffer: Uint8Array | null = null;
 
   public get colorCount() {
     return this.$view.getInt32(ByteOffset.ncolors, true);
@@ -24,6 +15,30 @@ export class Palette extends BaseStruct {
 
   public set colorCount(value: number) {
     this.$view.setInt32(ByteOffset.ncolors, value, true);
+  }
+
+  public get colors() {
+    const addr = this.$view.getBigUint64(ByteOffset.colors, true);
+
+    if (!addr || addr === 0n) return [];
+
+    return CStruct.readArray(Color, Number(addr) as Pointer, this.colorCount);
+  }
+
+  public set colors(value: Color[]) {
+    this.colorCount = value.length;
+
+    if (value.length === 0) {
+      this.$colorsBuffer = null;
+      this.$view.setBigUint64(ByteOffset.colors, 0n, true);
+      return;
+    }
+
+    const { address, buffer } = CStruct.writeArray(value, Color.BYTE_SIZE);
+
+    this.$colorsBuffer = buffer;
+
+    this.$view.setBigUint64(ByteOffset.colors, BigInt(address), true);
   }
 
   public get version() {

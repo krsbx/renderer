@@ -1,15 +1,17 @@
 import type { SDL } from '@/sdl';
+import type { SharedObject } from '@/sdl/types/definition';
 import { stringToCString } from '@utility/common';
-import type { Pointer } from 'bun:ffi';
 
 export function loadObject(this: SDL, sofile: string) {
-  return this.symbols.SDL_LoadObject(stringToCString(sofile).ptr);
+  return this.symbols.SDL_LoadObject(
+    stringToCString(sofile).ptr
+  ) as SharedObject;
 }
 
 export function loadFunction(
   this: SDL,
   options: {
-    handle: Pointer;
+    handle: SharedObject;
     name: string;
   }
 ) {
@@ -19,6 +21,6 @@ export function loadFunction(
   );
 }
 
-export function unloadObject(this: SDL, handle: Pointer) {
+export function unloadObject(this: SDL, handle: SharedObject) {
   this.symbols.SDL_UnloadObject(handle);
 }

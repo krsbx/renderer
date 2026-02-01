@@ -1,6 +1,6 @@
 import type { SDL } from '@/sdl';
+import type { Sensor } from '@/sdl/types/definition';
 import { CStruct } from '@cstruct';
-import type { Pointer } from 'bun:ffi';
 import type { SensorType } from '../../../ffi/sensor/constant';
 
 export function getSensors(this: SDL) {
@@ -31,37 +31,37 @@ export function getSensorNonPortableTypeForID(this: SDL, instanceId: number) {
 }
 
 export function openSensor(this: SDL, instanceId: number) {
-  return this.symbols.SDL_OpenSensor(instanceId);
+  return this.symbols.SDL_OpenSensor(instanceId) as Sensor;
 }
 
 export function getSensorFromID(this: SDL, instanceId: number) {
-  return this.symbols.SDL_GetSensorFromID(instanceId);
+  return this.symbols.SDL_GetSensorFromID(instanceId) as Sensor;
 }
 
-export function getSensorProperties(this: SDL, sensor: Pointer) {
+export function getSensorProperties(this: SDL, sensor: Sensor) {
   return this.symbols.SDL_GetSensorProperties(sensor);
 }
 
-export function getSensorName(this: SDL, sensor: Pointer) {
+export function getSensorName(this: SDL, sensor: Sensor) {
   return this.symbols.SDL_GetSensorName(sensor).toString();
 }
 
-export function getSensorType(this: SDL, sensor: Pointer) {
+export function getSensorType(this: SDL, sensor: Sensor) {
   return this.symbols.SDL_GetSensorType(sensor) as SensorType;
 }
 
-export function getSensorNonPortableType(this: SDL, sensor: Pointer) {
+export function getSensorNonPortableType(this: SDL, sensor: Sensor) {
   return this.symbols.SDL_GetSensorNonPortableType(sensor);
 }
 
-export function getSensorID(this: SDL, sensor: Pointer) {
+export function getSensorID(this: SDL, sensor: Sensor) {
   return this.symbols.SDL_GetSensorID(sensor);
 }
 
 export function getSensorData(
   this: SDL,
   options: {
-    sensor: Pointer;
+    sensor: Sensor;
     numValues: number;
   }
 ) {
@@ -78,7 +78,7 @@ export function getSensorData(
   return data;
 }
 
-export function closeSensor(this: SDL, sensor: Pointer) {
+export function closeSensor(this: SDL, sensor: Sensor) {
   this.symbols.SDL_CloseSensor(sensor);
 }
 

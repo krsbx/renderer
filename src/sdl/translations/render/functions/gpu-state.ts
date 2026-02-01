@@ -1,24 +1,24 @@
 import type { SDL } from '@/sdl';
-import { type Pointer } from 'bun:ffi';
+import type { GPURenderState, Renderer } from '@/sdl/types/definition';
 import { GPURenderStateCreateInfo } from '../struct';
 
 export function createGPURenderState(
   this: SDL,
   options: {
-    renderer: Pointer;
+    renderer: Renderer;
     createInfo: GPURenderStateCreateInfo;
   }
 ) {
   return this.symbols.SDL_CreateGPURenderState(
     options.renderer,
     options.createInfo.$address
-  );
+  ) as GPURenderState;
 }
 
 export function setGPURenderStateFragmentUniforms(
   this: SDL,
   options: {
-    state: Pointer;
+    state: GPURenderState;
     slotIndex: number;
     data: Uint8Array;
     length: number;
@@ -35,8 +35,8 @@ export function setGPURenderStateFragmentUniforms(
 export function setGPURenderState(
   this: SDL,
   options: {
-    renderer: Pointer;
-    state?: Pointer | null;
+    renderer: Renderer;
+    state?: GPURenderState | null;
   }
 ) {
   return this.symbols.SDL_SetGPURenderState(
@@ -45,6 +45,6 @@ export function setGPURenderState(
   );
 }
 
-export function destroyGPURenderState(this: SDL, state: Pointer) {
+export function destroyGPURenderState(this: SDL, state: GPURenderState) {
   this.symbols.SDL_DestroyGPURenderState(state);
 }

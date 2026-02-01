@@ -1,7 +1,7 @@
 import type { SDL } from '@/sdl';
+import type { GPUDevice, Renderer, Window } from '@/sdl/types/definition';
 import { CStruct } from '@cstruct';
 import { stringToCString } from '@utility/common';
-import type { Pointer } from 'bun:ffi';
 import type { WindowFlags } from '../../../ffi/video/constant';
 import { Surface } from '../../surface/struct';
 
@@ -29,63 +29,66 @@ export function createWindowAndRenderer(
   if (!success) return null;
 
   return {
-    window: windowStruct.getValue(0, 'ptr'),
-    renderer: rendererStruct.getValue(0, 'ptr'),
+    window: windowStruct.getValue(0, 'ptr') as Window,
+    renderer: rendererStruct.getValue(0, 'ptr') as Renderer,
   };
 }
 
 export function createRenderer(
   this: SDL,
   options: {
-    window: Pointer;
+    window: Window;
     name?: string | null;
   }
 ) {
   return this.symbols.SDL_CreateRenderer(
     options.window,
     options.name ? stringToCString(options.name).ptr : null
-  );
+  ) as Renderer;
 }
 
 export function createRendererWithProperties(this: SDL, props: number) {
-  return this.symbols.SDL_CreateRendererWithProperties(props);
+  return this.symbols.SDL_CreateRendererWithProperties(props) as Renderer;
 }
 
 export function createGPURenderer(
   this: SDL,
   options: {
-    device: Pointer;
-    window: Pointer;
+    device: GPUDevice;
+    window: Window;
   }
 ) {
-  return this.symbols.SDL_CreateGPURenderer(options.device, options.window);
+  return this.symbols.SDL_CreateGPURenderer(
+    options.device,
+    options.window
+  ) as Renderer;
 }
 
-export function getGPURendererDevice(this: SDL, renderer: Pointer) {
-  return this.symbols.SDL_GetGPURendererDevice(renderer);
+export function getGPURendererDevice(this: SDL, renderer: Renderer) {
+  return this.symbols.SDL_GetGPURendererDevice(renderer) as GPUDevice;
 }
 
 export function createSoftwareRenderer(this: SDL, surface: Surface) {
-  return this.symbols.SDL_CreateSoftwareRenderer(surface.$address);
+  return this.symbols.SDL_CreateSoftwareRenderer(surface.$address) as Renderer;
 }
 
-export function getRenderer(this: SDL, window: Pointer) {
-  return this.symbols.SDL_GetRenderer(window);
+export function getRenderer(this: SDL, window: Window) {
+  return this.symbols.SDL_GetRenderer(window) as Renderer;
 }
 
-export function getRenderWindow(this: SDL, renderer: Pointer) {
-  return this.symbols.SDL_GetRenderWindow(renderer);
+export function getRenderWindow(this: SDL, renderer: Renderer) {
+  return this.symbols.SDL_GetRenderWindow(renderer) as Window;
 }
 
-export function getRendererName(this: SDL, renderer: Pointer) {
+export function getRendererName(this: SDL, renderer: Renderer) {
   return this.symbols.SDL_GetRendererName(renderer).toString();
 }
 
-export function getRendererProperties(this: SDL, renderer: Pointer) {
+export function getRendererProperties(this: SDL, renderer: Renderer) {
   return this.symbols.SDL_GetRendererProperties(renderer);
 }
 
-export function getRenderOutputSize(this: SDL, renderer: Pointer) {
+export function getRenderOutputSize(this: SDL, renderer: Renderer) {
   const wStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
   const hStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
@@ -103,7 +106,7 @@ export function getRenderOutputSize(this: SDL, renderer: Pointer) {
   };
 }
 
-export function getCurrentRenderOutputSize(this: SDL, renderer: Pointer) {
+export function getCurrentRenderOutputSize(this: SDL, renderer: Renderer) {
   const wStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
   const hStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 

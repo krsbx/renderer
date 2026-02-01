@@ -1,6 +1,6 @@
 import type { SDL } from '@/sdl';
+import type { Renderer, Texture } from '@/sdl/types/definition';
 import { CStruct } from '@cstruct';
-import { type Pointer } from 'bun:ffi';
 import type { BlendMode } from '../../../ffi/blend-mode/constant';
 import type { PixelFormat } from '../../../ffi/pixels/constant';
 import type { TextureAccess } from '../../../ffi/render/constant';
@@ -12,7 +12,7 @@ import { Surface } from '../../surface/struct';
 export function createTexture(
   this: SDL,
   options: {
-    renderer: Pointer;
+    renderer: Renderer;
     format: PixelFormat;
     access: TextureAccess;
     w: number;
@@ -25,44 +25,44 @@ export function createTexture(
     options.access,
     options.w,
     options.h
-  );
+  ) as Texture;
 }
 
 export function createTextureFromSurface(
   this: SDL,
   options: {
-    renderer: Pointer;
+    renderer: Renderer;
     surface: Surface;
   }
 ) {
   return this.symbols.SDL_CreateTextureFromSurface(
     options.renderer,
     options.surface.$address
-  );
+  ) as Texture;
 }
 
 export function createTextureWithProperties(
   this: SDL,
   options: {
-    renderer: Pointer;
+    renderer: Renderer;
     props: number;
   }
 ) {
   return this.symbols.SDL_CreateTextureWithProperties(
     options.renderer,
     options.props
-  );
+  ) as Texture;
 }
 
-export function getTextureProperties(this: SDL, texture: Pointer) {
+export function getTextureProperties(this: SDL, texture: Texture) {
   return this.symbols.SDL_GetTextureProperties(texture);
 }
 
-export function getRendererFromTexture(this: SDL, texture: Pointer) {
-  return this.symbols.SDL_GetRendererFromTexture(texture);
+export function getRendererFromTexture(this: SDL, texture: Texture) {
+  return this.symbols.SDL_GetRendererFromTexture(texture) as Renderer;
 }
 
-export function getTextureSize(this: SDL, texture: Pointer) {
+export function getTextureSize(this: SDL, texture: Texture) {
   const wStruct = new CStruct({ length: CStruct.BYTE_SIZE.f32 });
   const hStruct = new CStruct({ length: CStruct.BYTE_SIZE.f32 });
 
@@ -83,7 +83,7 @@ export function getTextureSize(this: SDL, texture: Pointer) {
 export function setTexturePalette(
   this: SDL,
   options: {
-    texture: Pointer;
+    texture: Texture;
     palette: Palette;
   }
 ) {
@@ -93,7 +93,7 @@ export function setTexturePalette(
   );
 }
 
-export function getTexturePalette(this: SDL, texture: Pointer) {
+export function getTexturePalette(this: SDL, texture: Texture) {
   const palettePtr = this.symbols.SDL_GetTexturePalette(texture);
 
   if (!palettePtr) return null;
@@ -104,7 +104,7 @@ export function getTexturePalette(this: SDL, texture: Pointer) {
 export function setTextureColorMod(
   this: SDL,
   options: {
-    texture: Pointer;
+    texture: Texture;
     r: number;
     g: number;
     b: number;
@@ -121,7 +121,7 @@ export function setTextureColorMod(
 export function setTextureColorModFloat(
   this: SDL,
   options: {
-    texture: Pointer;
+    texture: Texture;
     r: number;
     g: number;
     b: number;
@@ -135,7 +135,7 @@ export function setTextureColorModFloat(
   );
 }
 
-export function getTextureColorMod(this: SDL, texture: Pointer) {
+export function getTextureColorMod(this: SDL, texture: Texture) {
   const rStruct = new CStruct({ length: CStruct.BYTE_SIZE.u8 });
   const gStruct = new CStruct({ length: CStruct.BYTE_SIZE.u8 });
   const bStruct = new CStruct({ length: CStruct.BYTE_SIZE.u8 });
@@ -156,7 +156,7 @@ export function getTextureColorMod(this: SDL, texture: Pointer) {
   };
 }
 
-export function getTextureColorModFloat(this: SDL, texture: Pointer) {
+export function getTextureColorModFloat(this: SDL, texture: Texture) {
   const rStruct = new CStruct({ length: CStruct.BYTE_SIZE.f32 });
   const gStruct = new CStruct({ length: CStruct.BYTE_SIZE.f32 });
   const bStruct = new CStruct({ length: CStruct.BYTE_SIZE.f32 });
@@ -180,7 +180,7 @@ export function getTextureColorModFloat(this: SDL, texture: Pointer) {
 export function setTextureAlphaMod(
   this: SDL,
   options: {
-    texture: Pointer;
+    texture: Texture;
     alpha: number;
   }
 ) {
@@ -190,7 +190,7 @@ export function setTextureAlphaMod(
 export function setTextureAlphaModFloat(
   this: SDL,
   options: {
-    texture: Pointer;
+    texture: Texture;
     alpha: number;
   }
 ) {
@@ -200,7 +200,7 @@ export function setTextureAlphaModFloat(
   );
 }
 
-export function getTextureAlphaMod(this: SDL, texture: Pointer) {
+export function getTextureAlphaMod(this: SDL, texture: Texture) {
   const alphaStruct = new CStruct({ length: CStruct.BYTE_SIZE.u8 });
 
   const success = this.symbols.SDL_GetTextureAlphaMod(
@@ -213,7 +213,7 @@ export function getTextureAlphaMod(this: SDL, texture: Pointer) {
   return alphaStruct.getValue(0, 'u8');
 }
 
-export function getTextureAlphaModFloat(this: SDL, texture: Pointer) {
+export function getTextureAlphaModFloat(this: SDL, texture: Texture) {
   const alphaStruct = new CStruct({ length: CStruct.BYTE_SIZE.f32 });
 
   const success = this.symbols.SDL_GetTextureAlphaModFloat(
@@ -229,7 +229,7 @@ export function getTextureAlphaModFloat(this: SDL, texture: Pointer) {
 export function setTextureBlendMode(
   this: SDL,
   options: {
-    texture: Pointer;
+    texture: Texture;
     blendMode: BlendMode;
   }
 ) {
@@ -239,7 +239,7 @@ export function setTextureBlendMode(
   );
 }
 
-export function getTextureBlendMode(this: SDL, texture: Pointer) {
+export function getTextureBlendMode(this: SDL, texture: Texture) {
   const blendModeStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
   const success = this.symbols.SDL_GetTextureBlendMode(
@@ -255,7 +255,7 @@ export function getTextureBlendMode(this: SDL, texture: Pointer) {
 export function setTextureScaleMode(
   this: SDL,
   options: {
-    texture: Pointer;
+    texture: Texture;
     scaleMode: ScaleMode;
   }
 ) {
@@ -265,7 +265,7 @@ export function setTextureScaleMode(
   );
 }
 
-export function getTextureScaleMode(this: SDL, texture: Pointer) {
+export function getTextureScaleMode(this: SDL, texture: Texture) {
   const scaleModeStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
   const success = this.symbols.SDL_GetTextureScaleMode(
@@ -281,7 +281,7 @@ export function getTextureScaleMode(this: SDL, texture: Pointer) {
 export function updateTexture(
   this: SDL,
   options: {
-    texture: Pointer;
+    texture: Texture;
     rect?: Rect | null;
     pixels: Uint8Array;
     pitch: number;
@@ -298,7 +298,7 @@ export function updateTexture(
 export function updateYUVTexture(
   this: SDL,
   options: {
-    texture: Pointer;
+    texture: Texture;
     rect?: Rect | null;
     yPlane: Uint8Array;
     yPitch: number;
@@ -323,7 +323,7 @@ export function updateYUVTexture(
 export function updateNVTexture(
   this: SDL,
   options: {
-    texture: Pointer;
+    texture: Texture;
     rect?: Rect | null;
     yPlane: Uint8Array;
     yPitch: number;
@@ -344,7 +344,7 @@ export function updateNVTexture(
 export function lockTexture(
   this: SDL,
   options: {
-    texture: Pointer;
+    texture: Texture;
     rect?: Rect | null;
   }
 ) {
@@ -369,7 +369,7 @@ export function lockTexture(
 export function lockTextureToSurface(
   this: SDL,
   options: {
-    texture: Pointer;
+    texture: Texture;
     rect?: Rect | null;
   }
 ) {
@@ -390,6 +390,6 @@ export function lockTextureToSurface(
   return new Surface(surfacePtr);
 }
 
-export function unlockTexture(this: SDL, texture: Pointer) {
+export function unlockTexture(this: SDL, texture: Texture) {
   this.symbols.SDL_UnlockTexture(texture);
 }

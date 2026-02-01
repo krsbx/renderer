@@ -1,7 +1,7 @@
 import type { SDL } from '@/sdl';
+import type { Renderer } from '@/sdl/types/definition';
 import { CStruct } from '@cstruct';
 import { stringToCString } from '@utility/common';
-import type { Pointer } from 'bun:ffi';
 import type { ScaleMode } from '../../../ffi/surface/constant';
 
 // Debug Text
@@ -9,7 +9,7 @@ import type { ScaleMode } from '../../../ffi/surface/constant';
 export function renderDebugText(
   this: SDL,
   options: {
-    renderer: Pointer;
+    renderer: Renderer;
     x: number;
     y: number;
     str: string;
@@ -26,7 +26,7 @@ export function renderDebugText(
 export function renderDebugTextFormat(
   this: SDL,
   options: {
-    renderer: Pointer;
+    renderer: Renderer;
     x: number;
     y: number;
     fmt: string;
@@ -45,7 +45,7 @@ export function renderDebugTextFormat(
 export function setDefaultTextureScaleMode(
   this: SDL,
   options: {
-    renderer: Pointer;
+    renderer: Renderer;
     scaleMode: ScaleMode;
   }
 ) {
@@ -55,7 +55,7 @@ export function setDefaultTextureScaleMode(
   );
 }
 
-export function getDefaultTextureScaleMode(this: SDL, renderer: Pointer) {
+export function getDefaultTextureScaleMode(this: SDL, renderer: Renderer) {
   const scaleModeStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
   const success = this.symbols.SDL_GetDefaultTextureScaleMode(

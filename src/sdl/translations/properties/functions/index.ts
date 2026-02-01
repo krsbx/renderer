@@ -1,7 +1,16 @@
 import type { SDL } from '@/sdl';
+import { CallbackManager } from '@/sdl/utility';
 import { stringToCString } from '@utility/common';
-import type { JSCallback, Pointer } from 'bun:ffi';
 import type { PropertyType } from '../../../ffi/properties/constant';
+import type {
+  CleanupPropertyCallbackFn,
+  EnumeratePropertiesCallbackFn,
+} from '../types/callback';
+import {
+  createCleanupPropertyCallback,
+  createEnumeratePropertiesCallback,
+  getCleanupPropertyCallbackKey,
+} from '../utility/callback';
 
 export function getGlobalProperties(this: SDL) {
   return this.symbols.SDL_GetGlobalProperties();
@@ -34,18 +43,29 @@ export function setPointerPropertyWithCleanup(
   options: {
     props: number;
     name: string;
-    value?: Pointer | null;
-    cleanup: JSCallback;
-    userdata?: Pointer | null;
+    value?: Uint8Array | null;
+    cleanup: CleanupPropertyCallbackFn;
   }
 ) {
-  return this.symbols.SDL_SetPointerPropertyWithCleanup(
+  const key = getCleanupPropertyCallbackKey();
+  const value = options.value ?? null;
+  const cb = createCleanupPropertyCallback(options.cleanup, key);
+
+  const success = this.symbols.SDL_SetPointerPropertyWithCleanup(
     options.props,
     stringToCString(options.name).ptr,
-    options.value ?? null,
-    options.cleanup.ptr,
-    options.userdata ?? null
+    value,
+    cb.ptr,
+    null
   );
+
+  if (!success) {
+    cb.close();
+  } else {
+    CallbackManager.register(key, cb);
+  }
+
+  return success;
 }
 
 export function setPointerProperty(
@@ -53,7 +73,7 @@ export function setPointerProperty(
   options: {
     props: number;
     name: string;
-    value?: Pointer | null;
+    value?: Uint8Array | null;
   }
 ) {
   return this.symbols.SDL_SetPointerProperty(
@@ -154,7 +174,7 @@ export function getPointerProperty(
   options: {
     props: number;
     name: string;
-    defaultValue?: Pointer | null;
+    defaultValue?: Uint8Array | null;
   }
 ) {
   return this.symbols.SDL_GetPointerProperty(
@@ -243,22 +263,23 @@ export function enumerateProperties(
   this: SDL,
   options: {
     props: number;
-    callback: JSCallback;
-    userdata?: Pointer | null;
+    callback: EnumeratePropertiesCallbackFn;
   }
 ) {
-  return this.symbols.SDL_EnumerateProperties(
+  const cb = createEnumeratePropertiesCallback(options.callback);
+
+  const result = this.symbols.SDL_EnumerateProperties(
     options.props,
-    options.callback.ptr,
-    options.userdata ?? null
+    cb.ptr,
+    null
   );
+
+  // Synchronous call - safe to close after
+  cb.close();
+
+  return result;
 }
 
-export function destroyProperties(
-  this: SDL,
-  options: {
-    props: number;
-  }
-) {
-  return this.symbols.SDL_DestroyProperties(options.props);
+export function destroyProperties(this: SDL, props: number) {
+  return this.symbols.SDL_DestroyProperties(props);
 }

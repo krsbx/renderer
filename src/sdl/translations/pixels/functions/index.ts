@@ -73,16 +73,20 @@ export function setPaletteColors(
   this: SDL,
   options: {
     palette: Palette;
-    colors: Color;
+    colors: Color[];
     firstcolor: number;
-    ncolors: number;
   }
 ) {
+  const { buffer: colors } = CStruct.writeArray(
+    options.colors,
+    Color.BYTE_SIZE
+  );
+
   return this.symbols.SDL_SetPaletteColors(
     options.palette.$address,
-    options.colors.$address,
+    colors,
     options.firstcolor,
-    options.ncolors
+    options.colors.length
   );
 }
 

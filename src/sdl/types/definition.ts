@@ -20,6 +20,12 @@ export type Camera = SDLOpaque<'Camera'>;
 // Gamepad
 export type Gamepad = SDLOpaque<'Gamepad'>;
 
+// GPU
+export type GPUDevice = SDLOpaque<'GPUDevice'>;
+export type GPUTexture = SDLOpaque<'GPUTexture'>;
+export type GPUBuffer = SDLOpaque<'GPUBuffer'>;
+export type GPUShader = SDLOpaque<'GPUShader'>;
+
 // Haptic
 export type Haptic = SDLOpaque<'Haptic'>;
 
@@ -34,6 +40,26 @@ export type MetalView = SDLOpaque<'MetalView'>;
 
 // Mouse
 export type Cursor = SDLOpaque<'Cursor'>;
+
+// Mutex
+export type Mutex = SDLOpaque<'Mutex'>;
+export type RWLock = SDLOpaque<'RWLock'>;
+export type Semaphore = SDLOpaque<'Semaphore'>;
+export type Condition = SDLOpaque<'Condition'>;
+
+// Process
+export type Process = SDLOpaque<'Process'>;
+
+// Renderer
+export type Renderer = SDLOpaque<'Renderer'>;
+export type Texture = SDLOpaque<'Texture'>;
+export type GPURenderState = SDLOpaque<'GPURenderState'>;
+
+// Sensor
+export type Sensor = SDLOpaque<'Sensor'>;
+
+// Shared Object
+export type SharedObject = SDLOpaque<'SharedObject'>;
 
 // Window
 export type Window = SDLOpaque<'Window'>;

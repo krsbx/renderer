@@ -1,11 +1,11 @@
 import type { SDL } from '@/sdl';
+import type { Renderer, Texture } from '@/sdl/types/definition';
 import { CStruct } from '@cstruct';
-import type { Pointer } from 'bun:ffi';
 import { FPoint, FRect } from '../../rect/struct';
 
 // Clear
 
-export function renderClear(this: SDL, renderer: Pointer) {
+export function renderClear(this: SDL, renderer: Renderer) {
   return this.symbols.SDL_RenderClear(renderer);
 }
 
@@ -14,7 +14,7 @@ export function renderClear(this: SDL, renderer: Pointer) {
 export function renderPoint(
   this: SDL,
   options: {
-    renderer: Pointer;
+    renderer: Renderer;
     x: number;
     y: number;
   }
@@ -25,7 +25,7 @@ export function renderPoint(
 export function renderPoints(
   this: SDL,
   options: {
-    renderer: Pointer;
+    renderer: Renderer;
     points: FPoint[];
   }
 ) {
@@ -43,7 +43,7 @@ export function renderPoints(
 export function renderLine(
   this: SDL,
   options: {
-    renderer: Pointer;
+    renderer: Renderer;
     x1: number;
     y1: number;
     x2: number;
@@ -62,7 +62,7 @@ export function renderLine(
 export function renderLines(
   this: SDL,
   options: {
-    renderer: Pointer;
+    renderer: Renderer;
     points: FPoint[];
   }
 ) {
@@ -80,7 +80,7 @@ export function renderLines(
 export function renderRect(
   this: SDL,
   options: {
-    renderer: Pointer;
+    renderer: Renderer;
     rect?: FRect | null;
   }
 ) {
@@ -93,7 +93,7 @@ export function renderRect(
 export function renderRects(
   this: SDL,
   options: {
-    renderer: Pointer;
+    renderer: Renderer;
     rects: FRect[];
   }
 ) {
@@ -111,7 +111,7 @@ export function renderRects(
 export function renderFillRect(
   this: SDL,
   options: {
-    renderer: Pointer;
+    renderer: Renderer;
     rect?: FRect | null;
   }
 ) {
@@ -124,7 +124,7 @@ export function renderFillRect(
 export function renderFillRects(
   this: SDL,
   options: {
-    renderer: Pointer;
+    renderer: Renderer;
     rects: FRect[];
   }
 ) {
@@ -142,8 +142,8 @@ export function renderFillRects(
 export function renderTexture(
   this: SDL,
   options: {
-    renderer: Pointer;
-    texture: Pointer;
+    renderer: Renderer;
+    texture: Texture;
     srcRect?: FRect | null;
     dstRect?: FRect | null;
   }

@@ -1,8 +1,17 @@
 import type { SDL } from '@/sdl';
+import type { Window } from '@/sdl/types/definition';
+import { CallbackManager } from '@/sdl/utility';
 import { CStruct } from '@cstruct';
-import { CString, ptr, type JSCallback, type Pointer } from 'bun:ffi';
+import { CString, ptr } from 'bun:ffi';
 import { type EventAction, type EventType } from '../../../ffi/events/constant';
 import { Event } from '../struct';
+import type { EventFilterCallbackFn } from '../types/callback';
+import {
+  createEventFilterCallback,
+  getEventFilterCallbackKey,
+  registerEventWatch,
+  unregisterEventWatch,
+} from '../utility/callback';
 
 export function pumpEvents(this: SDL) {
   this.symbols.SDL_PumpEvents();
@@ -97,12 +106,22 @@ export function pushEvent(this: SDL, event: Event) {
 
 export function setEventFilter(
   this: SDL,
-  options: {
-    filter: JSCallback;
-    userdata?: Pointer | null;
-  }
+  filter: EventFilterCallbackFn | null
 ) {
-  this.symbols.SDL_SetEventFilter(options.filter.ptr, options.userdata ?? null);
+  const key = getEventFilterCallbackKey();
+
+  // Clear existing filter
+  CallbackManager.unregister(key);
+
+  if (filter === null) {
+    this.symbols.SDL_SetEventFilter(null, null);
+    return;
+  }
+
+  const cb = createEventFilterCallback(filter);
+  CallbackManager.register(key, cb);
+
+  this.symbols.SDL_SetEventFilter(cb.ptr);
 }
 
 export function getEventFilter(this: SDL) {
@@ -122,40 +141,36 @@ export function getEventFilter(this: SDL) {
   };
 }
 
-export function addEventWatch(
-  this: SDL,
-  options: {
-    filter: JSCallback;
-    userdata?: Pointer | null;
+export function addEventWatch(this: SDL, filter: EventFilterCallbackFn) {
+  const { cb, watchId } = registerEventWatch(filter);
+
+  const success = this.symbols.SDL_AddEventWatch(cb.ptr, null);
+
+  if (!success) {
+    unregisterEventWatch(watchId);
+    return null;
   }
-) {
-  return this.symbols.SDL_AddEventWatch(
-    options.filter.ptr,
-    options.userdata ?? null
-  );
+
+  return watchId;
 }
 
-export function removeEventWatch(
-  this: SDL,
-  options: {
-    filter: JSCallback;
-    userdata?: Pointer | null;
+export function removeEventWatch(this: SDL, watchId: number) {
+  const cb = unregisterEventWatch(watchId);
+
+  if (cb) {
+    this.symbols.SDL_RemoveEventWatch(cb.ptr, null);
   }
-) {
-  this.symbols.SDL_RemoveEventWatch(
-    options.filter.ptr,
-    options.userdata ?? null
-  );
 }
 
-export function filterEvents(
-  this: SDL,
-  options: {
-    filter: JSCallback;
-    userdata?: Pointer | null;
+export function filterEvents(this: SDL, filter: EventFilterCallbackFn) {
+  // Synchronous callback - create, use, close immediately
+  const cb = createEventFilterCallback(filter);
+
+  try {
+    this.symbols.SDL_FilterEvents(cb.ptr, null);
+  } finally {
+    cb.close();
   }
-) {
-  this.symbols.SDL_FilterEvents(options.filter.ptr, options.userdata ?? null);
 }
 
 export function setEventEnabled(
@@ -177,7 +192,7 @@ export function registerEvents(this: SDL, numevents: number) {
 }
 
 export function getWindowFromEvent(this: SDL, event: Event) {
-  return this.symbols.SDL_GetWindowFromEvent(event.$address);
+  return this.symbols.SDL_GetWindowFromEvent(event.$address) as Window | null;
 }
 
 export function getEventDescription(this: SDL, event: Event) {

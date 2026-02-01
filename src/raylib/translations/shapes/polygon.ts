@@ -12,11 +12,11 @@ export function drawPoly(
   }
 ) {
   this.symbols.DrawPoly(
-    options.center.$address,
+    options.center.$memory,
     options.sides,
     options.radius,
     options.rotation,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -31,11 +31,11 @@ export function drawPolyLines(
   }
 ) {
   this.symbols.DrawPolyLines(
-    options.center.$address,
+    options.center.$memory,
     options.sides,
     options.radius,
     options.rotation,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -51,11 +51,11 @@ export function drawPolyLinesEx(
   }
 ) {
   this.symbols.DrawPolyLinesEx(
-    options.center.$address,
+    options.center.$memory,
     options.sides,
     options.radius,
     options.rotation,
     options.lineThick,
-    options.color.$address
+    options.color.$memory
   );
 }

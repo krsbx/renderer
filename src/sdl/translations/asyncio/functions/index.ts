@@ -92,7 +92,7 @@ export function getAsyncIOResult(
 
   const success = this.symbols.SDL_GetAsyncIOResult(
     options.queue,
-    outcome.$address
+    outcome.$memory
   );
 
   if (!success) return null;
@@ -112,7 +112,7 @@ export function waitAsyncIOResult(
 
   const success = this.symbols.SDL_WaitAsyncIOResult(
     options.queue,
-    outcome.$address,
+    outcome.$memory,
     options.timeoutMS
   );
 

@@ -13,10 +13,10 @@ export function blitSurface(
   }
 ) {
   return this.symbols.SDL_BlitSurface(
-    options.src.$address,
-    options.srcrect?.$address ?? null,
-    options.dst.$address,
-    options.dstrect?.$address ?? null
+    options.src.$memory,
+    options.srcrect?.$memory ?? null,
+    options.dst.$memory,
+    options.dstrect?.$memory ?? null
   );
 }
 
@@ -30,10 +30,10 @@ export function blitSurfaceUnchecked(
   }
 ) {
   return this.symbols.SDL_BlitSurfaceUnchecked(
-    options.src.$address,
-    options.srcrect?.$address ?? null,
-    options.dst.$address,
-    options.dstrect?.$address ?? null
+    options.src.$memory,
+    options.srcrect?.$memory ?? null,
+    options.dst.$memory,
+    options.dstrect?.$memory ?? null
   );
 }
 
@@ -48,10 +48,10 @@ export function blitSurfaceScaled(
   }
 ) {
   return this.symbols.SDL_BlitSurfaceScaled(
-    options.src.$address,
-    options.srcrect?.$address ?? null,
-    options.dst.$address,
-    options.dstrect?.$address ?? null,
+    options.src.$memory,
+    options.srcrect?.$memory ?? null,
+    options.dst.$memory,
+    options.dstrect?.$memory ?? null,
     options.scaleMode
   );
 }
@@ -67,10 +67,10 @@ export function blitSurfaceUncheckedScaled(
   }
 ) {
   return this.symbols.SDL_BlitSurfaceUncheckedScaled(
-    options.src.$address,
-    options.srcrect?.$address ?? null,
-    options.dst.$address,
-    options.dstrect?.$address ?? null,
+    options.src.$memory,
+    options.srcrect?.$memory ?? null,
+    options.dst.$memory,
+    options.dstrect?.$memory ?? null,
     options.scaleMode
   );
 }
@@ -86,10 +86,10 @@ export function stretchSurface(
   }
 ) {
   return this.symbols.SDL_StretchSurface(
-    options.src.$address,
-    options.srcrect?.$address ?? null,
-    options.dst.$address,
-    options.dstrect?.$address ?? null,
+    options.src.$memory,
+    options.srcrect?.$memory ?? null,
+    options.dst.$memory,
+    options.dstrect?.$memory ?? null,
     options.scaleMode
   );
 }
@@ -104,10 +104,10 @@ export function blitSurfaceTiled(
   }
 ) {
   return this.symbols.SDL_BlitSurfaceTiled(
-    options.src.$address,
-    options.srcrect?.$address ?? null,
-    options.dst.$address,
-    options.dstrect?.$address ?? null
+    options.src.$memory,
+    options.srcrect?.$memory ?? null,
+    options.dst.$memory,
+    options.dstrect?.$memory ?? null
   );
 }
 
@@ -123,12 +123,12 @@ export function blitSurfaceTiledWithScale(
   }
 ) {
   return this.symbols.SDL_BlitSurfaceTiledWithScale(
-    options.src.$address,
-    options.srcrect?.$address ?? null,
+    options.src.$memory,
+    options.srcrect?.$memory ?? null,
     options.scale,
     options.scaleMode,
-    options.dst.$address,
-    options.dstrect?.$address ?? null
+    options.dst.$memory,
+    options.dstrect?.$memory ?? null
   );
 }
 
@@ -148,15 +148,15 @@ export function blitSurface9Grid(
   }
 ) {
   return this.symbols.SDL_BlitSurface9Grid(
-    options.src.$address,
-    options.srcrect?.$address ?? null,
+    options.src.$memory,
+    options.srcrect?.$memory ?? null,
     options.leftWidth,
     options.rightWidth,
     options.topHeight,
     options.bottomHeight,
     options.scale,
     options.scaleMode,
-    options.dst.$address,
-    options.dstrect?.$address ?? null
+    options.dst.$memory,
+    options.dstrect?.$memory ?? null
   );
 }

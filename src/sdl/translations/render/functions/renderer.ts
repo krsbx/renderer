@@ -22,8 +22,8 @@ export function createWindowAndRenderer(
     options.width,
     options.height,
     options.windowFlags,
-    windowStruct.$address,
-    rendererStruct.$address
+    windowStruct.$memory,
+    rendererStruct.$memory
   );
 
   if (!success) return null;
@@ -72,7 +72,7 @@ export function getGPURendererDevice(this: SDL, renderer: Renderer) {
 
 export function createSoftwareRenderer(this: SDL, surface: Surface) {
   return this.symbols.SDL_CreateSoftwareRenderer(
-    surface.$address
+    surface.$memory
   ) as Renderer | null;
 }
 
@@ -98,8 +98,8 @@ export function getRenderOutputSize(this: SDL, renderer: Renderer) {
 
   const success = this.symbols.SDL_GetRenderOutputSize(
     renderer,
-    wStruct.$address,
-    hStruct.$address
+    wStruct.$memory,
+    hStruct.$memory
   );
 
   if (!success) return null;
@@ -116,8 +116,8 @@ export function getCurrentRenderOutputSize(this: SDL, renderer: Renderer) {
 
   const success = this.symbols.SDL_GetCurrentRenderOutputSize(
     renderer,
-    wStruct.$address,
-    hStruct.$address
+    wStruct.$memory,
+    hStruct.$memory
   );
 
   if (!success) return null;

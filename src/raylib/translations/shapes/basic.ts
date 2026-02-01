@@ -10,15 +10,15 @@ export function setShapesTexture(
   }
 ) {
   this.symbols.SetShapesTexture(
-    options.texture.$address,
-    options.source.$address
+    options.texture.$memory,
+    options.source.$memory
   );
 }
 
 export function getShapesTexture(this: RayLib) {
   const texture = Texture2D.create();
 
-  this.symbols.GetShapesTexture(texture.$address);
+  this.symbols.GetShapesTexture(texture.$memory);
 
   return texture;
 }
@@ -26,7 +26,7 @@ export function getShapesTexture(this: RayLib) {
 export function getShapesTextureRectangle(this: RayLib) {
   const rect = Rectangle.create();
 
-  this.symbols.GetShapesTextureRectangle(rect.$address);
+  this.symbols.GetShapesTextureRectangle(rect.$memory);
 
   return rect;
 }
@@ -39,7 +39,7 @@ export function drawPixel(
     color: Color;
   }
 ) {
-  this.symbols.DrawPixel(options.posX, options.posY, options.color.$address);
+  this.symbols.DrawPixel(options.posX, options.posY, options.color.$memory);
 }
 
 export function drawPixelV(
@@ -49,7 +49,7 @@ export function drawPixelV(
     color: Color;
   }
 ) {
-  this.symbols.DrawPixelV(options.position.$address, options.color.$address);
+  this.symbols.DrawPixelV(options.position.$memory, options.color.$memory);
 }
 
 export function drawLine(
@@ -67,7 +67,7 @@ export function drawLine(
     options.startPosY,
     options.endPosX,
     options.endPosY,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -80,9 +80,9 @@ export function drawLineV(
   }
 ) {
   this.symbols.DrawLineV(
-    options.startPos.$address,
-    options.endPos.$address,
-    options.color.$address
+    options.startPos.$memory,
+    options.endPos.$memory,
+    options.color.$memory
   );
 }
 
@@ -96,10 +96,10 @@ export function drawLineEx(
   }
 ) {
   this.symbols.DrawLineEx(
-    options.startPos.$address,
-    options.endPos.$address,
+    options.startPos.$memory,
+    options.endPos.$memory,
     options.thick,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -118,7 +118,7 @@ export function drawLineStrip(
   this.symbols.DrawLineStrip(
     points,
     options.points.length,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -132,9 +132,9 @@ export function drawLineBezier(
   }
 ) {
   this.symbols.DrawLineBezier(
-    options.startPos.$address,
-    options.endPos.$address,
+    options.startPos.$memory,
+    options.endPos.$memory,
     options.thick,
-    options.color.$address
+    options.color.$memory
   );
 }

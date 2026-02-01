@@ -48,7 +48,7 @@ export function getRenderVSync(this: SDL, renderer: Renderer) {
 
   const success = this.symbols.SDL_GetRenderVSync(
     renderer,
-    vsyncStruct.$address
+    vsyncStruct.$memory
   );
 
   if (!success) return null;

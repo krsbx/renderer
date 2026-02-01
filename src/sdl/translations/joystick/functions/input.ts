@@ -24,7 +24,7 @@ export function getJoystickAxisInitialState(
   const success = this.symbols.SDL_GetJoystickAxisInitialState(
     options.joystick,
     options.axis,
-    stateStruct.$address
+    stateStruct.$memory
   );
 
   if (!success) return null;
@@ -45,8 +45,8 @@ export function getJoystickBall(
   const success = this.symbols.SDL_GetJoystickBall(
     options.joystick,
     options.ball,
-    dxStruct.$address,
-    dyStruct.$address
+    dxStruct.$memory,
+    dyStruct.$memory
   );
 
   if (!success) return null;

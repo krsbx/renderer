@@ -28,7 +28,7 @@ export function peepEvents(
   }
 ) {
   return this.symbols.SDL_PeepEvents(
-    options.events.$address,
+    options.events.$memory,
     options.numevents,
     options.action,
     options.minType,
@@ -66,7 +66,7 @@ export function flushEvents(
 
 export function pollEvent(this: SDL, event?: Event | null) {
   const eventInstance = event ?? Event.create();
-  const hasEvent = this.symbols.SDL_PollEvent(eventInstance.$address);
+  const hasEvent = this.symbols.SDL_PollEvent(eventInstance.$memory);
 
   if (!hasEvent) return null;
 
@@ -75,7 +75,7 @@ export function pollEvent(this: SDL, event?: Event | null) {
 
 export function waitEvent(this: SDL, event?: Event | null) {
   const eventInstance = event ?? Event.create();
-  const success = this.symbols.SDL_WaitEvent(eventInstance.$address);
+  const success = this.symbols.SDL_WaitEvent(eventInstance.$memory);
 
   if (!success) return null;
 
@@ -91,7 +91,7 @@ export function waitEventTimeout(
 ) {
   const eventInstance = options.event ?? Event.create();
   const success = this.symbols.SDL_WaitEventTimeout(
-    eventInstance.$address,
+    eventInstance.$memory,
     options.timeoutMS
   );
 
@@ -101,7 +101,7 @@ export function waitEventTimeout(
 }
 
 export function pushEvent(this: SDL, event: Event) {
-  return this.symbols.SDL_PushEvent(event.$address);
+  return this.symbols.SDL_PushEvent(event.$memory);
 }
 
 export function setEventFilter(
@@ -129,8 +129,8 @@ export function getEventFilter(this: SDL) {
   const userdataStruct = new CStruct({ length: CStruct.BYTE_SIZE.ptr });
 
   const success = this.symbols.SDL_GetEventFilter(
-    filterStruct.$address,
-    userdataStruct.$address
+    filterStruct.$memory,
+    userdataStruct.$memory
   );
 
   if (!success) return null;
@@ -192,7 +192,7 @@ export function registerEvents(this: SDL, numevents: number) {
 }
 
 export function getWindowFromEvent(this: SDL, event: Event) {
-  return this.symbols.SDL_GetWindowFromEvent(event.$address) as Window | null;
+  return this.symbols.SDL_GetWindowFromEvent(event.$memory) as Window | null;
 }
 
 export function getEventDescription(this: SDL, event: Event) {
@@ -202,12 +202,12 @@ export function getEventDescription(this: SDL, event: Event) {
   const buffer = new CStruct({ length: buflen });
 
   const length = this.symbols.SDL_GetEventDescription(
-    event.$address,
-    buffer.$address,
+    event.$memory,
+    buffer.$memory,
     buflen
   );
 
   if (length <= 0) return null;
 
-  return new CString(ptr(buffer.$address)).toString();
+  return new CString(ptr(buffer.$memory)).toString();
 }

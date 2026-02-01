@@ -23,7 +23,7 @@ export function loadCodepoints(this: RayLib, text: string) {
 
   const ptr = this.symbols.LoadCodepoints(
     stringToCString(text).ptr,
-    countStruct.$address
+    countStruct.$memory
   );
 
   if (!ptr) return null;
@@ -51,7 +51,7 @@ export function getCodepoint(this: RayLib, text: string) {
 
   const codepoint = this.symbols.GetCodepoint(
     stringToCString(text).ptr,
-    sizeStruct.$address
+    sizeStruct.$memory
   );
 
   return {
@@ -65,7 +65,7 @@ export function getCodepointNext(this: RayLib, text: string) {
 
   const codepoint = this.symbols.GetCodepointNext(
     stringToCString(text).ptr,
-    sizeStruct.$address
+    sizeStruct.$memory
   );
 
   return {
@@ -79,7 +79,7 @@ export function getCodepointPrevious(this: RayLib, text: string) {
 
   const codepoint = this.symbols.GetCodepointPrevious(
     stringToCString(text).ptr,
-    sizeStruct.$address
+    sizeStruct.$memory
   );
 
   return {
@@ -91,7 +91,7 @@ export function getCodepointPrevious(this: RayLib, text: string) {
 export function codepointToUTF8(this: RayLib, codepoint: number) {
   const sizeStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
-  const result = this.symbols.CodepointToUTF8(codepoint, sizeStruct.$address);
+  const result = this.symbols.CodepointToUTF8(codepoint, sizeStruct.$memory);
 
   return {
     text: result?.toString() ?? null,

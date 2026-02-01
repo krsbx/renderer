@@ -21,7 +21,7 @@ export function hasMouse(this: SDL) {
 export function getMice(this: SDL) {
   const countStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
-  const listPtr = this.symbols.SDL_GetMice(countStruct.$address);
+  const listPtr = this.symbols.SDL_GetMice(countStruct.$memory);
 
   if (!listPtr) return null;
 
@@ -46,8 +46,8 @@ export function getMouseState(this: SDL) {
   const yStruct = new CStruct({ length: CStruct.BYTE_SIZE.f32 });
 
   const buttons = this.symbols.SDL_GetMouseState(
-    xStruct.$address,
-    yStruct.$address
+    xStruct.$memory,
+    yStruct.$memory
   ) as MouseButtonFlags;
 
   return {
@@ -62,8 +62,8 @@ export function getGlobalMouseState(this: SDL) {
   const yStruct = new CStruct({ length: CStruct.BYTE_SIZE.f32 });
 
   const buttons = this.symbols.SDL_GetGlobalMouseState(
-    xStruct.$address,
-    yStruct.$address
+    xStruct.$memory,
+    yStruct.$memory
   ) as MouseButtonFlags;
 
   return {
@@ -78,8 +78,8 @@ export function getRelativeMouseState(this: SDL) {
   const yStruct = new CStruct({ length: CStruct.BYTE_SIZE.f32 });
 
   const buttons = this.symbols.SDL_GetRelativeMouseState(
-    xStruct.$address,
-    yStruct.$address
+    xStruct.$memory,
+    yStruct.$memory
   ) as MouseButtonFlags;
 
   return {
@@ -183,7 +183,7 @@ export function createColorCursor(
   }
 ) {
   return this.symbols.SDL_CreateColorCursor(
-    options.surface.$address,
+    options.surface.$memory,
     options.hotX,
     options.hotY
   ) as Cursor | null;

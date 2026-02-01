@@ -7,7 +7,7 @@ import { Color, Font, Image, Rectangle } from '../struct';
 export function imageCopy(this: RayLib, image: Image) {
   const copy = Image.create();
 
-  this.symbols.ImageCopy(image.$address, copy.$address);
+  this.symbols.ImageCopy(image.$memory, copy.$memory);
 
   return copy;
 }
@@ -22,9 +22,9 @@ export function imageFromImage(
   const newImage = Image.create();
 
   this.symbols.ImageFromImage(
-    options.image.$address,
-    options.rec.$address,
-    newImage.$address
+    options.image.$memory,
+    options.rec.$memory,
+    newImage.$memory
   );
 
   return newImage;
@@ -40,9 +40,9 @@ export function imageFromChannel(
   const newImage = Image.create();
 
   this.symbols.ImageFromChannel(
-    options.image.$address,
+    options.image.$memory,
     options.selectedChannel,
-    newImage.$address
+    newImage.$memory
   );
 
   return newImage;
@@ -61,8 +61,8 @@ export function imageText(
   this.symbols.ImageText(
     stringToCString(options.text).ptr,
     options.fontSize,
-    options.color.$address,
-    image.$address
+    options.color.$memory,
+    image.$memory
   );
 
   return image;
@@ -81,12 +81,12 @@ export function imageTextEx(
   const image = Image.create();
 
   this.symbols.ImageTextEx(
-    options.font.$address,
+    options.font.$memory,
     stringToCString(options.text).ptr,
     options.fontSize,
     options.spacing,
-    options.tint.$address,
-    image.$address
+    options.tint.$memory,
+    image.$memory
   );
 
   return image;
@@ -101,7 +101,7 @@ export function imageFormat(
     newFormat: number;
   }
 ) {
-  this.symbols.ImageFormat(options.image.$address, options.newFormat);
+  this.symbols.ImageFormat(options.image.$memory, options.newFormat);
 }
 
 export function imageToPOT(
@@ -111,7 +111,7 @@ export function imageToPOT(
     fill: Color;
   }
 ) {
-  this.symbols.ImageToPOT(options.image.$address, options.fill.$address);
+  this.symbols.ImageToPOT(options.image.$memory, options.fill.$memory);
 }
 
 export function imageCrop(
@@ -121,7 +121,7 @@ export function imageCrop(
     crop: Rectangle;
   }
 ) {
-  this.symbols.ImageCrop(options.image.$address, options.crop.$address);
+  this.symbols.ImageCrop(options.image.$memory, options.crop.$memory);
 }
 
 export function imageAlphaCrop(
@@ -131,7 +131,7 @@ export function imageAlphaCrop(
     threshold: number;
   }
 ) {
-  this.symbols.ImageAlphaCrop(options.image.$address, options.threshold);
+  this.symbols.ImageAlphaCrop(options.image.$memory, options.threshold);
 }
 
 export function imageAlphaClear(
@@ -143,8 +143,8 @@ export function imageAlphaClear(
   }
 ) {
   this.symbols.ImageAlphaClear(
-    options.image.$address,
-    options.color.$address,
+    options.image.$memory,
+    options.color.$memory,
     options.threshold
   );
 }
@@ -156,14 +156,11 @@ export function imageAlphaMask(
     alphaMask: Image;
   }
 ) {
-  this.symbols.ImageAlphaMask(
-    options.image.$address,
-    options.alphaMask.$address
-  );
+  this.symbols.ImageAlphaMask(options.image.$memory, options.alphaMask.$memory);
 }
 
 export function imageAlphaPremultiply(this: RayLib, image: Image) {
-  this.symbols.ImageAlphaPremultiply(image.$address);
+  this.symbols.ImageAlphaPremultiply(image.$memory);
 }
 
 export function imageBlurGaussian(
@@ -173,7 +170,7 @@ export function imageBlurGaussian(
     blurSize: number;
   }
 ) {
-  this.symbols.ImageBlurGaussian(options.image.$address, options.blurSize);
+  this.symbols.ImageBlurGaussian(options.image.$memory, options.blurSize);
 }
 
 export function imageKernelConvolution(
@@ -184,7 +181,7 @@ export function imageKernelConvolution(
   }
 ) {
   this.symbols.ImageKernelConvolution(
-    options.image.$address,
+    options.image.$memory,
     options.kernel,
     options.kernel.length
   );
@@ -199,7 +196,7 @@ export function imageResize(
   }
 ) {
   this.symbols.ImageResize(
-    options.image.$address,
+    options.image.$memory,
     options.newWidth,
     options.newHeight
   );
@@ -214,7 +211,7 @@ export function imageResizeNN(
   }
 ) {
   this.symbols.ImageResizeNN(
-    options.image.$address,
+    options.image.$memory,
     options.newWidth,
     options.newHeight
   );
@@ -232,17 +229,17 @@ export function imageResizeCanvas(
   }
 ) {
   this.symbols.ImageResizeCanvas(
-    options.image.$address,
+    options.image.$memory,
     options.newWidth,
     options.newHeight,
     options.offsetX,
     options.offsetY,
-    options.fill.$address
+    options.fill.$memory
   );
 }
 
 export function imageMipmaps(this: RayLib, image: Image) {
-  this.symbols.ImageMipmaps(image.$address);
+  this.symbols.ImageMipmaps(image.$memory);
 }
 
 export function imageDither(
@@ -256,7 +253,7 @@ export function imageDither(
   }
 ) {
   this.symbols.ImageDither(
-    options.image.$address,
+    options.image.$memory,
     options.rBpp,
     options.gBpp,
     options.bBpp,
@@ -265,11 +262,11 @@ export function imageDither(
 }
 
 export function imageFlipVertical(this: RayLib, image: Image) {
-  this.symbols.ImageFlipVertical(image.$address);
+  this.symbols.ImageFlipVertical(image.$memory);
 }
 
 export function imageFlipHorizontal(this: RayLib, image: Image) {
-  this.symbols.ImageFlipHorizontal(image.$address);
+  this.symbols.ImageFlipHorizontal(image.$memory);
 }
 
 export function imageRotate(
@@ -279,15 +276,15 @@ export function imageRotate(
     degrees: number;
   }
 ) {
-  this.symbols.ImageRotate(options.image.$address, options.degrees);
+  this.symbols.ImageRotate(options.image.$memory, options.degrees);
 }
 
 export function imageRotateCW(this: RayLib, image: Image) {
-  this.symbols.ImageRotateCW(image.$address);
+  this.symbols.ImageRotateCW(image.$memory);
 }
 
 export function imageRotateCCW(this: RayLib, image: Image) {
-  this.symbols.ImageRotateCCW(image.$address);
+  this.symbols.ImageRotateCCW(image.$memory);
 }
 
 export function imageColorTint(
@@ -297,15 +294,15 @@ export function imageColorTint(
     color: Color;
   }
 ) {
-  this.symbols.ImageColorTint(options.image.$address, options.color.$address);
+  this.symbols.ImageColorTint(options.image.$memory, options.color.$memory);
 }
 
 export function imageColorInvert(this: RayLib, image: Image) {
-  this.symbols.ImageColorInvert(image.$address);
+  this.symbols.ImageColorInvert(image.$memory);
 }
 
 export function imageColorGrayscale(this: RayLib, image: Image) {
-  this.symbols.ImageColorGrayscale(image.$address);
+  this.symbols.ImageColorGrayscale(image.$memory);
 }
 
 export function imageColorContrast(
@@ -315,7 +312,7 @@ export function imageColorContrast(
     contrast: number;
   }
 ) {
-  this.symbols.ImageColorContrast(options.image.$address, options.contrast);
+  this.symbols.ImageColorContrast(options.image.$memory, options.contrast);
 }
 
 export function imageColorBrightness(
@@ -325,7 +322,7 @@ export function imageColorBrightness(
     brightness: number;
   }
 ) {
-  this.symbols.ImageColorBrightness(options.image.$address, options.brightness);
+  this.symbols.ImageColorBrightness(options.image.$memory, options.brightness);
 }
 
 export function imageColorReplace(
@@ -337,16 +334,16 @@ export function imageColorReplace(
   }
 ) {
   this.symbols.ImageColorReplace(
-    options.image.$address,
-    options.color.$address,
-    options.replace.$address
+    options.image.$memory,
+    options.color.$memory,
+    options.replace.$memory
   );
 }
 
 // Color data functions
 
 export function loadImageColors(this: RayLib, image: Image) {
-  const ptr = this.symbols.LoadImageColors(image.$address);
+  const ptr = this.symbols.LoadImageColors(image.$memory);
 
   if (!ptr)
     return {
@@ -373,9 +370,9 @@ export function loadImagePalette(
   const colorCountOut = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
   const ptr = this.symbols.LoadImagePalette(
-    options.image.$address,
+    options.image.$memory,
     options.maxPaletteSize,
-    colorCountOut.$address
+    colorCountOut.$memory
   );
 
   if (!ptr) {
@@ -415,10 +412,10 @@ export function getImageColor(
   const color = Color.create();
 
   this.symbols.GetImageColor(
-    options.image.$address,
+    options.image.$memory,
     options.x,
     options.y,
-    color.$address
+    color.$memory
   );
 
   return color;
@@ -434,9 +431,9 @@ export function getImageAlphaBorder(
   const rect = Rectangle.create();
 
   this.symbols.GetImageAlphaBorder(
-    options.image.$address,
+    options.image.$memory,
     options.threshold,
-    rect.$address
+    rect.$memory
   );
 
   return rect;

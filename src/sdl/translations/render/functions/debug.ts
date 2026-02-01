@@ -60,7 +60,7 @@ export function getDefaultTextureScaleMode(this: SDL, renderer: Renderer) {
 
   const success = this.symbols.SDL_GetDefaultTextureScaleMode(
     renderer,
-    scaleModeStruct.$address
+    scaleModeStruct.$memory
   );
 
   if (!success) return null;

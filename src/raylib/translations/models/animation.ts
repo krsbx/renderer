@@ -13,7 +13,7 @@ export function loadModelAnimations(
   const countStruct = new CStruct({ length: 4 });
   const animationsPtr = this.symbols.LoadModelAnimations(
     stringToCString(options.fileName).ptr,
-    countStruct.$address
+    countStruct.$memory
   );
 
   const count = countStruct.getValue(0, 'i32');
@@ -34,8 +34,8 @@ export function updateModelAnimation(
   }
 ) {
   this.symbols.UpdateModelAnimation(
-    options.model.$address,
-    options.anim.$address,
+    options.model.$memory,
+    options.anim.$memory,
     options.frame
   );
 }
@@ -49,14 +49,14 @@ export function updateModelAnimationBones(
   }
 ) {
   this.symbols.UpdateModelAnimationBones(
-    options.model.$address,
-    options.anim.$address,
+    options.model.$memory,
+    options.anim.$memory,
     options.frame
   );
 }
 
 export function unloadModelAnimation(this: RayLib, anim: ModelAnimation) {
-  this.symbols.UnloadModelAnimation(anim.$address);
+  this.symbols.UnloadModelAnimation(anim.$memory);
 }
 
 export function unloadModelAnimations(
@@ -79,7 +79,7 @@ export function isModelAnimationValid(
   }
 ) {
   return this.symbols.IsModelAnimationValid(
-    options.model.$address,
-    options.anim.$address
+    options.model.$memory,
+    options.anim.$memory
   );
 }

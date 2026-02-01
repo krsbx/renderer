@@ -32,8 +32,8 @@ export function getDXGIOutputInfo(this: SDL, displayId: number) {
 
   const success = this.symbols.SDL_GetDXGIOutputInfo(
     displayId,
-    adapterIndexStruct.$address,
-    outputIndexStruct.$address
+    adapterIndexStruct.$memory,
+    outputIndexStruct.$memory
   );
 
   if (!success) return null;

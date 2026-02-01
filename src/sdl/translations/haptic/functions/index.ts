@@ -6,7 +6,7 @@ import { HapticEffect } from '../struct';
 export function getHaptics(this: SDL) {
   const struct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
-  const listPtr = this.symbols.SDL_GetHaptics(struct.$address);
+  const listPtr = this.symbols.SDL_GetHaptics(struct.$memory);
 
   if (!listPtr) return [];
 
@@ -83,7 +83,7 @@ export function hapticEffectSupported(
 ) {
   return this.symbols.SDL_HapticEffectSupported(
     options.haptic,
-    options.effect.$address
+    options.effect.$memory
   );
 }
 
@@ -96,7 +96,7 @@ export function createHapticEffect(
 ) {
   return this.symbols.SDL_CreateHapticEffect(
     options.haptic,
-    options.effect.$address
+    options.effect.$memory
   );
 }
 
@@ -111,7 +111,7 @@ export function updateHapticEffect(
   return this.symbols.SDL_UpdateHapticEffect(
     options.haptic,
     options.effect,
-    options.data.$address
+    options.data.$memory
   );
 }
 

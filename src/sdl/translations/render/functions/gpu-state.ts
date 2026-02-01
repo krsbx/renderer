@@ -11,7 +11,7 @@ export function createGPURenderState(
 ) {
   return this.symbols.SDL_CreateGPURenderState(
     options.renderer,
-    options.createInfo.$address
+    options.createInfo.$memory
   ) as GPURenderState;
 }
 

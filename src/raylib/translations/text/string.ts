@@ -1,6 +1,6 @@
 import type { RayLib } from '@/raylib';
-import { CStruct } from '@cstruct';
 import { stringToCString } from '@/utility/common';
+import { CStruct } from '@cstruct';
 import { CString, type Pointer } from 'bun:ffi';
 
 export function textCopy(
@@ -119,7 +119,7 @@ export function textSplit(
   const listPtr = this.symbols.TextSplit(
     stringToCString(options.text).ptr,
     delimiterCode,
-    countStruct.$address
+    countStruct.$memory
   );
 
   if (!listPtr) return [];

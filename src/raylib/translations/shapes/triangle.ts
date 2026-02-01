@@ -12,10 +12,10 @@ export function drawTriangle(
   }
 ) {
   this.symbols.DrawTriangle(
-    options.v1.$address,
-    options.v2.$address,
-    options.v3.$address,
-    options.color.$address
+    options.v1.$memory,
+    options.v2.$memory,
+    options.v3.$memory,
+    options.color.$memory
   );
 }
 
@@ -29,10 +29,10 @@ export function drawTriangleLines(
   }
 ) {
   this.symbols.DrawTriangleLines(
-    options.v1.$address,
-    options.v2.$address,
-    options.v3.$address,
-    options.color.$address
+    options.v1.$memory,
+    options.v2.$memory,
+    options.v3.$memory,
+    options.color.$memory
   );
 }
 
@@ -51,7 +51,7 @@ export function drawTriangleFan(
   this.symbols.DrawTriangleFan(
     points,
     options.points.length,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -70,6 +70,6 @@ export function drawTriangleStrip(
   this.symbols.DrawTriangleStrip(
     points,
     options.points.length,
-    options.color.$address
+    options.color.$memory
   );
 }

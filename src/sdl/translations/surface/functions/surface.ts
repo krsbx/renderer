@@ -47,13 +47,13 @@ export function createSurfaceFrom(
 }
 
 export function destroySurface(this: SDL, surface: Surface) {
-  this.symbols.SDL_DestroySurface(surface.$address);
+  this.symbols.SDL_DestroySurface(surface.$memory);
 }
 
 // Properties
 
 export function getSurfaceProperties(this: SDL, surface: Surface) {
-  return this.symbols.SDL_GetSurfaceProperties(surface.$address);
+  return this.symbols.SDL_GetSurfaceProperties(surface.$memory);
 }
 
 // Colorspace
@@ -66,21 +66,21 @@ export function setSurfaceColorspace(
   }
 ) {
   return this.symbols.SDL_SetSurfaceColorspace(
-    options.surface.$address,
+    options.surface.$memory,
     options.colorspace
   );
 }
 
 export function getSurfaceColorspace(this: SDL, surface: Surface) {
-  return this.symbols.SDL_GetSurfaceColorspace(surface.$address) as Colorspace;
+  return this.symbols.SDL_GetSurfaceColorspace(surface.$memory) as Colorspace;
 }
 
 // Lock/Unlock
 
 export function lockSurface(this: SDL, surface: Surface) {
-  return this.symbols.SDL_LockSurface(surface.$address);
+  return this.symbols.SDL_LockSurface(surface.$memory);
 }
 
 export function unlockSurface(this: SDL, surface: Surface) {
-  this.symbols.SDL_UnlockSurface(surface.$address);
+  this.symbols.SDL_UnlockSurface(surface.$memory);
 }

@@ -75,7 +75,7 @@ export class IOStreamInterface extends BaseStruct {
         options.userdata ?? null,
         options.ptr,
         BigInt(options.size),
-        statusStruct.$address,
+        statusStruct.$memory,
       ]
     );
 
@@ -95,7 +95,7 @@ export class IOStreamInterface extends BaseStruct {
         options.userdata ?? null,
         options.ptr,
         BigInt(options.size),
-        statusStruct.$address,
+        statusStruct.$memory,
       ]
     );
 
@@ -111,7 +111,7 @@ export class IOStreamInterface extends BaseStruct {
     const result = this.invoke<boolean>(
       ByteOffset.flush,
       IOStreamInterfaceDefinition.flush,
-      [userdata ?? null, statusStruct.$address]
+      [userdata ?? null, statusStruct.$memory]
     );
 
     return {

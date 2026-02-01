@@ -37,7 +37,7 @@ export function beginGPURenderPass(
     options.commandBuffer,
     colorTargetInfos,
     options.colorTargetInfos.length,
-    options.depthStencilTargetInfo?.$address ?? null
+    options.depthStencilTargetInfo?.$memory ?? null
   ) as GPURenderPass;
 }
 
@@ -61,10 +61,7 @@ export function setGPUViewport(
     viewport: GPUViewport;
   }
 ) {
-  this.symbols.SDL_SetGPUViewport(
-    options.renderPass,
-    options.viewport.$address
-  );
+  this.symbols.SDL_SetGPUViewport(options.renderPass, options.viewport.$memory);
 }
 
 export function setGPUScissor(
@@ -74,7 +71,7 @@ export function setGPUScissor(
     scissor: Rect;
   }
 ) {
-  this.symbols.SDL_SetGPUScissor(options.renderPass, options.scissor.$address);
+  this.symbols.SDL_SetGPUScissor(options.renderPass, options.scissor.$memory);
 }
 
 export function setGPUBlendConstants(
@@ -86,7 +83,7 @@ export function setGPUBlendConstants(
 ) {
   this.symbols.SDL_SetGPUBlendConstants(
     options.renderPass,
-    options.blendConstants.$address
+    options.blendConstants.$memory
   );
 }
 
@@ -136,7 +133,7 @@ export function bindGPUIndexBuffer(
 ) {
   this.symbols.SDL_BindGPUIndexBuffer(
     options.renderPass,
-    options.binding.$address,
+    options.binding.$memory,
     options.indexElementSize
   );
 }

@@ -20,7 +20,7 @@ export function reportAssertion(
   }
 ) {
   const result = this.symbols.SDL_ReportAssertion(
-    options.data.$address,
+    options.data.$memory,
     stringToCString(options.func).ptr,
     stringToCString(options.file).ptr,
     options.line

@@ -7,7 +7,7 @@ export function loadAutomationEventList(this: RayLib, fileName: string) {
 
   this.symbols.LoadAutomationEventList(
     stringToCString(fileName).ptr,
-    list.$address
+    list.$memory
   );
 
   return list;
@@ -17,7 +17,7 @@ export function unloadAutomationEventList(
   this: RayLib,
   list: AutomationEventList
 ) {
-  this.symbols.UnloadAutomationEventList(list.$address);
+  this.symbols.UnloadAutomationEventList(list.$memory);
 }
 
 export function exportAutomationEventList(
@@ -28,7 +28,7 @@ export function exportAutomationEventList(
   }
 ) {
   return this.symbols.ExportAutomationEventList(
-    options.list.$address,
+    options.list.$memory,
     stringToCString(options.fileName).ptr
   );
 }
@@ -37,7 +37,7 @@ export function setAutomationEventList(
   this: RayLib,
   list: AutomationEventList
 ) {
-  this.symbols.SetAutomationEventList(list.$address);
+  this.symbols.SetAutomationEventList(list.$memory);
 }
 
 export function setAutomationEventBaseFrame(this: RayLib, frame: number) {
@@ -53,5 +53,5 @@ export function stopAutomationEventRecording(this: RayLib) {
 }
 
 export function playAutomationEvent(this: RayLib, event: AutomationEvent) {
-  this.symbols.PlayAutomationEvent(event.$address);
+  this.symbols.PlayAutomationEvent(event.$memory);
 }

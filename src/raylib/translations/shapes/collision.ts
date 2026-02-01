@@ -10,8 +10,8 @@ export function checkCollisionRecs(
   }
 ) {
   return this.symbols.CheckCollisionRecs(
-    options.rec1.$address,
-    options.rec2.$address
+    options.rec1.$memory,
+    options.rec2.$memory
   );
 }
 
@@ -25,9 +25,9 @@ export function checkCollisionCircles(
   }
 ) {
   return this.symbols.CheckCollisionCircles(
-    options.center1.$address,
+    options.center1.$memory,
     options.radius1,
-    options.center2.$address,
+    options.center2.$memory,
     options.radius2
   );
 }
@@ -41,9 +41,9 @@ export function checkCollisionCircleRec(
   }
 ) {
   return this.symbols.CheckCollisionCircleRec(
-    options.center.$address,
+    options.center.$memory,
     options.radius,
-    options.rec.$address
+    options.rec.$memory
   );
 }
 
@@ -57,10 +57,10 @@ export function checkCollisionCircleLine(
   }
 ) {
   return this.symbols.CheckCollisionCircleLine(
-    options.center.$address,
+    options.center.$memory,
     options.radius,
-    options.p1.$address,
-    options.p2.$address
+    options.p1.$memory,
+    options.p2.$memory
   );
 }
 
@@ -72,8 +72,8 @@ export function checkCollisionPointRec(
   }
 ) {
   return this.symbols.CheckCollisionPointRec(
-    options.point.$address,
-    options.rec.$address
+    options.point.$memory,
+    options.rec.$memory
   );
 }
 
@@ -86,8 +86,8 @@ export function checkCollisionPointCircle(
   }
 ) {
   return this.symbols.CheckCollisionPointCircle(
-    options.point.$address,
-    options.center.$address,
+    options.point.$memory,
+    options.center.$memory,
     options.radius
   );
 }
@@ -102,10 +102,10 @@ export function checkCollisionPointTriangle(
   }
 ) {
   return this.symbols.CheckCollisionPointTriangle(
-    options.point.$address,
-    options.p1.$address,
-    options.p2.$address,
-    options.p3.$address
+    options.point.$memory,
+    options.p1.$memory,
+    options.p2.$memory,
+    options.p3.$memory
   );
 }
 
@@ -119,9 +119,9 @@ export function checkCollisionPointLine(
   }
 ) {
   return this.symbols.CheckCollisionPointLine(
-    options.point.$address,
-    options.p1.$address,
-    options.p2.$address,
+    options.point.$memory,
+    options.p1.$memory,
+    options.p2.$memory,
     options.threshold
   );
 }
@@ -139,7 +139,7 @@ export function checkCollisionPointPoly(
   );
 
   return this.symbols.CheckCollisionPointPoly(
-    options.point.$address,
+    options.point.$memory,
     points,
     options.points.length
   );
@@ -157,11 +157,11 @@ export function checkCollisionLines(
   const collisionPoint = Vector2.create();
 
   const collide = this.symbols.CheckCollisionLines(
-    options.startPos1.$address,
-    options.endPos1.$address,
-    options.startPos2.$address,
-    options.endPos2.$address,
-    collisionPoint.$address
+    options.startPos1.$memory,
+    options.endPos1.$memory,
+    options.startPos2.$memory,
+    options.endPos2.$memory,
+    collisionPoint.$memory
   );
 
   return {
@@ -180,9 +180,9 @@ export function getCollisionRec(
   const rec = Rectangle.create();
 
   this.symbols.GetCollisionRec(
-    options.rec1.$address,
-    options.rec2.$address,
-    rec.$address
+    options.rec1.$memory,
+    options.rec2.$memory,
+    rec.$memory
   );
 
   return rec;

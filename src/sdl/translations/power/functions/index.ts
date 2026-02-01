@@ -7,8 +7,8 @@ export function getPowerInfo(this: SDL) {
   const percentStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
   const state = this.symbols.SDL_GetPowerInfo(
-    secondsStruct.$address,
-    percentStruct.$address
+    secondsStruct.$memory,
+    percentStruct.$memory
   ) as PowerState;
   const seconds = secondsStruct.getValue(0, 'i32');
   const percent = percentStruct.getValue(0, 'i32');

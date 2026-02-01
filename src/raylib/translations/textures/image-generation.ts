@@ -14,8 +14,8 @@ export function genImageColor(
   this.symbols.GenImageColor(
     options.width,
     options.height,
-    options.color.$address,
-    image.$address
+    options.color.$memory,
+    image.$memory
   );
 
   return image;
@@ -37,9 +37,9 @@ export function genImageGradientLinear(
     options.width,
     options.height,
     options.direction,
-    options.start.$address,
-    options.end.$address,
-    image.$address
+    options.start.$memory,
+    options.end.$memory,
+    image.$memory
   );
 
   return image;
@@ -61,9 +61,9 @@ export function genImageGradientRadial(
     options.width,
     options.height,
     options.density,
-    options.inner.$address,
-    options.outer.$address,
-    image.$address
+    options.inner.$memory,
+    options.outer.$memory,
+    image.$memory
   );
 
   return image;
@@ -85,9 +85,9 @@ export function genImageGradientSquare(
     options.width,
     options.height,
     options.density,
-    options.inner.$address,
-    options.outer.$address,
-    image.$address
+    options.inner.$memory,
+    options.outer.$memory,
+    image.$memory
   );
 
   return image;
@@ -111,9 +111,9 @@ export function genImageChecked(
     options.height,
     options.checksX,
     options.checksY,
-    options.col1.$address,
-    options.col2.$address,
-    image.$address
+    options.col1.$memory,
+    options.col2.$memory,
+    image.$memory
   );
 
   return image;
@@ -133,7 +133,7 @@ export function genImageWhiteNoise(
     options.width,
     options.height,
     options.factor,
-    image.$address
+    image.$memory
   );
 
   return image;
@@ -157,7 +157,7 @@ export function genImagePerlinNoise(
     options.offsetX,
     options.offsetY,
     options.scale,
-    image.$address
+    image.$memory
   );
 
   return image;
@@ -177,7 +177,7 @@ export function genImageCellular(
     options.width,
     options.height,
     options.tileSize,
-    image.$address
+    image.$memory
   );
 
   return image;

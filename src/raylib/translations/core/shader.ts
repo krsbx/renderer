@@ -16,7 +16,7 @@ export function loadShader(
   this.symbols.LoadShader(
     stringToCString(options.vsFileName).ptr,
     stringToCString(options.fsFileName).ptr,
-    shader.$address
+    shader.$memory
   );
 
   return shader;
@@ -34,14 +34,14 @@ export function loadShaderFromMemory(
   this.symbols.LoadShaderFromMemory(
     stringToCString(options.vsCode).ptr,
     stringToCString(options.fsCode).ptr,
-    shader.$address
+    shader.$memory
   );
 
   return shader;
 }
 
 export function isShaderValid(this: RayLib, shader: Shader) {
-  return this.symbols.IsShaderValid(shader.$address);
+  return this.symbols.IsShaderValid(shader.$memory);
 }
 
 export function getShaderLocation(
@@ -52,7 +52,7 @@ export function getShaderLocation(
   }
 ) {
   return this.symbols.GetShaderLocation(
-    options.shader.$address,
+    options.shader.$memory,
     stringToCString(options.uniformName).ptr
   );
 }
@@ -65,7 +65,7 @@ export function getShaderLocationAttrib(
   }
 ) {
   return this.symbols.GetShaderLocationAttrib(
-    options.shader.$address,
+    options.shader.$memory,
     stringToCString(options.attribName).ptr
   );
 }
@@ -80,7 +80,7 @@ export function setShaderValue(
   }
 ) {
   this.symbols.SetShaderValue(
-    options.shader.$address,
+    options.shader.$memory,
     options.locIndex,
     options.value,
     options.uniformType
@@ -98,7 +98,7 @@ export function setShaderValueV(
   }
 ) {
   this.symbols.SetShaderValueV(
-    options.shader.$address,
+    options.shader.$memory,
     options.locIndex,
     options.value,
     options.uniformType,
@@ -115,9 +115,9 @@ export function setShaderValueMatrix(
   }
 ) {
   this.symbols.SetShaderValueMatrix(
-    options.shader.$address,
+    options.shader.$memory,
     options.locIndex,
-    options.mat.$address
+    options.mat.$memory
   );
 }
 
@@ -130,12 +130,12 @@ export function setShaderValueTexture(
   }
 ) {
   this.symbols.SetShaderValueTexture(
-    options.shader.$address,
+    options.shader.$memory,
     options.locIndex,
-    options.texture.$address
+    options.texture.$memory
   );
 }
 
 export function unloadShader(this: RayLib, shader: Shader) {
-  this.symbols.UnloadShader(shader.$address);
+  this.symbols.UnloadShader(shader.$memory);
 }

@@ -10,13 +10,9 @@ const GUID_STRING_SIZE = 33;
 export function guidToString(this: SDL, guid: GUID) {
   const buffer = new CStruct({ length: GUID_STRING_SIZE });
 
-  this.symbols.SDL_GUIDToString(
-    guid.$address,
-    buffer.$address,
-    GUID_STRING_SIZE
-  );
+  this.symbols.SDL_GUIDToString(guid.$memory, buffer.$memory, GUID_STRING_SIZE);
 
-  return new CString(ptr(buffer.$address)).toString();
+  return new CString(ptr(buffer.$memory)).toString();
 }
 
 export function stringToGUID(this: SDL, str: string) {

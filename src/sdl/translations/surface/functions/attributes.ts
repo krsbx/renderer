@@ -14,13 +14,13 @@ export function setSurfaceRLE(
   }
 ) {
   return this.symbols.SDL_SetSurfaceRLE(
-    options.surface.$address,
+    options.surface.$memory,
     options.enabled
   );
 }
 
 export function surfaceHasRLE(this: SDL, surface: Surface) {
-  return this.symbols.SDL_SurfaceHasRLE(surface.$address);
+  return this.symbols.SDL_SurfaceHasRLE(surface.$memory);
 }
 
 // Color Key
@@ -34,22 +34,22 @@ export function setSurfaceColorKey(
   }
 ) {
   return this.symbols.SDL_SetSurfaceColorKey(
-    options.surface.$address,
+    options.surface.$memory,
     options.enabled,
     options.key
   );
 }
 
 export function surfaceHasColorKey(this: SDL, surface: Surface) {
-  return this.symbols.SDL_SurfaceHasColorKey(surface.$address);
+  return this.symbols.SDL_SurfaceHasColorKey(surface.$memory);
 }
 
 export function getSurfaceColorKey(this: SDL, surface: Surface) {
   const keyStruct = new CStruct({ length: CStruct.BYTE_SIZE.u32 });
 
   const success = this.symbols.SDL_GetSurfaceColorKey(
-    surface.$address,
-    keyStruct.$address
+    surface.$memory,
+    keyStruct.$memory
   );
 
   if (!success) return null;
@@ -69,7 +69,7 @@ export function setSurfaceColorMod(
   }
 ) {
   return this.symbols.SDL_SetSurfaceColorMod(
-    options.surface.$address,
+    options.surface.$memory,
     options.r,
     options.g,
     options.b
@@ -82,10 +82,10 @@ export function getSurfaceColorMod(this: SDL, surface: Surface) {
   const bStruct = new CStruct({ length: CStruct.BYTE_SIZE.u8 });
 
   const success = this.symbols.SDL_GetSurfaceColorMod(
-    surface.$address,
-    rStruct.$address,
-    gStruct.$address,
-    bStruct.$address
+    surface.$memory,
+    rStruct.$memory,
+    gStruct.$memory,
+    bStruct.$memory
   );
 
   if (!success) return null;
@@ -107,7 +107,7 @@ export function setSurfaceAlphaMod(
   }
 ) {
   return this.symbols.SDL_SetSurfaceAlphaMod(
-    options.surface.$address,
+    options.surface.$memory,
     options.alpha
   );
 }
@@ -116,8 +116,8 @@ export function getSurfaceAlphaMod(this: SDL, surface: Surface) {
   const alphaStruct = new CStruct({ length: CStruct.BYTE_SIZE.u8 });
 
   const success = this.symbols.SDL_GetSurfaceAlphaMod(
-    surface.$address,
-    alphaStruct.$address
+    surface.$memory,
+    alphaStruct.$memory
   );
 
   if (!success) return null;
@@ -135,7 +135,7 @@ export function setSurfaceBlendMode(
   }
 ) {
   return this.symbols.SDL_SetSurfaceBlendMode(
-    options.surface.$address,
+    options.surface.$memory,
     options.blendMode
   );
 }
@@ -144,8 +144,8 @@ export function getSurfaceBlendMode(this: SDL, surface: Surface) {
   const blendModeStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
   const success = this.symbols.SDL_GetSurfaceBlendMode(
-    surface.$address,
-    blendModeStruct.$address
+    surface.$memory,
+    blendModeStruct.$memory
   );
 
   if (!success) return null;
@@ -163,8 +163,8 @@ export function setSurfaceClipRect(
   }
 ) {
   return this.symbols.SDL_SetSurfaceClipRect(
-    options.surface.$address,
-    options.rect?.$address ?? null
+    options.surface.$memory,
+    options.rect?.$memory ?? null
   );
 }
 
@@ -172,8 +172,8 @@ export function getSurfaceClipRect(this: SDL, surface: Surface) {
   const rect = Rect.create();
 
   const success = this.symbols.SDL_GetSurfaceClipRect(
-    surface.$address,
-    rect.$address
+    surface.$memory,
+    rect.$memory
   );
 
   if (!success) return null;

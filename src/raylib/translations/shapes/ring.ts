@@ -14,13 +14,13 @@ export function drawRing(
   }
 ) {
   this.symbols.DrawRing(
-    options.center.$address,
+    options.center.$memory,
     options.innerRadius,
     options.outerRadius,
     options.startAngle,
     options.endAngle,
     options.segments,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -37,12 +37,12 @@ export function drawRingLines(
   }
 ) {
   this.symbols.DrawRingLines(
-    options.center.$address,
+    options.center.$memory,
     options.innerRadius,
     options.outerRadius,
     options.startAngle,
     options.endAngle,
     options.segments,
-    options.color.$address
+    options.color.$memory
   );
 }

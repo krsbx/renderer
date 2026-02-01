@@ -27,7 +27,7 @@ export function getSystemTheme(this: SDL) {
 export function getDisplays(this: SDL) {
   const countStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
-  const listPtr = this.symbols.SDL_GetDisplays(countStruct.$address);
+  const listPtr = this.symbols.SDL_GetDisplays(countStruct.$memory);
 
   if (!listPtr) return [];
 
@@ -54,7 +54,7 @@ export function getDisplayName(this: SDL, displayID: number) {
 export function getDisplayBounds(this: SDL, displayID: number) {
   const rect = Rect.create();
 
-  const success = this.symbols.SDL_GetDisplayBounds(displayID, rect.$address);
+  const success = this.symbols.SDL_GetDisplayBounds(displayID, rect.$memory);
 
   if (!success) return null;
 
@@ -66,7 +66,7 @@ export function getDisplayUsableBounds(this: SDL, displayID: number) {
 
   const success = this.symbols.SDL_GetDisplayUsableBounds(
     displayID,
-    rect.$address
+    rect.$memory
   );
 
   if (!success) return null;
@@ -95,7 +95,7 @@ export function getFullscreenDisplayModes(this: SDL, displayID: number) {
 
   const listPtr = this.symbols.SDL_GetFullscreenDisplayModes(
     displayID,
-    countStruct.$address
+    countStruct.$memory
   );
 
   if (!listPtr) return null;
@@ -129,7 +129,7 @@ export function getClosestFullscreenDisplayMode(
     options.h,
     options.refreshRate,
     options.include_high_density_modes ?? true,
-    displayMode.$address
+    displayMode.$memory
   );
 
   if (!success) return null;
@@ -154,11 +154,11 @@ export function getCurrentDisplayMode(this: SDL, displayID: number) {
 }
 
 export function getDisplayForPoint(this: SDL, point: Point) {
-  return this.symbols.SDL_GetDisplayForPoint(point.$address);
+  return this.symbols.SDL_GetDisplayForPoint(point.$memory);
 }
 
 export function getDisplayForRect(this: SDL, rect: Rect) {
-  return this.symbols.SDL_GetDisplayForRect(rect.$address);
+  return this.symbols.SDL_GetDisplayForRect(rect.$memory);
 }
 
 export function getDisplayForWindow(this: SDL, window: Window) {

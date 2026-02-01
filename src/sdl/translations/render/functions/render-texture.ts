@@ -18,10 +18,10 @@ export function renderTextureRotated(
   return this.symbols.SDL_RenderTextureRotated(
     options.renderer,
     options.texture,
-    options.srcRect?.$address ?? null,
-    options.dstRect?.$address ?? null,
+    options.srcRect?.$memory ?? null,
+    options.dstRect?.$memory ?? null,
     options.angle,
-    options.center?.$address ?? null,
+    options.center?.$memory ?? null,
     options.flip
   );
 }
@@ -40,10 +40,10 @@ export function renderTextureAffine(
   return this.symbols.SDL_RenderTextureAffine(
     options.renderer,
     options.texture,
-    options.srcRect?.$address ?? null,
-    options.origin?.$address ?? null,
-    options.right?.$address ?? null,
-    options.down?.$address ?? null
+    options.srcRect?.$memory ?? null,
+    options.origin?.$memory ?? null,
+    options.right?.$memory ?? null,
+    options.down?.$memory ?? null
   );
 }
 
@@ -60,9 +60,9 @@ export function renderTextureTiled(
   return this.symbols.SDL_RenderTextureTiled(
     options.renderer,
     options.texture,
-    options.srcRect?.$address ?? null,
+    options.srcRect?.$memory ?? null,
     options.scale,
-    options.dstRect?.$address ?? null
+    options.dstRect?.$memory ?? null
   );
 }
 
@@ -83,13 +83,13 @@ export function renderTexture9Grid(
   return this.symbols.SDL_RenderTexture9Grid(
     options.renderer,
     options.texture,
-    options.srcRect?.$address ?? null,
+    options.srcRect?.$memory ?? null,
     options.leftWidth,
     options.rightWidth,
     options.topHeight,
     options.bottomHeight,
     options.scale,
-    options.dstRect?.$address ?? null
+    options.dstRect?.$memory ?? null
   );
 }
 
@@ -111,13 +111,13 @@ export function renderTexture9GridTiled(
   return this.symbols.SDL_RenderTexture9GridTiled(
     options.renderer,
     options.texture,
-    options.srcRect?.$address ?? null,
+    options.srcRect?.$memory ?? null,
     options.leftWidth,
     options.rightWidth,
     options.topHeight,
     options.bottomHeight,
     options.scale,
-    options.dstRect?.$address ?? null,
+    options.dstRect?.$memory ?? null,
     options.tileScale
   );
 }

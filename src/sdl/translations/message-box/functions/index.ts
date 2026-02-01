@@ -9,8 +9,8 @@ export function showMessageBox(this: SDL, messageboxdata: MessageBoxData) {
   const struct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
   const success = this.symbols.SDL_ShowMessageBox(
-    messageboxdata.$address,
-    struct.$address
+    messageboxdata.$memory,
+    struct.$memory
   );
 
   if (!success) return null;

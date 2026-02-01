@@ -33,7 +33,7 @@ export function reloadGamepadMappings(this: SDL) {
 export function getGamepadMappings(this: SDL) {
   const countStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
-  const listPtr = this.symbols.SDL_GetGamepadMappings(countStruct.$address);
+  const listPtr = this.symbols.SDL_GetGamepadMappings(countStruct.$memory);
 
   if (!listPtr) return [];
 
@@ -46,7 +46,7 @@ export function getGamepadMappings(this: SDL) {
 }
 
 export function getGamepadMappingForGUID(this: SDL, guid: GUID) {
-  const ptr = this.symbols.SDL_GetGamepadMappingForGUID(guid.$address);
+  const ptr = this.symbols.SDL_GetGamepadMappingForGUID(guid.$memory);
 
   if (!ptr) return null;
 

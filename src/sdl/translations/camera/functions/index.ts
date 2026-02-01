@@ -23,7 +23,7 @@ export function getCurrentCameraDriver(this: SDL) {
 export function getCameras(this: SDL) {
   const struct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
-  const listPtr = this.symbols.SDL_GetCameras(struct.$address);
+  const listPtr = this.symbols.SDL_GetCameras(struct.$memory);
 
   if (!listPtr) return [];
 
@@ -41,7 +41,7 @@ export function getCameraSupportedFormats(this: SDL, cameraId: number) {
 
   const listPtr = this.symbols.SDL_GetCameraSupportedFormats(
     cameraId,
-    struct.$address
+    struct.$memory
   );
 
   if (!listPtr) return [];
@@ -73,7 +73,7 @@ export function openCamera(
   const spec = options.spec ?? null;
   const camera = this.symbols.SDL_OpenCamera(
     options.cameraId,
-    spec?.$address ?? null
+    spec?.$memory ?? null
   );
 
   if (!camera) return null;
@@ -105,7 +105,7 @@ export function getCameraFormat(
   const spec = options.spec ?? CameraSpec.create();
   const success = this.symbols.SDL_GetCameraFormat(
     options.camera,
-    spec.$address
+    spec.$memory
   );
 
   if (!success) return null;
@@ -118,7 +118,7 @@ export function acquireCameraFrame(this: SDL, camera: Camera) {
 
   const surfacePtr = this.symbols.SDL_AcquireCameraFrame(
     camera,
-    struct.$address
+    struct.$memory
   );
 
   if (!surfacePtr) return null;
@@ -139,7 +139,7 @@ export function releaseCameraFrame(
     surface: Surface;
   }
 ) {
-  this.symbols.SDL_ReleaseCameraFrame(options.camera, options.surface.$address);
+  this.symbols.SDL_ReleaseCameraFrame(options.camera, options.surface.$memory);
 }
 
 export function closeCamera(this: SDL, camera: Camera) {

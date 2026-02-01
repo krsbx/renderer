@@ -11,9 +11,9 @@ export function drawLine3D(
   }
 ) {
   this.symbols.DrawLine3D(
-    options.startPos.$address,
-    options.endPos.$address,
-    options.color.$address
+    options.startPos.$memory,
+    options.endPos.$memory,
+    options.color.$memory
   );
 }
 
@@ -24,7 +24,7 @@ export function drawPoint3D(
     color: Color;
   }
 ) {
-  this.symbols.DrawPoint3D(options.position.$address, options.color.$address);
+  this.symbols.DrawPoint3D(options.position.$memory, options.color.$memory);
 }
 
 export function drawCircle3D(
@@ -38,11 +38,11 @@ export function drawCircle3D(
   }
 ) {
   this.symbols.DrawCircle3D(
-    options.center.$address,
+    options.center.$memory,
     options.radius,
-    options.rotationAxis.$address,
+    options.rotationAxis.$memory,
     options.rotationAngle,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -56,10 +56,10 @@ export function drawTriangle3D(
   }
 ) {
   this.symbols.DrawTriangle3D(
-    options.v1.$address,
-    options.v2.$address,
-    options.v3.$address,
-    options.color.$address
+    options.v1.$memory,
+    options.v2.$memory,
+    options.v3.$memory,
+    options.color.$memory
   );
 }
 
@@ -78,7 +78,7 @@ export function drawTriangleStrip3D(
   this.symbols.DrawTriangleStrip3D(
     points,
     options.points.length,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -93,11 +93,11 @@ export function drawCube(
   }
 ) {
   this.symbols.DrawCube(
-    options.position.$address,
+    options.position.$memory,
     options.width,
     options.height,
     options.length,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -110,9 +110,9 @@ export function drawCubeV(
   }
 ) {
   this.symbols.DrawCubeV(
-    options.position.$address,
-    options.size.$address,
-    options.color.$address
+    options.position.$memory,
+    options.size.$memory,
+    options.color.$memory
   );
 }
 
@@ -127,11 +127,11 @@ export function drawCubeWires(
   }
 ) {
   this.symbols.DrawCubeWires(
-    options.position.$address,
+    options.position.$memory,
     options.width,
     options.height,
     options.length,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -144,9 +144,9 @@ export function drawCubeWiresV(
   }
 ) {
   this.symbols.DrawCubeWiresV(
-    options.position.$address,
-    options.size.$address,
-    options.color.$address
+    options.position.$memory,
+    options.size.$memory,
+    options.color.$memory
   );
 }
 
@@ -159,9 +159,9 @@ export function drawSphere(
   }
 ) {
   this.symbols.DrawSphere(
-    options.centerPos.$address,
+    options.centerPos.$memory,
     options.radius,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -176,11 +176,11 @@ export function drawSphereEx(
   }
 ) {
   this.symbols.DrawSphereEx(
-    options.centerPos.$address,
+    options.centerPos.$memory,
     options.radius,
     options.rings,
     options.slices,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -195,11 +195,11 @@ export function drawSphereWires(
   }
 ) {
   this.symbols.DrawSphereWires(
-    options.centerPos.$address,
+    options.centerPos.$memory,
     options.radius,
     options.rings,
     options.slices,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -215,12 +215,12 @@ export function drawCylinder(
   }
 ) {
   this.symbols.DrawCylinder(
-    options.position.$address,
+    options.position.$memory,
     options.radiusTop,
     options.radiusBottom,
     options.height,
     options.slices,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -236,12 +236,12 @@ export function drawCylinderEx(
   }
 ) {
   this.symbols.DrawCylinderEx(
-    options.startPos.$address,
-    options.endPos.$address,
+    options.startPos.$memory,
+    options.endPos.$memory,
     options.startRadius,
     options.endRadius,
     options.sides,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -257,12 +257,12 @@ export function drawCylinderWires(
   }
 ) {
   this.symbols.DrawCylinderWires(
-    options.position.$address,
+    options.position.$memory,
     options.radiusTop,
     options.radiusBottom,
     options.height,
     options.slices,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -278,12 +278,12 @@ export function drawCylinderWiresEx(
   }
 ) {
   this.symbols.DrawCylinderWiresEx(
-    options.startPos.$address,
-    options.endPos.$address,
+    options.startPos.$memory,
+    options.endPos.$memory,
     options.startRadius,
     options.endRadius,
     options.sides,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -299,12 +299,12 @@ export function drawCapsule(
   }
 ) {
   this.symbols.DrawCapsule(
-    options.startPos.$address,
-    options.endPos.$address,
+    options.startPos.$memory,
+    options.endPos.$memory,
     options.radius,
     options.slices,
     options.rings,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -320,12 +320,12 @@ export function drawCapsuleWires(
   }
 ) {
   this.symbols.DrawCapsuleWires(
-    options.startPos.$address,
-    options.endPos.$address,
+    options.startPos.$memory,
+    options.endPos.$memory,
     options.radius,
     options.slices,
     options.rings,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -338,9 +338,9 @@ export function drawPlane(
   }
 ) {
   this.symbols.DrawPlane(
-    options.centerPos.$address,
-    options.size.$address,
-    options.color.$address
+    options.centerPos.$memory,
+    options.size.$memory,
+    options.color.$memory
   );
 }
 
@@ -351,7 +351,7 @@ export function drawRay(
     color: Color;
   }
 ) {
-  this.symbols.DrawRay(options.ray.$address, options.color.$address);
+  this.symbols.DrawRay(options.ray.$memory, options.color.$memory);
 }
 
 export function drawGrid(

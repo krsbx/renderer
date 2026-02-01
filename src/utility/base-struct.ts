@@ -1,5 +1,5 @@
 import type { StructInit } from '@/types/shared';
-import { type Pointer, toArrayBuffer } from 'bun:ffi';
+import { type Pointer, ptr, toArrayBuffer } from 'bun:ffi';
 
 export type BaseStructOptions = Pointer | Uint8Array;
 
@@ -12,7 +12,7 @@ export type BaseStructConstructor<T extends BaseStruct = BaseStruct> = {
 export abstract class BaseStruct {
   public static readonly BYTE_SIZE: number;
 
-  public $address: BaseStructOptions;
+  public $address: Pointer;
   public $memory: Uint8Array;
   public $view: DataView;
 
@@ -25,7 +25,7 @@ export abstract class BaseStruct {
 
     if (data instanceof Uint8Array) {
       this.$memory = data;
-      this.$address = data;
+      this.$address = ptr(data);
     } else {
       const buffer = toArrayBuffer(data, 0, BYTE_SIZE);
       this.$memory = new Uint8Array(buffer);

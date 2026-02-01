@@ -31,7 +31,7 @@ export function loadFileIO(
 
   const dataPtr = this.symbols.SDL_LoadFile_IO(
     options.src,
-    struct.$address,
+    struct.$memory,
     options.closeio
   );
 
@@ -53,7 +53,7 @@ export function loadFile(this: SDL, file: string) {
 
   const dataPtr = this.symbols.SDL_LoadFile(
     stringToCString(file).ptr,
-    struct.$address
+    struct.$memory
   );
 
   if (!dataPtr) return null;

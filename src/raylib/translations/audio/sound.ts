@@ -5,7 +5,7 @@ import { Sound, Wave } from '../struct';
 export function loadSound(this: RayLib, fileName: string) {
   const sound = Sound.create();
 
-  this.symbols.LoadSound(stringToCString(fileName).ptr, sound.$address);
+  this.symbols.LoadSound(stringToCString(fileName).ptr, sound.$memory);
 
   return sound;
 }
@@ -13,7 +13,7 @@ export function loadSound(this: RayLib, fileName: string) {
 export function loadSoundFromWave(this: RayLib, wave: Wave) {
   const sound = Sound.create();
 
-  this.symbols.LoadSoundFromWave(wave.$address, sound.$address);
+  this.symbols.LoadSoundFromWave(wave.$memory, sound.$memory);
 
   return sound;
 }
@@ -21,13 +21,13 @@ export function loadSoundFromWave(this: RayLib, wave: Wave) {
 export function loadSoundAlias(this: RayLib, source: Sound) {
   const alias = Sound.create();
 
-  this.symbols.LoadSoundAlias(source.$address, alias.$address);
+  this.symbols.LoadSoundAlias(source.$memory, alias.$memory);
 
   return alias;
 }
 
 export function isSoundValid(this: RayLib, sound: Sound) {
-  return this.symbols.IsSoundValid(sound.$address);
+  return this.symbols.IsSoundValid(sound.$memory);
 }
 
 export function updateSound(
@@ -39,38 +39,38 @@ export function updateSound(
   }
 ) {
   this.symbols.UpdateSound(
-    options.sound.$address,
+    options.sound.$memory,
     options.data,
     options.sampleCount
   );
 }
 
 export function unloadSound(this: RayLib, sound: Sound) {
-  this.symbols.UnloadSound(sound.$address);
+  this.symbols.UnloadSound(sound.$memory);
 }
 
 export function unloadSoundAlias(this: RayLib, alias: Sound) {
-  this.symbols.UnloadSoundAlias(alias.$address);
+  this.symbols.UnloadSoundAlias(alias.$memory);
 }
 
 export function playSound(this: RayLib, sound: Sound) {
-  this.symbols.PlaySound(sound.$address);
+  this.symbols.PlaySound(sound.$memory);
 }
 
 export function stopSound(this: RayLib, sound: Sound) {
-  this.symbols.StopSound(sound.$address);
+  this.symbols.StopSound(sound.$memory);
 }
 
 export function pauseSound(this: RayLib, sound: Sound) {
-  this.symbols.PauseSound(sound.$address);
+  this.symbols.PauseSound(sound.$memory);
 }
 
 export function resumeSound(this: RayLib, sound: Sound) {
-  this.symbols.ResumeSound(sound.$address);
+  this.symbols.ResumeSound(sound.$memory);
 }
 
 export function isSoundPlaying(this: RayLib, sound: Sound) {
-  return this.symbols.IsSoundPlaying(sound.$address);
+  return this.symbols.IsSoundPlaying(sound.$memory);
 }
 
 export function setSoundVolume(
@@ -80,7 +80,7 @@ export function setSoundVolume(
     volume: number;
   }
 ) {
-  this.symbols.SetSoundVolume(options.sound.$address, options.volume);
+  this.symbols.SetSoundVolume(options.sound.$memory, options.volume);
 }
 
 export function setSoundPitch(
@@ -90,7 +90,7 @@ export function setSoundPitch(
     pitch: number;
   }
 ) {
-  this.symbols.SetSoundPitch(options.sound.$address, options.pitch);
+  this.symbols.SetSoundPitch(options.sound.$memory, options.pitch);
 }
 
 export function setSoundPan(
@@ -100,5 +100,5 @@ export function setSoundPan(
     pan: number;
   }
 ) {
-  this.symbols.SetSoundPan(options.sound.$address, options.pan);
+  this.symbols.SetSoundPan(options.sound.$memory, options.pan);
 }

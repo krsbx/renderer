@@ -76,7 +76,7 @@ export function isFileNameValid(this: RayLib, fileName: string) {
 export function loadDirectoryFiles(this: RayLib, dirPath: string) {
   const lilst = FilePathList.create();
 
-  this.symbols.LoadDirectoryFiles(stringToCString(dirPath).ptr, lilst.$address);
+  this.symbols.LoadDirectoryFiles(stringToCString(dirPath).ptr, lilst.$memory);
 
   return lilst;
 }
@@ -95,14 +95,14 @@ export function loadDirectoryFilesEx(
     stringToCString(options.dirPath).ptr,
     stringToCString(options.filter).ptr,
     options.recursive,
-    lilst.$address
+    lilst.$memory
   );
 
   return lilst;
 }
 
 export function unloadDirectoryFiles(this: RayLib, list: FilePathList) {
-  this.symbols.UnloadDirectoryFiles(list.$address);
+  this.symbols.UnloadDirectoryFiles(list.$memory);
 }
 
 export function isFileDropped(this: RayLib) {
@@ -112,13 +112,13 @@ export function isFileDropped(this: RayLib) {
 export function loadDroppedFiles(this: RayLib) {
   const list = FilePathList.create();
 
-  this.symbols.LoadDroppedFiles(list.$address);
+  this.symbols.LoadDroppedFiles(list.$memory);
 
   return list;
 }
 
 export function unloadDroppedFiles(this: RayLib, list: FilePathList) {
-  this.symbols.UnloadDroppedFiles(list.$address);
+  this.symbols.UnloadDroppedFiles(list.$memory);
 }
 
 export function getFileModTime(this: RayLib, fileName: string) {

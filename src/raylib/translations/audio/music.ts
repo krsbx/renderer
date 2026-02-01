@@ -5,7 +5,7 @@ import { Music } from '../struct';
 export function loadMusicStream(this: RayLib, fileName: string) {
   const music = Music.create();
 
-  this.symbols.LoadMusicStream(stringToCString(fileName).ptr, music.$address);
+  this.symbols.LoadMusicStream(stringToCString(fileName).ptr, music.$memory);
 
   return music;
 }
@@ -23,42 +23,42 @@ export function loadMusicStreamFromMemory(
     stringToCString(options.fileType).ptr,
     options.data,
     options.data.byteLength,
-    music.$address
+    music.$memory
   );
 
   return music;
 }
 
 export function isMusicValid(this: RayLib, music: Music) {
-  return this.symbols.IsMusicValid(music.$address);
+  return this.symbols.IsMusicValid(music.$memory);
 }
 
 export function unloadMusicStream(this: RayLib, music: Music) {
-  this.symbols.UnloadMusicStream(music.$address);
+  this.symbols.UnloadMusicStream(music.$memory);
 }
 
 export function playMusicStream(this: RayLib, music: Music) {
-  this.symbols.PlayMusicStream(music.$address);
+  this.symbols.PlayMusicStream(music.$memory);
 }
 
 export function isMusicStreamPlaying(this: RayLib, music: Music) {
-  return this.symbols.IsMusicStreamPlaying(music.$address);
+  return this.symbols.IsMusicStreamPlaying(music.$memory);
 }
 
 export function updateMusicStream(this: RayLib, music: Music) {
-  this.symbols.UpdateMusicStream(music.$address);
+  this.symbols.UpdateMusicStream(music.$memory);
 }
 
 export function stopMusicStream(this: RayLib, music: Music) {
-  this.symbols.StopMusicStream(music.$address);
+  this.symbols.StopMusicStream(music.$memory);
 }
 
 export function pauseMusicStream(this: RayLib, music: Music) {
-  this.symbols.PauseMusicStream(music.$address);
+  this.symbols.PauseMusicStream(music.$memory);
 }
 
 export function resumeMusicStream(this: RayLib, music: Music) {
-  this.symbols.ResumeMusicStream(music.$address);
+  this.symbols.ResumeMusicStream(music.$memory);
 }
 
 export function seekMusicStream(
@@ -68,7 +68,7 @@ export function seekMusicStream(
     position: number;
   }
 ) {
-  this.symbols.SeekMusicStream(options.music.$address, options.position);
+  this.symbols.SeekMusicStream(options.music.$memory, options.position);
 }
 
 export function setMusicVolume(
@@ -78,7 +78,7 @@ export function setMusicVolume(
     volume: number;
   }
 ) {
-  this.symbols.SetMusicVolume(options.music.$address, options.volume);
+  this.symbols.SetMusicVolume(options.music.$memory, options.volume);
 }
 
 export function setMusicPitch(
@@ -88,7 +88,7 @@ export function setMusicPitch(
     pitch: number;
   }
 ) {
-  this.symbols.SetMusicPitch(options.music.$address, options.pitch);
+  this.symbols.SetMusicPitch(options.music.$memory, options.pitch);
 }
 
 export function setMusicPan(
@@ -98,13 +98,13 @@ export function setMusicPan(
     pan: number;
   }
 ) {
-  this.symbols.SetMusicPan(options.music.$address, options.pan);
+  this.symbols.SetMusicPan(options.music.$memory, options.pan);
 }
 
 export function getMusicTimeLength(this: RayLib, music: Music) {
-  return this.symbols.GetMusicTimeLength(music.$address);
+  return this.symbols.GetMusicTimeLength(music.$memory);
 }
 
 export function getMusicTimePlayed(this: RayLib, music: Music) {
-  return this.symbols.GetMusicTimePlayed(music.$address);
+  return this.symbols.GetMusicTimePlayed(music.$memory);
 }

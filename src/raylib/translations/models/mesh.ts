@@ -14,7 +14,7 @@ export function uploadMesh(
     dynamic: boolean;
   }
 ) {
-  this.symbols.UploadMesh(options.mesh.$address, options.dynamic);
+  this.symbols.UploadMesh(options.mesh.$memory, options.dynamic);
 }
 
 export function updateMeshBuffer(
@@ -27,7 +27,7 @@ export function updateMeshBuffer(
   }
 ) {
   this.symbols.UpdateMeshBuffer(
-    options.mesh.$address,
+    options.mesh.$memory,
     options.index,
     options.data,
     options.data.byteLength,
@@ -36,7 +36,7 @@ export function updateMeshBuffer(
 }
 
 export function unloadMesh(this: RayLib, mesh: Mesh) {
-  this.symbols.UnloadMesh(mesh.$address);
+  this.symbols.UnloadMesh(mesh.$memory);
 }
 
 export function drawMesh(
@@ -48,9 +48,9 @@ export function drawMesh(
   }
 ) {
   this.symbols.DrawMesh(
-    options.mesh.$address,
-    options.material.$address,
-    options.transform.$address
+    options.mesh.$memory,
+    options.material.$memory,
+    options.transform.$memory
   );
 }
 
@@ -68,8 +68,8 @@ export function drawMeshInstanced(
   );
 
   this.symbols.DrawMeshInstanced(
-    options.mesh.$address,
-    options.material.$address,
+    options.mesh.$memory,
+    options.material.$memory,
     transforms,
     options.transforms.length
   );
@@ -78,13 +78,13 @@ export function drawMeshInstanced(
 export function getMeshBoundingBox(this: RayLib, mesh: Mesh) {
   const box = BoundingBox.create();
 
-  this.symbols.GetMeshBoundingBox(mesh.$address, box.$address);
+  this.symbols.GetMeshBoundingBox(mesh.$memory, box.$memory);
 
   return box;
 }
 
 export function genMeshTangents(this: RayLib, mesh: Mesh) {
-  this.symbols.GenMeshTangents(mesh.$address);
+  this.symbols.GenMeshTangents(mesh.$memory);
 }
 
 export function exportMesh(
@@ -95,7 +95,7 @@ export function exportMesh(
   }
 ) {
   return this.symbols.ExportMesh(
-    options.mesh.$address,
+    options.mesh.$memory,
     stringToCString(options.fileName).ptr
   );
 }
@@ -108,7 +108,7 @@ export function exportMeshAsCode(
   }
 ) {
   return this.symbols.ExportMeshAsCode(
-    options.mesh.$address,
+    options.mesh.$memory,
     stringToCString(options.fileName).ptr
   );
 }
@@ -124,7 +124,7 @@ export function genMeshPoly(
 ) {
   const mesh = Mesh.create();
 
-  this.symbols.GenMeshPoly(options.sides, options.radius, mesh.$address);
+  this.symbols.GenMeshPoly(options.sides, options.radius, mesh.$memory);
 
   return mesh;
 }
@@ -145,7 +145,7 @@ export function genMeshPlane(
     options.length,
     options.resX,
     options.resZ,
-    mesh.$address
+    mesh.$memory
   );
 
   return mesh;
@@ -165,7 +165,7 @@ export function genMeshCube(
     options.width,
     options.height,
     options.length,
-    mesh.$address
+    mesh.$memory
   );
 
   return mesh;
@@ -185,7 +185,7 @@ export function genMeshSphere(
     options.radius,
     options.rings,
     options.slices,
-    mesh.$address
+    mesh.$memory
   );
 
   return mesh;
@@ -205,7 +205,7 @@ export function genMeshHemiSphere(
     options.radius,
     options.rings,
     options.slices,
-    mesh.$address
+    mesh.$memory
   );
 
   return mesh;
@@ -225,7 +225,7 @@ export function genMeshCylinder(
     options.radius,
     options.height,
     options.slices,
-    mesh.$address
+    mesh.$memory
   );
 
   return mesh;
@@ -245,7 +245,7 @@ export function genMeshCone(
     options.radius,
     options.height,
     options.slices,
-    mesh.$address
+    mesh.$memory
   );
 
   return mesh;
@@ -267,7 +267,7 @@ export function genMeshTorus(
     options.size,
     options.radSeg,
     options.sides,
-    mesh.$address
+    mesh.$memory
   );
 
   return mesh;
@@ -289,7 +289,7 @@ export function genMeshKnot(
     options.size,
     options.radSeg,
     options.sides,
-    mesh.$address
+    mesh.$memory
   );
 
   return mesh;
@@ -305,9 +305,9 @@ export function genMeshHeightmap(
   const mesh = Mesh.create();
 
   this.symbols.GenMeshHeightmap(
-    options.heightmap.$address,
-    options.size.$address,
-    mesh.$address
+    options.heightmap.$memory,
+    options.size.$memory,
+    mesh.$memory
   );
 
   return mesh;
@@ -323,9 +323,9 @@ export function genMeshCubicmap(
   const mesh = Mesh.create();
 
   this.symbols.GenMeshCubicmap(
-    options.cubicmap.$address,
-    options.cubeSize.$address,
-    mesh.$address
+    options.cubicmap.$memory,
+    options.cubeSize.$memory,
+    mesh.$memory
   );
 
   return mesh;

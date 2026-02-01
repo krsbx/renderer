@@ -20,7 +20,7 @@ export function createTray(
   }
 ) {
   return this.symbols.SDL_CreateTray(
-    options.icon?.$address ?? null,
+    options.icon?.$memory ?? null,
     stringToCString(options.tooltip).ptr
   ) as Tray | null;
 }
@@ -32,7 +32,7 @@ export function setTrayIcon(
     icon: Surface | null;
   }
 ) {
-  this.symbols.SDL_SetTrayIcon(options.tray, options.icon?.$address ?? null);
+  this.symbols.SDL_SetTrayIcon(options.tray, options.icon?.$memory ?? null);
 }
 
 export function setTrayTooltip(
@@ -67,7 +67,7 @@ export function getTraySubmenu(this: SDL, entry: TrayEntry) {
 export function getTrayEntries(this: SDL, menu: TrayMenu) {
   const countStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
-  const listPtr = this.symbols.SDL_GetTrayEntries(menu, countStruct.$address);
+  const listPtr = this.symbols.SDL_GetTrayEntries(menu, countStruct.$memory);
 
   if (!listPtr) return null;
 

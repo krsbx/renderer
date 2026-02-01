@@ -10,8 +10,8 @@ export function hasRectIntersectionFloat(
   }
 ) {
   return this.symbols.SDL_HasRectIntersectionFloat(
-    options.a.$address,
-    options.b.$address
+    options.a.$memory,
+    options.b.$memory
   );
 }
 
@@ -25,9 +25,9 @@ export function getRectIntersectionFloat(
   const result = FRect.create();
 
   const success = this.symbols.SDL_GetRectIntersectionFloat(
-    options.a.$address,
-    options.b.$address,
-    result.$address
+    options.a.$memory,
+    options.b.$memory,
+    result.$memory
   );
 
   if (!success) return null;
@@ -45,9 +45,9 @@ export function getRectUnionFloat(
   const result = FRect.create();
 
   const success = this.symbols.SDL_GetRectUnionFloat(
-    options.a.$address,
-    options.b.$address,
-    result.$address
+    options.a.$memory,
+    options.b.$memory,
+    result.$memory
   );
 
   if (!success) return null;
@@ -71,8 +71,8 @@ export function getRectEnclosingPointsFloat(
   const success = this.symbols.SDL_GetRectEnclosingPointsFloat(
     points,
     options.points.length,
-    options.clip?.$address ?? null,
-    result.$address
+    options.clip?.$memory ?? null,
+    result.$memory
   );
 
   if (!success) return null;
@@ -107,11 +107,11 @@ export function getRectAndLineIntersectionFloat(
   }).setValue(0, options.y2, 'f32');
 
   const success = this.symbols.SDL_GetRectAndLineIntersectionFloat(
-    options.rect.$address,
-    x1Struct.$address,
-    y1Struct.$address,
-    x2Struct.$address,
-    y2Struct.$address
+    options.rect.$memory,
+    x1Struct.$memory,
+    y1Struct.$memory,
+    x2Struct.$memory,
+    y2Struct.$memory
   );
 
   if (!success) return null;

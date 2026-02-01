@@ -9,7 +9,7 @@ export function loadMaterials(this: RayLib, fileName: string) {
   const countStruct = new CStruct({ length: 4 });
   const materialsPtr = this.symbols.LoadMaterials(
     stringToCString(fileName).ptr,
-    countStruct.$address
+    countStruct.$memory
   );
 
   const count = countStruct.getValue(0, 'i32');
@@ -24,17 +24,17 @@ export function loadMaterials(this: RayLib, fileName: string) {
 export function loadMaterialDefault(this: RayLib) {
   const material = Material.create();
 
-  this.symbols.LoadMaterialDefault(material.$address);
+  this.symbols.LoadMaterialDefault(material.$memory);
 
   return material;
 }
 
 export function isMaterialValid(this: RayLib, material: Material) {
-  return this.symbols.IsMaterialValid(material.$address);
+  return this.symbols.IsMaterialValid(material.$memory);
 }
 
 export function unloadMaterial(this: RayLib, material: Material) {
-  this.symbols.UnloadMaterial(material.$address);
+  this.symbols.UnloadMaterial(material.$memory);
 }
 
 export function setMaterialTexture(
@@ -46,9 +46,9 @@ export function setMaterialTexture(
   }
 ) {
   this.symbols.SetMaterialTexture(
-    options.material.$address,
+    options.material.$memory,
     options.mapType,
-    options.texture.$address
+    options.texture.$memory
   );
 }
 
@@ -61,7 +61,7 @@ export function setModelMeshMaterial(
   }
 ) {
   this.symbols.SetModelMeshMaterial(
-    options.model.$address,
+    options.model.$memory,
     options.meshId,
     options.materialId
   );

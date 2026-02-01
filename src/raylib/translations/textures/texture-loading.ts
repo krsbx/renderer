@@ -11,7 +11,7 @@ import {
 export function loadTexture(this: RayLib, fileName: string) {
   const texture = Texture2D.create();
 
-  this.symbols.LoadTexture(stringToCString(fileName).ptr, texture.$address);
+  this.symbols.LoadTexture(stringToCString(fileName).ptr, texture.$memory);
 
   return texture;
 }
@@ -19,7 +19,7 @@ export function loadTexture(this: RayLib, fileName: string) {
 export function loadTextureFromImage(this: RayLib, image: Image) {
   const texture = Texture2D.create();
 
-  this.symbols.LoadTextureFromImage(image.$address, texture.$address);
+  this.symbols.LoadTextureFromImage(image.$memory, texture.$memory);
 
   return texture;
 }
@@ -34,9 +34,9 @@ export function loadTextureCubemap(
   const texture = TextureCubemap.create();
 
   this.symbols.LoadTextureCubemap(
-    options.image.$address,
+    options.image.$memory,
     options.layout,
-    texture.$address
+    texture.$memory
   );
 
   return texture;
@@ -54,26 +54,26 @@ export function loadRenderTexture(
   this.symbols.LoadRenderTexture(
     options.width,
     options.height,
-    texture.$address
+    texture.$memory
   );
 
   return texture;
 }
 
 export function isTextureValid(this: RayLib, texture: Texture2D) {
-  return this.symbols.IsTextureValid(texture.$address);
+  return this.symbols.IsTextureValid(texture.$memory);
 }
 
 export function unloadTexture(this: RayLib, texture: Texture2D) {
-  this.symbols.UnloadTexture(texture.$address);
+  this.symbols.UnloadTexture(texture.$memory);
 }
 
 export function isRenderTextureValid(this: RayLib, texture: RenderTexture2D) {
-  return this.symbols.IsRenderTextureValid(texture.$address);
+  return this.symbols.IsRenderTextureValid(texture.$memory);
 }
 
 export function unloadRenderTexture(this: RayLib, texture: RenderTexture2D) {
-  this.symbols.UnloadRenderTexture(texture.$address);
+  this.symbols.UnloadRenderTexture(texture.$memory);
 }
 
 export function updateTexture(
@@ -83,7 +83,7 @@ export function updateTexture(
     pixels: Uint8Array;
   }
 ) {
-  this.symbols.UpdateTexture(options.texture.$address, options.pixels);
+  this.symbols.UpdateTexture(options.texture.$memory, options.pixels);
 }
 
 export function updateTextureRec(
@@ -95,8 +95,8 @@ export function updateTextureRec(
   }
 ) {
   this.symbols.UpdateTextureRec(
-    options.texture.$address,
-    options.rec.$address,
+    options.texture.$memory,
+    options.rec.$memory,
     options.pixels
   );
 }

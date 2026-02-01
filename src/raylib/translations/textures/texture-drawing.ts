@@ -17,10 +17,10 @@ export function drawTexture(
   }
 ) {
   this.symbols.DrawTexture(
-    options.texture.$address,
+    options.texture.$memory,
     options.posX,
     options.posY,
-    options.tint.$address
+    options.tint.$memory
   );
 }
 
@@ -33,9 +33,9 @@ export function drawTextureV(
   }
 ) {
   this.symbols.DrawTextureV(
-    options.texture.$address,
-    options.position.$address,
-    options.tint.$address
+    options.texture.$memory,
+    options.position.$memory,
+    options.tint.$memory
   );
 }
 
@@ -50,11 +50,11 @@ export function drawTextureEx(
   }
 ) {
   this.symbols.DrawTextureEx(
-    options.texture.$address,
-    options.position.$address,
+    options.texture.$memory,
+    options.position.$memory,
     options.rotation,
     options.scale,
-    options.tint.$address
+    options.tint.$memory
   );
 }
 
@@ -68,10 +68,10 @@ export function drawTextureRec(
   }
 ) {
   this.symbols.DrawTextureRec(
-    options.texture.$address,
-    options.source.$address,
-    options.position.$address,
-    options.tint.$address
+    options.texture.$memory,
+    options.source.$memory,
+    options.position.$memory,
+    options.tint.$memory
   );
 }
 
@@ -87,12 +87,12 @@ export function drawTexturePro(
   }
 ) {
   this.symbols.DrawTexturePro(
-    options.texture.$address,
-    options.source.$address,
-    options.dest.$address,
-    options.origin.$address,
+    options.texture.$memory,
+    options.source.$memory,
+    options.dest.$memory,
+    options.origin.$memory,
     options.rotation,
-    options.tint.$address
+    options.tint.$memory
   );
 }
 
@@ -108,11 +108,11 @@ export function drawTextureNPatch(
   }
 ) {
   this.symbols.DrawTextureNPatch(
-    options.texture.$address,
-    options.nPatchInfo.$address,
-    options.dest.$address,
-    options.origin.$address,
+    options.texture.$memory,
+    options.nPatchInfo.$memory,
+    options.dest.$memory,
+    options.origin.$memory,
     options.rotation,
-    options.tint.$address
+    options.tint.$memory
   );
 }

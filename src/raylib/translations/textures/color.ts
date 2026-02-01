@@ -10,7 +10,7 @@ export function fade(
 ) {
   const color = Color.create();
 
-  this.symbols.Fade(options.color.$address, options.alpha, color.$address);
+  this.symbols.Fade(options.color.$memory, options.alpha, color.$memory);
 
   return color;
 }
@@ -18,7 +18,7 @@ export function fade(
 export function colorNormalize(this: RayLib, color: Color) {
   const normalized = Vector4.create();
 
-  this.symbols.ColorNormalize(color.$address, normalized.$address);
+  this.symbols.ColorNormalize(color.$memory, normalized.$memory);
 
   return normalized;
 }
@@ -26,7 +26,7 @@ export function colorNormalize(this: RayLib, color: Color) {
 export function colorFromNormalized(this: RayLib, normalized: Vector4) {
   const color = Color.create();
 
-  this.symbols.ColorFromNormalized(normalized.$address, color.$address);
+  this.symbols.ColorFromNormalized(normalized.$memory, color.$memory);
 
   return color;
 }
@@ -34,7 +34,7 @@ export function colorFromNormalized(this: RayLib, normalized: Vector4) {
 export function colorToHSV(this: RayLib, color: Color) {
   const hsv = Vector3.create();
 
-  this.symbols.ColorToHSV(color.$address, hsv.$address);
+  this.symbols.ColorToHSV(color.$memory, hsv.$memory);
 
   return hsv;
 }
@@ -53,7 +53,7 @@ export function colorFromHSV(
     options.hue,
     options.saturation,
     options.value,
-    color.$address
+    color.$memory
   );
 
   return color;
@@ -69,9 +69,9 @@ export function colorTint(
   const tinted = Color.create();
 
   this.symbols.ColorTint(
-    options.color.$address,
-    options.tint.$address,
-    tinted.$address
+    options.color.$memory,
+    options.tint.$memory,
+    tinted.$memory
   );
 
   return tinted;
@@ -87,9 +87,9 @@ export function colorBrightness(
   const brighten = Color.create();
 
   this.symbols.ColorBrightness(
-    options.color.$address,
+    options.color.$memory,
     options.factor,
-    brighten.$address
+    brighten.$memory
   );
 
   return brighten;
@@ -105,9 +105,9 @@ export function colorContrast(
   const contrasted = Color.create();
 
   this.symbols.ColorContrast(
-    options.color.$address,
+    options.color.$memory,
     options.contrast,
-    contrasted.$address
+    contrasted.$memory
   );
 
   return contrasted;
@@ -123,9 +123,9 @@ export function colorAlpha(
   const alphaed = Color.create();
 
   this.symbols.ColorAlpha(
-    options.color.$address,
+    options.color.$memory,
     options.alpha,
-    alphaed.$address
+    alphaed.$memory
   );
 
   return alphaed;
@@ -142,10 +142,10 @@ export function colorAlphaBlend(
   const blended = Color.create();
 
   this.symbols.ColorAlphaBlend(
-    options.dst.$address,
-    options.src.$address,
-    options.tint.$address,
-    blended.$address
+    options.dst.$memory,
+    options.src.$memory,
+    options.tint.$memory,
+    blended.$memory
   );
 
   return blended;
@@ -162,10 +162,10 @@ export function colorLerp(
   const lerp = Color.create();
 
   this.symbols.ColorLerp(
-    options.color1.$address,
-    options.color2.$address,
+    options.color1.$memory,
+    options.color2.$memory,
     options.amount,
-    lerp.$address
+    lerp.$memory
   );
 
   return lerp;
@@ -174,7 +174,7 @@ export function colorLerp(
 export function getColor(this: RayLib, hex: number) {
   const color = Color.create();
 
-  this.symbols.GetColor(hex, color.$address);
+  this.symbols.GetColor(hex, color.$memory);
 
   return color;
 }
@@ -188,7 +188,7 @@ export function getPixelColor(
 ) {
   const color = Color.create();
 
-  this.symbols.GetPixelColor(options.srcPtr, color.$address, options.format);
+  this.symbols.GetPixelColor(options.srcPtr, color.$memory, options.format);
 
   return color;
 }
@@ -201,13 +201,13 @@ export function colorIsEqual(
   }
 ) {
   return this.symbols.ColorIsEqual(
-    option.color1.$address,
-    option.color2.$address
+    option.color1.$memory,
+    option.color2.$memory
   );
 }
 
 export function colorToInt(this: RayLib, color: Color) {
-  return this.symbols.ColorToInt(color.$address);
+  return this.symbols.ColorToInt(color.$memory);
 }
 
 export function setPixelColor(
@@ -220,7 +220,7 @@ export function setPixelColor(
 ) {
   this.symbols.SetPixelColor(
     options.dstPtr,
-    options.color.$address,
+    options.color.$memory,
     options.format
   );
 }

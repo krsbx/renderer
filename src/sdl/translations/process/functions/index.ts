@@ -31,8 +31,8 @@ export function readProcess(this: SDL, process: Process) {
 
   const dataPtr = this.symbols.SDL_ReadProcess(
     process,
-    datasizeStruct.$address,
-    exitcodeStruct.$address
+    datasizeStruct.$memory,
+    exitcodeStruct.$memory
   );
 
   if (!dataPtr) return null;
@@ -82,7 +82,7 @@ export function waitProcess(
   const success = this.symbols.SDL_WaitProcess(
     options.process,
     options.block,
-    exitcodeStruct.$address
+    exitcodeStruct.$memory
   );
 
   if (!success) return null;

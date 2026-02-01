@@ -16,7 +16,7 @@ export function drawRectangle(
     options.posY,
     options.width,
     options.height,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -29,9 +29,9 @@ export function drawRectangleV(
   }
 ) {
   this.symbols.DrawRectangleV(
-    options.position.$address,
-    options.size.$address,
-    options.color.$address
+    options.position.$memory,
+    options.size.$memory,
+    options.color.$memory
   );
 }
 
@@ -42,7 +42,7 @@ export function drawRectangleRec(
     color: Color;
   }
 ) {
-  this.symbols.DrawRectangleRec(options.rec.$address, options.color.$address);
+  this.symbols.DrawRectangleRec(options.rec.$memory, options.color.$memory);
 }
 
 export function drawRectanglePro(
@@ -55,10 +55,10 @@ export function drawRectanglePro(
   }
 ) {
   this.symbols.DrawRectanglePro(
-    options.rec.$address,
-    options.origin.$address,
+    options.rec.$memory,
+    options.origin.$memory,
     options.rotation,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -78,8 +78,8 @@ export function drawRectangleGradientV(
     options.posY,
     options.width,
     options.height,
-    options.top.$address,
-    options.bottom.$address
+    options.top.$memory,
+    options.bottom.$memory
   );
 }
 
@@ -99,8 +99,8 @@ export function drawRectangleGradientH(
     options.posY,
     options.width,
     options.height,
-    options.left.$address,
-    options.right.$address
+    options.left.$memory,
+    options.right.$memory
   );
 }
 
@@ -115,11 +115,11 @@ export function drawRectangleGradientEx(
   }
 ) {
   this.symbols.DrawRectangleGradientEx(
-    options.rec.$address,
-    options.topLeft.$address,
-    options.bottomLeft.$address,
-    options.topRight.$address,
-    options.bottomRight.$address
+    options.rec.$memory,
+    options.topLeft.$memory,
+    options.bottomLeft.$memory,
+    options.topRight.$memory,
+    options.bottomRight.$memory
   );
 }
 
@@ -138,7 +138,7 @@ export function drawRectangleLines(
     options.posY,
     options.width,
     options.height,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -151,9 +151,9 @@ export function drawRectangleLinesEx(
   }
 ) {
   this.symbols.DrawRectangleLinesEx(
-    options.rec.$address,
+    options.rec.$memory,
     options.lineThick,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -167,10 +167,10 @@ export function drawRectangleRounded(
   }
 ) {
   this.symbols.DrawRectangleRounded(
-    options.rec.$address,
+    options.rec.$memory,
     options.roundness,
     options.segments,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -184,10 +184,10 @@ export function drawRectangleRoundedLines(
   }
 ) {
   this.symbols.DrawRectangleRoundedLines(
-    options.rec.$address,
+    options.rec.$memory,
     options.roundness,
     options.segments,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -202,10 +202,10 @@ export function drawRectangleRoundedLinesEx(
   }
 ) {
   this.symbols.DrawRectangleRoundedLinesEx(
-    options.rec.$address,
+    options.rec.$memory,
     options.roundness,
     options.segments,
     options.lineThick,
-    options.color.$address
+    options.color.$memory
   );
 }

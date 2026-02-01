@@ -41,7 +41,7 @@ export function openIO(
   }
 ) {
   return this.symbols.SDL_OpenIO(
-    options.iface.$address,
+    options.iface.$memory,
     options.userdata ?? null
   ) as IOStream | null;
 }

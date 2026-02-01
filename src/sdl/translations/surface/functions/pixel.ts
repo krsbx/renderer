@@ -101,7 +101,7 @@ export function premultiplySurfaceAlpha(
   }
 ) {
   return this.symbols.SDL_PremultiplySurfaceAlpha(
-    options.surface.$address,
+    options.surface.$memory,
     options.linear
   );
 }
@@ -119,7 +119,7 @@ export function clearSurface(
   }
 ) {
   return this.symbols.SDL_ClearSurface(
-    options.surface.$address,
+    options.surface.$memory,
     options.r,
     options.g,
     options.b,
@@ -136,8 +136,8 @@ export function fillSurfaceRect(
   }
 ) {
   return this.symbols.SDL_FillSurfaceRect(
-    options.dst.$address,
-    options.rect?.$address ?? null,
+    options.dst.$memory,
+    options.rect?.$memory ?? null,
     options.color
   );
 }
@@ -153,7 +153,7 @@ export function fillSurfaceRects(
   const { buffer: rects } = CStruct.writeArray(options.rects, Rect.BYTE_SIZE);
 
   return this.symbols.SDL_FillSurfaceRects(
-    options.dst.$address,
+    options.dst.$memory,
     rects,
     options.rects.length,
     options.color
@@ -172,7 +172,7 @@ export function mapSurfaceRGB(
   }
 ) {
   return this.symbols.SDL_MapSurfaceRGB(
-    options.surface.$address,
+    options.surface.$memory,
     options.r,
     options.g,
     options.b
@@ -190,7 +190,7 @@ export function mapSurfaceRGBA(
   }
 ) {
   return this.symbols.SDL_MapSurfaceRGBA(
-    options.surface.$address,
+    options.surface.$memory,
     options.r,
     options.g,
     options.b,
@@ -214,13 +214,13 @@ export function readSurfacePixel(
   const aStruct = new CStruct({ length: CStruct.BYTE_SIZE.u8 });
 
   const success = this.symbols.SDL_ReadSurfacePixel(
-    options.surface.$address,
+    options.surface.$memory,
     options.x,
     options.y,
-    rStruct.$address,
-    gStruct.$address,
-    bStruct.$address,
-    aStruct.$address
+    rStruct.$memory,
+    gStruct.$memory,
+    bStruct.$memory,
+    aStruct.$memory
   );
 
   if (!success) return null;
@@ -247,13 +247,13 @@ export function readSurfacePixelFloat(
   const aStruct = new CStruct({ length: CStruct.BYTE_SIZE.f32 });
 
   const success = this.symbols.SDL_ReadSurfacePixelFloat(
-    options.surface.$address,
+    options.surface.$memory,
     options.x,
     options.y,
-    rStruct.$address,
-    gStruct.$address,
-    bStruct.$address,
-    aStruct.$address
+    rStruct.$memory,
+    gStruct.$memory,
+    bStruct.$memory,
+    aStruct.$memory
   );
 
   if (!success) return null;
@@ -281,7 +281,7 @@ export function writeSurfacePixel(
   }
 ) {
   return this.symbols.SDL_WriteSurfacePixel(
-    options.surface.$address,
+    options.surface.$memory,
     options.x,
     options.y,
     options.r,
@@ -304,7 +304,7 @@ export function writeSurfacePixelFloat(
   }
 ) {
   return this.symbols.SDL_WriteSurfacePixelFloat(
-    options.surface.$address,
+    options.surface.$memory,
     options.x,
     options.y,
     options.r,

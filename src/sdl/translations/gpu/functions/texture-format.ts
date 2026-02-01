@@ -35,7 +35,7 @@ export function blitGPUTexture(
     info: GPUBlitInfo;
   }
 ) {
-  this.symbols.SDL_BlitGPUTexture(options.commandBuffer, options.info.$address);
+  this.symbols.SDL_BlitGPUTexture(options.commandBuffer, options.info.$memory);
 }
 
 // Texture Format Utilities

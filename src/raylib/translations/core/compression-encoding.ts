@@ -15,7 +15,7 @@ export function compressData(this: RayLib, data: Uint8Array | string) {
   const compressedPtr = this.symbols.CompressData(
     bytes,
     bytes.byteLength,
-    outputSizeStruct.$address
+    outputSizeStruct.$memory
   );
 
   if (!compressedPtr) return null;
@@ -35,7 +35,7 @@ export function decompressData(this: RayLib, data: Uint8Array) {
   const decompressedPtr = this.symbols.DecompressData(
     data,
     data.byteLength,
-    outputSizeStruct.$address
+    outputSizeStruct.$memory
   );
 
   if (!decompressedPtr) return null;
@@ -60,7 +60,7 @@ export function encodeDataBase64(this: RayLib, data: Uint8Array | string) {
   const encoded = this.symbols.EncodeDataBase64(
     bytes,
     bytes.byteLength,
-    outputSizeStruct.$address
+    outputSizeStruct.$memory
   );
 
   if (!encoded) return null;
@@ -74,7 +74,7 @@ export function decodeDataBase64(this: RayLib, data: string) {
 
   const decodedPtr = this.symbols.DecodeDataBase64(
     bytes,
-    outputSizeStruct.$address
+    outputSizeStruct.$memory
   );
 
   if (!decodedPtr) return null;

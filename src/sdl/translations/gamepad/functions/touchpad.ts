@@ -36,10 +36,10 @@ export function getGamepadTouchpadFinger(
     options.gamepad,
     options.touchpad,
     options.finger,
-    downStruct.$address,
-    xStruct.$address,
-    yStruct.$address,
-    pressureStruct.$address
+    downStruct.$memory,
+    xStruct.$memory,
+    yStruct.$memory,
+    pressureStruct.$memory
   );
 
   if (!success) return null;

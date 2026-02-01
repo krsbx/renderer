@@ -6,7 +6,7 @@ import { Finger } from '../struct';
 export function getTouchDevices(this: SDL) {
   const countStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
-  const listPtr = this.symbols.SDL_GetTouchDevices(countStruct.$address);
+  const listPtr = this.symbols.SDL_GetTouchDevices(countStruct.$memory);
 
   if (!listPtr) return null;
 
@@ -31,7 +31,7 @@ export function getTouchFingers(this: SDL, touchId: bigint) {
 
   const listPtr = this.symbols.SDL_GetTouchFingers(
     touchId,
-    countStruct.$address
+    countStruct.$memory
   );
 
   if (!listPtr) return null;

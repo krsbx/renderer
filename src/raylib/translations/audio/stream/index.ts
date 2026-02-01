@@ -17,18 +17,18 @@ export function loadAudioStream(
     options.sampleRate,
     options.sampleSize,
     options.channels,
-    stream.$address
+    stream.$memory
   );
 
   return stream;
 }
 
 export function isAudioStreamValid(this: RayLib, stream: AudioStream) {
-  return this.symbols.IsAudioStreamValid(stream.$address);
+  return this.symbols.IsAudioStreamValid(stream.$memory);
 }
 
 export function unloadAudioStream(this: RayLib, stream: AudioStream) {
-  this.symbols.UnloadAudioStream(stream.$address);
+  this.symbols.UnloadAudioStream(stream.$memory);
 }
 
 export function updateAudioStream(
@@ -40,34 +40,34 @@ export function updateAudioStream(
   }
 ) {
   this.symbols.UpdateAudioStream(
-    options.stream.$address,
+    options.stream.$memory,
     options.data,
     options.frameCount
   );
 }
 
 export function isAudioStreamProcessed(this: RayLib, stream: AudioStream) {
-  return this.symbols.IsAudioStreamProcessed(stream.$address);
+  return this.symbols.IsAudioStreamProcessed(stream.$memory);
 }
 
 export function playAudioStream(this: RayLib, stream: AudioStream) {
-  this.symbols.PlayAudioStream(stream.$address);
+  this.symbols.PlayAudioStream(stream.$memory);
 }
 
 export function pauseAudioStream(this: RayLib, stream: AudioStream) {
-  this.symbols.PauseAudioStream(stream.$address);
+  this.symbols.PauseAudioStream(stream.$memory);
 }
 
 export function resumeAudioStream(this: RayLib, stream: AudioStream) {
-  this.symbols.ResumeAudioStream(stream.$address);
+  this.symbols.ResumeAudioStream(stream.$memory);
 }
 
 export function isAudioStreamPlaying(this: RayLib, stream: AudioStream) {
-  return this.symbols.IsAudioStreamPlaying(stream.$address);
+  return this.symbols.IsAudioStreamPlaying(stream.$memory);
 }
 
 export function stopAudioStream(this: RayLib, stream: AudioStream) {
-  this.symbols.StopAudioStream(stream.$address);
+  this.symbols.StopAudioStream(stream.$memory);
 }
 
 export function setAudioStreamVolume(
@@ -77,7 +77,7 @@ export function setAudioStreamVolume(
     volume: number;
   }
 ) {
-  this.symbols.SetAudioStreamVolume(options.stream.$address, options.volume);
+  this.symbols.SetAudioStreamVolume(options.stream.$memory, options.volume);
 }
 
 export function setAudioStreamPitch(
@@ -87,7 +87,7 @@ export function setAudioStreamPitch(
     pitch: number;
   }
 ) {
-  this.symbols.SetAudioStreamPitch(options.stream.$address, options.pitch);
+  this.symbols.SetAudioStreamPitch(options.stream.$memory, options.pitch);
 }
 
 export function setAudioStreamPan(
@@ -97,7 +97,7 @@ export function setAudioStreamPan(
     pan: number;
   }
 ) {
-  this.symbols.SetAudioStreamPan(options.stream.$address, options.pan);
+  this.symbols.SetAudioStreamPan(options.stream.$memory, options.pan);
 }
 
 export function setAudioStreamBufferSizeDefault(this: RayLib, size: number) {
@@ -118,13 +118,13 @@ export function setAudioStreamCallback(
 
   if (!options.callback) {
     CallbackManager.unregister(identifier);
-    this.symbols.SetAudioStreamCallback(options.stream.$address, null);
+    this.symbols.SetAudioStreamCallback(options.stream.$memory, null);
     return;
   }
 
   const cb = CallbackManager.createAudioCallback(options.callback);
   CallbackManager.register(identifier, cb);
-  this.symbols.SetAudioStreamCallback(options.stream.$address, cb.ptr);
+  this.symbols.SetAudioStreamCallback(options.stream.$memory, cb.ptr);
 }
 
 export function attachAudioStreamProcessor(
@@ -141,7 +141,7 @@ export function attachAudioStreamProcessor(
 
   const cb = CallbackManager.createAudioCallback(options.processor);
   CallbackManager.register(identifier, cb);
-  this.symbols.AttachAudioStreamProcessor(options.stream.$address, cb.ptr);
+  this.symbols.AttachAudioStreamProcessor(options.stream.$memory, cb.ptr);
 }
 
 export function detachAudioStreamProcessor(this: RayLib, stream: AudioStream) {
@@ -154,7 +154,7 @@ export function detachAudioStreamProcessor(this: RayLib, stream: AudioStream) {
 
   if (!cb) return;
 
-  this.symbols.DetachAudioStreamProcessor(stream.$address, cb.ptr);
+  this.symbols.DetachAudioStreamProcessor(stream.$memory, cb.ptr);
 }
 
 export function attachAudioMixedProcessor(

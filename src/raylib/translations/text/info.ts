@@ -31,11 +31,11 @@ export function measureTextEx(
   const result = Vector2.create();
 
   this.symbols.MeasureTextEx(
-    options.font.$address,
+    options.font.$memory,
     stringToCString(options.text).ptr,
     options.fontSize,
     options.spacing,
-    result.$address
+    result.$memory
   );
 
   return result;
@@ -48,7 +48,7 @@ export function getGlyphIndex(
     codepoint: number;
   }
 ) {
-  return this.symbols.GetGlyphIndex(options.font.$address, options.codepoint);
+  return this.symbols.GetGlyphIndex(options.font.$memory, options.codepoint);
 }
 
 export function getGlyphInfo(
@@ -61,9 +61,9 @@ export function getGlyphInfo(
   const glyphInfo = GlyphInfo.create();
 
   this.symbols.GetGlyphInfo(
-    options.font.$address,
+    options.font.$memory,
     options.codepoint,
-    glyphInfo.$address
+    glyphInfo.$memory
   );
 
   return glyphInfo;
@@ -79,9 +79,9 @@ export function getGlyphAtlasRec(
   const rectangle = Rectangle.create();
 
   this.symbols.GetGlyphAtlasRec(
-    options.font.$address,
+    options.font.$memory,
     options.codepoint,
-    rectangle.$address
+    rectangle.$memory
   );
 
   return rectangle;

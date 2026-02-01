@@ -13,7 +13,7 @@ export function flipSurface(
     flip: FlipMode;
   }
 ) {
-  return this.symbols.SDL_FlipSurface(options.surface.$address, options.flip);
+  return this.symbols.SDL_FlipSurface(options.surface.$memory, options.flip);
 }
 
 // Rotate
@@ -26,7 +26,7 @@ export function rotateSurface(
   }
 ) {
   const surface = this.symbols.SDL_RotateSurface(
-    options.surface.$address,
+    options.surface.$memory,
     options.angle
   );
 
@@ -38,7 +38,7 @@ export function rotateSurface(
 // Duplicate
 
 export function duplicateSurface(this: SDL, surface: Surface) {
-  const newSurfacePtr = this.symbols.SDL_DuplicateSurface(surface.$address);
+  const newSurfacePtr = this.symbols.SDL_DuplicateSurface(surface.$memory);
 
   if (!newSurfacePtr) return null;
 
@@ -57,7 +57,7 @@ export function scaleSurface(
   }
 ) {
   const surface = this.symbols.SDL_ScaleSurface(
-    options.surface.$address,
+    options.surface.$memory,
     options.width,
     options.height,
     options.scaleMode
@@ -78,7 +78,7 @@ export function convertSurface(
   }
 ) {
   const surface = this.symbols.SDL_ConvertSurface(
-    options.surface.$address,
+    options.surface.$memory,
     options.format
   );
 
@@ -98,9 +98,9 @@ export function convertSurfaceAndColorspace(
   }
 ) {
   const surface = this.symbols.SDL_ConvertSurfaceAndColorspace(
-    options.surface.$address,
+    options.surface.$memory,
     options.format,
-    options.palette?.$address ?? null,
+    options.palette?.$memory ?? null,
     options.colorspace,
     options.props ?? 0
   );

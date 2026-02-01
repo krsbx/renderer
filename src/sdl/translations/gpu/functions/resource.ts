@@ -30,7 +30,7 @@ export function createGPUComputePipeline(
 ) {
   return this.symbols.SDL_CreateGPUComputePipeline(
     options.device,
-    options.createInfo.$address
+    options.createInfo.$memory
   ) as GPUComputePipeline | null;
 }
 
@@ -43,7 +43,7 @@ export function createGPUGraphicsPipeline(
 ) {
   return this.symbols.SDL_CreateGPUGraphicsPipeline(
     options.device,
-    options.createInfo.$address
+    options.createInfo.$memory
   ) as GPUGraphicsPipeline | null;
 }
 
@@ -56,7 +56,7 @@ export function createGPUSampler(
 ) {
   return this.symbols.SDL_CreateGPUSampler(
     options.device,
-    options.createInfo.$address
+    options.createInfo.$memory
   ) as GPUSampler | null;
 }
 
@@ -69,7 +69,7 @@ export function createGPUShader(
 ) {
   return this.symbols.SDL_CreateGPUShader(
     options.device,
-    options.createInfo.$address
+    options.createInfo.$memory
   ) as GPUShader | null;
 }
 
@@ -84,7 +84,7 @@ export function createGPUTexture(
 ) {
   return this.symbols.SDL_CreateGPUTexture(
     options.device,
-    options.createInfo.$address
+    options.createInfo.$memory
   ) as GPUTexture | null;
 }
 
@@ -97,7 +97,7 @@ export function createGPUBuffer(
 ) {
   return this.symbols.SDL_CreateGPUBuffer(
     options.device,
-    options.createInfo.$address
+    options.createInfo.$memory
   ) as GPUBuffer | null;
 }
 
@@ -110,7 +110,7 @@ export function createGPUTransferBuffer(
 ) {
   return this.symbols.SDL_CreateGPUTransferBuffer(
     options.device,
-    options.createInfo.$address
+    options.createInfo.$memory
   ) as GPUTransferBuffer | null;
 }
 

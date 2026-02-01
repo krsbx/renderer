@@ -1,13 +1,13 @@
 import type { RayLib } from '@/raylib';
-import { CStruct } from '@cstruct';
 import { stringToCString } from '@/utility/common';
+import { CStruct } from '@cstruct';
 import type { Pointer } from 'bun:ffi';
 import { Color, Font, GlyphInfo, Image, Rectangle } from '../struct';
 
 export function getFontDefault(this: RayLib) {
   const font = Font.create();
 
-  this.symbols.GetFontDefault(font.$address);
+  this.symbols.GetFontDefault(font.$memory);
 
   return font;
 }
@@ -15,7 +15,7 @@ export function getFontDefault(this: RayLib) {
 export function loadFont(this: RayLib, fileName: string) {
   const font = Font.create();
 
-  this.symbols.LoadFont(stringToCString(fileName).ptr, font.$address);
+  this.symbols.LoadFont(stringToCString(fileName).ptr, font.$memory);
 
   return font;
 }
@@ -36,7 +36,7 @@ export function loadFontEx(
     options.fontSize,
     options.codepoints ?? null,
     codepointCount,
-    font.$address
+    font.$memory
   );
 
   return font;
@@ -53,10 +53,10 @@ export function loadFontFromImage(
   const font = Font.create();
 
   this.symbols.LoadFontFromImage(
-    options.image.$address,
-    options.key.$address,
+    options.image.$memory,
+    options.key.$memory,
     options.firstChar,
-    font.$address
+    font.$memory
   );
 
   return font;
@@ -81,14 +81,14 @@ export function loadFontFromMemory(
     options.fontSize,
     options.codepoints ?? null,
     codepointCount,
-    font.$address
+    font.$memory
   );
 
   return font;
 }
 
 export function isFontValid(this: RayLib, font: Font) {
-  return this.symbols.IsFontValid(font.$address);
+  return this.symbols.IsFontValid(font.$memory);
 }
 
 export function loadFontData(
@@ -141,12 +141,12 @@ export function genImageFontAtlas(
 
   this.symbols.GenImageFontAtlas(
     glyphsAddr,
-    glyphRecsOut.$address,
+    glyphRecsOut.$memory,
     glyphCount,
     options.fontSize,
     options.padding,
     options.packMethod,
-    image.$address
+    image.$memory
   );
 
   const glyphRecsPtr = glyphRecsOut.getValue(0, 'ptr');
@@ -175,7 +175,7 @@ export function unloadFontData(
 }
 
 export function unloadFont(this: RayLib, font: Font) {
-  this.symbols.UnloadFont(font.$address);
+  this.symbols.UnloadFont(font.$memory);
 }
 
 export function exportFontAsCode(
@@ -186,7 +186,7 @@ export function exportFontAsCode(
   }
 ) {
   return this.symbols.ExportFontAsCode(
-    options.font.$address,
+    options.font.$memory,
     stringToCString(options.fileName).ptr
   );
 }

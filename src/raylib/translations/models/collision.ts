@@ -13,9 +13,9 @@ export function checkCollisionSpheres(
   }
 ) {
   return this.symbols.CheckCollisionSpheres(
-    options.center1.$address,
+    options.center1.$memory,
     options.radius1,
-    options.center2.$address,
+    options.center2.$memory,
     options.radius2
   );
 }
@@ -28,8 +28,8 @@ export function checkCollisionBoxes(
   }
 ) {
   return this.symbols.CheckCollisionBoxes(
-    options.box1.$address,
-    options.box2.$address
+    options.box1.$memory,
+    options.box2.$memory
   );
 }
 
@@ -42,8 +42,8 @@ export function checkCollisionBoxSphere(
   }
 ) {
   return this.symbols.CheckCollisionBoxSphere(
-    options.box.$address,
-    options.center.$address,
+    options.box.$memory,
+    options.center.$memory,
     options.radius
   );
 }
@@ -59,10 +59,10 @@ export function getRayCollisionSphere(
   const collision = RayCollision.create();
 
   this.symbols.GetRayCollisionSphere(
-    options.ray.$address,
-    options.center.$address,
+    options.ray.$memory,
+    options.center.$memory,
     options.radius,
-    collision.$address
+    collision.$memory
   );
 
   return collision;
@@ -78,9 +78,9 @@ export function getRayCollisionBox(
   const collision = RayCollision.create();
 
   this.symbols.GetRayCollisionBox(
-    options.ray.$address,
-    options.box.$address,
-    collision.$address
+    options.ray.$memory,
+    options.box.$memory,
+    collision.$memory
   );
 
   return collision;
@@ -97,10 +97,10 @@ export function getRayCollisionMesh(
   const collision = RayCollision.create();
 
   this.symbols.GetRayCollisionMesh(
-    options.ray.$address,
-    options.mesh.$address,
-    options.transform.$address,
-    collision.$address
+    options.ray.$memory,
+    options.mesh.$memory,
+    options.transform.$memory,
+    collision.$memory
   );
 
   return collision;
@@ -118,11 +118,11 @@ export function getRayCollisionTriangle(
   const collision = RayCollision.create();
 
   this.symbols.GetRayCollisionTriangle(
-    options.ray.$address,
-    options.p1.$address,
-    options.p2.$address,
-    options.p3.$address,
-    collision.$address
+    options.ray.$memory,
+    options.p1.$memory,
+    options.p2.$memory,
+    options.p3.$memory,
+    collision.$memory
   );
 
   return collision;
@@ -141,12 +141,12 @@ export function getRayCollisionQuad(
   const collision = RayCollision.create();
 
   this.symbols.GetRayCollisionQuad(
-    options.ray.$address,
-    options.p1.$address,
-    options.p2.$address,
-    options.p3.$address,
-    options.p4.$address,
-    collision.$address
+    options.ray.$memory,
+    options.p1.$memory,
+    options.p2.$memory,
+    options.p3.$memory,
+    options.p4.$memory,
+    collision.$memory
   );
 
   return collision;

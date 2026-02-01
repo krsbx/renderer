@@ -6,7 +6,7 @@ import type { SensorType } from '../../../ffi/sensor/constant';
 export function getSensors(this: SDL) {
   const countStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
-  const listPtr = this.symbols.SDL_GetSensors(countStruct.$address);
+  const listPtr = this.symbols.SDL_GetSensors(countStruct.$memory);
 
   if (!listPtr) return null;
 

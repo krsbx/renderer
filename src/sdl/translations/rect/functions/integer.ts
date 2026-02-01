@@ -10,8 +10,8 @@ export function hasRectIntersection(
   }
 ) {
   return this.symbols.SDL_HasRectIntersection(
-    options.a.$address,
-    options.b.$address
+    options.a.$memory,
+    options.b.$memory
   );
 }
 
@@ -25,9 +25,9 @@ export function getRectIntersection(
   const result = Rect.create();
 
   const success = this.symbols.SDL_GetRectIntersection(
-    options.a.$address,
-    options.b.$address,
-    result.$address
+    options.a.$memory,
+    options.b.$memory,
+    result.$memory
   );
 
   if (!success) return null;
@@ -45,9 +45,9 @@ export function getRectUnion(
   const result = Rect.create();
 
   const success = this.symbols.SDL_GetRectUnion(
-    options.a.$address,
-    options.b.$address,
-    result.$address
+    options.a.$memory,
+    options.b.$memory,
+    result.$memory
   );
 
   if (!success) return null;
@@ -71,8 +71,8 @@ export function getRectEnclosingPoints(
   const success = this.symbols.SDL_GetRectEnclosingPoints(
     points,
     options.points.length,
-    options.clip?.$address ?? null,
-    result.$address
+    options.clip?.$memory ?? null,
+    result.$memory
   );
 
   if (!success) return null;
@@ -107,11 +107,11 @@ export function getRectAndLineIntersection(
   }).setValue(0, options.y2, 'i32');
 
   const success = this.symbols.SDL_GetRectAndLineIntersection(
-    options.rect.$address,
-    x1Struct.$address,
-    y1Struct.$address,
-    x2Struct.$address,
-    y2Struct.$address
+    options.rect.$memory,
+    x1Struct.$memory,
+    y1Struct.$memory,
+    x2Struct.$memory,
+    y2Struct.$memory
   );
 
   if (!success) return null;

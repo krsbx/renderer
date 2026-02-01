@@ -6,7 +6,7 @@ import { Image, Texture2D } from '../struct';
 export function loadImage(this: RayLib, fileName: string) {
   const image = Image.create();
 
-  this.symbols.LoadImage(stringToCString(fileName).ptr, image.$address);
+  this.symbols.LoadImage(stringToCString(fileName).ptr, image.$memory);
 
   return image;
 }
@@ -29,7 +29,7 @@ export function loadImageRaw(
     options.height,
     options.format,
     options.headerSize,
-    image.$address
+    image.$memory
   );
 
   return image;
@@ -41,8 +41,8 @@ export function loadImageAnim(this: RayLib, fileName: string) {
 
   this.symbols.LoadImageAnim(
     stringToCString(fileName).ptr,
-    framesOut.$address,
-    image.$address
+    framesOut.$memory,
+    image.$memory
   );
 
   return {
@@ -65,8 +65,8 @@ export function loadImageAnimFromMemory(
     stringToCString(options.fileType).ptr,
     options.fileData,
     options.fileData.byteLength,
-    framesOut.$address,
-    image.$address
+    framesOut.$memory,
+    image.$memory
   );
 
   return {
@@ -88,7 +88,7 @@ export function loadImageFromMemory(
     stringToCString(options.fileType).ptr,
     options.fileData,
     options.fileData.byteLength,
-    image.$address
+    image.$memory
   );
 
   return image;
@@ -97,7 +97,7 @@ export function loadImageFromMemory(
 export function loadImageFromTexture(this: RayLib, texture: Texture2D) {
   const image = Image.create();
 
-  this.symbols.LoadImageFromTexture(texture.$address, image.$address);
+  this.symbols.LoadImageFromTexture(texture.$memory, image.$memory);
 
   return image;
 }
@@ -105,17 +105,17 @@ export function loadImageFromTexture(this: RayLib, texture: Texture2D) {
 export function loadImageFromScreen(this: RayLib) {
   const image = Image.create();
 
-  this.symbols.LoadImageFromScreen(image.$address);
+  this.symbols.LoadImageFromScreen(image.$memory);
 
   return image;
 }
 
 export function isImageValid(this: RayLib, image: Image) {
-  return this.symbols.IsImageValid(image.$address);
+  return this.symbols.IsImageValid(image.$memory);
 }
 
 export function unloadImage(this: RayLib, image: Image) {
-  this.symbols.UnloadImage(image.$address);
+  this.symbols.UnloadImage(image.$memory);
 }
 
 export function exportImage(
@@ -126,7 +126,7 @@ export function exportImage(
   }
 ) {
   return this.symbols.ExportImage(
-    options.image.$address,
+    options.image.$memory,
     stringToCString(options.fileName).ptr
   );
 }
@@ -141,9 +141,9 @@ export function exportImageToMemory(
   const fileSizeOut = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
   const ptr = this.symbols.ExportImageToMemory(
-    options.image.$address,
+    options.image.$memory,
     stringToCString(options.fileType).ptr,
-    fileSizeOut.$address
+    fileSizeOut.$memory
   );
 
   const fileSize = fileSizeOut.getValue(0, 'i32');
@@ -170,7 +170,7 @@ export function exportImageAsCode(
   }
 ) {
   return this.symbols.ExportImageAsCode(
-    options.image.$address,
+    options.image.$memory,
     stringToCString(options.fileName).ptr
   );
 }

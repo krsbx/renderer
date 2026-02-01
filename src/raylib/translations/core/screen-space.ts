@@ -12,9 +12,9 @@ export function getScreenToWorldRay(
   const ray = Ray.create();
 
   this.symbols.GetScreenToWorldRay(
-    options.position.$address,
-    options.camera.$address,
-    ray.$address
+    options.position.$memory,
+    options.camera.$memory,
+    ray.$memory
   );
 
   return ray;
@@ -32,11 +32,11 @@ export function getScreenToWorldRayEx(
   const ray = Ray.create();
 
   this.symbols.GetScreenToWorldRayEx(
-    options.position.$address,
-    options.camera.$address,
+    options.position.$memory,
+    options.camera.$memory,
     options.width,
     options.height,
-    ray.$address
+    ray.$memory
   );
 
   return ray;
@@ -52,9 +52,9 @@ export function getWorldToScreen(
   const vector = Vector2.create();
 
   this.symbols.GetWorldToScreen(
-    options.position.$address,
-    options.camera.$address,
-    vector.$address
+    options.position.$memory,
+    options.camera.$memory,
+    vector.$memory
   );
 
   return vector;
@@ -72,11 +72,11 @@ export function getWorldToScreenEx(
   const vector = Vector2.create();
 
   this.symbols.GetWorldToScreenEx(
-    options.position.$address,
-    options.camera.$address,
+    options.position.$memory,
+    options.camera.$memory,
     options.width,
     options.height,
-    vector.$address
+    vector.$memory
   );
 
   return vector;
@@ -92,9 +92,9 @@ export function getWorldToScreen2D(
   const vector = Vector2.create();
 
   this.symbols.GetWorldToScreen2D(
-    options.position.$address,
-    options.camera.$address,
-    vector.$address
+    options.position.$memory,
+    options.camera.$memory,
+    vector.$memory
   );
 
   return vector;
@@ -110,9 +110,9 @@ export function getScreenToWorld2D(
   const vector = Vector2.create();
 
   this.symbols.GetScreenToWorld2D(
-    options.position.$address,
-    options.camera.$address,
-    vector.$address
+    options.position.$memory,
+    options.camera.$memory,
+    vector.$memory
   );
 
   return vector;
@@ -121,7 +121,7 @@ export function getScreenToWorld2D(
 export function getCameraMatrix(this: RayLib, camera: Camera) {
   const matrix = Matrix.create();
 
-  this.symbols.GetCameraMatrix(camera.$address, matrix.$address);
+  this.symbols.GetCameraMatrix(camera.$memory, matrix.$memory);
 
   return matrix;
 }
@@ -129,7 +129,7 @@ export function getCameraMatrix(this: RayLib, camera: Camera) {
 export function getCameraMatrix2D(this: RayLib, camera: Camera2D) {
   const matrix = Matrix.create();
 
-  this.symbols.GetCameraMatrix2D(camera.$address, matrix.$address);
+  this.symbols.GetCameraMatrix2D(camera.$memory, matrix.$memory);
 
   return matrix;
 }

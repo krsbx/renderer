@@ -25,7 +25,7 @@ export function vulkanGetInstanceExtensions(this: SDL) {
   const countStruct = new CStruct({ length: CStruct.BYTE_SIZE.u32 });
 
   const listPtr = this.symbols.SDL_Vulkan_GetInstanceExtensions(
-    countStruct.$address
+    countStruct.$memory
   );
 
   if (!listPtr) return null;
@@ -52,7 +52,7 @@ export function vulkanCreateSurface(
     options.window,
     options.instance,
     options.allocator ?? null,
-    surfaceStruct.$address
+    surfaceStruct.$memory
   );
 
   if (!success) return null;

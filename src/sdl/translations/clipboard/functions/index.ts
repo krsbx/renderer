@@ -100,7 +100,7 @@ export function getClipboardData(this: SDL, mimeType: string) {
 
   const dataPtr = this.symbols.SDL_GetClipboardData(
     stringToCString(mimeType).ptr,
-    sizeStruct.$address
+    sizeStruct.$memory
   );
 
   if (!dataPtr) return null;
@@ -127,7 +127,7 @@ export function hasClipboardData(this: SDL, mimeType: string) {
 export function getClipboardMimeTypes(this: SDL) {
   const sizeStruct = new CStruct({ length: CStruct.BYTE_SIZE.u64 });
 
-  const listPtr = this.symbols.SDL_GetClipboardMimeTypes(sizeStruct.$address);
+  const listPtr = this.symbols.SDL_GetClipboardMimeTypes(sizeStruct.$memory);
 
   if (!listPtr) return [];
 

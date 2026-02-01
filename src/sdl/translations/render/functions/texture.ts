@@ -37,7 +37,7 @@ export function createTextureFromSurface(
 ) {
   return this.symbols.SDL_CreateTextureFromSurface(
     options.renderer,
-    options.surface.$address
+    options.surface.$memory
   ) as Texture | null;
 }
 
@@ -68,8 +68,8 @@ export function getTextureSize(this: SDL, texture: Texture) {
 
   const success = this.symbols.SDL_GetTextureSize(
     texture,
-    wStruct.$address,
-    hStruct.$address
+    wStruct.$memory,
+    hStruct.$memory
   );
 
   if (!success) return null;
@@ -89,7 +89,7 @@ export function setTexturePalette(
 ) {
   return this.symbols.SDL_SetTexturePalette(
     options.texture,
-    options.palette.$address
+    options.palette.$memory
   );
 }
 
@@ -142,9 +142,9 @@ export function getTextureColorMod(this: SDL, texture: Texture) {
 
   const success = this.symbols.SDL_GetTextureColorMod(
     texture,
-    rStruct.$address,
-    gStruct.$address,
-    bStruct.$address
+    rStruct.$memory,
+    gStruct.$memory,
+    bStruct.$memory
   );
 
   if (!success) return null;
@@ -163,9 +163,9 @@ export function getTextureColorModFloat(this: SDL, texture: Texture) {
 
   const success = this.symbols.SDL_GetTextureColorModFloat(
     texture,
-    rStruct.$address,
-    gStruct.$address,
-    bStruct.$address
+    rStruct.$memory,
+    gStruct.$memory,
+    bStruct.$memory
   );
 
   if (!success) return null;
@@ -205,7 +205,7 @@ export function getTextureAlphaMod(this: SDL, texture: Texture) {
 
   const success = this.symbols.SDL_GetTextureAlphaMod(
     texture,
-    alphaStruct.$address
+    alphaStruct.$memory
   );
 
   if (!success) return null;
@@ -218,7 +218,7 @@ export function getTextureAlphaModFloat(this: SDL, texture: Texture) {
 
   const success = this.symbols.SDL_GetTextureAlphaModFloat(
     texture,
-    alphaStruct.$address
+    alphaStruct.$memory
   );
 
   if (!success) return null;
@@ -244,7 +244,7 @@ export function getTextureBlendMode(this: SDL, texture: Texture) {
 
   const success = this.symbols.SDL_GetTextureBlendMode(
     texture,
-    blendModeStruct.$address
+    blendModeStruct.$memory
   );
 
   if (!success) return null;
@@ -270,7 +270,7 @@ export function getTextureScaleMode(this: SDL, texture: Texture) {
 
   const success = this.symbols.SDL_GetTextureScaleMode(
     texture,
-    scaleModeStruct.$address
+    scaleModeStruct.$memory
   );
 
   if (!success) return null;
@@ -289,7 +289,7 @@ export function updateTexture(
 ) {
   return this.symbols.SDL_UpdateTexture(
     options.texture,
-    options.rect?.$address ?? null,
+    options.rect?.$memory ?? null,
     options.pixels,
     options.pitch
   );
@@ -310,7 +310,7 @@ export function updateYUVTexture(
 ) {
   return this.symbols.SDL_UpdateYUVTexture(
     options.texture,
-    options.rect?.$address ?? null,
+    options.rect?.$memory ?? null,
     options.yPlane,
     options.yPitch,
     options.uPlane,
@@ -333,7 +333,7 @@ export function updateNVTexture(
 ) {
   return this.symbols.SDL_UpdateNVTexture(
     options.texture,
-    options.rect?.$address ?? null,
+    options.rect?.$memory ?? null,
     options.yPlane,
     options.yPitch,
     options.uvPlane,
@@ -353,9 +353,9 @@ export function lockTexture(
 
   const success = this.symbols.SDL_LockTexture(
     options.texture,
-    options.rect?.$address ?? null,
-    pixelsStruct.$address,
-    pitchStruct.$address
+    options.rect?.$memory ?? null,
+    pixelsStruct.$memory,
+    pitchStruct.$memory
   );
 
   if (!success) return null;
@@ -377,8 +377,8 @@ export function lockTextureToSurface(
 
   const success = this.symbols.SDL_LockTextureToSurface(
     options.texture,
-    options.rect?.$address ?? null,
-    surfaceStruct.$address
+    options.rect?.$memory ?? null,
+    surfaceStruct.$memory
   );
 
   if (!success) return null;

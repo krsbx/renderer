@@ -7,7 +7,7 @@ import { Wave } from '../struct';
 export function loadWave(this: RayLib, fileName: string) {
   const wave = Wave.create();
 
-  this.symbols.LoadWave(stringToCString(fileName).ptr, wave.$address);
+  this.symbols.LoadWave(stringToCString(fileName).ptr, wave.$memory);
 
   return wave;
 }
@@ -25,18 +25,18 @@ export function loadWaveFromMemory(
     stringToCString(options.fileType).ptr,
     options.data,
     options.data.byteLength,
-    wave.$address
+    wave.$memory
   );
 
   return wave;
 }
 
 export function isWaveValid(this: RayLib, wave: Wave) {
-  return this.symbols.IsWaveValid(wave.$address);
+  return this.symbols.IsWaveValid(wave.$memory);
 }
 
 export function unloadWave(this: RayLib, wave: Wave) {
-  this.symbols.UnloadWave(wave.$address);
+  this.symbols.UnloadWave(wave.$memory);
 }
 
 export function exportWave(
@@ -47,7 +47,7 @@ export function exportWave(
   }
 ) {
   return this.symbols.ExportWave(
-    options.wave.$address,
+    options.wave.$memory,
     stringToCString(options.fileName).ptr
   );
 }
@@ -60,7 +60,7 @@ export function exportWaveAsCode(
   }
 ) {
   return this.symbols.ExportWaveAsCode(
-    options.wave.$address,
+    options.wave.$memory,
     stringToCString(options.fileName).ptr
   );
 }
@@ -68,7 +68,7 @@ export function exportWaveAsCode(
 export function waveCopy(this: RayLib, wave: Wave) {
   const copy = Wave.create();
 
-  this.symbols.WaveCopy(wave.$address, copy.$address);
+  this.symbols.WaveCopy(wave.$memory, copy.$memory);
 
   return copy;
 }
@@ -82,7 +82,7 @@ export function waveCrop(
   }
 ) {
   this.symbols.WaveCrop(
-    options.wave.$address,
+    options.wave.$memory,
     options.initFrame,
     options.finalFrame
   );
@@ -98,7 +98,7 @@ export function waveFormat(
   }
 ) {
   this.symbols.WaveFormat(
-    options.wave.$address,
+    options.wave.$memory,
     options.sampleRate,
     options.sampleSize,
     options.channels
@@ -106,7 +106,7 @@ export function waveFormat(
 }
 
 export function loadWaveSamples(this: RayLib, wave: Wave) {
-  const ptr = this.symbols.LoadWaveSamples(wave.$address);
+  const ptr = this.symbols.LoadWaveSamples(wave.$memory);
 
   if (!ptr) return null;
 

@@ -92,7 +92,7 @@ export function renderRect(
 ) {
   return this.symbols.SDL_RenderRect(
     options.renderer,
-    options.rect?.$address ?? null
+    options.rect?.$memory ?? null
   );
 }
 
@@ -123,7 +123,7 @@ export function renderFillRect(
 ) {
   return this.symbols.SDL_RenderFillRect(
     options.renderer,
-    options.rect?.$address ?? null
+    options.rect?.$memory ?? null
   );
 }
 
@@ -157,7 +157,7 @@ export function renderTexture(
   return this.symbols.SDL_RenderTexture(
     options.renderer,
     options.texture,
-    options.srcRect?.$address ?? null,
-    options.dstRect?.$address ?? null
+    options.srcRect?.$memory ?? null,
+    options.dstRect?.$memory ?? null
   );
 }

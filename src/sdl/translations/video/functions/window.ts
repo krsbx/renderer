@@ -35,7 +35,7 @@ export function setWindowFullscreenMode(
 ) {
   return this.symbols.SDL_SetWindowFullscreenMode(
     options.window,
-    options.mode.$address
+    options.mode.$memory
   );
 }
 
@@ -52,7 +52,7 @@ export function getWindowIccProfile(this: SDL, window: Window) {
 
   const memory = this.symbols.SDL_GetWindowICCProfile(
     window,
-    sizeStruct.$address
+    sizeStruct.$memory
   );
 
   if (!memory) return null;
@@ -80,7 +80,7 @@ export function getWindowPixelFormat(this: SDL, window: Window) {
 export function getWindows(this: SDL) {
   const countStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
-  const listPtr = this.symbols.SDL_GetWindows(countStruct.$address);
+  const listPtr = this.symbols.SDL_GetWindows(countStruct.$memory);
 
   if (!listPtr) return [];
 
@@ -178,7 +178,7 @@ export function setWindowIcon(
     icon: Surface;
   }
 ) {
-  return this.symbols.SDL_SetWindowIcon(options.window, options.icon.$address);
+  return this.symbols.SDL_SetWindowIcon(options.window, options.icon.$memory);
 }
 
 export function setWindowPosition(
@@ -202,8 +202,8 @@ export function getWindowPosition(this: SDL, window: Window) {
 
   const success = this.symbols.SDL_GetWindowPosition(
     window,
-    posXStruct.$address,
-    posYStruct.$address
+    posXStruct.$memory,
+    posYStruct.$memory
   );
 
   if (!success) return null;
@@ -231,8 +231,8 @@ export function getWindowSize(this: SDL, window: Window) {
 
   const success = this.symbols.SDL_GetWindowSize(
     window,
-    wStruct.$address,
-    hStruct.$address
+    wStruct.$memory,
+    hStruct.$memory
   );
 
   if (!success) return null;
@@ -246,7 +246,7 @@ export function getWindowSize(this: SDL, window: Window) {
 export function getWindowSafeArea(this: SDL, window: Window) {
   const rect = Rect.create();
 
-  const success = this.symbols.SDL_GetWindowSafeArea(window, rect.$address);
+  const success = this.symbols.SDL_GetWindowSafeArea(window, rect.$memory);
 
   if (!success) return null;
 
@@ -274,8 +274,8 @@ export function getWindowAspectRatio(this: SDL, window: Window) {
 
   const success = this.symbols.SDL_GetWindowAspectRatio(
     window,
-    minAspectStruct.$address,
-    maxAspectStruct.$address
+    minAspectStruct.$memory,
+    maxAspectStruct.$memory
   );
 
   if (!success) return null;
@@ -294,10 +294,10 @@ export function getWindowBordersSize(this: SDL, window: Window) {
 
   const success = this.symbols.SDL_GetWindowBordersSize(
     window,
-    topStruct.$address,
-    leftStruct.$address,
-    bottomStruct.$address,
-    rightStruct.$address
+    topStruct.$memory,
+    leftStruct.$memory,
+    bottomStruct.$memory,
+    rightStruct.$memory
   );
 
   if (!success) return null;
@@ -316,8 +316,8 @@ export function getWindowSizeInPixels(this: SDL, window: Window) {
 
   const success = this.symbols.SDL_GetWindowSizeInPixels(
     window,
-    wStruct.$address,
-    hStruct.$address
+    wStruct.$memory,
+    hStruct.$memory
   );
 
   if (!success) return null;
@@ -349,8 +349,8 @@ export function getWindowMinimumSize(this: SDL, window: Window) {
 
   const success = this.symbols.SDL_GetWindowMinimumSize(
     window,
-    wStruct.$address,
-    hStruct.$address
+    wStruct.$memory,
+    hStruct.$memory
   );
 
   if (!success) return null;
@@ -382,8 +382,8 @@ export function getWindowMaximumSize(this: SDL, window: Window) {
 
   const success = this.symbols.SDL_GetWindowMaximumSize(
     window,
-    wStruct.$address,
-    hStruct.$address
+    wStruct.$memory,
+    hStruct.$memory
   );
 
   if (!success) return null;
@@ -505,7 +505,7 @@ export function getWindowSurfaceVSync(this: SDL, window: Window) {
 
   const success = this.symbols.SDL_GetWindowSurfaceVSync(
     window,
-    vsyncStruct.$address
+    vsyncStruct.$memory
   );
 
   return success ? vsyncStruct.getValue(0, 'i32') : null;
@@ -576,7 +576,7 @@ export function setWindowMouseRect(
 ) {
   return this.symbols.SDL_SetWindowMouseRect(
     options.window,
-    options.rect.$address
+    options.rect.$memory
   );
 }
 
@@ -672,10 +672,7 @@ export function setWindowShape(
     shape: Surface;
   }
 ) {
-  return this.symbols.SDL_SetWindowShape(
-    options.window,
-    options.shape.$address
-  );
+  return this.symbols.SDL_SetWindowShape(options.window, options.shape.$memory);
 }
 
 export function flashWindow(

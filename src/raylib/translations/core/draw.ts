@@ -23,7 +23,7 @@ export function endDrawing(this: RayLib) {
 }
 
 export function beginMode2D(this: RayLib, camera: Camera2D) {
-  this.symbols.BeginMode2D(camera.$address);
+  this.symbols.BeginMode2D(camera.$memory);
 }
 
 export function endMode2D(this: RayLib) {
@@ -31,7 +31,7 @@ export function endMode2D(this: RayLib) {
 }
 
 export function beginMode3D(this: RayLib, camera: Camera3D) {
-  this.symbols.BeginMode3D(camera.$address);
+  this.symbols.BeginMode3D(camera.$memory);
 }
 
 export function endMode3D(this: RayLib) {
@@ -39,7 +39,7 @@ export function endMode3D(this: RayLib) {
 }
 
 export function beginTextureMode(this: RayLib, texture: RenderTexture2D) {
-  this.symbols.BeginTextureMode(texture.$address);
+  this.symbols.BeginTextureMode(texture.$memory);
 }
 
 export function endTextureMode(this: RayLib) {
@@ -47,7 +47,7 @@ export function endTextureMode(this: RayLib) {
 }
 
 export function beginShaderMode(this: RayLib, shader: Shader) {
-  this.symbols.BeginShaderMode(shader.$address);
+  this.symbols.BeginShaderMode(shader.$memory);
 }
 
 export function endShaderMode(this: RayLib) {
@@ -84,7 +84,7 @@ export function endScissorMode(this: RayLib) {
 }
 
 export function beginVrStereoMode(this: RayLib, config: VrStereoConfig) {
-  this.symbols.BeginVrStereoMode(config.$address);
+  this.symbols.BeginVrStereoMode(config.$memory);
 }
 
 export function endVrStereoMode(this: RayLib) {

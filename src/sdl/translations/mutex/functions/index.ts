@@ -131,11 +131,11 @@ export function waitConditionTimeout(
 }
 
 export function shouldInit(this: SDL, state: InitState) {
-  return this.symbols.SDL_ShouldInit(state.$address);
+  return this.symbols.SDL_ShouldInit(state.$memory);
 }
 
 export function shouldQuit(this: SDL, state: InitState) {
-  return this.symbols.SDL_ShouldQuit(state.$address);
+  return this.symbols.SDL_ShouldQuit(state.$memory);
 }
 
 export function setInitialized(
@@ -145,5 +145,5 @@ export function setInitialized(
     initialized: boolean;
   }
 ) {
-  this.symbols.SDL_SetInitialized(options.state.$address, options.initialized);
+  this.symbols.SDL_SetInitialized(options.state.$memory, options.initialized);
 }

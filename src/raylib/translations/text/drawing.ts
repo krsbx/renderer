@@ -21,7 +21,7 @@ export function drawText(
     options.posX,
     options.posY,
     options.fontSize,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -37,12 +37,12 @@ export function drawTextEx(
   }
 ) {
   this.symbols.DrawTextEx(
-    options.font.$address,
+    options.font.$memory,
     stringToCString(options.text).ptr,
-    options.position.$address,
+    options.position.$memory,
     options.fontSize,
     options.spacing,
-    options.tint.$address
+    options.tint.$memory
   );
 }
 
@@ -60,14 +60,14 @@ export function drawTextPro(
   }
 ) {
   this.symbols.DrawTextPro(
-    options.font.$address,
+    options.font.$memory,
     stringToCString(options.text).ptr,
-    options.position.$address,
-    options.origin.$address,
+    options.position.$memory,
+    options.origin.$memory,
     options.rotation,
     options.fontSize,
     options.spacing,
-    options.tint.$address
+    options.tint.$memory
   );
 }
 
@@ -82,11 +82,11 @@ export function drawTextCodepoint(
   }
 ) {
   this.symbols.DrawTextCodepoint(
-    options.font.$address,
+    options.font.$memory,
     options.codepoint,
-    options.position.$address,
+    options.position.$memory,
     options.fontSize,
-    options.tint.$address
+    options.tint.$memory
   );
 }
 
@@ -102,12 +102,12 @@ export function drawTextCodepoints(
   }
 ) {
   this.symbols.DrawTextCodepoints(
-    options.font.$address,
+    options.font.$memory,
     options.codepoints,
     options.codepoints.length,
-    options.position.$address,
+    options.position.$memory,
     options.fontSize,
     options.spacing,
-    options.tint.$address
+    options.tint.$memory
   );
 }

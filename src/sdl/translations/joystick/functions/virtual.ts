@@ -4,7 +4,7 @@ import type { SensorType } from '../../../ffi/sensor/constant';
 import { VirtualJoystickDesc } from '../struct';
 
 export function attachVirtualJoystick(this: SDL, desc: VirtualJoystickDesc) {
-  return this.symbols.SDL_AttachVirtualJoystick(desc.$address);
+  return this.symbols.SDL_AttachVirtualJoystick(desc.$memory);
 }
 
 export function detachVirtualJoystick(this: SDL, instanceId: number) {

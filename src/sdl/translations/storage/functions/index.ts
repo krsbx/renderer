@@ -51,7 +51,7 @@ export function openStorage(
   }
 ) {
   return this.symbols.SDL_OpenStorage(
-    options.iface.$address,
+    options.iface.$memory,
     options.userdata ?? null
   ) as Storage | null;
 }
@@ -76,7 +76,7 @@ export function getStorageFileSize(
   const success = this.symbols.SDL_GetStorageFileSize(
     options.storage,
     stringToCString(options.path).ptr,
-    lengthStruct.$address
+    lengthStruct.$memory
   );
 
   if (!success) return null;
@@ -219,7 +219,7 @@ export function getStoragePathInfo(
   const success = this.symbols.SDL_GetStoragePathInfo(
     options.storage,
     stringToCString(options.path).ptr,
-    info.$address
+    info.$memory
   );
 
   if (!success) return null;
@@ -247,7 +247,7 @@ export function globStorageDirectory(
     options.path ? stringToCString(options.path).ptr : null,
     options.pattern ? stringToCString(options.pattern).ptr : null,
     options.flags ?? 0,
-    countStruct.$address
+    countStruct.$memory
   );
 
   if (!listPtr) return null;

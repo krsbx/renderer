@@ -12,21 +12,21 @@ export function addSurfaceAlternateImage(
   }
 ) {
   return this.symbols.SDL_AddSurfaceAlternateImage(
-    options.surface.$address,
-    options.image.$address
+    options.surface.$memory,
+    options.image.$memory
   );
 }
 
 export function surfaceHasAlternateImages(this: SDL, surface: Surface) {
-  return this.symbols.SDL_SurfaceHasAlternateImages(surface.$address);
+  return this.symbols.SDL_SurfaceHasAlternateImages(surface.$memory);
 }
 
 export function getSurfaceImages(this: SDL, surface: Surface) {
   const countStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
   const listPtr = this.symbols.SDL_GetSurfaceImages(
-    surface.$address,
-    countStruct.$address
+    surface.$memory,
+    countStruct.$memory
   );
 
   if (!listPtr) return [];
@@ -41,5 +41,5 @@ export function getSurfaceImages(this: SDL, surface: Surface) {
 }
 
 export function removeSurfaceAlternateImages(this: SDL, surface: Surface) {
-  this.symbols.SDL_RemoveSurfaceAlternateImages(surface.$address);
+  this.symbols.SDL_RemoveSurfaceAlternateImages(surface.$memory);
 }

@@ -14,7 +14,7 @@ export function drawCircle(
     options.centerX,
     options.centerY,
     options.radius,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -30,12 +30,12 @@ export function drawCircleSector(
   }
 ) {
   this.symbols.DrawCircleSector(
-    options.center.$address,
+    options.center.$memory,
     options.radius,
     options.startAngle,
     options.endAngle,
     options.segments,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -51,12 +51,12 @@ export function drawCircleSectorLines(
   }
 ) {
   this.symbols.DrawCircleSectorLines(
-    options.center.$address,
+    options.center.$memory,
     options.radius,
     options.startAngle,
     options.endAngle,
     options.segments,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -74,8 +74,8 @@ export function drawCircleGradient(
     options.centerX,
     options.centerY,
     options.radius,
-    options.inner.$address,
-    options.outer.$address
+    options.inner.$memory,
+    options.outer.$memory
   );
 }
 
@@ -88,9 +88,9 @@ export function drawCircleV(
   }
 ) {
   this.symbols.DrawCircleV(
-    options.center.$address,
+    options.center.$memory,
     options.radius,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -107,7 +107,7 @@ export function drawCircleLines(
     options.centerX,
     options.centerY,
     options.radius,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -120,8 +120,8 @@ export function drawCircleLinesV(
   }
 ) {
   this.symbols.DrawCircleLinesV(
-    options.center.$address,
+    options.center.$memory,
     options.radius,
-    options.color.$address
+    options.color.$memory
   );
 }

@@ -67,8 +67,8 @@ export function uploadToGPUTexture(
 ) {
   this.symbols.SDL_UploadToGPUTexture(
     options.copyPass,
-    options.source.$address,
-    options.destination.$address,
+    options.source.$memory,
+    options.destination.$memory,
     options.cycle ?? false
   );
 }
@@ -87,8 +87,8 @@ export function uploadToGPUBuffer(
 ) {
   this.symbols.SDL_UploadToGPUBuffer(
     options.copyPass,
-    options.source.$address,
-    options.destination.$address,
+    options.source.$memory,
+    options.destination.$memory,
     options.cycle ?? false
   );
 }
@@ -110,8 +110,8 @@ export function copyGPUTextureToTexture(
 ) {
   this.symbols.SDL_CopyGPUTextureToTexture(
     options.copyPass,
-    options.source.$address,
-    options.destination.$address,
+    options.source.$memory,
+    options.destination.$memory,
     options.w,
     options.h,
     options.d,
@@ -134,8 +134,8 @@ export function copyGPUBufferToBuffer(
 ) {
   this.symbols.SDL_CopyGPUBufferToBuffer(
     options.copyPass,
-    options.source.$address,
-    options.destination.$address,
+    options.source.$memory,
+    options.destination.$memory,
     options.size,
     options.cycle ?? false
   );
@@ -151,8 +151,8 @@ export function downloadFromGPUTexture(
 ) {
   this.symbols.SDL_DownloadFromGPUTexture(
     options.copyPass,
-    options.source.$address,
-    options.destination.$address
+    options.source.$memory,
+    options.destination.$memory
   );
 }
 
@@ -166,8 +166,8 @@ export function downloadFromGPUBuffer(
 ) {
   this.symbols.SDL_DownloadFromGPUBuffer(
     options.copyPass,
-    options.source.$address,
-    options.destination.$address
+    options.source.$memory,
+    options.destination.$memory
   );
 }
 

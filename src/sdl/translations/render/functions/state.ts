@@ -50,9 +50,9 @@ export function getRenderLogicalPresentation(this: SDL, renderer: Renderer) {
 
   const success = this.symbols.SDL_GetRenderLogicalPresentation(
     renderer,
-    wStruct.$address,
-    hStruct.$address,
-    modeStruct.$address
+    wStruct.$memory,
+    hStruct.$memory,
+    modeStruct.$memory
   );
 
   if (!success) return null;
@@ -72,7 +72,7 @@ export function getRenderLogicalPresentationRect(
 
   const success = this.symbols.SDL_GetRenderLogicalPresentationRect(
     renderer,
-    rect.$address
+    rect.$memory
   );
 
   if (!success) return null;
@@ -97,8 +97,8 @@ export function renderCoordinatesFromWindow(
     options.renderer,
     options.windowX,
     options.windowY,
-    xStruct.$address,
-    yStruct.$address
+    xStruct.$memory,
+    yStruct.$memory
   );
 
   if (!success) return null;
@@ -124,8 +124,8 @@ export function renderCoordinatesToWindow(
     options.renderer,
     options.x,
     options.y,
-    windowXStruct.$address,
-    windowYStruct.$address
+    windowXStruct.$memory,
+    windowYStruct.$memory
   );
 
   if (!success) return null;
@@ -145,7 +145,7 @@ export function convertEventToRenderCoordinates(
 ) {
   return this.symbols.SDL_ConvertEventToRenderCoordinates(
     options.renderer,
-    options.event.$address
+    options.event.$memory
   );
 }
 
@@ -160,14 +160,14 @@ export function setRenderViewport(
 ) {
   return this.symbols.SDL_SetRenderViewport(
     options.renderer,
-    options.rect?.$address ?? null
+    options.rect?.$memory ?? null
   );
 }
 
 export function getRenderViewport(this: SDL, renderer: Renderer) {
   const rect = Rect.create();
 
-  const success = this.symbols.SDL_GetRenderViewport(renderer, rect.$address);
+  const success = this.symbols.SDL_GetRenderViewport(renderer, rect.$memory);
 
   if (!success) return null;
 
@@ -181,7 +181,7 @@ export function renderViewportSet(this: SDL, renderer: Renderer) {
 export function getRenderSafeArea(this: SDL, renderer: Renderer) {
   const rect = Rect.create();
 
-  const success = this.symbols.SDL_GetRenderSafeArea(renderer, rect.$address);
+  const success = this.symbols.SDL_GetRenderSafeArea(renderer, rect.$memory);
 
   if (!success) return null;
 
@@ -199,14 +199,14 @@ export function setRenderClipRect(
 ) {
   return this.symbols.SDL_SetRenderClipRect(
     options.renderer,
-    options.rect?.$address ?? null
+    options.rect?.$memory ?? null
   );
 }
 
 export function getRenderClipRect(this: SDL, renderer: Renderer) {
   const rect = Rect.create();
 
-  const success = this.symbols.SDL_GetRenderClipRect(renderer, rect.$address);
+  const success = this.symbols.SDL_GetRenderClipRect(renderer, rect.$memory);
 
   if (!success) return null;
 
@@ -240,8 +240,8 @@ export function getRenderScale(this: SDL, renderer: Renderer) {
 
   const success = this.symbols.SDL_GetRenderScale(
     renderer,
-    scaleXStruct.$address,
-    scaleYStruct.$address
+    scaleXStruct.$memory,
+    scaleYStruct.$memory
   );
 
   if (!success) return null;

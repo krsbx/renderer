@@ -14,7 +14,7 @@ export function hasKeyboard(this: SDL) {
 export function getKeyboards(this: SDL) {
   const countStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
-  const listPtr = this.symbols.SDL_GetKeyboards(countStruct.$address);
+  const listPtr = this.symbols.SDL_GetKeyboards(countStruct.$memory);
 
   if (!listPtr) return null;
 
@@ -37,7 +37,7 @@ export function getKeyboardFocus(this: SDL) {
 export function getKeyboardState(this: SDL) {
   const numkeysStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
-  const statePtr = this.symbols.SDL_GetKeyboardState(numkeysStruct.$address);
+  const statePtr = this.symbols.SDL_GetKeyboardState(numkeysStruct.$memory);
 
   if (!statePtr) return null;
 
@@ -78,7 +78,7 @@ export function getScancodeFromKey(this: SDL, key: Keycode) {
 
   const scancode = this.symbols.SDL_GetScancodeFromKey(
     key,
-    modstateStruct.$address
+    modstateStruct.$memory
   ) as Scancode;
   const modstate = modstateStruct.getValue(0, 'u16') as Keymod;
 
@@ -158,7 +158,7 @@ export function setTextInputArea(
 ) {
   return this.symbols.SDL_SetTextInputArea(
     options.window,
-    options.rect.$address,
+    options.rect.$memory,
     options.cursor
   );
 }
@@ -169,8 +169,8 @@ export function getTextInputArea(this: SDL, window: Window) {
 
   const success = this.symbols.SDL_GetTextInputArea(
     window,
-    rect.$address,
-    cursorStruct.$address
+    rect.$memory,
+    cursorStruct.$memory
   );
 
   if (!success) return null;

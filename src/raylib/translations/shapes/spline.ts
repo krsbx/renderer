@@ -19,7 +19,7 @@ export function drawSplineLinear(
     points,
     options.points.length,
     options.thick,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -40,7 +40,7 @@ export function drawSplineBasis(
     points,
     options.points.length,
     options.thick,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -61,7 +61,7 @@ export function drawSplineCatmullRom(
     points,
     options.points.length,
     options.thick,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -82,7 +82,7 @@ export function drawSplineBezierQuadratic(
     points,
     options.points.length,
     options.thick,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -103,7 +103,7 @@ export function drawSplineBezierCubic(
     points,
     options.points.length,
     options.thick,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -117,10 +117,10 @@ export function drawSplineSegmentLinear(
   }
 ) {
   this.symbols.DrawSplineSegmentLinear(
-    options.p1.$address,
-    options.p2.$address,
+    options.p1.$memory,
+    options.p2.$memory,
     options.thick,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -136,12 +136,12 @@ export function drawSplineSegmentBasis(
   }
 ) {
   this.symbols.DrawSplineSegmentBasis(
-    options.p1.$address,
-    options.p2.$address,
-    options.p3.$address,
-    options.p4.$address,
+    options.p1.$memory,
+    options.p2.$memory,
+    options.p3.$memory,
+    options.p4.$memory,
     options.thick,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -157,12 +157,12 @@ export function drawSplineSegmentCatmullRom(
   }
 ) {
   this.symbols.DrawSplineSegmentCatmullRom(
-    options.p1.$address,
-    options.p2.$address,
-    options.p3.$address,
-    options.p4.$address,
+    options.p1.$memory,
+    options.p2.$memory,
+    options.p3.$memory,
+    options.p4.$memory,
     options.thick,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -177,11 +177,11 @@ export function drawSplineSegmentBezierQuadratic(
   }
 ) {
   this.symbols.DrawSplineSegmentBezierQuadratic(
-    options.p1.$address,
-    options.p2.$address,
-    options.p3.$address,
+    options.p1.$memory,
+    options.p2.$memory,
+    options.p3.$memory,
     options.thick,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -197,12 +197,12 @@ export function drawSplineSegmentBezierCubic(
   }
 ) {
   this.symbols.DrawSplineSegmentBezierCubic(
-    options.p1.$address,
-    options.p2.$address,
-    options.p3.$address,
-    options.p4.$address,
+    options.p1.$memory,
+    options.p2.$memory,
+    options.p3.$memory,
+    options.p4.$memory,
     options.thick,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -217,10 +217,10 @@ export function getSplinePointLinear(
   const point = Vector2.create();
 
   this.symbols.GetSplinePointLinear(
-    options.startPos.$address,
-    options.endPos.$address,
+    options.startPos.$memory,
+    options.endPos.$memory,
     options.t,
-    point.$address
+    point.$memory
   );
 
   return point;
@@ -239,12 +239,12 @@ export function getSplinePointBasis(
   const point = Vector2.create();
 
   this.symbols.GetSplinePointBasis(
-    options.p1.$address,
-    options.p2.$address,
-    options.p3.$address,
-    options.p4.$address,
+    options.p1.$memory,
+    options.p2.$memory,
+    options.p3.$memory,
+    options.p4.$memory,
     options.t,
-    point.$address
+    point.$memory
   );
 
   return point;
@@ -263,12 +263,12 @@ export function getSplinePointCatmullRom(
   const point = Vector2.create();
 
   this.symbols.GetSplinePointCatmullRom(
-    options.p1.$address,
-    options.p2.$address,
-    options.p3.$address,
-    options.p4.$address,
+    options.p1.$memory,
+    options.p2.$memory,
+    options.p3.$memory,
+    options.p4.$memory,
     options.t,
-    point.$address
+    point.$memory
   );
 
   return point;
@@ -286,11 +286,11 @@ export function getSplinePointBezierQuad(
   const point = Vector2.create();
 
   this.symbols.GetSplinePointBezierQuad(
-    options.p1.$address,
-    options.p2.$address,
-    options.p3.$address,
+    options.p1.$memory,
+    options.p2.$memory,
+    options.p3.$memory,
     options.t,
-    point.$address
+    point.$memory
   );
 
   return point;
@@ -309,12 +309,12 @@ export function getSplinePointBezierCubic(
   const point = Vector2.create();
 
   this.symbols.GetSplinePointBezierCubic(
-    options.p1.$address,
-    options.p2.$address,
-    options.p3.$address,
-    options.p4.$address,
+    options.p1.$memory,
+    options.p2.$memory,
+    options.p3.$memory,
+    options.p4.$memory,
     options.t,
-    point.$address
+    point.$memory
   );
 
   return point;

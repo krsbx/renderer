@@ -101,7 +101,7 @@ export function getPathInfo(
 
   const success = this.symbols.SDL_GetPathInfo(
     stringToCString(options.path).ptr,
-    infoInstance.$address
+    infoInstance.$memory
   );
 
   if (!success) return null;
@@ -123,7 +123,7 @@ export function globDirectory(
     stringToCString(options.path).ptr,
     options.pattern ? stringToCString(options.pattern).ptr : null,
     options.flags ?? 0,
-    countStruct.$address
+    countStruct.$memory
   );
 
   if (!listPtr) return [];

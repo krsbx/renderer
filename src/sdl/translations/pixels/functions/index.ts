@@ -16,11 +16,11 @@ export function getMasksForPixelFormat(this: SDL, format: PixelFormat) {
 
   const success = this.symbols.SDL_GetMasksForPixelFormat(
     format,
-    bppStruct.$address,
-    rMaskStruct.$address,
-    gMaskStruct.$address,
-    bMaskStruct.$address,
-    aMaskStruct.$address
+    bppStruct.$memory,
+    rMaskStruct.$memory,
+    gMaskStruct.$memory,
+    bMaskStruct.$memory,
+    aMaskStruct.$memory
   );
 
   if (!success) return null;
@@ -83,7 +83,7 @@ export function setPaletteColors(
   );
 
   return this.symbols.SDL_SetPaletteColors(
-    options.palette.$address,
+    options.palette.$memory,
     colors,
     options.firstcolor,
     options.colors.length
@@ -91,7 +91,7 @@ export function setPaletteColors(
 }
 
 export function destroyPalette(this: SDL, palette: Palette) {
-  this.symbols.SDL_DestroyPalette(palette.$address);
+  this.symbols.SDL_DestroyPalette(palette.$memory);
 }
 
 export function mapRGB(
@@ -105,8 +105,8 @@ export function mapRGB(
   }
 ) {
   return this.symbols.SDL_MapRGB(
-    options.format.$address,
-    options.palette?.$address ?? null,
+    options.format.$memory,
+    options.palette?.$memory ?? null,
     options.r,
     options.g,
     options.b
@@ -125,8 +125,8 @@ export function mapRGBA(
   }
 ) {
   return this.symbols.SDL_MapRGBA(
-    options.format.$address,
-    options.palette?.$address ?? null,
+    options.format.$memory,
+    options.palette?.$memory ?? null,
     options.r,
     options.g,
     options.b,
@@ -148,11 +148,11 @@ export function getRGB(
 
   this.symbols.SDL_GetRGB(
     options.pixel,
-    options.format.$address,
-    options.palette?.$address ?? null,
-    rStruct.$address,
-    gStruct.$address,
-    bStruct.$address
+    options.format.$memory,
+    options.palette?.$memory ?? null,
+    rStruct.$memory,
+    gStruct.$memory,
+    bStruct.$memory
   );
 
   return {
@@ -177,12 +177,12 @@ export function getRGBA(
 
   this.symbols.SDL_GetRGBA(
     options.pixel,
-    options.format.$address,
-    options.palette?.$address ?? null,
-    rStruct.$address,
-    gStruct.$address,
-    bStruct.$address,
-    aStruct.$address
+    options.format.$memory,
+    options.palette?.$memory ?? null,
+    rStruct.$memory,
+    gStruct.$memory,
+    bStruct.$memory,
+    aStruct.$memory
   );
 
   return {

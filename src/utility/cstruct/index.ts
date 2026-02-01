@@ -1,9 +1,7 @@
-import { type Pointer, toArrayBuffer } from 'bun:ffi';
+import { type Pointer, ptr, toArrayBuffer } from 'bun:ffi';
 import type {
   BigIntCType,
   CStructOptions,
-  CStructOptionsWithAddress,
-  CStructOptionsWithLength,
   NumberedCType,
   PointerCType,
   ReadType,
@@ -19,18 +17,7 @@ import {
   writeArrayString,
 } from './utils';
 
-export class CStruct<
-  Options extends CStructOptions = CStructOptions,
-  Address extends Options extends CStructOptionsWithLength
-    ? Uint8Array
-    : Options extends CStructOptionsWithAddress
-      ? Pointer
-      : Uint8Array = Options extends CStructOptionsWithLength
-    ? Uint8Array
-    : Options extends CStructOptionsWithAddress
-      ? Pointer
-      : Uint8Array,
-> {
+export class CStruct<Options extends CStructOptions> {
   public static readonly BYTE_SIZE = {
     u8: 1,
     i8: 1,
@@ -56,21 +43,21 @@ export class CStruct<
   public static writeArrayPointer = writeArrayPointer;
 
   public $memory: Uint8Array;
-  public $address: Address;
+  public $address: Pointer;
   public $view: DataView;
 
   public constructor(options: Options) {
     if ('address' in options && 'length' in options) {
       const buffer = toArrayBuffer(options.address, 0, options.length);
       this.$memory = new Uint8Array(buffer);
-      this.$address = options.address as Address;
+      this.$address = options.address;
     } else if ('length' in options) {
       this.$memory = new Uint8Array(options.length);
-      this.$address = this.$memory as Address;
+      this.$address = ptr(this.$memory);
     } else {
       const buffer = toArrayBuffer(options.address);
       this.$memory = new Uint8Array(buffer);
-      this.$address = options.address as Address;
+      this.$address = options.address;
     }
 
     this.$view = new DataView(
@@ -195,7 +182,7 @@ export class CStruct<
     });
 
     struct.$memory = this.$memory.slice();
-    struct.$address = struct.$memory;
+    struct.$address = ptr(struct.$memory);
 
     return struct;
   }

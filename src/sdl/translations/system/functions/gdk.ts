@@ -4,7 +4,7 @@ import { CStruct } from '@cstruct';
 export function getGDKTaskQueue(this: SDL) {
   const taskQueueStruct = new CStruct({ length: CStruct.BYTE_SIZE.ptr });
 
-  const success = this.symbols.SDL_GetGDKTaskQueue(taskQueueStruct.$address);
+  const success = this.symbols.SDL_GetGDKTaskQueue(taskQueueStruct.$memory);
 
   if (!success) return null;
 
@@ -14,7 +14,7 @@ export function getGDKTaskQueue(this: SDL) {
 export function getGDKDefaultUser(this: SDL) {
   const userHandleStruct = new CStruct({ length: CStruct.BYTE_SIZE.ptr });
 
-  const success = this.symbols.SDL_GetGDKDefaultUser(userHandleStruct.$address);
+  const success = this.symbols.SDL_GetGDKDefaultUser(userHandleStruct.$memory);
 
   if (!success) return null;
 

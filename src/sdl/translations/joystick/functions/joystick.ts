@@ -27,7 +27,7 @@ export function hasJoystick(this: SDL) {
 export function getJoysticks(this: SDL) {
   const struct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
-  const listPtr = this.symbols.SDL_GetJoysticks(struct.$address);
+  const listPtr = this.symbols.SDL_GetJoysticks(struct.$memory);
 
   if (!listPtr) return [];
 
@@ -165,11 +165,11 @@ export function getJoystickGUIDInfo(this: SDL, guid: GUID) {
   const crc16Struct = new CStruct({ length: CStruct.BYTE_SIZE.u16 });
 
   this.symbols.SDL_GetJoystickGUIDInfo(
-    guid.$address,
-    vendorStruct.$address,
-    productStruct.$address,
-    versionStruct.$address,
-    crc16Struct.$address
+    guid.$memory,
+    vendorStruct.$memory,
+    productStruct.$memory,
+    versionStruct.$memory,
+    crc16Struct.$memory
   );
 
   return {
@@ -241,7 +241,7 @@ export function getJoystickPowerInfo(this: SDL, joystick: Joystick) {
 
   const state = this.symbols.SDL_GetJoystickPowerInfo(
     joystick,
-    percentStruct.$address
+    percentStruct.$memory
   ) as PowerState;
   const percent = percentStruct.getValue(0, 'i32');
 

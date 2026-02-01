@@ -60,7 +60,7 @@ export function renderGeometryRaw(
     options.texture ?? null,
     options.xy,
     options.xyStride,
-    options.color.$address,
+    options.color.$memory,
     options.colorStride,
     options.uv,
     options.uvStride,
@@ -94,8 +94,8 @@ export function getRenderTextureAddressMode(this: SDL, renderer: Renderer) {
 
   const success = this.symbols.SDL_GetRenderTextureAddressMode(
     renderer,
-    uModeStruct.$address,
-    vModeStruct.$address
+    uModeStruct.$memory,
+    vModeStruct.$memory
   );
 
   if (!success) return null;

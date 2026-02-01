@@ -204,8 +204,8 @@ export function getLogOutputFunction(this: SDL) {
   const userdataStruct = new CStruct({ length: CStruct.BYTE_SIZE.ptr });
 
   this.symbols.SDL_GetLogOutputFunction(
-    callbackStruct.$address,
-    userdataStruct.$address
+    callbackStruct.$memory,
+    userdataStruct.$memory
   );
 
   return {

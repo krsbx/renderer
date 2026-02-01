@@ -8,8 +8,8 @@ export function getDateTimeLocalePreferences(this: SDL) {
   const timeFormatStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
   const success = this.symbols.SDL_GetDateTimeLocalePreferences(
-    dateFormatStruct.$address,
-    timeFormatStruct.$address
+    dateFormatStruct.$memory,
+    timeFormatStruct.$memory
   );
 
   if (!success) return null;
@@ -23,7 +23,7 @@ export function getDateTimeLocalePreferences(this: SDL) {
 export function getCurrentTime(this: SDL) {
   const ticksStruct = new CStruct({ length: CStruct.BYTE_SIZE.i64 });
 
-  const success = this.symbols.SDL_GetCurrentTime(ticksStruct.$address);
+  const success = this.symbols.SDL_GetCurrentTime(ticksStruct.$memory);
 
   if (!success) return null;
 
@@ -41,7 +41,7 @@ export function timeToDateTime(
 
   const success = this.symbols.SDL_TimeToDateTime(
     options.ticks,
-    dt.$address,
+    dt.$memory,
     options.localTime
   );
 
@@ -54,8 +54,8 @@ export function dateTimeToTime(this: SDL, dt: DateTime) {
   const ticksStruct = new CStruct({ length: CStruct.BYTE_SIZE.i64 });
 
   const success = this.symbols.SDL_DateTimeToTime(
-    dt.$address,
-    ticksStruct.$address
+    dt.$memory,
+    ticksStruct.$memory
   );
 
   if (!success) return null;
@@ -67,11 +67,7 @@ export function timeToWindows(this: SDL, ticks: bigint) {
   const lowStruct = new CStruct({ length: CStruct.BYTE_SIZE.u32 });
   const highStruct = new CStruct({ length: CStruct.BYTE_SIZE.u32 });
 
-  this.symbols.SDL_TimeToWindows(
-    ticks,
-    lowStruct.$address,
-    highStruct.$address
-  );
+  this.symbols.SDL_TimeToWindows(ticks, lowStruct.$memory, highStruct.$memory);
 
   return {
     dwLowDateTime: lowStruct.getValue(0, 'u32'),

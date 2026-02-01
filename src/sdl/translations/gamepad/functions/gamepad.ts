@@ -20,7 +20,7 @@ export function hasGamepad(this: SDL) {
 export function getGamepads(this: SDL) {
   const struct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
-  const listPtr = this.symbols.SDL_GetGamepads(struct.$address);
+  const listPtr = this.symbols.SDL_GetGamepads(struct.$memory);
 
   if (!listPtr) return [];
 
@@ -179,7 +179,7 @@ export function getGamepadPowerInfo(this: SDL, gamepad: Gamepad) {
 
   const state = this.symbols.SDL_GetGamepadPowerInfo(
     gamepad,
-    struct.$address
+    struct.$memory
   ) as PowerState;
   const percent = struct.getValue(0, 'i32');
 
@@ -208,7 +208,7 @@ export function gamepadEventsEnabled(this: SDL) {
 export function getGamepadBindings(this: SDL, gamepad: Gamepad) {
   const struct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
-  const listPtr = this.symbols.SDL_GetGamepadBindings(gamepad, struct.$address);
+  const listPtr = this.symbols.SDL_GetGamepadBindings(gamepad, struct.$memory);
 
   if (!listPtr) return [];
 

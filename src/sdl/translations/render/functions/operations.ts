@@ -14,7 +14,7 @@ export function renderReadPixels(
 ) {
   const surfacePtr = this.symbols.SDL_RenderReadPixels(
     options.renderer,
-    options.rect?.$address ?? null
+    options.rect?.$memory ?? null
   );
 
   if (!surfacePtr) return null;

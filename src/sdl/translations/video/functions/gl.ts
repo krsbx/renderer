@@ -59,7 +59,7 @@ export function glSetAttribute(
 export function glGetAttribute(this: BaseSDL, attr: GLAttr) {
   const valueStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
-  const success = this.symbols.SDL_GL_GetAttribute(attr, valueStruct.$address);
+  const success = this.symbols.SDL_GL_GetAttribute(attr, valueStruct.$memory);
 
   return success ? valueStruct.getValue(0, 'i32') : null;
 }
@@ -148,7 +148,7 @@ export function glSetSwapInterval(this: BaseSDL, interval: number) {
 export function glGetSwapInterval(this: BaseSDL) {
   const intervalStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
-  const success = this.symbols.SDL_GL_GetSwapInterval(intervalStruct.$address);
+  const success = this.symbols.SDL_GL_GetSwapInterval(intervalStruct.$memory);
 
   return success ? intervalStruct.getValue(0, 'i32') : null;
 }

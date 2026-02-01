@@ -5,7 +5,7 @@ import { Surface } from '../struct';
 // Palette
 
 export function createSurfacePalette(this: SDL, surface: Surface) {
-  const palettePtr = this.symbols.SDL_CreateSurfacePalette(surface.$address);
+  const palettePtr = this.symbols.SDL_CreateSurfacePalette(surface.$memory);
 
   if (!palettePtr) return null;
 
@@ -20,13 +20,13 @@ export function setSurfacePalette(
   }
 ) {
   return this.symbols.SDL_SetSurfacePalette(
-    options.surface.$address,
-    options.palette.$address
+    options.surface.$memory,
+    options.palette.$memory
   );
 }
 
 export function getSurfacePalette(this: SDL, surface: Surface) {
-  const palettePtr = this.symbols.SDL_GetSurfacePalette(surface.$address);
+  const palettePtr = this.symbols.SDL_GetSurfacePalette(surface.$memory);
 
   if (!palettePtr) return null;
 

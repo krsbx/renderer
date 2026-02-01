@@ -10,10 +10,7 @@ export function imageClearBackground(
     color: Color;
   }
 ) {
-  this.symbols.ImageClearBackground(
-    options.dst.$address,
-    options.color.$address
-  );
+  this.symbols.ImageClearBackground(options.dst.$memory, options.color.$memory);
 }
 
 export function imageDrawPixel(
@@ -26,10 +23,10 @@ export function imageDrawPixel(
   }
 ) {
   this.symbols.ImageDrawPixel(
-    options.dst.$address,
+    options.dst.$memory,
     options.posX,
     options.posY,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -42,9 +39,9 @@ export function imageDrawPixelV(
   }
 ) {
   this.symbols.ImageDrawPixelV(
-    options.dst.$address,
-    options.position.$address,
-    options.color.$address
+    options.dst.$memory,
+    options.position.$memory,
+    options.color.$memory
   );
 }
 
@@ -60,12 +57,12 @@ export function imageDrawLine(
   }
 ) {
   this.symbols.ImageDrawLine(
-    options.dst.$address,
+    options.dst.$memory,
     options.startPosX,
     options.startPosY,
     options.endPosX,
     options.endPosY,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -79,10 +76,10 @@ export function imageDrawLineV(
   }
 ) {
   this.symbols.ImageDrawLineV(
-    options.dst.$address,
-    options.start.$address,
-    options.end.$address,
-    options.color.$address
+    options.dst.$memory,
+    options.start.$memory,
+    options.end.$memory,
+    options.color.$memory
   );
 }
 
@@ -97,11 +94,11 @@ export function imageDrawLineEx(
   }
 ) {
   this.symbols.ImageDrawLineEx(
-    options.dst.$address,
-    options.start.$address,
-    options.end.$address,
+    options.dst.$memory,
+    options.start.$memory,
+    options.end.$memory,
     options.thick,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -116,11 +113,11 @@ export function imageDrawCircle(
   }
 ) {
   this.symbols.ImageDrawCircle(
-    options.dst.$address,
+    options.dst.$memory,
     options.centerX,
     options.centerY,
     options.radius,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -134,10 +131,10 @@ export function imageDrawCircleV(
   }
 ) {
   this.symbols.ImageDrawCircleV(
-    options.dst.$address,
-    options.center.$address,
+    options.dst.$memory,
+    options.center.$memory,
     options.radius,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -152,11 +149,11 @@ export function imageDrawCircleLines(
   }
 ) {
   this.symbols.ImageDrawCircleLines(
-    options.dst.$address,
+    options.dst.$memory,
     options.centerX,
     options.centerY,
     options.radius,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -170,10 +167,10 @@ export function imageDrawCircleLinesV(
   }
 ) {
   this.symbols.ImageDrawCircleLinesV(
-    options.dst.$address,
-    options.center.$address,
+    options.dst.$memory,
+    options.center.$memory,
     options.radius,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -189,12 +186,12 @@ export function imageDrawRectangle(
   }
 ) {
   this.symbols.ImageDrawRectangle(
-    options.dst.$address,
+    options.dst.$memory,
     options.posX,
     options.posY,
     options.width,
     options.height,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -208,10 +205,10 @@ export function imageDrawRectangleV(
   }
 ) {
   this.symbols.ImageDrawRectangleV(
-    options.dst.$address,
-    options.position.$address,
-    options.size.$address,
-    options.color.$address
+    options.dst.$memory,
+    options.position.$memory,
+    options.size.$memory,
+    options.color.$memory
   );
 }
 
@@ -224,9 +221,9 @@ export function imageDrawRectangleRec(
   }
 ) {
   this.symbols.ImageDrawRectangleRec(
-    options.dst.$address,
-    options.rec.$address,
-    options.color.$address
+    options.dst.$memory,
+    options.rec.$memory,
+    options.color.$memory
   );
 }
 
@@ -240,10 +237,10 @@ export function imageDrawRectangleLines(
   }
 ) {
   this.symbols.ImageDrawRectangleLines(
-    options.dst.$address,
-    options.rec.$address,
+    options.dst.$memory,
+    options.rec.$memory,
     options.thick,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -258,11 +255,11 @@ export function imageDrawTriangle(
   }
 ) {
   this.symbols.ImageDrawTriangle(
-    options.dst.$address,
-    options.v1.$address,
-    options.v2.$address,
-    options.v3.$address,
-    options.color.$address
+    options.dst.$memory,
+    options.v1.$memory,
+    options.v2.$memory,
+    options.v3.$memory,
+    options.color.$memory
   );
 }
 
@@ -279,13 +276,13 @@ export function imageDrawTriangleEx(
   }
 ) {
   this.symbols.ImageDrawTriangleEx(
-    options.dst.$address,
-    options.v1.$address,
-    options.v2.$address,
-    options.v3.$address,
-    options.c1.$address,
-    options.c2.$address,
-    options.c3.$address
+    options.dst.$memory,
+    options.v1.$memory,
+    options.v2.$memory,
+    options.v3.$memory,
+    options.c1.$memory,
+    options.c2.$memory,
+    options.c3.$memory
   );
 }
 
@@ -300,11 +297,11 @@ export function imageDrawTriangleLines(
   }
 ) {
   this.symbols.ImageDrawTriangleLines(
-    options.dst.$address,
-    options.v1.$address,
-    options.v2.$address,
-    options.v3.$address,
-    options.color.$address
+    options.dst.$memory,
+    options.v1.$memory,
+    options.v2.$memory,
+    options.v3.$memory,
+    options.color.$memory
   );
 }
 
@@ -322,10 +319,10 @@ export function imageDrawTriangleFan(
   );
 
   this.symbols.ImageDrawTriangleFan(
-    options.dst.$address,
+    options.dst.$memory,
     points,
     options.points.length,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -343,10 +340,10 @@ export function imageDrawTriangleStrip(
   );
 
   this.symbols.ImageDrawTriangleStrip(
-    options.dst.$address,
+    options.dst.$memory,
     points,
     options.points.length,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -361,11 +358,11 @@ export function imageDraw(
   }
 ) {
   this.symbols.ImageDraw(
-    options.dst.$address,
-    options.src.$address,
-    options.srcRec.$address,
-    options.dstRec.$address,
-    options.tint.$address
+    options.dst.$memory,
+    options.src.$memory,
+    options.srcRec.$memory,
+    options.dstRec.$memory,
+    options.tint.$memory
   );
 }
 
@@ -381,12 +378,12 @@ export function imageDrawText(
   }
 ) {
   this.symbols.ImageDrawText(
-    options.dst.$address,
+    options.dst.$memory,
     stringToCString(options.text).ptr,
     options.posX,
     options.posY,
     options.fontSize,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -403,12 +400,12 @@ export function imageDrawTextEx(
   }
 ) {
   this.symbols.ImageDrawTextEx(
-    options.dst.$address,
-    options.font.$address,
+    options.dst.$memory,
+    options.font.$memory,
     stringToCString(options.text).ptr,
-    options.position.$address,
+    options.position.$memory,
     options.fontSize,
     options.spacing,
-    options.tint.$address
+    options.tint.$memory
   );
 }

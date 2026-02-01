@@ -16,7 +16,7 @@ export function drawEllipse(
     options.centerY,
     options.radiusH,
     options.radiusV,
-    options.color.$address
+    options.color.$memory
   );
 }
 
@@ -35,6 +35,6 @@ export function drawEllipseLines(
     options.centerY,
     options.radiusH,
     options.radiusV,
-    options.color.$address
+    options.color.$memory
   );
 }

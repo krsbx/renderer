@@ -24,7 +24,7 @@ export function setCurrentThreadPriority(this: SDL, priority: ThreadPriority) {
 export function waitThread(this: SDL, thread: Thread) {
   const statusStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
-  this.symbols.SDL_WaitThread(thread, statusStruct.$address);
+  this.symbols.SDL_WaitThread(thread, statusStruct.$memory);
 
   return statusStruct.getValue(0, 'i32');
 }
@@ -38,7 +38,7 @@ export function detachThread(this: SDL, thread: Thread) {
 }
 
 export function getTLS(this: SDL, id: TLSID) {
-  return this.symbols.SDL_GetTLS(id.$address);
+  return this.symbols.SDL_GetTLS(id.$memory);
 }
 
 export function setTLS(
@@ -50,7 +50,7 @@ export function setTLS(
   }
 ) {
   return this.symbols.SDL_SetTLS(
-    options.id.$address,
+    options.id.$memory,
     options.value,
     options.destructor?.ptr ?? null
   );

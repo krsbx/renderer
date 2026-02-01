@@ -126,8 +126,8 @@ export function acquireGPUSwapchainTexture(
   const success = this.symbols.SDL_AcquireGPUSwapchainTexture(
     options.commandBuffer,
     options.window,
-    swapchainTextureStruct.$address,
-    widthStruct.$address
+    swapchainTextureStruct.$memory,
+    widthStruct.$memory
   );
 
   if (!success) return null;
@@ -165,8 +165,8 @@ export function waitAndAcquireGPUSwapchainTexture(
   const success = this.symbols.SDL_WaitAndAcquireGPUSwapchainTexture(
     options.commandBuffer,
     options.window,
-    swapchainTextureStruct.$address,
-    widthStruct.$address
+    swapchainTextureStruct.$memory,
+    widthStruct.$memory
   );
 
   if (!success) return null;

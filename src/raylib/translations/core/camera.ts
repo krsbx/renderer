@@ -8,7 +8,7 @@ export function updateCamera(
     mode: number;
   }
 ) {
-  this.symbols.UpdateCamera(options.camera.$address, options.mode);
+  this.symbols.UpdateCamera(options.camera.$memory, options.mode);
 }
 
 export function updateCameraPro(
@@ -21,9 +21,9 @@ export function updateCameraPro(
   }
 ) {
   this.symbols.UpdateCameraPro(
-    options.camera.$address,
-    options.movement.$address,
-    options.rotation.$address,
+    options.camera.$memory,
+    options.movement.$memory,
+    options.rotation.$memory,
     options.zoom
   );
 }

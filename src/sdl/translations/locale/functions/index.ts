@@ -5,7 +5,7 @@ import { Locale } from '../struct';
 export function getPreferredLocales(this: SDL) {
   const countStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
-  const listPtr = this.symbols.SDL_GetPreferredLocales(countStruct.$address);
+  const listPtr = this.symbols.SDL_GetPreferredLocales(countStruct.$memory);
 
   if (!listPtr) return [];
 

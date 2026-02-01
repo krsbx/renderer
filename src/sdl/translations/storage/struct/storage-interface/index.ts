@@ -103,7 +103,7 @@ export class StorageInterface extends BaseStruct {
       [
         options.userdata ?? null,
         stringToCString(options.path).ptr,
-        info.$address,
+        info.$memory,
       ]
     );
 

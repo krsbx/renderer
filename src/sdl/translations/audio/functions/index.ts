@@ -33,7 +33,7 @@ export function getCurrentAudioDriver(this: SDL) {
 export function getAudioPlaybackDevices(this: SDL) {
   const struct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
-  const listPtr = this.symbols.SDL_GetAudioPlaybackDevices(struct.$address);
+  const listPtr = this.symbols.SDL_GetAudioPlaybackDevices(struct.$memory);
 
   if (!listPtr) return [];
 
@@ -49,7 +49,7 @@ export function getAudioPlaybackDevices(this: SDL) {
 export function getAudioRecordingDevices(this: SDL) {
   const struct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
-  const listPtr = this.symbols.SDL_GetAudioRecordingDevices(struct.$address);
+  const listPtr = this.symbols.SDL_GetAudioRecordingDevices(struct.$memory);
 
   if (!listPtr) return [];
 
@@ -78,8 +78,8 @@ export function getAudioDeviceFormat(
 
   const success = this.symbols.SDL_GetAudioDeviceFormat(
     options.deviceId,
-    specInstance.$address,
-    sampleFrames.$address
+    specInstance.$memory,
+    sampleFrames.$memory
   );
 
   if (!success) return null;
@@ -95,7 +95,7 @@ export function getAudioDeviceChannelMap(this: SDL, deviceId: number) {
 
   const listPtr = this.symbols.SDL_GetAudioDeviceChannelMap(
     deviceId,
-    struct.$address
+    struct.$memory
   );
 
   if (!listPtr) return [];
@@ -118,7 +118,7 @@ export function openAudioDevice(
 ) {
   return this.symbols.SDL_OpenAudioDevice(
     options.deviceId,
-    options.spec.$address
+    options.spec.$memory
   );
 }
 
@@ -208,8 +208,8 @@ export function createAudioStream(
   }
 ) {
   return this.symbols.SDL_CreateAudioStream(
-    options.srcSpec.$address,
-    options.dstSpec.$address
+    options.srcSpec.$memory,
+    options.dstSpec.$memory
   ) as AudioStream | null;
 }
 
@@ -230,8 +230,8 @@ export function getAudioStreamFormat(
 
   const success = this.symbols.SDL_GetAudioStreamFormat(
     options.stream,
-    srcSpecInstance.$address,
-    dstSpecInstance.$address
+    srcSpecInstance.$memory,
+    dstSpecInstance.$memory
   );
 
   if (!success) return null;
@@ -252,8 +252,8 @@ export function setAudioStreamFormat(
 ) {
   return this.symbols.SDL_SetAudioStreamFormat(
     options.stream,
-    options.srcSpec?.$address ?? null,
-    options.dstSpec?.$address ?? null
+    options.srcSpec?.$memory ?? null,
+    options.dstSpec?.$memory ?? null
   );
 }
 
@@ -292,7 +292,7 @@ export function getAudioStreamInputChannelMap(this: SDL, stream: AudioStream) {
   const struct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
   const listPtr = this.symbols.SDL_GetAudioStreamInputChannelMap(
     stream,
-    struct.$address
+    struct.$memory
   );
 
   if (!listPtr) return [];
@@ -310,7 +310,7 @@ export function getAudioStreamOutputChannelMap(this: SDL, stream: AudioStream) {
   const struct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
   const listPtr = this.symbols.SDL_GetAudioStreamOutputChannelMap(
     stream,
-    struct.$address
+    struct.$memory
   );
 
   if (!listPtr) return [];
@@ -554,7 +554,7 @@ export function openAudioDeviceStream(
   if (!options.callback) {
     return this.symbols.SDL_OpenAudioDeviceStream(
       options.deviceId,
-      options.spec?.$address ?? null,
+      options.spec?.$memory ?? null,
       null,
       null
     );
@@ -564,7 +564,7 @@ export function openAudioDeviceStream(
 
   const stream = this.symbols.SDL_OpenAudioDeviceStream(
     options.deviceId,
-    options.spec?.$address ?? null,
+    options.spec?.$memory ?? null,
     cb.ptr,
     null
   );
@@ -628,9 +628,9 @@ export function loadWAV_IO(
   const success = this.symbols.SDL_LoadWAV_IO(
     options.src,
     options.closeio,
-    specInstance.$address,
-    audioBuf.$address,
-    audioLen.$address
+    specInstance.$memory,
+    audioBuf.$memory,
+    audioLen.$memory
   );
 
   if (!success) return null;
@@ -656,9 +656,9 @@ export function loadWAV(
 
   const success = this.symbols.SDL_LoadWAV(
     stringToCString(options.path).ptr,
-    specInstance.$address,
-    audioBuf.$address,
-    audioLen.$address
+    specInstance.$memory,
+    audioBuf.$memory,
+    audioLen.$memory
   );
 
   if (!success) return null;
@@ -701,12 +701,12 @@ export function convertAudioSamples(
   const dstLen = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
   const success = this.symbols.SDL_ConvertAudioSamples(
-    options.srcSpec.$address,
+    options.srcSpec.$memory,
     options.srcData,
     options.srcData.byteLength,
-    options.dstSpec.$address,
-    dstData.$address,
-    dstLen.$address
+    options.dstSpec.$memory,
+    dstData.$memory,
+    dstLen.$memory
   );
 
   if (!success) return null;

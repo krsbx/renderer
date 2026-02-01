@@ -1,5 +1,5 @@
 import { BaseStruct } from '@basestruct';
-import { ptr, type Pointer } from 'bun:ffi';
+import { type Pointer } from 'bun:ffi';
 import { Surface } from '../../../surface/struct';
 import { ByteOffset } from './constant';
 
@@ -20,15 +20,7 @@ export class CursorFrameInfo extends BaseStruct {
       return;
     }
 
-    this.$view.setBigUint64(
-      ByteOffset.surface,
-      BigInt(
-        typeof value.$address === 'number'
-          ? value.$address
-          : ptr(value.$address)
-      ),
-      true
-    );
+    this.$view.setBigUint64(ByteOffset.surface, BigInt(value.$address), true);
   }
 
   public get duration() {

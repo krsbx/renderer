@@ -87,7 +87,7 @@ export function restoreWindow(this: RayLib) {
 }
 
 export function setWindowIcon(this: RayLib, image: Image) {
-  this.symbols.SetWindowIcon(image.$address);
+  this.symbols.SetWindowIcon(image.$memory);
 }
 
 export function setWindowIcons(this: RayLib, images: Image[]) {
@@ -175,7 +175,7 @@ export function getCurrentMonitor(this: RayLib) {
 export function getMonitorPosition(this: RayLib, monitor: number) {
   const position = Vector2.create();
 
-  this.symbols.GetMonitorPosition(monitor, position.$address);
+  this.symbols.GetMonitorPosition(monitor, position.$memory);
 
   return position;
 }
@@ -203,7 +203,7 @@ export function getMonitorRefreshRate(this: RayLib, monitor: number) {
 export function getWindowPosition(this: RayLib) {
   const position = Vector2.create();
 
-  this.symbols.GetWindowPosition(position.$address);
+  this.symbols.GetWindowPosition(position.$memory);
 
   return position;
 }
@@ -211,7 +211,7 @@ export function getWindowPosition(this: RayLib) {
 export function getWindowScaleDPI(this: RayLib) {
   const dpi = Vector2.create();
 
-  this.symbols.GetWindowScaleDPI(dpi.$address);
+  this.symbols.GetWindowScaleDPI(dpi.$memory);
 
   return dpi;
 }
@@ -231,7 +231,7 @@ export function getClipboardText(this: RayLib) {
 export function getClipboardImage(this: RayLib) {
   const image = Image.create();
 
-  this.symbols.GetClipboardImage(image.$address);
+  this.symbols.GetClipboardImage(image.$memory);
 
   return image;
 }

@@ -51,10 +51,10 @@ export function getRenderDrawColor(this: SDL, renderer: Renderer) {
 
   const success = this.symbols.SDL_GetRenderDrawColor(
     renderer,
-    rStruct.$address,
-    gStruct.$address,
-    bStruct.$address,
-    aStruct.$address
+    rStruct.$memory,
+    gStruct.$memory,
+    bStruct.$memory,
+    aStruct.$memory
   );
 
   if (!success) return null;
@@ -75,10 +75,10 @@ export function getRenderDrawColorFloat(this: SDL, renderer: Renderer) {
 
   const success = this.symbols.SDL_GetRenderDrawColorFloat(
     renderer,
-    rStruct.$address,
-    gStruct.$address,
-    bStruct.$address,
-    aStruct.$address
+    rStruct.$memory,
+    gStruct.$memory,
+    bStruct.$memory,
+    aStruct.$memory
   );
 
   if (!success) return null;
@@ -108,7 +108,7 @@ export function getRenderColorScale(this: SDL, renderer: Renderer) {
 
   const success = this.symbols.SDL_GetRenderColorScale(
     renderer,
-    scaleStruct.$address
+    scaleStruct.$memory
   );
 
   if (!success) return null;
@@ -136,7 +136,7 @@ export function getRenderDrawBlendMode(this: SDL, renderer: Renderer) {
 
   const success = this.symbols.SDL_GetRenderDrawBlendMode(
     renderer,
-    blendModeStruct.$address
+    blendModeStruct.$memory
   );
 
   if (!success) return null;

@@ -62,7 +62,7 @@ export function saveBMPIO(
   }
 ) {
   return this.symbols.SDL_SaveBMP_IO(
-    options.surface.$address,
+    options.surface.$memory,
     options.dst,
     options.closeio
   );
@@ -76,7 +76,7 @@ export function saveBMP(
   }
 ) {
   return this.symbols.SDL_SaveBMP(
-    options.surface.$address,
+    options.surface.$memory,
     stringToCString(options.file).ptr
   );
 }
@@ -116,7 +116,7 @@ export function savePNGIO(
   }
 ) {
   return this.symbols.SDL_SavePNG_IO(
-    options.surface.$address,
+    options.surface.$memory,
     options.dst,
     options.closeio
   );
@@ -130,7 +130,7 @@ export function savePNG(
   }
 ) {
   return this.symbols.SDL_SavePNG(
-    options.surface.$address,
+    options.surface.$memory,
     stringToCString(options.file).ptr
   );
 }

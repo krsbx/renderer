@@ -15,7 +15,7 @@ import { Model } from '../struct/model';
 export function loadModel(this: RayLib, fileName: string) {
   const model = Model.create();
 
-  this.symbols.LoadModel(stringToCString(fileName).ptr, model.$address);
+  this.symbols.LoadModel(stringToCString(fileName).ptr, model.$memory);
 
   return model;
 }
@@ -23,23 +23,23 @@ export function loadModel(this: RayLib, fileName: string) {
 export function loadModelFromMesh(this: RayLib, mesh: Mesh) {
   const model = Model.create();
 
-  this.symbols.LoadModelFromMesh(mesh.$address, model.$address);
+  this.symbols.LoadModelFromMesh(mesh.$memory, model.$memory);
 
   return model;
 }
 
 export function isModelValid(this: RayLib, model: Model) {
-  return this.symbols.IsModelValid(model.$address);
+  return this.symbols.IsModelValid(model.$memory);
 }
 
 export function unloadModel(this: RayLib, model: Model) {
-  this.symbols.UnloadModel(model.$address);
+  this.symbols.UnloadModel(model.$memory);
 }
 
 export function getModelBoundingBox(this: RayLib, model: Model) {
   const box = BoundingBox.create();
 
-  this.symbols.GetModelBoundingBox(model.$address, box.$address);
+  this.symbols.GetModelBoundingBox(model.$memory, box.$memory);
 
   return box;
 }
@@ -54,10 +54,10 @@ export function drawModel(
   }
 ) {
   this.symbols.DrawModel(
-    options.model.$address,
-    options.position.$address,
+    options.model.$memory,
+    options.position.$memory,
     options.scale,
-    options.tint.$address
+    options.tint.$memory
   );
 }
 
@@ -73,12 +73,12 @@ export function drawModelEx(
   }
 ) {
   this.symbols.DrawModelEx(
-    options.model.$address,
-    options.position.$address,
-    options.rotationAxis.$address,
+    options.model.$memory,
+    options.position.$memory,
+    options.rotationAxis.$memory,
     options.rotationAngle,
-    options.scale.$address,
-    options.tint.$address
+    options.scale.$memory,
+    options.tint.$memory
   );
 }
 
@@ -92,10 +92,10 @@ export function drawModelWires(
   }
 ) {
   this.symbols.DrawModelWires(
-    options.model.$address,
-    options.position.$address,
+    options.model.$memory,
+    options.position.$memory,
     options.scale,
-    options.tint.$address
+    options.tint.$memory
   );
 }
 
@@ -111,12 +111,12 @@ export function drawModelWiresEx(
   }
 ) {
   this.symbols.DrawModelWiresEx(
-    options.model.$address,
-    options.position.$address,
-    options.rotationAxis.$address,
+    options.model.$memory,
+    options.position.$memory,
+    options.rotationAxis.$memory,
     options.rotationAngle,
-    options.scale.$address,
-    options.tint.$address
+    options.scale.$memory,
+    options.tint.$memory
   );
 }
 
@@ -130,10 +130,10 @@ export function drawModelPoints(
   }
 ) {
   this.symbols.DrawModelPoints(
-    options.model.$address,
-    options.position.$address,
+    options.model.$memory,
+    options.position.$memory,
     options.scale,
-    options.tint.$address
+    options.tint.$memory
   );
 }
 
@@ -149,12 +149,12 @@ export function drawModelPointsEx(
   }
 ) {
   this.symbols.DrawModelPointsEx(
-    options.model.$address,
-    options.position.$address,
-    options.rotationAxis.$address,
+    options.model.$memory,
+    options.position.$memory,
+    options.rotationAxis.$memory,
     options.rotationAngle,
-    options.scale.$address,
-    options.tint.$address
+    options.scale.$memory,
+    options.tint.$memory
   );
 }
 
@@ -165,7 +165,7 @@ export function drawBoundingBox(
     color: Color;
   }
 ) {
-  this.symbols.DrawBoundingBox(options.box.$address, options.color.$address);
+  this.symbols.DrawBoundingBox(options.box.$memory, options.color.$memory);
 }
 
 export function drawBillboard(
@@ -179,11 +179,11 @@ export function drawBillboard(
   }
 ) {
   this.symbols.DrawBillboard(
-    options.camera.$address,
-    options.texture.$address,
-    options.position.$address,
+    options.camera.$memory,
+    options.texture.$memory,
+    options.position.$memory,
     options.scale,
-    options.tint.$address
+    options.tint.$memory
   );
 }
 
@@ -199,12 +199,12 @@ export function drawBillboardRec(
   }
 ) {
   this.symbols.DrawBillboardRec(
-    options.camera.$address,
-    options.texture.$address,
-    options.source.$address,
-    options.position.$address,
-    options.size.$address,
-    options.tint.$address
+    options.camera.$memory,
+    options.texture.$memory,
+    options.source.$memory,
+    options.position.$memory,
+    options.size.$memory,
+    options.tint.$memory
   );
 }
 
@@ -223,14 +223,14 @@ export function drawBillboardPro(
   }
 ) {
   this.symbols.DrawBillboardPro(
-    options.camera.$address,
-    options.texture.$address,
-    options.source.$address,
-    options.position.$address,
-    options.up.$address,
-    options.size.$address,
-    options.origin.$address,
+    options.camera.$memory,
+    options.texture.$memory,
+    options.source.$memory,
+    options.position.$memory,
+    options.up.$memory,
+    options.size.$memory,
+    options.origin.$memory,
     options.rotation,
-    options.tint.$address
+    options.tint.$memory
   );
 }

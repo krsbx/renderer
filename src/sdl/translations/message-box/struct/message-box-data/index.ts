@@ -3,7 +3,7 @@ import { BaseStruct } from '@basestruct';
 import type { MessageBoxFlags } from '@sdl/ffi/constant/message-box';
 import { stringToCString } from '@utility/common';
 import { CStruct } from '@utility/cstruct';
-import { CString, ptr, type Pointer } from 'bun:ffi';
+import { CString, type Pointer } from 'bun:ffi';
 import { MessageBoxButtonData } from '../message-box-button-data';
 import { MessageBoxColorScheme } from '../message-box-color-scheme';
 import { ByteOffset } from './constant';
@@ -136,11 +136,7 @@ export class MessageBoxData extends BaseStruct {
 
     this.$view.setBigUint64(
       ByteOffset.colorScheme,
-      BigInt(
-        typeof value.$address === 'number'
-          ? value.$address
-          : ptr(value.$address)
-      ),
+      BigInt(value.$address),
       true
     );
   }

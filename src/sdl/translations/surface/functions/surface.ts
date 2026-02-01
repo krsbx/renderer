@@ -29,16 +29,16 @@ export function createSurfaceFrom(
     width: number;
     height: number;
     format: PixelFormat;
-    pixels: Uint8Array;
-    pitch: number;
+    pixels?: Uint8Array | null;
+    pitch?: number;
   }
 ) {
   const surface = this.symbols.SDL_CreateSurfaceFrom(
     options.width,
     options.height,
     options.format,
-    options.pixels,
-    options.pitch
+    options.pixels ?? null,
+    options.pitch ?? 0
   );
 
   if (!surface) return null;

@@ -54,7 +54,7 @@ export class Surface extends BaseStruct {
   }
 
   public set pixels(value: Pointer) {
-    this.$view.setBigUint64(ByteOffset.pitch, BigInt(value), true);
+    this.$view.setBigUint64(ByteOffset.pixels, BigInt(value), true);
   }
 
   public get refcount() {

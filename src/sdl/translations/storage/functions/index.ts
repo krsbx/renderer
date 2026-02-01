@@ -1,10 +1,13 @@
 import type { SDL } from '@/sdl';
+import type { Storage } from '@/sdl/types/definition';
 import { CStruct } from '@cstruct';
 import { stringToCString } from '@utility/common';
-import { ptr, type JSCallback, type Pointer } from 'bun:ffi';
+import { ptr, type Pointer } from 'bun:ffi';
 import type { GlobFlags } from '../../../ffi/file-system/constant';
 import { PathInfo } from '../../file-system/struct';
 import { StorageInterface } from '../struct';
+import type { EnumerateStorageDirectoryCallbackFn } from '../types/callback';
+import { createEnumerateStorageDirectoryCallback } from '../utility/callback';
 
 export function openTitleStorage(
   this: SDL,
@@ -16,7 +19,7 @@ export function openTitleStorage(
   return this.symbols.SDL_OpenTitleStorage(
     options.override ? stringToCString(options.override).ptr : null,
     options.props
-  );
+  ) as Storage;
 }
 
 export function openUserStorage(
@@ -31,11 +34,13 @@ export function openUserStorage(
     stringToCString(options.org).ptr,
     stringToCString(options.app).ptr,
     options.props
-  );
+  ) as Storage;
 }
 
-export function openFileStorage(this: SDL, path: string) {
-  return this.symbols.SDL_OpenFileStorage(stringToCString(path).ptr);
+export function openFileStorage(this: SDL, path?: string | null) {
+  return this.symbols.SDL_OpenFileStorage(
+    path ? stringToCString(path).ptr : null
+  ) as Storage;
 }
 
 export function openStorage(
@@ -48,21 +53,21 @@ export function openStorage(
   return this.symbols.SDL_OpenStorage(
     options.iface.$address,
     options.userdata ?? null
-  );
+  ) as Storage;
 }
 
-export function closeStorage(this: SDL, storage: Pointer) {
+export function closeStorage(this: SDL, storage: Storage) {
   return this.symbols.SDL_CloseStorage(storage);
 }
 
-export function storageReady(this: SDL, storage: Pointer) {
+export function storageReady(this: SDL, storage: Storage) {
   return this.symbols.SDL_StorageReady(storage);
 }
 
 export function getStorageFileSize(
   this: SDL,
   options: {
-    storage: Pointer;
+    storage: Storage;
     path: string;
   }
 ) {
@@ -82,7 +87,7 @@ export function getStorageFileSize(
 export function readStorageFile(
   this: SDL,
   options: {
-    storage: Pointer;
+    storage: Storage;
     path: string;
     length?: bigint | null;
   }
@@ -111,7 +116,7 @@ export function readStorageFile(
 export function writeStorageFile(
   this: SDL,
   options: {
-    storage: Pointer;
+    storage: Storage;
     path: string;
     source: Uint8Array;
   }
@@ -127,7 +132,7 @@ export function writeStorageFile(
 export function createStorageDirectory(
   this: SDL,
   options: {
-    storage: Pointer;
+    storage: Storage;
     path: string;
   }
 ) {
@@ -140,24 +145,29 @@ export function createStorageDirectory(
 export function enumerateStorageDirectory(
   this: SDL,
   options: {
-    storage: Pointer;
-    path: string;
-    callback: JSCallback;
-    userdata?: Pointer | null;
+    storage: Storage;
+    path?: string | null;
+    callback: EnumerateStorageDirectoryCallbackFn;
   }
 ) {
-  return this.symbols.SDL_EnumerateStorageDirectory(
+  const cb = createEnumerateStorageDirectoryCallback(options.callback);
+
+  const success = this.symbols.SDL_EnumerateStorageDirectory(
     options.storage,
-    stringToCString(options.path).ptr,
-    options.callback.ptr,
-    options.userdata ?? null
+    options.path ? stringToCString(options.path).ptr : null,
+    cb.ptr,
+    null
   );
+
+  cb.close();
+
+  return success;
 }
 
 export function removeStoragePath(
   this: SDL,
   options: {
-    storage: Pointer;
+    storage: Storage;
     path: string;
   }
 ) {
@@ -170,7 +180,7 @@ export function removeStoragePath(
 export function renameStoragePath(
   this: SDL,
   options: {
-    storage: Pointer;
+    storage: Storage;
     oldpath: string;
     newpath: string;
   }
@@ -185,7 +195,7 @@ export function renameStoragePath(
 export function copyStorageFile(
   this: SDL,
   options: {
-    storage: Pointer;
+    storage: Storage;
     oldpath: string;
     newpath: string;
   }
@@ -200,7 +210,7 @@ export function copyStorageFile(
 export function getStoragePathInfo(
   this: SDL,
   options: {
-    storage: Pointer;
+    storage: Storage;
     path: string;
   }
 ) {
@@ -217,15 +227,15 @@ export function getStoragePathInfo(
   return info;
 }
 
-export function getStorageSpaceRemaining(this: SDL, storage: Pointer) {
+export function getStorageSpaceRemaining(this: SDL, storage: Storage) {
   return this.symbols.SDL_GetStorageSpaceRemaining(storage);
 }
 
 export function globStorageDirectory(
   this: SDL,
   options: {
-    storage: Pointer;
-    path: string;
+    storage: Storage;
+    path?: string | null;
     pattern?: string | null;
     flags?: GlobFlags | null;
   }
@@ -234,7 +244,7 @@ export function globStorageDirectory(
 
   const listPtr = this.symbols.SDL_GlobStorageDirectory(
     options.storage,
-    stringToCString(options.path).ptr,
+    options.path ? stringToCString(options.path).ptr : null,
     options.pattern ? stringToCString(options.pattern).ptr : null,
     options.flags ?? 0,
     countStruct.$address

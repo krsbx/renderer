@@ -1,5 +1,13 @@
 import type { SDL } from '@/sdl';
-import type { JSCallback, Pointer } from 'bun:ffi';
+import { CallbackManager } from '@/sdl/utility';
+import type { Pointer } from 'bun:ffi';
+import type { NSTimerCallbackFn, TimerCallbackFn } from '../types/callback';
+import {
+  createNSTimerCallback,
+  createTimerCallback,
+  getNSTimerCallbackKey,
+  getTimerCallbackKey,
+} from '../utility/callback';
 
 export function getTicks(this: SDL) {
   return this.symbols.SDL_GetTicks();
@@ -33,32 +41,69 @@ export function addTimer(
   this: SDL,
   options: {
     interval: number;
-    callback: JSCallback;
+    callback: TimerCallbackFn;
     userdata?: Pointer | null;
   }
 ) {
-  return this.symbols.SDL_AddTimer(
+  const cb = createTimerCallback(options.callback);
+
+  const timerID = this.symbols.SDL_AddTimer(
     options.interval,
-    options.callback.ptr,
+    cb.ptr,
     options.userdata ?? null
   );
+
+  if (timerID === 0) {
+    cb.close();
+    return 0;
+  }
+
+  const key = getTimerCallbackKey(timerID);
+
+  CallbackManager.register(key, cb);
+
+  return timerID;
 }
 
 export function addTimerNS(
   this: SDL,
   options: {
     interval: bigint;
-    callback: JSCallback;
+    callback: NSTimerCallbackFn;
     userdata?: Pointer | null;
   }
 ) {
-  return this.symbols.SDL_AddTimerNS(
+  const cb = createNSTimerCallback(options.callback);
+
+  const timerID = this.symbols.SDL_AddTimerNS(
     options.interval,
-    options.callback.ptr,
+    cb.ptr,
     options.userdata ?? null
   );
+
+  if (timerID === 0) {
+    cb.close();
+    return 0;
+  }
+
+  const key = getNSTimerCallbackKey(timerID);
+
+  CallbackManager.register(key, cb);
+
+  return timerID;
 }
 
 export function removeTimer(this: SDL, id: number) {
-  return this.symbols.SDL_RemoveTimer(id);
+  const timerKey = getTimerCallbackKey(id);
+  const nsTimerKey = getNSTimerCallbackKey(id);
+
+  const success = this.symbols.SDL_RemoveTimer(id);
+
+  if (success) {
+    // Clean up callbacks for both ms and ns timers
+    CallbackManager.unregister(timerKey);
+    CallbackManager.unregister(nsTimerKey);
+  }
+
+  return success;
 }

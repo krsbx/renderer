@@ -1,6 +1,6 @@
 import type { SDL } from '@/sdl';
+import type { IOStream } from '@/sdl/types/definition';
 import { stringToCString } from '@utility/common';
-import type { Pointer } from 'bun:ffi';
 import { Surface } from '../struct';
 
 // Load Surface (BMP or PNG)
@@ -8,7 +8,7 @@ import { Surface } from '../struct';
 export function loadSurfaceIO(
   this: SDL,
   options: {
-    src: Pointer;
+    src: IOStream;
     closeio: boolean;
   }
 ) {
@@ -32,7 +32,7 @@ export function loadSurface(this: SDL, file: string) {
 export function loadBMPIO(
   this: SDL,
   options: {
-    src: Pointer;
+    src: IOStream;
     closeio: boolean;
   }
 ) {
@@ -57,7 +57,7 @@ export function saveBMPIO(
   this: SDL,
   options: {
     surface: Surface;
-    dst: Pointer;
+    dst: IOStream;
     closeio: boolean;
   }
 ) {
@@ -86,7 +86,7 @@ export function saveBMP(
 export function loadPNGIO(
   this: SDL,
   options: {
-    src: Pointer;
+    src: IOStream;
     closeio: boolean;
   }
 ) {
@@ -111,7 +111,7 @@ export function savePNGIO(
   this: SDL,
   options: {
     surface: Surface;
-    dst: Pointer;
+    dst: IOStream;
     closeio: boolean;
   }
 ) {

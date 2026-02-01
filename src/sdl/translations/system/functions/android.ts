@@ -1,6 +1,7 @@
 import type { SDL } from '@/sdl';
 import { stringToCString } from '@utility/common';
-import { type JSCallback, type Pointer } from 'bun:ffi';
+import type { AndroidPermissionCallbackFn } from '../types/callback';
+import { createAndroidPermissionCallback } from '../utility/callback';
 
 export function getAndroidJNIEnv(this: SDL) {
   return this.symbols.SDL_GetAndroidJNIEnv();
@@ -46,14 +47,15 @@ export function requestAndroidPermission(
   this: SDL,
   options: {
     permission: string;
-    callback: JSCallback;
-    userdata?: Pointer | null;
+    callback: AndroidPermissionCallbackFn;
   }
 ) {
+  const cb = createAndroidPermissionCallback(options.callback);
+
   return this.symbols.SDL_RequestAndroidPermission(
     stringToCString(options.permission).ptr,
-    options.callback.ptr,
-    options.userdata ?? null
+    cb.ptr,
+    null
   );
 }
 

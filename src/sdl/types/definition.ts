@@ -61,5 +61,11 @@ export type Sensor = SDLOpaque<'Sensor'>;
 // Shared Object
 export type SharedObject = SDLOpaque<'SharedObject'>;
 
+// Storage
+export type Storage = SDLOpaque<'Storage'>;
+
+// Thread
+export type Thread = SDLOpaque<'Thread'>;
+
 // Window
 export type Window = SDLOpaque<'Window'>;

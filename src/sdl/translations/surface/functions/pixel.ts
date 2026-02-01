@@ -147,7 +147,6 @@ export function fillSurfaceRects(
   options: {
     dst: Surface;
     rects: Rect[];
-    count: number;
     color: number;
   }
 ) {
@@ -156,7 +155,7 @@ export function fillSurfaceRects(
   return this.symbols.SDL_FillSurfaceRects(
     options.dst.$address,
     buffer,
-    options.count,
+    options.rects.length,
     options.color
   );
 }

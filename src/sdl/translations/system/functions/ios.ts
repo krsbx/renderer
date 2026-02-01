@@ -1,20 +1,39 @@
 import type { SDL } from '@/sdl';
-import type { JSCallback, Pointer } from 'bun:ffi';
+import type { Window } from '@/sdl/types/definition';
+import { CallbackManager } from '@/sdl/utility';
+import type { iOSAnimationCallbackFn } from '../types/callback';
+import {
+  createiOSAnimationCallback,
+  iOSAnimationCallbackKeyPrefix,
+} from '../utility/callback';
 
 export function setiOSAnimationCallback(
   this: SDL,
   options: {
-    window: Pointer;
+    window: Window;
     interval: number;
-    callback: JSCallback;
-    callbackParam?: Pointer | null;
+    callback: iOSAnimationCallbackFn | null;
   }
 ) {
+  const key = `${iOSAnimationCallbackKeyPrefix}${options.window}`;
+
+  if (!options.callback) {
+    CallbackManager.unregister(key);
+    return this.symbols.SDL_SetiOSAnimationCallback(
+      options.window,
+      options.interval,
+      null,
+      null
+    );
+  }
+
+  const cb = createiOSAnimationCallback(options.callback, key);
+
   return this.symbols.SDL_SetiOSAnimationCallback(
     options.window,
     options.interval,
-    options.callback.ptr,
-    options.callbackParam ?? null
+    cb.ptr,
+    null
   );
 }
 

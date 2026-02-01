@@ -12,3 +12,5 @@ export class AtomicInt extends BaseStruct {
     this.$view.setInt32(ByteOffset.value, value, true);
   }
 }
+
+export { AtomicInt as TLSID };

@@ -1,5 +1,5 @@
 import { BaseStruct } from '@basestruct';
-import type { Pointer } from 'bun:ffi';
+import type { GPUBuffer } from '@/sdl/types/definition';
 import { ByteOffset } from './constant';
 
 export class GPUBufferLocation extends BaseStruct {
@@ -8,10 +8,10 @@ export class GPUBufferLocation extends BaseStruct {
   public get buffer() {
     const addr = this.$view.getBigUint64(ByteOffset.buffer, true);
 
-    return Number(addr) as Pointer;
+    return Number(addr) as GPUBuffer;
   }
 
-  public set buffer(value: Pointer) {
+  public set buffer(value: GPUBuffer) {
     this.$view.setBigUint64(ByteOffset.buffer, BigInt(value), true);
   }
 

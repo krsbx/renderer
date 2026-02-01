@@ -1,12 +1,12 @@
 import type { SDL } from '@/sdl';
-import type { Pointer } from 'bun:ffi';
+import type { GPUDevice } from '@/sdl/types/definition';
 
 // GDK (Xbox)
 
-export function gdkSuspendGPU(this: SDL, device: Pointer) {
+export function gdkSuspendGPU(this: SDL, device: GPUDevice) {
   this.symbols.SDL_GDKSuspendGPU(device);
 }
 
-export function gdkResumeGPU(this: SDL, device: Pointer) {
+export function gdkResumeGPU(this: SDL, device: GPUDevice) {
   this.symbols.SDL_GDKResumeGPU(device);
 }

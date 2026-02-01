@@ -1,14 +1,19 @@
 import type { SDL } from '@/sdl';
+import type {
+  GPUBuffer,
+  GPUCommandBuffer,
+  GPUDevice,
+  GPUTexture,
+} from '@/sdl/types/definition';
 import { stringToCString } from '@utility/common';
-import type { Pointer } from 'bun:ffi';
 
 // Debug/Naming
 
 export function setGPUBufferName(
   this: SDL,
   options: {
-    device: Pointer;
-    buffer: Pointer;
+    device: GPUDevice;
+    buffer: GPUBuffer;
     text: string;
   }
 ) {
@@ -22,8 +27,8 @@ export function setGPUBufferName(
 export function setGPUTextureName(
   this: SDL,
   options: {
-    device: Pointer;
-    texture: Pointer;
+    device: GPUDevice;
+    texture: GPUTexture;
     text: string;
   }
 ) {
@@ -37,7 +42,7 @@ export function setGPUTextureName(
 export function insertGPUDebugLabel(
   this: SDL,
   options: {
-    commandBuffer: Pointer;
+    commandBuffer: GPUCommandBuffer;
     text: string;
   }
 ) {
@@ -50,7 +55,7 @@ export function insertGPUDebugLabel(
 export function pushGPUDebugGroup(
   this: SDL,
   options: {
-    commandBuffer: Pointer;
+    commandBuffer: GPUCommandBuffer;
     name: string;
   }
 ) {
@@ -60,6 +65,6 @@ export function pushGPUDebugGroup(
   );
 }
 
-export function popGPUDebugGroup(this: SDL, commandBuffer: Pointer) {
+export function popGPUDebugGroup(this: SDL, commandBuffer: GPUCommandBuffer) {
   this.symbols.SDL_PopGPUDebugGroup(commandBuffer);
 }

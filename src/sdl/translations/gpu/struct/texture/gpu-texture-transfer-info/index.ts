@@ -1,5 +1,5 @@
 import { BaseStruct } from '@basestruct';
-import type { Pointer } from 'bun:ffi';
+import type { GPUTransferBuffer } from '@/sdl/types/definition';
 import { ByteOffset } from './constant';
 
 export class GPUTextureTransferInfo extends BaseStruct {
@@ -8,10 +8,10 @@ export class GPUTextureTransferInfo extends BaseStruct {
   public get transferBuffer() {
     const addr = this.$view.getBigUint64(ByteOffset.transfer_buffer, true);
 
-    return Number(addr) as Pointer;
+    return Number(addr) as GPUTransferBuffer;
   }
 
-  public set transferBuffer(value: Pointer) {
+  public set transferBuffer(value: GPUTransferBuffer) {
     this.$view.setBigUint64(ByteOffset.transfer_buffer, BigInt(value), true);
   }
 

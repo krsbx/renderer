@@ -1,5 +1,5 @@
 import { BaseStruct, type BaseStructOptions } from '@basestruct';
-import type { Pointer } from 'bun:ffi';
+import type { GPUShader } from '@/sdl/types/definition';
 import { GPUMultisampleState, GPURasterizerState } from '../../common';
 import { GPUDepthStencilState } from '../../stencil';
 import { GPUVertexInputState } from '../../vertex';
@@ -53,20 +53,20 @@ export class GPUGraphicsPipelineCreateInfo extends BaseStruct {
   public get vertexShader() {
     const addr = this.$view.getBigUint64(ByteOffset.vertex_shader, true);
 
-    return Number(addr) as Pointer;
+    return Number(addr) as GPUShader;
   }
 
-  public set vertexShader(value: Pointer) {
+  public set vertexShader(value: GPUShader) {
     this.$view.setBigUint64(ByteOffset.vertex_shader, BigInt(value), true);
   }
 
   public get fragmentShader() {
     const addr = this.$view.getBigUint64(ByteOffset.fragment_shader, true);
 
-    return Number(addr) as Pointer;
+    return Number(addr) as GPUShader;
   }
 
-  public set fragmentShader(value: Pointer) {
+  public set fragmentShader(value: GPUShader) {
     this.$view.setBigUint64(ByteOffset.fragment_shader, BigInt(value), true);
   }
 

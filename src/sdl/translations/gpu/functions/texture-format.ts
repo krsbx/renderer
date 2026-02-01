@@ -1,5 +1,9 @@
 import type { SDL } from '@/sdl';
-import type { Pointer } from 'bun:ffi';
+import type {
+  GPUCommandBuffer,
+  GPUDevice,
+  GPUTexture,
+} from '@/sdl/types/definition';
 import type {
   GPUSampleCount,
   GPUTextureFormat,
@@ -14,8 +18,8 @@ import { GPUBlitInfo } from '../struct';
 export function generateMipmapsForGPUTexture(
   this: SDL,
   options: {
-    commandBuffer: Pointer;
-    texture: Pointer;
+    commandBuffer: GPUCommandBuffer;
+    texture: GPUTexture;
   }
 ) {
   this.symbols.SDL_GenerateMipmapsForGPUTexture(
@@ -27,7 +31,7 @@ export function generateMipmapsForGPUTexture(
 export function blitGPUTexture(
   this: SDL,
   options: {
-    commandBuffer: Pointer;
+    commandBuffer: GPUCommandBuffer;
     info: GPUBlitInfo;
   }
 ) {
@@ -46,7 +50,7 @@ export function gpuTextureFormatTexelBlockSize(
 export function gpuTextureSupportsFormat(
   this: SDL,
   options: {
-    device: Pointer;
+    device: GPUDevice;
     format: GPUTextureFormat;
     type: GPUTextureType;
     usage: GPUTextureUsageFlags;
@@ -63,7 +67,7 @@ export function gpuTextureSupportsFormat(
 export function gpuTextureSupportsSampleCount(
   this: SDL,
   options: {
-    device: Pointer;
+    device: GPUDevice;
     format: GPUTextureFormat;
     sampleCount: GPUSampleCount;
   }

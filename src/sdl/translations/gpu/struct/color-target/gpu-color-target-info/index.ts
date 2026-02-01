@@ -1,6 +1,6 @@
 import { BaseStruct, type BaseStructOptions } from '@basestruct';
 import type { GPULoadOp, GPUStoreOp } from '@sdl/ffi/constant/gpu';
-import type { Pointer } from 'bun:ffi';
+import type { GPUTexture } from '@/sdl/types/definition';
 import { FColor } from '../../../../pixels/struct';
 import { ByteOffset } from './constant';
 
@@ -23,10 +23,10 @@ export class GPUColorTargetInfo extends BaseStruct {
   public get texture() {
     const addr = this.$view.getBigUint64(ByteOffset.texture, true);
 
-    return Number(addr) as Pointer;
+    return Number(addr) as GPUTexture;
   }
 
-  public set texture(value: Pointer) {
+  public set texture(value: GPUTexture) {
     this.$view.setBigUint64(ByteOffset.texture, BigInt(value), true);
   }
 
@@ -65,10 +65,10 @@ export class GPUColorTargetInfo extends BaseStruct {
   public get resolveTexture() {
     const addr = this.$view.getBigUint64(ByteOffset.resolve_texture, true);
 
-    return Number(addr) as Pointer;
+    return Number(addr) as GPUTexture;
   }
 
-  public set resolveTexture(value: Pointer) {
+  public set resolveTexture(value: GPUTexture) {
     this.$view.setBigUint64(ByteOffset.resolve_texture, BigInt(value), true);
   }
 

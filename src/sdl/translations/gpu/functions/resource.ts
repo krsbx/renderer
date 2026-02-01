@@ -1,5 +1,14 @@
 import type { SDL } from '@/sdl';
-import type { Pointer } from 'bun:ffi';
+import type {
+  GPUBuffer,
+  GPUComputePipeline,
+  GPUDevice,
+  GPUGraphicsPipeline,
+  GPUSampler,
+  GPUShader,
+  GPUTexture,
+  GPUTransferBuffer,
+} from '@/sdl/types/definition';
 import {
   GPUBufferCreateInfo,
   GPUComputePipelineCreateInfo,
@@ -15,53 +24,53 @@ import {
 export function createGPUComputePipeline(
   this: SDL,
   options: {
-    device: Pointer;
+    device: GPUDevice;
     createInfo: GPUComputePipelineCreateInfo;
   }
 ) {
   return this.symbols.SDL_CreateGPUComputePipeline(
     options.device,
     options.createInfo.$address
-  );
+  ) as GPUComputePipeline;
 }
 
 export function createGPUGraphicsPipeline(
   this: SDL,
   options: {
-    device: Pointer;
+    device: GPUDevice;
     createInfo: GPUGraphicsPipelineCreateInfo;
   }
 ) {
   return this.symbols.SDL_CreateGPUGraphicsPipeline(
     options.device,
     options.createInfo.$address
-  );
+  ) as GPUGraphicsPipeline;
 }
 
 export function createGPUSampler(
   this: SDL,
   options: {
-    device: Pointer;
+    device: GPUDevice;
     createInfo: GPUSamplerCreateInfo;
   }
 ) {
   return this.symbols.SDL_CreateGPUSampler(
     options.device,
     options.createInfo.$address
-  );
+  ) as GPUSampler;
 }
 
 export function createGPUShader(
   this: SDL,
   options: {
-    device: Pointer;
+    device: GPUDevice;
     createInfo: GPUShaderCreateInfo;
   }
 ) {
   return this.symbols.SDL_CreateGPUShader(
     options.device,
     options.createInfo.$address
-  );
+  ) as GPUShader;
 }
 
 // Create Texture/Buffer
@@ -69,40 +78,40 @@ export function createGPUShader(
 export function createGPUTexture(
   this: SDL,
   options: {
-    device: Pointer;
+    device: GPUDevice;
     createInfo: GPUTextureCreateInfo;
   }
 ) {
   return this.symbols.SDL_CreateGPUTexture(
     options.device,
     options.createInfo.$address
-  );
+  ) as GPUTexture;
 }
 
 export function createGPUBuffer(
   this: SDL,
   options: {
-    device: Pointer;
+    device: GPUDevice;
     createInfo: GPUBufferCreateInfo;
   }
 ) {
   return this.symbols.SDL_CreateGPUBuffer(
     options.device,
     options.createInfo.$address
-  );
+  ) as GPUBuffer;
 }
 
 export function createGPUTransferBuffer(
   this: SDL,
   options: {
-    device: Pointer;
+    device: GPUDevice;
     createInfo: GPUTransferBufferCreateInfo;
   }
 ) {
   return this.symbols.SDL_CreateGPUTransferBuffer(
     options.device,
     options.createInfo.$address
-  );
+  ) as GPUTransferBuffer;
 }
 
 // Release Resources
@@ -110,8 +119,8 @@ export function createGPUTransferBuffer(
 export function releaseGPUTexture(
   this: SDL,
   options: {
-    device: Pointer;
-    texture: Pointer;
+    device: GPUDevice;
+    texture: GPUTexture;
   }
 ) {
   this.symbols.SDL_ReleaseGPUTexture(options.device, options.texture);
@@ -120,8 +129,8 @@ export function releaseGPUTexture(
 export function releaseGPUSampler(
   this: SDL,
   options: {
-    device: Pointer;
-    sampler: Pointer;
+    device: GPUDevice;
+    sampler: GPUSampler;
   }
 ) {
   this.symbols.SDL_ReleaseGPUSampler(options.device, options.sampler);
@@ -130,8 +139,8 @@ export function releaseGPUSampler(
 export function releaseGPUBuffer(
   this: SDL,
   options: {
-    device: Pointer;
-    buffer: Pointer;
+    device: GPUDevice;
+    buffer: GPUBuffer;
   }
 ) {
   this.symbols.SDL_ReleaseGPUBuffer(options.device, options.buffer);
@@ -140,8 +149,8 @@ export function releaseGPUBuffer(
 export function releaseGPUTransferBuffer(
   this: SDL,
   options: {
-    device: Pointer;
-    transferBuffer: Pointer;
+    device: GPUDevice;
+    transferBuffer: GPUTransferBuffer;
   }
 ) {
   this.symbols.SDL_ReleaseGPUTransferBuffer(
@@ -153,8 +162,8 @@ export function releaseGPUTransferBuffer(
 export function releaseGPUComputePipeline(
   this: SDL,
   options: {
-    device: Pointer;
-    computePipeline: Pointer;
+    device: GPUDevice;
+    computePipeline: GPUComputePipeline;
   }
 ) {
   this.symbols.SDL_ReleaseGPUComputePipeline(
@@ -166,8 +175,8 @@ export function releaseGPUComputePipeline(
 export function releaseGPUShader(
   this: SDL,
   options: {
-    device: Pointer;
-    shader: Pointer;
+    device: GPUDevice;
+    shader: GPUShader;
   }
 ) {
   this.symbols.SDL_ReleaseGPUShader(options.device, options.shader);
@@ -176,8 +185,8 @@ export function releaseGPUShader(
 export function releaseGPUGraphicsPipeline(
   this: SDL,
   options: {
-    device: Pointer;
-    graphicsPipeline: Pointer;
+    device: GPUDevice;
+    graphicsPipeline: GPUGraphicsPipeline;
   }
 ) {
   this.symbols.SDL_ReleaseGPUGraphicsPipeline(

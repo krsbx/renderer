@@ -1,5 +1,10 @@
 import type { SDL } from '@/sdl';
-import type { Pointer } from 'bun:ffi';
+import type {
+  GPUCommandBuffer,
+  GPUCopyPass,
+  GPUDevice,
+  GPUTransferBuffer,
+} from '@/sdl/types/definition';
 import {
   GPUBufferLocation,
   GPUBufferRegion,
@@ -14,8 +19,8 @@ import {
 export function mapGPUTransferBuffer(
   this: SDL,
   options: {
-    device: Pointer;
-    transferBuffer: Pointer;
+    device: GPUDevice;
+    transferBuffer: GPUTransferBuffer;
     /**
      * @default false
      */
@@ -32,8 +37,8 @@ export function mapGPUTransferBuffer(
 export function unmapGPUTransferBuffer(
   this: SDL,
   options: {
-    device: Pointer;
-    transferBuffer: Pointer;
+    device: GPUDevice;
+    transferBuffer: GPUTransferBuffer;
   }
 ) {
   this.symbols.SDL_UnmapGPUTransferBuffer(
@@ -44,14 +49,14 @@ export function unmapGPUTransferBuffer(
 
 // Copy Pass
 
-export function beginGPUCopyPass(this: SDL, commandBuffer: Pointer) {
-  return this.symbols.SDL_BeginGPUCopyPass(commandBuffer);
+export function beginGPUCopyPass(this: SDL, commandBuffer: GPUCommandBuffer) {
+  return this.symbols.SDL_BeginGPUCopyPass(commandBuffer) as GPUCopyPass;
 }
 
 export function uploadToGPUTexture(
   this: SDL,
   options: {
-    copyPass: Pointer;
+    copyPass: GPUCopyPass;
     source: GPUTextureTransferInfo;
     destination: GPUTextureRegion;
     /**
@@ -71,7 +76,7 @@ export function uploadToGPUTexture(
 export function uploadToGPUBuffer(
   this: SDL,
   options: {
-    copyPass: Pointer;
+    copyPass: GPUCopyPass;
     source: GPUTransferBufferLocation;
     destination: GPUBufferRegion;
     /**
@@ -91,7 +96,7 @@ export function uploadToGPUBuffer(
 export function copyGPUTextureToTexture(
   this: SDL,
   options: {
-    copyPass: Pointer;
+    copyPass: GPUCopyPass;
     source: GPUTextureLocation;
     destination: GPUTextureLocation;
     w: number;
@@ -117,7 +122,7 @@ export function copyGPUTextureToTexture(
 export function copyGPUBufferToBuffer(
   this: SDL,
   options: {
-    copyPass: Pointer;
+    copyPass: GPUCopyPass;
     source: GPUBufferLocation;
     destination: GPUBufferLocation;
     size: number;
@@ -139,7 +144,7 @@ export function copyGPUBufferToBuffer(
 export function downloadFromGPUTexture(
   this: SDL,
   options: {
-    copyPass: Pointer;
+    copyPass: GPUCopyPass;
     source: GPUTextureRegion;
     destination: GPUTextureTransferInfo;
   }
@@ -154,7 +159,7 @@ export function downloadFromGPUTexture(
 export function downloadFromGPUBuffer(
   this: SDL,
   options: {
-    copyPass: Pointer;
+    copyPass: GPUCopyPass;
     source: GPUBufferRegion;
     destination: GPUTransferBufferLocation;
   }
@@ -166,6 +171,6 @@ export function downloadFromGPUBuffer(
   );
 }
 
-export function endGPUCopyPass(this: SDL, copyPass: Pointer) {
+export function endGPUCopyPass(this: SDL, copyPass: GPUCopyPass) {
   this.symbols.SDL_EndGPUCopyPass(copyPass);
 }

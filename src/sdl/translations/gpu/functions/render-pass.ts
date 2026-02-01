@@ -1,5 +1,12 @@
 import type { SDL } from '@/sdl';
-import type { Pointer } from 'bun:ffi';
+import type {
+  GPUBuffer,
+  GPUCommandBuffer,
+  GPUGraphicsPipeline,
+  GPURenderPass,
+  GPUTexture,
+} from '@/sdl/types/definition';
+import { CStruct } from '@/utility/cstruct';
 import type { GPUIndexElementSize } from '../../../ffi/gpu/constant';
 import { FColor } from '../../pixels/struct';
 import { Rect } from '../../rect/struct';
@@ -16,25 +23,29 @@ import {
 export function beginGPURenderPass(
   this: SDL,
   options: {
-    commandBuffer: Pointer;
-    colorTargetInfos: GPUColorTargetInfo;
-    numColorTargets: number;
+    commandBuffer: GPUCommandBuffer;
+    colorTargetInfos: GPUColorTargetInfo[];
     depthStencilTargetInfo?: GPUDepthStencilTargetInfo | null;
   }
 ) {
+  const { buffer: colorTargetInfos } = CStruct.writeArray(
+    options.colorTargetInfos,
+    GPUColorTargetInfo.BYTE_SIZE
+  );
+
   return this.symbols.SDL_BeginGPURenderPass(
     options.commandBuffer,
-    options.colorTargetInfos.$address,
-    options.numColorTargets,
+    colorTargetInfos,
+    options.colorTargetInfos.length,
     options.depthStencilTargetInfo?.$address ?? null
-  );
+  ) as GPURenderPass;
 }
 
 export function bindGPUGraphicsPipeline(
   this: SDL,
   options: {
-    renderPass: Pointer;
-    graphicsPipeline: Pointer;
+    renderPass: GPURenderPass;
+    graphicsPipeline: GPUGraphicsPipeline;
   }
 ) {
   this.symbols.SDL_BindGPUGraphicsPipeline(
@@ -46,7 +57,7 @@ export function bindGPUGraphicsPipeline(
 export function setGPUViewport(
   this: SDL,
   options: {
-    renderPass: Pointer;
+    renderPass: GPURenderPass;
     viewport: GPUViewport;
   }
 ) {
@@ -59,7 +70,7 @@ export function setGPUViewport(
 export function setGPUScissor(
   this: SDL,
   options: {
-    renderPass: Pointer;
+    renderPass: GPURenderPass;
     scissor: Rect;
   }
 ) {
@@ -69,7 +80,7 @@ export function setGPUScissor(
 export function setGPUBlendConstants(
   this: SDL,
   options: {
-    renderPass: Pointer;
+    renderPass: GPURenderPass;
     blendConstants: FColor;
   }
 ) {
@@ -82,7 +93,7 @@ export function setGPUBlendConstants(
 export function setGPUStencilReference(
   this: SDL,
   options: {
-    renderPass: Pointer;
+    renderPass: GPURenderPass;
     reference: number;
   }
 ) {
@@ -97,24 +108,28 @@ export function setGPUStencilReference(
 export function bindGPUVertexBuffers(
   this: SDL,
   options: {
-    renderPass: Pointer;
+    renderPass: GPURenderPass;
     firstSlot: number;
-    bindings: GPUBufferBinding;
-    numBindings: number;
+    bindings: GPUBufferBinding[];
   }
 ) {
+  const { buffer: bindings } = CStruct.writeArray(
+    options.bindings,
+    GPUBufferBinding.BYTE_SIZE
+  );
+
   this.symbols.SDL_BindGPUVertexBuffers(
     options.renderPass,
     options.firstSlot,
-    options.bindings.$address,
-    options.numBindings
+    bindings,
+    options.bindings.length
   );
 }
 
 export function bindGPUIndexBuffer(
   this: SDL,
   options: {
-    renderPass: Pointer;
+    renderPass: GPURenderPass;
     binding: GPUBufferBinding;
     indexElementSize: GPUIndexElementSize;
   }
@@ -131,51 +146,57 @@ export function bindGPUIndexBuffer(
 export function bindGPUVertexSamplers(
   this: SDL,
   options: {
-    renderPass: Pointer;
+    renderPass: GPURenderPass;
     firstSlot: number;
-    textureSamplerBindings: GPUTextureSamplerBinding;
-    numBindings: number;
+    textureSamplerBindings: GPUTextureSamplerBinding[];
   }
 ) {
+  const { buffer: textureSamplerBindings } = CStruct.writeArray(
+    options.textureSamplerBindings,
+    GPUTextureSamplerBinding.BYTE_SIZE
+  );
+
   this.symbols.SDL_BindGPUVertexSamplers(
     options.renderPass,
     options.firstSlot,
-    options.textureSamplerBindings.$address,
-    options.numBindings
+    textureSamplerBindings,
+    options.textureSamplerBindings.length
   );
 }
 
 export function bindGPUVertexStorageTextures(
   this: SDL,
   options: {
-    renderPass: Pointer;
+    renderPass: GPURenderPass;
     firstSlot: number;
-    storageTextures: Pointer;
-    numBindings: number;
+    storageTextures: GPUTexture[];
   }
 ) {
+  const { address } = CStruct.writeArrayPointer(options.storageTextures);
+
   this.symbols.SDL_BindGPUVertexStorageTextures(
     options.renderPass,
     options.firstSlot,
-    options.storageTextures,
-    options.numBindings
+    address,
+    options.storageTextures.length
   );
 }
 
 export function bindGPUVertexStorageBuffers(
   this: SDL,
   options: {
-    renderPass: Pointer;
+    renderPass: GPURenderPass;
     firstSlot: number;
-    storageBuffers: Pointer;
-    numBindings: number;
+    storageBuffers: GPUBuffer[];
   }
 ) {
+  const { address } = CStruct.writeArrayPointer(options.storageBuffers);
+
   this.symbols.SDL_BindGPUVertexStorageBuffers(
     options.renderPass,
     options.firstSlot,
-    options.storageBuffers,
-    options.numBindings
+    address,
+    options.storageBuffers.length
   );
 }
 
@@ -184,51 +205,57 @@ export function bindGPUVertexStorageBuffers(
 export function bindGPUFragmentSamplers(
   this: SDL,
   options: {
-    renderPass: Pointer;
+    renderPass: GPURenderPass;
     firstSlot: number;
-    textureSamplerBindings: GPUTextureSamplerBinding;
-    numBindings: number;
+    textureSamplerBindings: GPUTextureSamplerBinding[];
   }
 ) {
+  const { buffer: textureSamplerBindings } = CStruct.writeArray(
+    options.textureSamplerBindings,
+    GPUTextureSamplerBinding.BYTE_SIZE
+  );
+
   this.symbols.SDL_BindGPUFragmentSamplers(
     options.renderPass,
     options.firstSlot,
-    options.textureSamplerBindings.$address,
-    options.numBindings
+    textureSamplerBindings,
+    options.textureSamplerBindings.length
   );
 }
 
 export function bindGPUFragmentStorageTextures(
   this: SDL,
   options: {
-    renderPass: Pointer;
+    renderPass: GPURenderPass;
     firstSlot: number;
-    storageTextures: Pointer;
-    numBindings: number;
+    storageTextures: GPUTexture[];
   }
 ) {
+  const { address } = CStruct.writeArrayPointer(options.storageTextures);
+
   this.symbols.SDL_BindGPUFragmentStorageTextures(
     options.renderPass,
     options.firstSlot,
-    options.storageTextures,
-    options.numBindings
+    address,
+    options.storageTextures.length
   );
 }
 
 export function bindGPUFragmentStorageBuffers(
   this: SDL,
   options: {
-    renderPass: Pointer;
+    renderPass: GPURenderPass;
     firstSlot: number;
-    storageBuffers: Pointer;
-    numBindings: number;
+    storageBuffers: GPUBuffer[];
   }
 ) {
+  const { address } = CStruct.writeArrayPointer(options.storageBuffers);
+
   this.symbols.SDL_BindGPUFragmentStorageBuffers(
     options.renderPass,
     options.firstSlot,
-    options.storageBuffers,
-    options.numBindings
+    address,
+    options.storageBuffers.length
   );
 }
 
@@ -237,7 +264,7 @@ export function bindGPUFragmentStorageBuffers(
 export function drawGPUIndexedPrimitives(
   this: SDL,
   options: {
-    renderPass: Pointer;
+    renderPass: GPURenderPass;
     numIndices: number;
     numInstances: number;
     firstIndex: number;
@@ -258,7 +285,7 @@ export function drawGPUIndexedPrimitives(
 export function drawGPUPrimitives(
   this: SDL,
   options: {
-    renderPass: Pointer;
+    renderPass: GPURenderPass;
     numVertices: number;
     numInstances: number;
     firstVertex: number;
@@ -277,8 +304,8 @@ export function drawGPUPrimitives(
 export function drawGPUPrimitivesIndirect(
   this: SDL,
   options: {
-    renderPass: Pointer;
-    buffer: Pointer;
+    renderPass: GPURenderPass;
+    buffer: GPUBuffer;
     offset: number;
     drawCount: number;
   }
@@ -294,8 +321,8 @@ export function drawGPUPrimitivesIndirect(
 export function drawGPUIndexedPrimitivesIndirect(
   this: SDL,
   options: {
-    renderPass: Pointer;
-    buffer: Pointer;
+    renderPass: GPURenderPass;
+    buffer: GPUBuffer;
     offset: number;
     drawCount: number;
   }
@@ -308,6 +335,6 @@ export function drawGPUIndexedPrimitivesIndirect(
   );
 }
 
-export function endGPURenderPass(this: SDL, renderPass: Pointer) {
+export function endGPURenderPass(this: SDL, renderPass: GPURenderPass) {
   this.symbols.SDL_EndGPURenderPass(renderPass);
 }

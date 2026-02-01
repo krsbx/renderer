@@ -22,9 +22,18 @@ export type Gamepad = SDLOpaque<'Gamepad'>;
 
 // GPU
 export type GPUDevice = SDLOpaque<'GPUDevice'>;
-export type GPUTexture = SDLOpaque<'GPUTexture'>;
 export type GPUBuffer = SDLOpaque<'GPUBuffer'>;
+export type GPUTransferBuffer = SDLOpaque<'GPUTransferBuffer'>;
+export type GPUTexture = SDLOpaque<'GPUTexture'>;
+export type GPUSampler = SDLOpaque<'GPUSampler'>;
 export type GPUShader = SDLOpaque<'GPUShader'>;
+export type GPUComputePipeline = SDLOpaque<'GPUComputePipeline'>;
+export type GPUGraphicsPipeline = SDLOpaque<'GPUGraphicsPipeline'>;
+export type GPUCommandBuffer = SDLOpaque<'GPUCommandBuffer'>;
+export type GPURenderPass = SDLOpaque<'GPURenderPass'>;
+export type GPUComputePass = SDLOpaque<'GPUComputePass'>;
+export type GPUCopyPass = SDLOpaque<'GPUCopyPass'>;
+export type GPUFence = SDLOpaque<'GPUFence'>;
 
 // Haptic
 export type Haptic = SDLOpaque<'Haptic'>;

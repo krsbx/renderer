@@ -1,6 +1,11 @@
 import type { SDL } from '@/sdl';
+import type {
+  GPUCommandBuffer,
+  GPUDevice,
+  GPUTexture,
+  Window,
+} from '@/sdl/types/definition';
 import { CStruct } from '@cstruct';
-import type { Pointer } from 'bun:ffi';
 import type {
   GPUPresentMode,
   GPUSwapchainComposition,
@@ -12,8 +17,8 @@ import type {
 export function windowSupportsGPUSwapchainComposition(
   this: SDL,
   options: {
-    device: Pointer;
-    window: Pointer;
+    device: GPUDevice;
+    window: Window;
     swapchainComposition: GPUSwapchainComposition;
   }
 ) {
@@ -27,8 +32,8 @@ export function windowSupportsGPUSwapchainComposition(
 export function windowSupportsGPUPresentMode(
   this: SDL,
   options: {
-    device: Pointer;
-    window: Pointer;
+    device: GPUDevice;
+    window: Window;
     presentMode: GPUPresentMode;
   }
 ) {
@@ -42,8 +47,8 @@ export function windowSupportsGPUPresentMode(
 export function claimWindowForGPUDevice(
   this: SDL,
   options: {
-    device: Pointer;
-    window: Pointer;
+    device: GPUDevice;
+    window: Window;
   }
 ) {
   return this.symbols.SDL_ClaimWindowForGPUDevice(
@@ -55,8 +60,8 @@ export function claimWindowForGPUDevice(
 export function releaseWindowFromGPUDevice(
   this: SDL,
   options: {
-    device: Pointer;
-    window: Pointer;
+    device: GPUDevice;
+    window: Window;
   }
 ) {
   this.symbols.SDL_ReleaseWindowFromGPUDevice(options.device, options.window);
@@ -65,8 +70,8 @@ export function releaseWindowFromGPUDevice(
 export function setGPUSwapchainParameters(
   this: SDL,
   options: {
-    device: Pointer;
-    window: Pointer;
+    device: GPUDevice;
+    window: Window;
     swapchainComposition: GPUSwapchainComposition;
     presentMode: GPUPresentMode;
   }
@@ -82,7 +87,7 @@ export function setGPUSwapchainParameters(
 export function setGPUAllowedFramesInFlight(
   this: SDL,
   options: {
-    device: Pointer;
+    device: GPUDevice;
     allowedFramesInFlight: number;
   }
 ) {
@@ -95,8 +100,8 @@ export function setGPUAllowedFramesInFlight(
 export function getGPUSwapchainTextureFormat(
   this: SDL,
   options: {
-    device: Pointer;
-    window: Pointer;
+    device: GPUDevice;
+    window: Window;
   }
 ) {
   return this.symbols.SDL_GetGPUSwapchainTextureFormat(
@@ -108,8 +113,8 @@ export function getGPUSwapchainTextureFormat(
 export function acquireGPUSwapchainTexture(
   this: SDL,
   options: {
-    commandBuffer: Pointer;
-    window: Pointer;
+    commandBuffer: GPUCommandBuffer;
+    window: Window;
   }
 ) {
   const swapchainTextureStruct = new CStruct({
@@ -128,7 +133,7 @@ export function acquireGPUSwapchainTexture(
   if (!success) return null;
 
   return {
-    texture: swapchainTextureStruct.getValue(0, 'ptr'),
+    texture: swapchainTextureStruct.getValue(0, 'ptr') as GPUTexture,
     width: widthStruct.getValue(0, 'u32'),
     height: heightStruct.getValue(0, 'u32'),
   };
@@ -137,8 +142,8 @@ export function acquireGPUSwapchainTexture(
 export function waitForGPUSwapchain(
   this: SDL,
   options: {
-    device: Pointer;
-    window: Pointer;
+    device: GPUDevice;
+    window: Window;
   }
 ) {
   return this.symbols.SDL_WaitForGPUSwapchain(options.device, options.window);
@@ -147,8 +152,8 @@ export function waitForGPUSwapchain(
 export function waitAndAcquireGPUSwapchainTexture(
   this: SDL,
   options: {
-    commandBuffer: Pointer;
-    window: Pointer;
+    commandBuffer: GPUCommandBuffer;
+    window: Window;
   }
 ) {
   const swapchainTextureStruct = new CStruct({
@@ -167,7 +172,7 @@ export function waitAndAcquireGPUSwapchainTexture(
   if (!success) return null;
 
   return {
-    texture: swapchainTextureStruct.getValue(0, 'ptr'),
+    texture: swapchainTextureStruct.getValue(0, 'ptr') as GPUTexture,
     width: widthStruct.getValue(0, 'u32'),
     height: heightStruct.getValue(0, 'u32'),
   };

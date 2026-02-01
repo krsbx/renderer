@@ -80,15 +80,17 @@ export function getJoystickTypeForID(this: SDL, instanceId: number) {
 // Open/Get Joystick
 
 export function openJoystick(this: SDL, instanceId: number) {
-  return this.symbols.SDL_OpenJoystick(instanceId) as Joystick;
+  return this.symbols.SDL_OpenJoystick(instanceId) as Joystick | null;
 }
 
 export function getJoystickFromID(this: SDL, instanceId: number) {
-  return this.symbols.SDL_GetJoystickFromID(instanceId) as Joystick;
+  return this.symbols.SDL_GetJoystickFromID(instanceId) as Joystick | null;
 }
 
 export function getJoystickFromPlayerIndex(this: SDL, playerIndex: number) {
-  return this.symbols.SDL_GetJoystickFromPlayerIndex(playerIndex) as Joystick;
+  return this.symbols.SDL_GetJoystickFromPlayerIndex(
+    playerIndex
+  ) as Joystick | null;
 }
 
 // Properties

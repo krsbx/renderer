@@ -1,5 +1,4 @@
-import type { Pointer } from 'bun:ffi';
-import type { Window } from '@/sdl/types/definition';
+import type { EGLConfig, EGLDisplay, Window } from '@/sdl/types/definition';
 import type { HitTestResult } from '../../../ffi/video/constant';
 import type { Point } from '../../rect/struct';
 
@@ -39,5 +38,5 @@ export interface EGLPlatformAttribCallbackFn {
  *          The array should NOT include EGL_NONE terminator - it will be added automatically.
  */
 export interface EGLIntArrayCallbackFn {
-  (options: { display: Pointer; config: Pointer }): number[] | null;
+  (options: { display: EGLDisplay; config: EGLConfig }): number[] | null;
 }

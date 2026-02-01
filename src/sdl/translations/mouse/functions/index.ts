@@ -38,7 +38,7 @@ export function getMouseNameForID(this: SDL, instanceId: number) {
 }
 
 export function getMouseFocus(this: SDL) {
-  return this.symbols.SDL_GetMouseFocus() as Window;
+  return this.symbols.SDL_GetMouseFocus() as Window | null;
 }
 
 export function getMouseState(this: SDL) {
@@ -171,7 +171,7 @@ export function createCursor(
     options.h,
     options.hotX,
     options.hotY
-  ) as Cursor;
+  ) as Cursor | null;
 }
 
 export function createColorCursor(
@@ -186,7 +186,7 @@ export function createColorCursor(
     options.surface.$address,
     options.hotX,
     options.hotY
-  ) as Cursor;
+  ) as Cursor | null;
 }
 
 export function createAnimatedCursor(
@@ -207,11 +207,11 @@ export function createAnimatedCursor(
     options.frames.length,
     options.hotX,
     options.hotY
-  ) as Cursor;
+  ) as Cursor | null;
 }
 
 export function createSystemCursor(this: SDL, id: SystemCursor) {
-  return this.symbols.SDL_CreateSystemCursor(id) as Cursor;
+  return this.symbols.SDL_CreateSystemCursor(id) as Cursor | null;
 }
 
 export function setCursor(this: SDL, cursor: Cursor) {
@@ -219,11 +219,11 @@ export function setCursor(this: SDL, cursor: Cursor) {
 }
 
 export function getCursor(this: SDL) {
-  return this.symbols.SDL_GetCursor() as Cursor;
+  return this.symbols.SDL_GetCursor() as Cursor | null;
 }
 
 export function getDefaultCursor(this: SDL) {
-  return this.symbols.SDL_GetDefaultCursor() as Cursor;
+  return this.symbols.SDL_GetDefaultCursor() as Cursor | null;
 }
 
 export function destroyCursor(this: SDL, cursor: Cursor) {

@@ -106,7 +106,7 @@ export function createWindow(
     options.w,
     options.h,
     options.flags
-  ) as Window;
+  ) as Window | null;
 }
 
 export function createPopupWindow(
@@ -127,11 +127,11 @@ export function createPopupWindow(
     options.w,
     options.h,
     options.flags
-  ) as Window;
+  ) as Window | null;
 }
 
 export function createWindowWithProperties(this: SDL, props: number) {
-  return this.symbols.SDL_CreateWindowWithProperties(props) as Window;
+  return this.symbols.SDL_CreateWindowWithProperties(props) as Window | null;
 }
 
 export function getWindowId(this: SDL, window: Window) {
@@ -139,11 +139,11 @@ export function getWindowId(this: SDL, window: Window) {
 }
 
 export function getWindowFromId(this: SDL, id: number) {
-  return this.symbols.SDL_GetWindowFromID(id) as Window;
+  return this.symbols.SDL_GetWindowFromID(id) as Window | null;
 }
 
 export function getWindowParent(this: SDL, window: Window) {
-  return this.symbols.SDL_GetWindowParent(window) as Window;
+  return this.symbols.SDL_GetWindowParent(window) as Window | null;
 }
 
 export function getWindowProperties(this: SDL, window: Window) {
@@ -483,7 +483,11 @@ export function windowHasSurface(this: SDL, window: Window) {
 }
 
 export function getWindowSurface(this: SDL, window: Window) {
-  return this.symbols.SDL_GetWindowSurface(window);
+  const surfacePtr = this.symbols.SDL_GetWindowSurface(window);
+
+  if (!surfacePtr) return null;
+
+  return new Surface(surfacePtr);
 }
 
 export function setWindowSurfaceVSync(
@@ -560,7 +564,7 @@ export function getWindowKeyboardGrab(this: SDL, window: Window) {
 }
 
 export function getGrabbedWindow(this: SDL) {
-  return this.symbols.SDL_GetGrabbedWindow() as Window;
+  return this.symbols.SDL_GetGrabbedWindow() as Window | null;
 }
 
 export function setWindowMouseRect(

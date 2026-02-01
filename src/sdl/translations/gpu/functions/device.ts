@@ -39,11 +39,13 @@ export function createGPUDevice(
     options.formatFlags,
     options.debugMode ?? false,
     options.name ? stringToCString(options.name).ptr : null
-  ) as GPUDevice;
+  ) as GPUDevice | null;
 }
 
 export function createGPUDeviceWithProperties(this: SDL, props: number) {
-  return this.symbols.SDL_CreateGPUDeviceWithProperties(props) as GPUDevice;
+  return this.symbols.SDL_CreateGPUDeviceWithProperties(
+    props
+  ) as GPUDevice | null;
 }
 
 export function destroyGPUDevice(this: SDL, device: GPUDevice) {

@@ -23,11 +23,11 @@ export function getHapticNameForID(this: SDL, instanceId: number) {
 }
 
 export function openHaptic(this: SDL, instanceId: number) {
-  return this.symbols.SDL_OpenHaptic(instanceId) as Haptic;
+  return this.symbols.SDL_OpenHaptic(instanceId) as Haptic | null;
 }
 
 export function getHapticFromID(this: SDL, instanceId: number) {
-  return this.symbols.SDL_GetHapticFromID(instanceId) as Haptic;
+  return this.symbols.SDL_GetHapticFromID(instanceId) as Haptic | null;
 }
 
 export function getHapticID(this: SDL, haptic: Haptic) {
@@ -43,7 +43,7 @@ export function isMouseHaptic(this: SDL) {
 }
 
 export function openHapticFromMouse(this: SDL) {
-  return this.symbols.SDL_OpenHapticFromMouse() as Haptic;
+  return this.symbols.SDL_OpenHapticFromMouse() as Haptic | null;
 }
 
 export function isJoystickHaptic(this: SDL, joystick: Joystick) {
@@ -51,7 +51,7 @@ export function isJoystickHaptic(this: SDL, joystick: Joystick) {
 }
 
 export function openHapticFromJoystick(this: SDL, joystick: Joystick) {
-  return this.symbols.SDL_OpenHapticFromJoystick(joystick) as Haptic;
+  return this.symbols.SDL_OpenHapticFromJoystick(joystick) as Haptic | null;
 }
 
 export function closeHaptic(this: SDL, haptic: Haptic) {

@@ -25,7 +25,7 @@ export function createTexture(
     options.access,
     options.w,
     options.h
-  ) as Texture;
+  ) as Texture | null;
 }
 
 export function createTextureFromSurface(
@@ -38,7 +38,7 @@ export function createTextureFromSurface(
   return this.symbols.SDL_CreateTextureFromSurface(
     options.renderer,
     options.surface.$address
-  ) as Texture;
+  ) as Texture | null;
 }
 
 export function createTextureWithProperties(
@@ -51,7 +51,7 @@ export function createTextureWithProperties(
   return this.symbols.SDL_CreateTextureWithProperties(
     options.renderer,
     options.props
-  ) as Texture;
+  ) as Texture | null;
 }
 
 export function getTextureProperties(this: SDL, texture: Texture) {
@@ -59,7 +59,7 @@ export function getTextureProperties(this: SDL, texture: Texture) {
 }
 
 export function getRendererFromTexture(this: SDL, texture: Texture) {
-  return this.symbols.SDL_GetRendererFromTexture(texture) as Renderer;
+  return this.symbols.SDL_GetRendererFromTexture(texture) as Renderer | null;
 }
 
 export function getTextureSize(this: SDL, texture: Texture) {

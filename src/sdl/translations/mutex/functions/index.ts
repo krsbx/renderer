@@ -8,7 +8,7 @@ import type {
 import { InitState } from '../struct';
 
 export function createMutex(this: SDL) {
-  return this.symbols.SDL_CreateMutex() as Mutex;
+  return this.symbols.SDL_CreateMutex() as Mutex | null;
 }
 
 export function lockMutex(this: SDL, mutex: Mutex) {
@@ -28,7 +28,7 @@ export function destroyMutex(this: SDL, mutex: Mutex) {
 }
 
 export function createRWLock(this: SDL) {
-  return this.symbols.SDL_CreateRWLock() as RWLock;
+  return this.symbols.SDL_CreateRWLock() as RWLock | null;
 }
 
 export function lockRWLockForReading(this: SDL, rwlock: RWLock) {
@@ -56,7 +56,7 @@ export function destroyRWLock(this: SDL, rwlock: RWLock) {
 }
 
 export function createSemaphore(this: SDL, initialValue: number) {
-  return this.symbols.SDL_CreateSemaphore(initialValue) as Semaphore;
+  return this.symbols.SDL_CreateSemaphore(initialValue) as Semaphore | null;
 }
 
 export function destroySemaphore(this: SDL, sem: Semaphore) {
@@ -90,7 +90,7 @@ export function getSemaphoreValue(this: SDL, sem: Semaphore) {
 }
 
 export function createCondition(this: SDL) {
-  return this.symbols.SDL_CreateCondition() as Condition;
+  return this.symbols.SDL_CreateCondition() as Condition | null;
 }
 
 export function destroyCondition(this: SDL, cond: Condition) {

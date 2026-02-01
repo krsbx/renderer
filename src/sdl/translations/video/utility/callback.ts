@@ -1,4 +1,4 @@
-import type { Window } from '@/sdl/types/definition';
+import type { EGLConfig, EGLDisplay, Window } from '@/sdl/types/definition';
 import { CallbackManager } from '@/sdl/utility';
 import { FFIType, JSCallback, ptr, type Pointer } from 'bun:ffi';
 import { Point } from '../../rect/struct';
@@ -156,7 +156,7 @@ export function createEGLContextAttribCallback(
   callback: EGLIntArrayCallbackFn
 ) {
   const cb = new JSCallback(
-    (_: Pointer, display: Pointer, config: Pointer) => {
+    (_: Pointer, display: EGLDisplay, config: EGLConfig) => {
       const result = callback({ display, config });
 
       if (!result || result.length === 0) {

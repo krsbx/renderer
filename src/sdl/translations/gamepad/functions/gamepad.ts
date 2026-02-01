@@ -90,15 +90,17 @@ export function getGamepadMappingForID(this: SDL, instanceId: number) {
 }
 
 export function openGamepad(this: SDL, instanceId: number) {
-  return this.symbols.SDL_OpenGamepad(instanceId) as Gamepad;
+  return this.symbols.SDL_OpenGamepad(instanceId) as Gamepad | null;
 }
 
 export function getGamepadFromID(this: SDL, instanceId: number) {
-  return this.symbols.SDL_GetGamepadFromID(instanceId) as Gamepad;
+  return this.symbols.SDL_GetGamepadFromID(instanceId) as Gamepad | null;
 }
 
 export function getGamepadFromPlayerIndex(this: SDL, playerIndex: number) {
-  return this.symbols.SDL_GetGamepadFromPlayerIndex(playerIndex) as Gamepad;
+  return this.symbols.SDL_GetGamepadFromPlayerIndex(
+    playerIndex
+  ) as Gamepad | null;
 }
 
 export function getGamepadProperties(this: SDL, gamepad: Gamepad) {
@@ -192,7 +194,7 @@ export function gamepadConnected(this: SDL, gamepad: Gamepad) {
 }
 
 export function getGamepadJoystick(this: SDL, gamepad: Gamepad) {
-  return this.symbols.SDL_GetGamepadJoystick(gamepad) as Joystick;
+  return this.symbols.SDL_GetGamepadJoystick(gamepad) as Joystick | null;
 }
 
 export function setGamepadEventsEnabled(this: SDL, enabled: boolean) {

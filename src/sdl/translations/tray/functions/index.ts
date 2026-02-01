@@ -22,7 +22,7 @@ export function createTray(
   return this.symbols.SDL_CreateTray(
     options.icon?.$address ?? null,
     stringToCString(options.tooltip).ptr
-  ) as Tray;
+  ) as Tray | null;
 }
 
 export function setTrayIcon(
@@ -49,19 +49,19 @@ export function setTrayTooltip(
 }
 
 export function createTrayMenu(this: SDL, tray: Tray) {
-  return this.symbols.SDL_CreateTrayMenu(tray) as TrayMenu;
+  return this.symbols.SDL_CreateTrayMenu(tray) as TrayMenu | null;
 }
 
 export function createTraySubmenu(this: SDL, entry: TrayEntry) {
-  return this.symbols.SDL_CreateTraySubmenu(entry) as TrayMenu;
+  return this.symbols.SDL_CreateTraySubmenu(entry) as TrayMenu | null;
 }
 
 export function getTrayMenu(this: SDL, tray: Tray) {
-  return this.symbols.SDL_GetTrayMenu(tray) as TrayMenu;
+  return this.symbols.SDL_GetTrayMenu(tray) as TrayMenu | null;
 }
 
 export function getTraySubmenu(this: SDL, entry: TrayEntry) {
-  return this.symbols.SDL_GetTraySubmenu(entry) as TrayMenu;
+  return this.symbols.SDL_GetTraySubmenu(entry) as TrayMenu | null;
 }
 
 export function getTrayEntries(this: SDL, menu: TrayMenu) {
@@ -102,7 +102,7 @@ export function insertTrayEntryAt(
     options.pos,
     stringToCString(options.label).ptr,
     options.flags
-  ) as TrayEntry;
+  ) as TrayEntry | null;
 }
 
 export function setTrayEntryLabel(
@@ -189,15 +189,15 @@ export function destroyTray(this: SDL, tray: Tray) {
 }
 
 export function getTrayEntryParent(this: SDL, entry: TrayEntry) {
-  return this.symbols.SDL_GetTrayEntryParent(entry) as TrayMenu;
+  return this.symbols.SDL_GetTrayEntryParent(entry) as TrayMenu | null;
 }
 
 export function getTrayMenuParentEntry(this: SDL, menu: TrayMenu) {
-  return this.symbols.SDL_GetTrayMenuParentEntry(menu) as TrayEntry;
+  return this.symbols.SDL_GetTrayMenuParentEntry(menu) as TrayEntry | null;
 }
 
 export function getTrayMenuParentTray(this: SDL, menu: TrayMenu) {
-  return this.symbols.SDL_GetTrayMenuParentTray(menu) as Tray;
+  return this.symbols.SDL_GetTrayMenuParentTray(menu) as Tray | null;
 }
 
 export function updateTrays(this: SDL) {

@@ -65,7 +65,7 @@ export function glGetAttribute(this: BaseSDL, attr: GLAttr) {
 }
 
 export function glCreateContext(this: BaseSDL, window: Window) {
-  return this.symbols.SDL_GL_CreateContext(window);
+  return this.symbols.SDL_GL_CreateContext(window) as GLContext | null;
 }
 
 export function glMakeCurrent(
@@ -79,11 +79,11 @@ export function glMakeCurrent(
 }
 
 export function glGetCurrentWindow(this: BaseSDL) {
-  return this.symbols.SDL_GL_GetCurrentWindow() as Window;
+  return this.symbols.SDL_GL_GetCurrentWindow() as Window | null;
 }
 
 export function glGetCurrentContext(this: BaseSDL) {
-  return this.symbols.SDL_GL_GetCurrentContext();
+  return this.symbols.SDL_GL_GetCurrentContext() as GLContext | null;
 }
 
 export function eglGetCurrentDisplay(this: BaseSDL) {

@@ -15,19 +15,22 @@ export function ioFromFile(
   return this.symbols.SDL_IOFromFile(
     stringToCString(options.file).ptr,
     stringToCString(options.mode).ptr
-  ) as IOStream;
+  ) as IOStream | null;
 }
 
 export function ioFromMem(this: SDL, mem: Uint8Array) {
-  return this.symbols.SDL_IOFromMem(mem, mem.byteLength) as IOStream;
+  return this.symbols.SDL_IOFromMem(mem, mem.byteLength) as IOStream | null;
 }
 
 export function ioFromConstMem(this: SDL, mem: Uint8Array) {
-  return this.symbols.SDL_IOFromConstMem(mem, mem.byteLength) as IOStream;
+  return this.symbols.SDL_IOFromConstMem(
+    mem,
+    mem.byteLength
+  ) as IOStream | null;
 }
 
 export function ioFromDynamicMem(this: SDL) {
-  return this.symbols.SDL_IOFromDynamicMem() as IOStream;
+  return this.symbols.SDL_IOFromDynamicMem() as IOStream | null;
 }
 
 export function openIO(
@@ -40,7 +43,7 @@ export function openIO(
   return this.symbols.SDL_OpenIO(
     options.iface.$address,
     options.userdata ?? null
-  ) as IOStream;
+  ) as IOStream | null;
 }
 
 export function closeIO(this: SDL, context: IOStream) {

@@ -2,7 +2,7 @@ import type { SDL } from '@/sdl';
 import type { MetalView, Window } from '@/sdl/types/definition';
 
 export function metalCreateView(this: SDL, window: Window) {
-  return this.symbols.SDL_Metal_CreateView(window);
+  return this.symbols.SDL_Metal_CreateView(window) as MetalView | null;
 }
 
 export function metalDestroyView(this: SDL, view: MetalView) {

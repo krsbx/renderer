@@ -88,6 +88,8 @@ export type VkPhysicalDevice = SDLOpaque<'VkPhysicalDevice'>;
 
 // Video
 export type GLContext = SDLOpaque<'GLContext'>;
+export type EGLDisplay = SDLOpaque<'EGLDisplay'>;
+export type EGLConfig = SDLOpaque<'EGLConfig'>;
 
 // Window
 export type Window = SDLOpaque<'Window'>;

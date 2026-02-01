@@ -19,7 +19,7 @@ export function openTitleStorage(
   return this.symbols.SDL_OpenTitleStorage(
     options.override ? stringToCString(options.override).ptr : null,
     options.props
-  ) as Storage;
+  ) as Storage | null;
 }
 
 export function openUserStorage(
@@ -34,13 +34,13 @@ export function openUserStorage(
     stringToCString(options.org).ptr,
     stringToCString(options.app).ptr,
     options.props
-  ) as Storage;
+  ) as Storage | null;
 }
 
 export function openFileStorage(this: SDL, path?: string | null) {
   return this.symbols.SDL_OpenFileStorage(
     path ? stringToCString(path).ptr : null
-  ) as Storage;
+  ) as Storage | null;
 }
 
 export function openStorage(
@@ -53,7 +53,7 @@ export function openStorage(
   return this.symbols.SDL_OpenStorage(
     options.iface.$address,
     options.userdata ?? null
-  ) as Storage;
+  ) as Storage | null;
 }
 
 export function closeStorage(this: SDL, storage: Storage) {

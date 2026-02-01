@@ -11,11 +11,14 @@ export function createProcess(
 ) {
   const { buffer: args } = CStruct.writeArrayString(options.args);
 
-  return this.symbols.SDL_CreateProcess(args, options.pipeStdio) as Process;
+  return this.symbols.SDL_CreateProcess(
+    args,
+    options.pipeStdio
+  ) as Process | null;
 }
 
 export function createProcessWithProperties(this: SDL, props: number) {
-  return this.symbols.SDL_CreateProcessWithProperties(props) as Process;
+  return this.symbols.SDL_CreateProcessWithProperties(props) as Process | null;
 }
 
 export function getProcessProperties(this: SDL, process: Process) {
@@ -50,11 +53,11 @@ export function readProcess(this: SDL, process: Process) {
 }
 
 export function getProcessInput(this: SDL, process: Process) {
-  return this.symbols.SDL_GetProcessInput(process) as IOStream;
+  return this.symbols.SDL_GetProcessInput(process) as IOStream | null;
 }
 
 export function getProcessOutput(this: SDL, process: Process) {
-  return this.symbols.SDL_GetProcessOutput(process) as IOStream;
+  return this.symbols.SDL_GetProcessOutput(process) as IOStream | null;
 }
 
 export function killProcess(

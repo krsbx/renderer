@@ -44,11 +44,13 @@ export function createRenderer(
   return this.symbols.SDL_CreateRenderer(
     options.window,
     options.name ? stringToCString(options.name).ptr : null
-  ) as Renderer;
+  ) as Renderer | null;
 }
 
 export function createRendererWithProperties(this: SDL, props: number) {
-  return this.symbols.SDL_CreateRendererWithProperties(props) as Renderer;
+  return this.symbols.SDL_CreateRendererWithProperties(
+    props
+  ) as Renderer | null;
 }
 
 export function createGPURenderer(
@@ -61,23 +63,25 @@ export function createGPURenderer(
   return this.symbols.SDL_CreateGPURenderer(
     options.device,
     options.window
-  ) as Renderer;
+  ) as Renderer | null;
 }
 
 export function getGPURendererDevice(this: SDL, renderer: Renderer) {
-  return this.symbols.SDL_GetGPURendererDevice(renderer) as GPUDevice;
+  return this.symbols.SDL_GetGPURendererDevice(renderer) as GPUDevice | null;
 }
 
 export function createSoftwareRenderer(this: SDL, surface: Surface) {
-  return this.symbols.SDL_CreateSoftwareRenderer(surface.$address) as Renderer;
+  return this.symbols.SDL_CreateSoftwareRenderer(
+    surface.$address
+  ) as Renderer | null;
 }
 
 export function getRenderer(this: SDL, window: Window) {
-  return this.symbols.SDL_GetRenderer(window) as Renderer;
+  return this.symbols.SDL_GetRenderer(window) as Renderer | null;
 }
 
 export function getRenderWindow(this: SDL, renderer: Renderer) {
-  return this.symbols.SDL_GetRenderWindow(renderer) as Window;
+  return this.symbols.SDL_GetRenderWindow(renderer) as Window | null;
 }
 
 export function getRendererName(this: SDL, renderer: Renderer) {

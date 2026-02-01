@@ -210,7 +210,7 @@ export function createAudioStream(
   return this.symbols.SDL_CreateAudioStream(
     options.srcSpec.$address,
     options.dstSpec.$address
-  ) as AudioStream;
+  ) as AudioStream | null;
 }
 
 export function getAudioStreamProperties(this: SDL, stream: AudioStream) {

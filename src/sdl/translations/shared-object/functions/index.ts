@@ -5,7 +5,7 @@ import { stringToCString } from '@utility/common';
 export function loadObject(this: SDL, sofile: string) {
   return this.symbols.SDL_LoadObject(
     stringToCString(sofile).ptr
-  ) as SharedObject;
+  ) as SharedObject | null;
 }
 
 export function loadFunction(

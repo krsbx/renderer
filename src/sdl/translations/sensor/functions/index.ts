@@ -31,11 +31,11 @@ export function getSensorNonPortableTypeForID(this: SDL, instanceId: number) {
 }
 
 export function openSensor(this: SDL, instanceId: number) {
-  return this.symbols.SDL_OpenSensor(instanceId) as Sensor;
+  return this.symbols.SDL_OpenSensor(instanceId) as Sensor | null;
 }
 
 export function getSensorFromID(this: SDL, instanceId: number) {
-  return this.symbols.SDL_GetSensorFromID(instanceId) as Sensor;
+  return this.symbols.SDL_GetSensorFromID(instanceId) as Sensor | null;
 }
 
 export function getSensorProperties(this: SDL, sensor: Sensor) {

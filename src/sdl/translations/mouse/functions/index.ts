@@ -1,5 +1,6 @@
 import type { SDL } from '@/sdl';
 import type { Cursor, Window } from '@/sdl/types/definition';
+import type { Float, Int32, UInt32 } from '@/types/primitive';
 import { CallbackManager } from '@/sdl/utility';
 import { CStruct } from '@cstruct';
 import type {
@@ -33,7 +34,7 @@ export function getMice(this: SDL) {
   return mice;
 }
 
-export function getMouseNameForID(this: SDL, instanceId: number) {
+export function getMouseNameForID(this: SDL, instanceId: UInt32) {
   return this.symbols.SDL_GetMouseNameForID(instanceId).toString();
 }
 
@@ -52,8 +53,8 @@ export function getMouseState(this: SDL) {
 
   return {
     buttons,
-    x: xStruct.getValue(0, 'f32'),
-    y: yStruct.getValue(0, 'f32'),
+    x: xStruct.getValue(0, 'f32') as Float,
+    y: yStruct.getValue(0, 'f32') as Float,
   };
 }
 
@@ -68,8 +69,8 @@ export function getGlobalMouseState(this: SDL) {
 
   return {
     buttons,
-    x: xStruct.getValue(0, 'f32'),
-    y: yStruct.getValue(0, 'f32'),
+    x: xStruct.getValue(0, 'f32') as Float,
+    y: yStruct.getValue(0, 'f32') as Float,
   };
 }
 
@@ -84,8 +85,8 @@ export function getRelativeMouseState(this: SDL) {
 
   return {
     buttons,
-    x: xStruct.getValue(0, 'f32'),
-    y: yStruct.getValue(0, 'f32'),
+    x: xStruct.getValue(0, 'f32') as Float,
+    y: yStruct.getValue(0, 'f32') as Float,
   };
 }
 
@@ -93,8 +94,8 @@ export function warpMouseInWindow(
   this: SDL,
   options: {
     window: Window;
-    x: number;
-    y: number;
+    x: Float;
+    y: Float;
   }
 ) {
   this.symbols.SDL_WarpMouseInWindow(options.window, options.x, options.y);
@@ -103,8 +104,8 @@ export function warpMouseInWindow(
 export function warpMouseGlobal(
   this: SDL,
   options: {
-    x: number;
-    y: number;
+    x: Float;
+    y: Float;
   }
 ) {
   return this.symbols.SDL_WarpMouseGlobal(options.x, options.y);
@@ -158,10 +159,10 @@ export function createCursor(
   options: {
     data: Uint8Array;
     mask: Uint8Array;
-    w: number;
-    h: number;
-    hotX: number;
-    hotY: number;
+    w: Int32;
+    h: Int32;
+    hotX: Int32;
+    hotY: Int32;
   }
 ) {
   return this.symbols.SDL_CreateCursor(
@@ -178,8 +179,8 @@ export function createColorCursor(
   this: SDL,
   options: {
     surface: Surface;
-    hotX: number;
-    hotY: number;
+    hotX: Int32;
+    hotY: Int32;
   }
 ) {
   return this.symbols.SDL_CreateColorCursor(
@@ -193,8 +194,8 @@ export function createAnimatedCursor(
   this: SDL,
   options: {
     frames: CursorFrameInfo[];
-    hotX: number;
-    hotY: number;
+    hotX: Int32;
+    hotY: Int32;
   }
 ) {
   const { buffer: frames } = CStruct.writeArray(

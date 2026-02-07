@@ -1,4 +1,5 @@
 import type { Window } from '@/sdl/types/definition';
+import type { Float, UInt32 } from '@/types/primitive';
 import { CStruct } from '@cstruct';
 import { FFIType, JSCallback, type Pointer } from 'bun:ffi';
 import type { MouseMotionTransformCallbackFn } from '../types/callback';
@@ -27,13 +28,13 @@ export function createMouseMotionTransformCallback(
         length: CStruct.BYTE_SIZE.f32,
       });
 
-      const x = xStruct.getValue(0, 'f32');
-      const y = yStruct.getValue(0, 'f32');
+      const x = xStruct.getValue(0, 'f32') as Float;
+      const y = yStruct.getValue(0, 'f32') as Float;
 
       const result = callback({
         timestamp,
         window: window as Window,
-        mouseId,
+        mouseId: mouseId as UInt32,
         x,
         y,
       });

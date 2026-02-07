@@ -1,4 +1,5 @@
 import type { SDL } from '@/sdl';
+import type { Int32 } from '@/types/primitive';
 import { CStruct } from '@cstruct';
 import type { PowerState } from '../../../ffi/power/constant';
 
@@ -10,8 +11,8 @@ export function getPowerInfo(this: SDL) {
     secondsStruct.$memory,
     percentStruct.$memory
   ) as PowerState;
-  const seconds = secondsStruct.getValue(0, 'i32');
-  const percent = percentStruct.getValue(0, 'i32');
+  const seconds = secondsStruct.getValue(0, 'i32') as Int32;
+  const percent = percentStruct.getValue(0, 'i32') as Int32;
 
   return {
     state,

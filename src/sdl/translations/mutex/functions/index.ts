@@ -5,6 +5,7 @@ import type {
   RWLock,
   Semaphore,
 } from '@/sdl/types/definition';
+import type { Int32, UInt32 } from '@/types/primitive';
 import { InitState } from '../struct';
 
 export function createMutex(this: SDL) {
@@ -55,7 +56,7 @@ export function destroyRWLock(this: SDL, rwlock: RWLock) {
   this.symbols.SDL_DestroyRWLock(rwlock);
 }
 
-export function createSemaphore(this: SDL, initialValue: number) {
+export function createSemaphore(this: SDL, initialValue: UInt32) {
   return this.symbols.SDL_CreateSemaphore(initialValue) as Semaphore | null;
 }
 
@@ -75,7 +76,7 @@ export function waitSemaphoreTimeout(
   this: SDL,
   options: {
     sem: Semaphore;
-    timeoutMS: number;
+    timeoutMS: Int32;
   }
 ) {
   return this.symbols.SDL_WaitSemaphoreTimeout(options.sem, options.timeoutMS);
@@ -86,7 +87,7 @@ export function signalSemaphore(this: SDL, sem: Semaphore) {
 }
 
 export function getSemaphoreValue(this: SDL, sem: Semaphore) {
-  return this.symbols.SDL_GetSemaphoreValue(sem);
+  return this.symbols.SDL_GetSemaphoreValue(sem) as UInt32;
 }
 
 export function createCondition(this: SDL) {
@@ -120,7 +121,7 @@ export function waitConditionTimeout(
   options: {
     cond: Condition;
     mutex: Mutex;
-    timeoutMS: number;
+    timeoutMS: Int32;
   }
 ) {
   return this.symbols.SDL_WaitConditionTimeout(

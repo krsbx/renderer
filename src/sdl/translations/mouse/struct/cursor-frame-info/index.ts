@@ -1,3 +1,4 @@
+import type { UInt32 } from '@/types/primitive';
 import { BaseStruct } from '@basestruct';
 import { type Pointer } from 'bun:ffi';
 import { Surface } from '../../../surface/struct';
@@ -24,10 +25,10 @@ export class CursorFrameInfo extends BaseStruct {
   }
 
   public get duration() {
-    return this.$view.getUint32(ByteOffset.duration, true);
+    return this.$view.getUint32(ByteOffset.duration, true) as UInt32;
   }
 
-  public set duration(value: number) {
+  public set duration(value: UInt32) {
     this.$view.setUint32(ByteOffset.duration, value, true);
   }
 }

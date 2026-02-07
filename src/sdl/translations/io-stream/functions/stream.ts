@@ -1,5 +1,6 @@
 import type { SDL } from '@/sdl';
 import type { IOStream } from '@/sdl/types/definition';
+import type { UInt32 } from '@/types/primitive';
 import { stringToCString } from '@utility/common';
 import { type Pointer } from 'bun:ffi';
 import { type IOStatus, type IOWhence } from '../../../ffi/io-stream/constant';
@@ -51,7 +52,7 @@ export function closeIO(this: SDL, context: IOStream) {
 }
 
 export function getIOProperties(this: SDL, context: IOStream) {
-  return this.symbols.SDL_GetIOProperties(context);
+  return this.symbols.SDL_GetIOProperties(context) as UInt32;
 }
 
 export function getIOStatus(this: SDL, context: IOStream) {

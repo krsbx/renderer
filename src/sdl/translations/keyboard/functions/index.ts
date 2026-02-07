@@ -1,5 +1,6 @@
 import type { SDL } from '@/sdl';
 import type { Window } from '@/sdl/types/definition';
+import type { Int32, UInt32 } from '@/types/primitive';
 import { CStruct } from '@cstruct';
 import { stringToCString } from '@utility/common';
 import type { Keycode, Keymod } from '../../../ffi/keycode/constant';
@@ -26,7 +27,7 @@ export function getKeyboards(this: SDL) {
   return keyboards;
 }
 
-export function getKeyboardNameForID(this: SDL, instanceId: number) {
+export function getKeyboardNameForID(this: SDL, instanceId: UInt32) {
   return this.symbols.SDL_GetKeyboardNameForID(instanceId).toString();
 }
 
@@ -127,7 +128,7 @@ export function startTextInputWithProperties(
   this: SDL,
   options: {
     window: Window;
-    props: number;
+    props: UInt32;
   }
 ) {
   return this.symbols.SDL_StartTextInputWithProperties(
@@ -153,7 +154,7 @@ export function setTextInputArea(
   options: {
     window: Window;
     rect: Rect;
-    cursor: number;
+    cursor: Int32;
   }
 ) {
   return this.symbols.SDL_SetTextInputArea(
@@ -177,7 +178,7 @@ export function getTextInputArea(this: SDL, window: Window) {
 
   return {
     rect,
-    cursor: cursorStruct.getValue(0, 'i32'),
+    cursor: cursorStruct.getValue(0, 'i32') as Int32,
   };
 }
 

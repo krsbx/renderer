@@ -1,17 +1,18 @@
 import type { SDL } from '@/sdl';
 import type { Joystick } from '@/sdl/types/definition';
+import type { Float, Int16, Int32, UInt8, UInt32 } from '@/types/primitive';
 import type { SensorType } from '../../../ffi/sensor/constant';
 import { VirtualJoystickDesc } from '../struct';
 
 export function attachVirtualJoystick(this: SDL, desc: VirtualJoystickDesc) {
-  return this.symbols.SDL_AttachVirtualJoystick(desc.$memory);
+  return this.symbols.SDL_AttachVirtualJoystick(desc.$memory) as UInt32;
 }
 
-export function detachVirtualJoystick(this: SDL, instanceId: number) {
+export function detachVirtualJoystick(this: SDL, instanceId: UInt32) {
   return this.symbols.SDL_DetachVirtualJoystick(instanceId);
 }
 
-export function isJoystickVirtual(this: SDL, instanceId: number) {
+export function isJoystickVirtual(this: SDL, instanceId: UInt32) {
   return this.symbols.SDL_IsJoystickVirtual(instanceId);
 }
 
@@ -19,8 +20,8 @@ export function setJoystickVirtualAxis(
   this: SDL,
   options: {
     joystick: Joystick;
-    axis: number;
-    value: number;
+    axis: Int32;
+    value: Int16;
   }
 ) {
   return this.symbols.SDL_SetJoystickVirtualAxis(
@@ -34,9 +35,9 @@ export function setJoystickVirtualBall(
   this: SDL,
   options: {
     joystick: Joystick;
-    ball: number;
-    xrel: number;
-    yrel: number;
+    ball: Int32;
+    xrel: Int16;
+    yrel: Int16;
   }
 ) {
   return this.symbols.SDL_SetJoystickVirtualBall(
@@ -51,7 +52,7 @@ export function setJoystickVirtualButton(
   this: SDL,
   options: {
     joystick: Joystick;
-    button: number;
+    button: Int32;
     down: boolean;
   }
 ) {
@@ -66,8 +67,8 @@ export function setJoystickVirtualHat(
   this: SDL,
   options: {
     joystick: Joystick;
-    hat: number;
-    value: number;
+    hat: Int32;
+    value: UInt8;
   }
 ) {
   return this.symbols.SDL_SetJoystickVirtualHat(
@@ -81,12 +82,12 @@ export function setJoystickVirtualTouchpad(
   this: SDL,
   options: {
     joystick: Joystick;
-    touchpad: number;
-    finger: number;
+    touchpad: Int32;
+    finger: Int32;
     down: boolean;
-    x: number;
-    y: number;
-    pressure: number;
+    x: Float;
+    y: Float;
+    pressure: Float;
   }
 ) {
   return this.symbols.SDL_SetJoystickVirtualTouchpad(

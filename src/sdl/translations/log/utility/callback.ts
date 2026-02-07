@@ -1,4 +1,5 @@
 import type { LogPriority } from '@/sdl/ffi/log/constant';
+import type { Int32 } from '@/types/primitive';
 import { CString, FFIType, JSCallback, type Pointer } from 'bun:ffi';
 import type { LogOutputFunctionFn } from '../types/callback';
 
@@ -6,7 +7,7 @@ export const LogOutputCallbackRegistryKey = 'log:output' as const;
 
 export function createLogOutputCallback(callback: LogOutputFunctionFn) {
   const cb = new JSCallback(
-    (_: Pointer, category: number, priority: LogPriority, message: Pointer) => {
+    (_: Pointer, category: Int32, priority: LogPriority, message: Pointer) => {
       callback({
         category,
         priority,

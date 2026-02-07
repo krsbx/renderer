@@ -1,4 +1,5 @@
 import type { SDL } from '@/sdl';
+import type { Int32 } from '@/types/primitive';
 import { CallbackManager } from '@/sdl/utility';
 import { CStruct } from '@cstruct';
 import { stringToCString } from '@utility/common';
@@ -17,14 +18,14 @@ export function setLogPriorities(this: SDL, priority: LogPriority) {
 export function setLogPriority(
   this: SDL,
   options: {
-    category: number;
+    category: Int32;
     priority: LogPriority;
   }
 ) {
   return this.symbols.SDL_SetLogPriority(options.category, options.priority);
 }
 
-export function getLogPriority(this: SDL, category: number) {
+export function getLogPriority(this: SDL, category: Int32) {
   return this.symbols.SDL_GetLogPriority(category) as LogPriority;
 }
 
@@ -60,7 +61,7 @@ export function log(this: SDL, message: string) {
 export function logTrace(
   this: SDL,
   options: {
-    category: number;
+    category: Int32;
     message: string;
   }
 ) {
@@ -77,7 +78,7 @@ export function logTrace(
 export function logVerbose(
   this: SDL,
   options: {
-    category: number;
+    category: Int32;
     message: string;
   }
 ) {
@@ -94,7 +95,7 @@ export function logVerbose(
 export function logDebug(
   this: SDL,
   options: {
-    category: number;
+    category: Int32;
     message: string;
   }
 ) {
@@ -111,7 +112,7 @@ export function logDebug(
 export function logInfo(
   this: SDL,
   options: {
-    category: number;
+    category: Int32;
     message: string;
   }
 ) {
@@ -128,7 +129,7 @@ export function logInfo(
 export function logWarn(
   this: SDL,
   options: {
-    category: number;
+    category: Int32;
     message: string;
   }
 ) {
@@ -145,7 +146,7 @@ export function logWarn(
 export function logError(
   this: SDL,
   options: {
-    category: number;
+    category: Int32;
     message: string;
   }
 ) {
@@ -162,7 +163,7 @@ export function logError(
 export function logCritical(
   this: SDL,
   options: {
-    category: number;
+    category: Int32;
     message: string;
   }
 ) {
@@ -179,7 +180,7 @@ export function logCritical(
 export function logMessage(
   this: SDL,
   options: {
-    category: number;
+    category: Int32;
     priority: LogPriority;
     message: string;
   }

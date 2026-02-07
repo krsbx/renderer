@@ -1,3 +1,4 @@
+import type { Int32 } from '@/types/primitive';
 import { BaseStruct } from '@basestruct';
 import type { MessageBoxButtonFlags } from '@sdl/ffi/constant/message-box';
 import { stringToCString } from '@utility/common';
@@ -23,10 +24,10 @@ export class MessageBoxButtonData extends BaseStruct {
   }
 
   public get buttonId() {
-    return this.$view.getInt32(ByteOffset.buttonID, true);
+    return this.$view.getInt32(ByteOffset.buttonID, true) as Int32;
   }
 
-  public set buttonId(value: number) {
+  public set buttonId(value: Int32) {
     this.$view.setInt32(ByteOffset.buttonID, value, true);
   }
 

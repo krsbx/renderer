@@ -1,3 +1,4 @@
+import type { Float } from '@/types/primitive';
 import { BaseStruct } from '@basestruct';
 import type { SensorType } from '@sdl/ffi/constant/sensor';
 import { ByteOffset } from './constant';
@@ -14,10 +15,10 @@ export class VirtualJoystickSensorDesc extends BaseStruct {
   }
 
   public get rate() {
-    return this.$view.getFloat32(ByteOffset.rate, true);
+    return this.$view.getFloat32(ByteOffset.rate, true) as Float;
   }
 
-  public set rate(value: number) {
+  public set rate(value: Float) {
     this.$view.setFloat32(ByteOffset.rate, value, true);
   }
 }

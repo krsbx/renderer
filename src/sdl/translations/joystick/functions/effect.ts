@@ -1,13 +1,14 @@
 import type { SDL } from '@/sdl';
 import type { Joystick } from '@/sdl/types/definition';
+import type { UInt8, UInt16, UInt32 } from '@/types/primitive';
 
 export function rumbleJoystick(
   this: SDL,
   options: {
     joystick: Joystick;
-    lowFrequencyRumble: number;
-    highFrequencyRumble: number;
-    durationMs: number;
+    lowFrequencyRumble: UInt16;
+    highFrequencyRumble: UInt16;
+    durationMs: UInt32;
   }
 ) {
   return this.symbols.SDL_RumbleJoystick(
@@ -22,9 +23,9 @@ export function rumbleJoystickTriggers(
   this: SDL,
   options: {
     joystick: Joystick;
-    leftRumble: number;
-    rightRumble: number;
-    durationMs: number;
+    leftRumble: UInt16;
+    rightRumble: UInt16;
+    durationMs: UInt32;
   }
 ) {
   return this.symbols.SDL_RumbleJoystickTriggers(
@@ -39,9 +40,9 @@ export function setJoystickLED(
   this: SDL,
   options: {
     joystick: Joystick;
-    red: number;
-    green: number;
-    blue: number;
+    red: UInt8;
+    green: UInt8;
+    blue: UInt8;
   }
 ) {
   return this.symbols.SDL_SetJoystickLED(

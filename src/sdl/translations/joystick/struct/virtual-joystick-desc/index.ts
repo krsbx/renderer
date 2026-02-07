@@ -1,3 +1,4 @@
+import type { UInt16, UInt32 } from '@/types/primitive';
 import { BaseStruct } from '@basestruct';
 import { stringToCString } from '@utility/common';
 import { CStruct } from '@utility/cstruct';
@@ -25,7 +26,7 @@ export class VirtualJoystickDesc extends BaseStruct {
   }> = {};
 
   public get version() {
-    return this.$view.getUint32(ByteOffset.version, true);
+    return this.$view.getUint32(ByteOffset.version, true) as UInt32;
   }
 
   private invoke<T>(offset: number, definition: FFIFunction, args: unknown[]) {
@@ -54,90 +55,90 @@ export class VirtualJoystickDesc extends BaseStruct {
   }
 
   public get type() {
-    return this.$view.getUint16(ByteOffset.type, true);
+    return this.$view.getUint16(ByteOffset.type, true) as UInt16;
   }
 
-  public set type(value: number) {
+  public set type(value: UInt16) {
     this.$view.setUint16(ByteOffset.type, value, true);
   }
 
   public get vendorId() {
-    return this.$view.getUint16(ByteOffset.vendor_id, true);
+    return this.$view.getUint16(ByteOffset.vendor_id, true) as UInt16;
   }
 
-  public set vendorId(value: number) {
+  public set vendorId(value: UInt16) {
     this.$view.setUint16(ByteOffset.vendor_id, value, true);
   }
 
   public get productId() {
-    return this.$view.getUint16(ByteOffset.product_id, true);
+    return this.$view.getUint16(ByteOffset.product_id, true) as UInt16;
   }
 
-  public set productId(value: number) {
+  public set productId(value: UInt16) {
     this.$view.setUint16(ByteOffset.product_id, value, true);
   }
 
   public get axesCount() {
-    return this.$view.getUint16(ByteOffset.naxes, true);
+    return this.$view.getUint16(ByteOffset.naxes, true) as UInt16;
   }
 
-  public set axesCount(value: number) {
+  public set axesCount(value: UInt16) {
     this.$view.setUint16(ByteOffset.naxes, value, true);
   }
 
   public get buttonCount() {
-    return this.$view.getUint16(ByteOffset.nbuttons, true);
+    return this.$view.getUint16(ByteOffset.nbuttons, true) as UInt16;
   }
 
-  public set buttonCount(value: number) {
+  public set buttonCount(value: UInt16) {
     this.$view.setUint16(ByteOffset.nbuttons, value, true);
   }
 
   public get ballCount() {
-    return this.$view.getUint16(ByteOffset.nballs, true);
+    return this.$view.getUint16(ByteOffset.nballs, true) as UInt16;
   }
 
-  public set ballCount(value: number) {
+  public set ballCount(value: UInt16) {
     this.$view.setUint16(ByteOffset.nballs, value, true);
   }
 
   public get hatCount() {
-    return this.$view.getUint16(ByteOffset.nhats, true);
+    return this.$view.getUint16(ByteOffset.nhats, true) as UInt16;
   }
 
-  public set hatCount(value: number) {
+  public set hatCount(value: UInt16) {
     this.$view.setUint16(ByteOffset.nhats, value, true);
   }
 
   public get touchpadCount() {
-    return this.$view.getUint16(ByteOffset.ntouchpads, true);
+    return this.$view.getUint16(ByteOffset.ntouchpads, true) as UInt16;
   }
 
-  public set touchpadCount(value: number) {
+  public set touchpadCount(value: UInt16) {
     this.$view.setUint16(ByteOffset.ntouchpads, value, true);
   }
 
   public get sensorCount() {
-    return this.$view.getUint16(ByteOffset.nsensors, true);
+    return this.$view.getUint16(ByteOffset.nsensors, true) as UInt16;
   }
 
-  public set sensorCount(value: number) {
+  public set sensorCount(value: UInt16) {
     this.$view.setUint16(ByteOffset.nsensors, value, true);
   }
 
   public get buttonMask() {
-    return this.$view.getUint32(ByteOffset.button_mask, true);
+    return this.$view.getUint32(ByteOffset.button_mask, true) as UInt32;
   }
 
-  public set buttonMask(value: number) {
+  public set buttonMask(value: UInt32) {
     this.$view.setUint32(ByteOffset.button_mask, value, true);
   }
 
   public get axisMask() {
-    return this.$view.getUint32(ByteOffset.axis_mask, true);
+    return this.$view.getUint32(ByteOffset.axis_mask, true) as UInt32;
   }
 
-  public set axisMask(value: number) {
+  public set axisMask(value: UInt32) {
     this.$view.setUint32(ByteOffset.axis_mask, value, true);
   }
 
@@ -175,7 +176,7 @@ export class VirtualJoystickDesc extends BaseStruct {
   }
 
   public set touchpads(value: VirtualJoystickTouchpadDesc[]) {
-    this.touchpadCount = value.length;
+    this.touchpadCount = value.length as UInt16;
 
     if (this.touchpadCount === 0) {
       this.$view.setBigUint64(ByteOffset.touchpads, 0n, true);
@@ -210,7 +211,7 @@ export class VirtualJoystickDesc extends BaseStruct {
   }
 
   public set sensors(value: VirtualJoystickSensorDesc[]) {
-    this.sensorCount = value.length;
+    this.sensorCount = value.length as UInt16;
 
     if (this.sensorCount === 0) {
       this.$view.setBigUint64(ByteOffset.sensors, 0n, true);

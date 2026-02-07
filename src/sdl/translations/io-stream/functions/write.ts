@@ -1,5 +1,13 @@
 import type { SDL } from '@/sdl';
 import type { IOStream } from '@/sdl/types/definition';
+import type {
+  Int8,
+  Int16,
+  Int32,
+  UInt8,
+  UInt16,
+  UInt32,
+} from '@/types/primitive';
 
 export function writeIO(
   this: SDL,
@@ -19,7 +27,7 @@ export function writeU8(
   this: SDL,
   options: {
     dst: IOStream;
-    value: number;
+    value: UInt8;
   }
 ) {
   return this.symbols.SDL_WriteU8(options.dst, options.value);
@@ -29,7 +37,7 @@ export function writeS8(
   this: SDL,
   options: {
     dst: IOStream;
-    value: number;
+    value: Int8;
   }
 ) {
   return this.symbols.SDL_WriteS8(options.dst, options.value);
@@ -39,7 +47,7 @@ export function writeU16LE(
   this: SDL,
   options: {
     dst: IOStream;
-    value: number;
+    value: UInt16;
   }
 ) {
   return this.symbols.SDL_WriteU16LE(options.dst, options.value);
@@ -49,7 +57,7 @@ export function writeS16LE(
   this: SDL,
   options: {
     dst: IOStream;
-    value: number;
+    value: Int16;
   }
 ) {
   return this.symbols.SDL_WriteS16LE(options.dst, options.value);
@@ -59,7 +67,7 @@ export function writeU16BE(
   this: SDL,
   options: {
     dst: IOStream;
-    value: number;
+    value: UInt16;
   }
 ) {
   return this.symbols.SDL_WriteU16BE(options.dst, options.value);
@@ -69,7 +77,7 @@ export function writeS16BE(
   this: SDL,
   options: {
     dst: IOStream;
-    value: number;
+    value: Int16;
   }
 ) {
   return this.symbols.SDL_WriteS16BE(options.dst, options.value);
@@ -79,7 +87,7 @@ export function writeU32LE(
   this: SDL,
   options: {
     dst: IOStream;
-    value: number;
+    value: UInt32;
   }
 ) {
   return this.symbols.SDL_WriteU32LE(options.dst, options.value);
@@ -89,7 +97,7 @@ export function writeS32LE(
   this: SDL,
   options: {
     dst: IOStream;
-    value: number;
+    value: Int32;
   }
 ) {
   return this.symbols.SDL_WriteS32LE(options.dst, options.value);
@@ -99,7 +107,7 @@ export function writeU32BE(
   this: SDL,
   options: {
     dst: IOStream;
-    value: number;
+    value: UInt32;
   }
 ) {
   return this.symbols.SDL_WriteU32BE(options.dst, options.value);
@@ -109,7 +117,7 @@ export function writeS32BE(
   this: SDL,
   options: {
     dst: IOStream;
-    value: number;
+    value: Int32;
   }
 ) {
   return this.symbols.SDL_WriteS32BE(options.dst, options.value);

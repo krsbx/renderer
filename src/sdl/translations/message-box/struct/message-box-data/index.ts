@@ -1,4 +1,5 @@
 import type { Window } from '@/sdl/types/definition';
+import type { Int32 } from '@/types/primitive';
 import { BaseStruct } from '@basestruct';
 import type { MessageBoxFlags } from '@sdl/ffi/constant/message-box';
 import { stringToCString } from '@utility/common';
@@ -73,10 +74,10 @@ export class MessageBoxData extends BaseStruct {
   }
 
   public get buttonCount() {
-    return this.$view.getInt32(ByteOffset.numbuttons, true);
+    return this.$view.getInt32(ByteOffset.numbuttons, true) as Int32;
   }
 
-  public set buttonCount(value: number) {
+  public set buttonCount(value: Int32) {
     this.$view.setInt32(ByteOffset.numbuttons, value, true);
   }
 
@@ -97,7 +98,7 @@ export class MessageBoxData extends BaseStruct {
   }
 
   public set buttons(value: MessageBoxButtonData[]) {
-    this.buttonCount = value.length;
+    this.buttonCount = value.length as Int32;
 
     if (this.buttonCount === 0) {
       this.$view.setBigUint64(ByteOffset.buttons, 0n, true);

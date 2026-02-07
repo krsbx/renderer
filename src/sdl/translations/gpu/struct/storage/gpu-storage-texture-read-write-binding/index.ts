@@ -1,4 +1,5 @@
 import { BaseStruct } from '@basestruct';
+import type { UInt32 } from '@/types/primitive';
 import type { GPUTexture } from '@/sdl/types/definition';
 import { ByteOffset } from './constant';
 
@@ -16,18 +17,18 @@ export class GPUStorageTextureReadWriteBinding extends BaseStruct {
   }
 
   public get mipLevel() {
-    return this.$view.getUint32(ByteOffset.mip_level, true);
+    return this.$view.getUint32(ByteOffset.mip_level, true) as UInt32;
   }
 
-  public set mipLevel(value: number) {
+  public set mipLevel(value: UInt32) {
     this.$view.setUint32(ByteOffset.mip_level, value, true);
   }
 
   public get layer() {
-    return this.$view.getUint32(ByteOffset.layer, true);
+    return this.$view.getUint32(ByteOffset.layer, true) as UInt32;
   }
 
-  public set layer(value: number) {
+  public set layer(value: UInt32) {
     this.$view.setUint32(ByteOffset.layer, value, true);
   }
 

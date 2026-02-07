@@ -1,3 +1,4 @@
+import type { UInt32 } from '@/types/primitive';
 import { BaseStruct } from '@basestruct';
 import { ByteOffset } from './constant';
 import type { GamepadDeviceEventType } from './types';
@@ -17,10 +18,10 @@ export class GamepadDeviceEvent extends BaseStruct {
   }
 
   public get reserved() {
-    return this.$view.getUint32(ByteOffset.reserved, true);
+    return this.$view.getUint32(ByteOffset.reserved, true) as UInt32;
   }
 
-  public set reserved(value: number) {
+  public set reserved(value: UInt32) {
     this.$view.setUint32(ByteOffset.reserved, value, true);
   }
 
@@ -33,10 +34,10 @@ export class GamepadDeviceEvent extends BaseStruct {
   }
 
   public get which() {
-    return this.$view.getUint32(ByteOffset.which, true);
+    return this.$view.getUint32(ByteOffset.which, true) as UInt32;
   }
 
-  public set which(value: number) {
+  public set which(value: UInt32) {
     this.$view.setUint32(ByteOffset.which, value, true);
   }
 }

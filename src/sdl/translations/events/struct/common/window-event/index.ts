@@ -1,3 +1,4 @@
+import type { Int32, UInt32 } from '@/types/primitive';
 import { BaseStruct } from '@basestruct';
 import { ByteOffset } from './constant';
 import type { WindowEventType } from './types';
@@ -14,10 +15,10 @@ export class WindowEvent extends BaseStruct {
   }
 
   public get reserved() {
-    return this.$view.getUint32(ByteOffset.reserved, true);
+    return this.$view.getUint32(ByteOffset.reserved, true) as UInt32;
   }
 
-  public set reserved(value: number) {
+  public set reserved(value: UInt32) {
     this.$view.setUint32(ByteOffset.reserved, value, true);
   }
 
@@ -30,26 +31,26 @@ export class WindowEvent extends BaseStruct {
   }
 
   public get windowId() {
-    return this.$view.getUint32(ByteOffset.windowID, true);
+    return this.$view.getUint32(ByteOffset.windowID, true) as UInt32;
   }
 
-  public set windowID(value: number) {
+  public set windowID(value: UInt32) {
     this.$view.setUint32(ByteOffset.windowID, value, true);
   }
 
   public get data1() {
-    return this.$view.getInt32(ByteOffset.data1, true);
+    return this.$view.getInt32(ByteOffset.data1, true) as Int32;
   }
 
-  public set data1(value: number) {
+  public set data1(value: Int32) {
     this.$view.setInt32(ByteOffset.data1, value, true);
   }
 
   public get data2() {
-    return this.$view.getInt32(ByteOffset.data2, true);
+    return this.$view.getInt32(ByteOffset.data2, true) as Int32;
   }
 
-  public set data2(value: number) {
+  public set data2(value: Int32) {
     this.$view.setInt32(ByteOffset.data2, value, true);
   }
 }

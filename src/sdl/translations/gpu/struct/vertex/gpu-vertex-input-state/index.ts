@@ -1,4 +1,5 @@
 import { BaseStruct } from '@basestruct';
+import type { UInt32 } from '@/types/primitive';
 import { CStruct } from '@utility/cstruct';
 import type { Pointer } from 'bun:ffi';
 import { GPUVertexAttribute } from '../gpu-vertex-attribute';
@@ -31,7 +32,7 @@ export class GPUVertexInputState extends BaseStruct {
   }
 
   public set vertexBufferDescriptions(value: GPUVertexBufferDescription[]) {
-    this.vertexBufferCount = value.length;
+    this.vertexBufferCount = value.length as UInt32;
 
     if (this.vertexBufferCount === 0) {
       this.$view.setBigUint64(ByteOffset.vertex_buffer_descriptions, 0n, true);
@@ -54,10 +55,10 @@ export class GPUVertexInputState extends BaseStruct {
   }
 
   public get vertexBufferCount() {
-    return this.$view.getUint32(ByteOffset.num_vertex_buffers, true);
+    return this.$view.getUint32(ByteOffset.num_vertex_buffers, true) as UInt32;
   }
 
-  public set vertexBufferCount(value: number) {
+  public set vertexBufferCount(value: UInt32) {
     this.$view.setUint32(ByteOffset.num_vertex_buffers, value, true);
   }
 
@@ -81,7 +82,7 @@ export class GPUVertexInputState extends BaseStruct {
   }
 
   public set vertexAttributes(value: GPUVertexAttribute[]) {
-    this.vertexAttributeCount = value.length;
+    this.vertexAttributeCount = value.length as UInt32;
 
     if (this.vertexAttributeCount === 0) {
       this.$view.setBigUint64(ByteOffset.vertex_attributes, 0n, true);
@@ -104,10 +105,13 @@ export class GPUVertexInputState extends BaseStruct {
   }
 
   public get vertexAttributeCount() {
-    return this.$view.getUint32(ByteOffset.num_vertex_attributes, true);
+    return this.$view.getUint32(
+      ByteOffset.num_vertex_attributes,
+      true
+    ) as UInt32;
   }
 
-  public set vertexAttributeCount(value: number) {
+  public set vertexAttributeCount(value: UInt32) {
     this.$view.setUint32(ByteOffset.num_vertex_attributes, value, true);
   }
 }

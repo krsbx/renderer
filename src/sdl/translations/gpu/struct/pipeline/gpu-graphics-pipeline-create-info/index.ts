@@ -1,4 +1,5 @@
 import { BaseStruct, type BaseStructOptions } from '@basestruct';
+import type { Int32, UInt32 } from '@/types/primitive';
 import type { GPUShader } from '@/sdl/types/definition';
 import { GPUMultisampleState, GPURasterizerState } from '../../common';
 import { GPUDepthStencilState } from '../../stencil';
@@ -71,18 +72,18 @@ export class GPUGraphicsPipelineCreateInfo extends BaseStruct {
   }
 
   public get primitiveType() {
-    return this.$view.getInt32(ByteOffset.primitive_type, true);
+    return this.$view.getInt32(ByteOffset.primitive_type, true) as Int32;
   }
 
-  public set primitiveType(value: number) {
+  public set primitiveType(value: Int32) {
     this.$view.setInt32(ByteOffset.primitive_type, value, true);
   }
 
   public get props() {
-    return this.$view.getUint32(ByteOffset.props, true);
+    return this.$view.getUint32(ByteOffset.props, true) as UInt32;
   }
 
-  public set props(value: number) {
+  public set props(value: UInt32) {
     this.$view.setUint32(ByteOffset.props, value, true);
   }
 }

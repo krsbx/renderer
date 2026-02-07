@@ -1,3 +1,4 @@
+import type { Int32, UInt32 } from '@/types/primitive';
 import { BaseStruct } from '@basestruct';
 import { CStruct } from '@utility/cstruct';
 import { CString, type Pointer } from 'bun:ffi';
@@ -24,10 +25,10 @@ export class TextEditingCandidatesEvent extends BaseStruct {
   }
 
   public get reserved() {
-    return this.$view.getUint32(ByteOffset.reserved, true);
+    return this.$view.getUint32(ByteOffset.reserved, true) as UInt32;
   }
 
-  public set reserved(value: number) {
+  public set reserved(value: UInt32) {
     this.$view.setUint32(ByteOffset.reserved, value, true);
   }
 
@@ -40,10 +41,10 @@ export class TextEditingCandidatesEvent extends BaseStruct {
   }
 
   public get windowId() {
-    return this.$view.getUint32(ByteOffset.windowID, true);
+    return this.$view.getUint32(ByteOffset.windowID, true) as UInt32;
   }
 
-  public set windowID(value: number) {
+  public set windowID(value: UInt32) {
     this.$view.setUint32(ByteOffset.windowID, value, true);
   }
 
@@ -60,9 +61,9 @@ export class TextEditingCandidatesEvent extends BaseStruct {
   }
 
   public set candidates(value: string[]) {
-    this.candidateCount = value.length;
+    this.candidateCount = value.length as Int32;
 
-    if (this.candidateCount === 0) {
+    if (this.candidateCount === (0 as Int32)) {
       this.$view.setBigUint64(ByteOffset.candidates, 0n, true);
       this.$candidatesBuffer = null;
       return;
@@ -77,18 +78,18 @@ export class TextEditingCandidatesEvent extends BaseStruct {
   }
 
   public get candidateCount() {
-    return this.$view.getInt32(ByteOffset.num_candidates, true);
+    return this.$view.getInt32(ByteOffset.num_candidates, true) as Int32;
   }
 
-  public set candidateCount(value: number) {
+  public set candidateCount(value: Int32) {
     this.$view.setInt32(ByteOffset.num_candidates, value, true);
   }
 
   public get selectedCandidate() {
-    return this.$view.getInt32(ByteOffset.selected_candidate, true);
+    return this.$view.getInt32(ByteOffset.selected_candidate, true) as Int32;
   }
 
-  public set selectedCandidate(value: number) {
+  public set selectedCandidate(value: Int32) {
     this.$view.setInt32(ByteOffset.selected_candidate, value, true);
   }
 

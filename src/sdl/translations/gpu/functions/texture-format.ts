@@ -4,6 +4,7 @@ import type {
   GPUDevice,
   GPUTexture,
 } from '@/sdl/types/definition';
+import type { UInt32 } from '@/types/primitive';
 import type {
   GPUSampleCount,
   GPUTextureFormat,
@@ -44,7 +45,7 @@ export function gpuTextureFormatTexelBlockSize(
   this: SDL,
   format: GPUTextureFormat
 ) {
-  return this.symbols.SDL_GPUTextureFormatTexelBlockSize(format);
+  return this.symbols.SDL_GPUTextureFormatTexelBlockSize(format) as UInt32;
 }
 
 export function gpuTextureSupportsFormat(
@@ -83,9 +84,9 @@ export function calculateGPUTextureFormatSize(
   this: SDL,
   options: {
     format: GPUTextureFormat;
-    width: number;
-    height: number;
-    depthOrLayerCount: number;
+    width: UInt32;
+    height: UInt32;
+    depthOrLayerCount: UInt32;
   }
 ) {
   return this.symbols.SDL_CalculateGPUTextureFormatSize(

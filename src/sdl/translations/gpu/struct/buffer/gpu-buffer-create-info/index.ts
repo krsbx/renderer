@@ -1,4 +1,5 @@
 import { BaseStruct } from '@basestruct';
+import type { UInt32 } from '@/types/primitive';
 import type { GPUBufferUsageFlags } from '@sdl/ffi/constant/gpu';
 import { ByteOffset } from './constant';
 
@@ -14,18 +15,18 @@ export class GPUBufferCreateInfo extends BaseStruct {
   }
 
   public get size() {
-    return this.$view.getUint32(ByteOffset.size, true);
+    return this.$view.getUint32(ByteOffset.size, true) as UInt32;
   }
 
-  public set size(value: number) {
+  public set size(value: UInt32) {
     this.$view.setUint32(ByteOffset.size, value, true);
   }
 
   public get props() {
-    return this.$view.getUint32(ByteOffset.props, true);
+    return this.$view.getUint32(ByteOffset.props, true) as UInt32;
   }
 
-  public set props(value: number) {
+  public set props(value: UInt32) {
     this.$view.setUint32(ByteOffset.props, value, true);
   }
 }

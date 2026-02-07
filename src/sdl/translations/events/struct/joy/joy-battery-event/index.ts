@@ -1,3 +1,4 @@
+import type { Int32, UInt32 } from '@/types/primitive';
 import { BaseStruct } from '@basestruct';
 import type { PowerState } from '@sdl/ffi/constant/power';
 import { ByteOffset } from './constant';
@@ -15,10 +16,10 @@ export class JoyBatteryEvent extends BaseStruct {
   }
 
   public get reserved() {
-    return this.$view.getUint32(ByteOffset.reserved, true);
+    return this.$view.getUint32(ByteOffset.reserved, true) as UInt32;
   }
 
-  public set reserved(value: number) {
+  public set reserved(value: UInt32) {
     this.$view.setUint32(ByteOffset.reserved, value, true);
   }
 
@@ -31,10 +32,10 @@ export class JoyBatteryEvent extends BaseStruct {
   }
 
   public get which() {
-    return this.$view.getUint32(ByteOffset.which, true);
+    return this.$view.getUint32(ByteOffset.which, true) as UInt32;
   }
 
-  public set which(value: number) {
+  public set which(value: UInt32) {
     this.$view.setUint32(ByteOffset.which, value, true);
   }
 
@@ -47,10 +48,10 @@ export class JoyBatteryEvent extends BaseStruct {
   }
 
   public get percent() {
-    return this.$view.getInt32(ByteOffset.percent, true);
+    return this.$view.getInt32(ByteOffset.percent, true) as Int32;
   }
 
-  public set percent(value: number) {
+  public set percent(value: Int32) {
     this.$view.setInt32(ByteOffset.percent, value, true);
   }
 }

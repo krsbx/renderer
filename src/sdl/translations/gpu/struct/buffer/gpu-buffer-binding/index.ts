@@ -1,4 +1,5 @@
 import { BaseStruct } from '@basestruct';
+import type { UInt32 } from '@/types/primitive';
 import type { GPUBuffer } from '@/sdl/types/definition';
 import { ByteOffset } from './constant';
 
@@ -16,10 +17,10 @@ export class GPUBufferBinding extends BaseStruct {
   }
 
   public get offset() {
-    return this.$view.getUint32(ByteOffset.offset, true);
+    return this.$view.getUint32(ByteOffset.offset, true) as UInt32;
   }
 
-  public set offset(value: number) {
+  public set offset(value: UInt32) {
     this.$view.setUint32(ByteOffset.offset, value, true);
   }
 }

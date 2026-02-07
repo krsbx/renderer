@@ -1,6 +1,7 @@
 import type { SDL } from '@/sdl';
 import type { Window } from '@/sdl/types/definition';
 import { CallbackManager } from '@/sdl/utility';
+import type { Int32, UInt32 } from '@/types/primitive';
 import { CStruct } from '@cstruct';
 import { CString, ptr } from 'bun:ffi';
 import { type EventAction, type EventType } from '../../../ffi/events/constant';
@@ -21,7 +22,7 @@ export function peepEvents(
   this: SDL,
   options: {
     events: Event;
-    numevents: number;
+    numevents: Int32;
     action: EventAction;
     minType: EventType;
     maxType: EventType;
@@ -33,7 +34,7 @@ export function peepEvents(
     options.action,
     options.minType,
     options.maxType
-  );
+  ) as Int32;
 }
 
 export function hasEvent(this: SDL, type: EventType) {
@@ -86,7 +87,7 @@ export function waitEventTimeout(
   this: SDL,
   options: {
     event?: Event | null;
-    timeoutMS: number;
+    timeoutMS: Int32;
   }
 ) {
   const eventInstance = options.event ?? Event.create();
@@ -187,8 +188,8 @@ export function eventEnabled(this: SDL, type: EventType) {
   return this.symbols.SDL_EventEnabled(type);
 }
 
-export function registerEvents(this: SDL, numevents: number) {
-  return this.symbols.SDL_RegisterEvents(numevents);
+export function registerEvents(this: SDL, numevents: Int32) {
+  return this.symbols.SDL_RegisterEvents(numevents) as UInt32;
 }
 
 export function getWindowFromEvent(this: SDL, event: Event) {

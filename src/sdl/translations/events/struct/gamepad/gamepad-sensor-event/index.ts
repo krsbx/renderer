@@ -1,3 +1,4 @@
+import type { Int32, UInt32 } from '@/types/primitive';
 import type { BuildTuple } from '@/types/shared';
 import { BaseStruct } from '@basestruct';
 import { ByteOffset } from './constant';
@@ -20,10 +21,10 @@ export class GamepadSensorEvent extends BaseStruct {
   }
 
   public get reserved() {
-    return this.$view.getUint32(ByteOffset.reserved, true);
+    return this.$view.getUint32(ByteOffset.reserved, true) as UInt32;
   }
 
-  public set reserved(value: number) {
+  public set reserved(value: UInt32) {
     this.$view.setUint32(ByteOffset.reserved, value, true);
   }
 
@@ -36,18 +37,18 @@ export class GamepadSensorEvent extends BaseStruct {
   }
 
   public get which() {
-    return this.$view.getUint32(ByteOffset.which, true);
+    return this.$view.getUint32(ByteOffset.which, true) as UInt32;
   }
 
-  public set which(value: number) {
+  public set which(value: UInt32) {
     this.$view.setUint32(ByteOffset.which, value, true);
   }
 
   public get sensor() {
-    return this.$view.getInt32(ByteOffset.sensor, true);
+    return this.$view.getInt32(ByteOffset.sensor, true) as Int32;
   }
 
-  public set sensor(value: number) {
+  public set sensor(value: Int32) {
     this.$view.setInt32(ByteOffset.sensor, value, true);
   }
 

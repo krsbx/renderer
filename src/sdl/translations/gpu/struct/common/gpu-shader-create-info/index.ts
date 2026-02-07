@@ -1,4 +1,5 @@
 import { BaseStruct } from '@basestruct';
+import type { UInt32 } from '@/types/primitive';
 import type { GPUShaderFormat, GPUShaderStage } from '@sdl/ffi/constant/gpu';
 import { stringToCString } from '@utility/common';
 import { CString, type Pointer } from 'bun:ffi';
@@ -61,42 +62,45 @@ export class GPUShaderCreateInfo extends BaseStruct {
   }
 
   public get samplerCount() {
-    return this.$view.getUint32(ByteOffset.num_samplers, true);
+    return this.$view.getUint32(ByteOffset.num_samplers, true) as UInt32;
   }
 
-  public set samplerCount(value: number) {
+  public set samplerCount(value: UInt32) {
     this.$view.setUint32(ByteOffset.num_samplers, value, true);
   }
 
   public get storageTextureCount() {
-    return this.$view.getUint32(ByteOffset.num_storage_textures, true);
+    return this.$view.getUint32(
+      ByteOffset.num_storage_textures,
+      true
+    ) as UInt32;
   }
 
-  public set storageTextureCount(value: number) {
+  public set storageTextureCount(value: UInt32) {
     this.$view.setUint32(ByteOffset.num_storage_textures, value, true);
   }
 
   public get storageBufferCount() {
-    return this.$view.getUint32(ByteOffset.num_storage_buffers, true);
+    return this.$view.getUint32(ByteOffset.num_storage_buffers, true) as UInt32;
   }
 
-  public set storageBufferCount(value: number) {
+  public set storageBufferCount(value: UInt32) {
     this.$view.setUint32(ByteOffset.num_storage_buffers, value, true);
   }
 
   public get uniformBufferCount() {
-    return this.$view.getUint32(ByteOffset.num_uniform_buffers, true);
+    return this.$view.getUint32(ByteOffset.num_uniform_buffers, true) as UInt32;
   }
 
-  public set uniformBufferCount(value: number) {
+  public set uniformBufferCount(value: UInt32) {
     this.$view.setUint32(ByteOffset.num_uniform_buffers, value, true);
   }
 
   public get props() {
-    return this.$view.getUint32(ByteOffset.props, true);
+    return this.$view.getUint32(ByteOffset.props, true) as UInt32;
   }
 
-  public set props(value: number) {
+  public set props(value: UInt32) {
     this.$view.setUint32(ByteOffset.props, value, true);
   }
 }

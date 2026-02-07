@@ -1,3 +1,4 @@
+import type { Float, UInt32 } from '@/types/primitive';
 import { BaseStruct } from '@basestruct';
 import { ByteOffset } from './constant';
 import type { PinchFingerEventType } from './types';
@@ -14,10 +15,10 @@ export class PinchFingerEvent extends BaseStruct {
   }
 
   public get reserved() {
-    return this.$view.getUint32(ByteOffset.reserved, true);
+    return this.$view.getUint32(ByteOffset.reserved, true) as UInt32;
   }
 
-  public set reserved(value: number) {
+  public set reserved(value: UInt32) {
     this.$view.setUint32(ByteOffset.reserved, value, true);
   }
 
@@ -30,18 +31,18 @@ export class PinchFingerEvent extends BaseStruct {
   }
 
   public get scale() {
-    return this.$view.getFloat32(ByteOffset.scale, true);
+    return this.$view.getFloat32(ByteOffset.scale, true) as Float;
   }
 
-  public set scale(value: number) {
+  public set scale(value: Float) {
     this.$view.setFloat32(ByteOffset.scale, value, true);
   }
 
   public get windowId() {
-    return this.$view.getUint32(ByteOffset.windowID, true);
+    return this.$view.getUint32(ByteOffset.windowID, true) as UInt32;
   }
 
-  public set windowID(value: number) {
+  public set windowID(value: UInt32) {
     this.$view.setUint32(ByteOffset.windowID, value, true);
   }
 }

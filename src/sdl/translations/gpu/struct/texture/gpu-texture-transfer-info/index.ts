@@ -1,4 +1,5 @@
 import { BaseStruct } from '@basestruct';
+import type { UInt32 } from '@/types/primitive';
 import type { GPUTransferBuffer } from '@/sdl/types/definition';
 import { ByteOffset } from './constant';
 
@@ -16,26 +17,26 @@ export class GPUTextureTransferInfo extends BaseStruct {
   }
 
   public get offset() {
-    return this.$view.getUint32(ByteOffset.offset, true);
+    return this.$view.getUint32(ByteOffset.offset, true) as UInt32;
   }
 
-  public set offset(value: number) {
+  public set offset(value: UInt32) {
     this.$view.setUint32(ByteOffset.offset, value, true);
   }
 
   public get pixelsPerRow() {
-    return this.$view.getUint32(ByteOffset.pixels_per_row, true);
+    return this.$view.getUint32(ByteOffset.pixels_per_row, true) as UInt32;
   }
 
-  public set pixelsPerRow(value: number) {
+  public set pixelsPerRow(value: UInt32) {
     this.$view.setUint32(ByteOffset.pixels_per_row, value, true);
   }
 
   public get rowsPerLayer() {
-    return this.$view.getUint32(ByteOffset.rows_per_layer, true);
+    return this.$view.getUint32(ByteOffset.rows_per_layer, true) as UInt32;
   }
 
-  public set rowsPerLayer(value: number) {
+  public set rowsPerLayer(value: UInt32) {
     this.$view.setUint32(ByteOffset.rows_per_layer, value, true);
   }
 }

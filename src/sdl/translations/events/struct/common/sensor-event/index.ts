@@ -1,3 +1,4 @@
+import type { UInt32 } from '@/types/primitive';
 import type { BuildTuple } from '@/types/shared';
 import { BaseStruct } from '@basestruct';
 import { ByteOffset } from './constant';
@@ -17,10 +18,10 @@ export class SensorEvent extends BaseStruct {
   }
 
   public get reserved() {
-    return this.$view.getUint32(ByteOffset.reserved, true);
+    return this.$view.getUint32(ByteOffset.reserved, true) as UInt32;
   }
 
-  public set reserved(value: number) {
+  public set reserved(value: UInt32) {
     this.$view.setUint32(ByteOffset.reserved, value, true);
   }
 
@@ -33,17 +34,17 @@ export class SensorEvent extends BaseStruct {
   }
 
   public get which() {
-    return this.$view.getUint32(ByteOffset.which, true);
+    return this.$view.getUint32(ByteOffset.which, true) as UInt32;
   }
 
-  public set which(value: number) {
+  public set which(value: UInt32) {
     this.$view.setUint32(ByteOffset.which, value, true);
   }
 
   public get data() {
     if (this.$data) return this.$data;
 
-    this.$data = new Uint32Array(
+    this.$data = new Float32Array(
       this.$memory.buffer,
       this.$memory.byteOffset + ByteOffset.data1,
       6

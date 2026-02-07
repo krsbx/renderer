@@ -5,6 +5,7 @@ import type {
   GPUDevice,
   GPUTransferBuffer,
 } from '@/sdl/types/definition';
+import type { UInt32 } from '@/types/primitive';
 import {
   GPUBufferLocation,
   GPUBufferRegion,
@@ -99,9 +100,9 @@ export function copyGPUTextureToTexture(
     copyPass: GPUCopyPass;
     source: GPUTextureLocation;
     destination: GPUTextureLocation;
-    w: number;
-    h: number;
-    d: number;
+    w: UInt32;
+    h: UInt32;
+    d: UInt32;
     /**
      * @default false
      */
@@ -125,7 +126,7 @@ export function copyGPUBufferToBuffer(
     copyPass: GPUCopyPass;
     source: GPUBufferLocation;
     destination: GPUBufferLocation;
-    size: number;
+    size: UInt32;
     /**
      * @default false
      */

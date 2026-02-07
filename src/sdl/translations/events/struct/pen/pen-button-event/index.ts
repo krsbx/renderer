@@ -1,3 +1,4 @@
+import type { Float, UInt32, UInt8 } from '@/types/primitive';
 import { BaseStruct } from '@basestruct';
 import type { PenInputFlags } from '@sdl/ffi/constant/pen';
 import { ByteOffset } from './constant';
@@ -15,10 +16,10 @@ export class PenButtonEvent extends BaseStruct {
   }
 
   public get reserved() {
-    return this.$view.getUint32(ByteOffset.reserved, true);
+    return this.$view.getUint32(ByteOffset.reserved, true) as UInt32;
   }
 
-  public set reserved(value: number) {
+  public set reserved(value: UInt32) {
     this.$view.setUint32(ByteOffset.reserved, value, true);
   }
 
@@ -31,18 +32,18 @@ export class PenButtonEvent extends BaseStruct {
   }
 
   public get windowId() {
-    return this.$view.getUint32(ByteOffset.windowID, true);
+    return this.$view.getUint32(ByteOffset.windowID, true) as UInt32;
   }
 
-  public set windowID(value: number) {
+  public set windowID(value: UInt32) {
     this.$view.setUint32(ByteOffset.windowID, value, true);
   }
 
   public get which() {
-    return this.$view.getUint32(ByteOffset.which, true);
+    return this.$view.getUint32(ByteOffset.which, true) as UInt32;
   }
 
-  public set which(value: number) {
+  public set which(value: UInt32) {
     this.$view.setUint32(ByteOffset.which, value, true);
   }
 
@@ -55,26 +56,26 @@ export class PenButtonEvent extends BaseStruct {
   }
 
   public get x() {
-    return this.$view.getFloat32(ByteOffset.x, true);
+    return this.$view.getFloat32(ByteOffset.x, true) as Float;
   }
 
-  public set x(value: number) {
+  public set x(value: Float) {
     this.$view.setFloat32(ByteOffset.x, value, true);
   }
 
   public get y() {
-    return this.$view.getFloat32(ByteOffset.y, true);
+    return this.$view.getFloat32(ByteOffset.y, true) as Float;
   }
 
-  public set y(value: number) {
+  public set y(value: Float) {
     this.$view.setFloat32(ByteOffset.y, value, true);
   }
 
   public get button() {
-    return this.$view.getUint8(ByteOffset.button);
+    return this.$view.getUint8(ByteOffset.button) as UInt8;
   }
 
-  public set button(value: number) {
+  public set button(value: UInt8) {
     this.$view.setUint8(ByteOffset.button, value);
   }
 

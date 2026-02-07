@@ -5,6 +5,7 @@ import type {
   GPUTexture,
   Window,
 } from '@/sdl/types/definition';
+import type { UInt32 } from '@/types/primitive';
 import { CStruct } from '@cstruct';
 import type {
   GPUPresentMode,
@@ -88,7 +89,7 @@ export function setGPUAllowedFramesInFlight(
   this: SDL,
   options: {
     device: GPUDevice;
-    allowedFramesInFlight: number;
+    allowedFramesInFlight: UInt32;
   }
 ) {
   return this.symbols.SDL_SetGPUAllowedFramesInFlight(

@@ -1,4 +1,5 @@
 import { BaseStruct } from '@basestruct';
+import type { Float } from '@/types/primitive';
 import type {
   GPUCullMode,
   GPUFillMode,
@@ -34,26 +35,32 @@ export class GPURasterizerState extends BaseStruct {
   }
 
   public get depthBiasConstantFactor() {
-    return this.$view.getFloat32(ByteOffset.depth_bias_constant_factor, true);
+    return this.$view.getFloat32(
+      ByteOffset.depth_bias_constant_factor,
+      true
+    ) as Float;
   }
 
-  public set depthBiasConstantFactor(value: number) {
+  public set depthBiasConstantFactor(value: Float) {
     this.$view.setFloat32(ByteOffset.depth_bias_constant_factor, value, true);
   }
 
   public get depthBiasClamp() {
-    return this.$view.getFloat32(ByteOffset.depth_bias_clamp, true);
+    return this.$view.getFloat32(ByteOffset.depth_bias_clamp, true) as Float;
   }
 
-  public set depthBiasClamp(value: number) {
+  public set depthBiasClamp(value: Float) {
     this.$view.setFloat32(ByteOffset.depth_bias_clamp, value, true);
   }
 
   public get depthBiasSlopeFactor() {
-    return this.$view.getFloat32(ByteOffset.depth_bias_slope_factor, true);
+    return this.$view.getFloat32(
+      ByteOffset.depth_bias_slope_factor,
+      true
+    ) as Float;
   }
 
-  public set depthBiasSlopeFactor(value: number) {
+  public set depthBiasSlopeFactor(value: Float) {
     this.$view.setFloat32(ByteOffset.depth_bias_slope_factor, value, true);
   }
 

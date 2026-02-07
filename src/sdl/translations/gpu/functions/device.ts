@@ -1,5 +1,6 @@
 import type { SDL } from '@/sdl';
 import type { GPUDevice } from '@/sdl/types/definition';
+import type { Int32, UInt32 } from '@/types/primitive';
 import { stringToCString } from '@utility/common';
 import type { GPUShaderFormat } from '../../../ffi/gpu/constant';
 
@@ -18,7 +19,7 @@ export function gpuSupportsShaderFormats(
   );
 }
 
-export function gpuSupportsProperties(this: SDL, props: number) {
+export function gpuSupportsProperties(this: SDL, props: UInt32) {
   return this.symbols.SDL_GPUSupportsProperties(props);
 }
 
@@ -42,7 +43,7 @@ export function createGPUDevice(
   ) as GPUDevice | null;
 }
 
-export function createGPUDeviceWithProperties(this: SDL, props: number) {
+export function createGPUDeviceWithProperties(this: SDL, props: UInt32) {
   return this.symbols.SDL_CreateGPUDeviceWithProperties(
     props
   ) as GPUDevice | null;
@@ -55,10 +56,10 @@ export function destroyGPUDevice(this: SDL, device: GPUDevice) {
 // Drivers
 
 export function getNumGPUDrivers(this: SDL) {
-  return this.symbols.SDL_GetNumGPUDrivers();
+  return this.symbols.SDL_GetNumGPUDrivers() as Int32;
 }
 
-export function getGPUDriver(this: SDL, index: number) {
+export function getGPUDriver(this: SDL, index: Int32) {
   return this.symbols.SDL_GetGPUDriver(index).toString();
 }
 
@@ -71,5 +72,5 @@ export function getGPUShaderFormats(this: SDL, device: GPUDevice) {
 }
 
 export function getGPUDeviceProperties(this: SDL, device: GPUDevice) {
-  return this.symbols.SDL_GetGPUDeviceProperties(device);
+  return this.symbols.SDL_GetGPUDeviceProperties(device) as UInt32;
 }

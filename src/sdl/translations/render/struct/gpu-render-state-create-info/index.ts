@@ -1,4 +1,5 @@
 import type { GPUBuffer, GPUShader, GPUTexture } from '@/sdl/types/definition';
+import type { Int32 } from '@/types/primitive';
 import { BaseStruct } from '@basestruct';
 import { CStruct } from '@utility/cstruct';
 import { type Pointer } from 'bun:ffi';
@@ -23,10 +24,10 @@ export class GPURenderStateCreateInfo extends BaseStruct {
   }
 
   public get samplerBindingCount() {
-    return this.$view.getInt32(ByteOffset.num_sampler_bindings, true);
+    return this.$view.getInt32(ByteOffset.num_sampler_bindings, true) as Int32;
   }
 
-  public set samplerBindingCount(value: number) {
+  public set samplerBindingCount(value: Int32) {
     this.$view.setInt32(ByteOffset.num_sampler_bindings, value, true);
   }
 
@@ -50,7 +51,7 @@ export class GPURenderStateCreateInfo extends BaseStruct {
   }
 
   public set samplerBindings(value: GPUTextureSamplerBinding[]) {
-    this.samplerBindingCount = value.length;
+    this.samplerBindingCount = value.length as Int32;
 
     if (this.samplerBindingCount === 0) {
       this.$view.setBigUint64(ByteOffset.sampler_bindings, 0n, true);
@@ -69,10 +70,10 @@ export class GPURenderStateCreateInfo extends BaseStruct {
   }
 
   public get storageTextureCount() {
-    return this.$view.getInt32(ByteOffset.num_storage_textures, true);
+    return this.$view.getInt32(ByteOffset.num_storage_textures, true) as Int32;
   }
 
-  public set storageTextureCount(value: number) {
+  public set storageTextureCount(value: Int32) {
     this.$view.setInt32(ByteOffset.num_storage_textures, value, true);
   }
 
@@ -92,7 +93,7 @@ export class GPURenderStateCreateInfo extends BaseStruct {
   }
 
   public set storageTextures(value: GPUTexture[]) {
-    this.storageTextureCount = value.length;
+    this.storageTextureCount = value.length as Int32;
 
     if (this.storageTextureCount === 0) {
       this.$view.setBigUint64(ByteOffset.storage_textures, 0n, true);
@@ -108,10 +109,10 @@ export class GPURenderStateCreateInfo extends BaseStruct {
   }
 
   public get storageBufferCount() {
-    return this.$view.getInt32(ByteOffset.num_storage_buffers, true);
+    return this.$view.getInt32(ByteOffset.num_storage_buffers, true) as Int32;
   }
 
-  public set storageBufferCount(value: number) {
+  public set storageBufferCount(value: Int32) {
     this.$view.setInt32(ByteOffset.num_storage_buffers, value, true);
   }
 
@@ -131,7 +132,7 @@ export class GPURenderStateCreateInfo extends BaseStruct {
   }
 
   public set storageBuffers(value: GPUBuffer[]) {
-    this.storageBufferCount = value.length;
+    this.storageBufferCount = value.length as Int32;
 
     if (this.storageBufferCount === 0) {
       this.$view.setBigUint64(ByteOffset.storage_buffers, 0n, true);

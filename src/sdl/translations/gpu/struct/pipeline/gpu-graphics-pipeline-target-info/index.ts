@@ -1,4 +1,5 @@
 import { BaseStruct } from '@basestruct';
+import type { UInt32 } from '@/types/primitive';
 import type { GPUTextureFormat } from '@sdl/ffi/constant/gpu';
 import { CStruct } from '@utility/cstruct';
 import type { Pointer } from 'bun:ffi';
@@ -33,7 +34,7 @@ export class GPUGraphicsPipelineTargetInfo extends BaseStruct {
   }
 
   public set colorTargetDescriptions(value: GPUColorTargetDescription[]) {
-    this.colorTargetsCount = value.length;
+    this.colorTargetsCount = value.length as UInt32;
 
     if (this.colorTargetsCount === 0) {
       this.$view.setBigUint64(ByteOffset.color_target_descriptions, 0n, true);
@@ -56,10 +57,10 @@ export class GPUGraphicsPipelineTargetInfo extends BaseStruct {
   }
 
   public get colorTargetsCount() {
-    return this.$view.getUint32(ByteOffset.num_color_targets, true);
+    return this.$view.getUint32(ByteOffset.num_color_targets, true) as UInt32;
   }
 
-  public set colorTargetsCount(value: number) {
+  public set colorTargetsCount(value: UInt32) {
     this.$view.setUint32(ByteOffset.num_color_targets, value, true);
   }
 

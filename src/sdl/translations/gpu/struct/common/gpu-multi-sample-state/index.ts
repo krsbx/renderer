@@ -1,23 +1,24 @@
 import { BaseStruct } from '@basestruct';
+import type { Int32, UInt32 } from '@/types/primitive';
 import { ByteOffset } from './constant';
 
 export class GPUMultisampleState extends BaseStruct {
   public static override readonly BYTE_SIZE = 12;
 
   public get sampleCount() {
-    return this.$view.getInt32(ByteOffset.sample_count, true);
+    return this.$view.getInt32(ByteOffset.sample_count, true) as Int32;
   }
 
-  public set sampleCount(value: number) {
+  public set sampleCount(value: Int32) {
     this.$view.setInt32(ByteOffset.sample_count, value, true);
   }
 
   public get sampleMask() {
-    return this.$view.getInt32(ByteOffset.sample_mask, true);
+    return this.$view.getUint32(ByteOffset.sample_mask, true) as UInt32;
   }
 
-  public set sampleMask(value: number) {
-    this.$view.setInt32(ByteOffset.sample_mask, value, true);
+  public set sampleMask(value: UInt32) {
+    this.$view.setUint32(ByteOffset.sample_mask, value, true);
   }
 
   public get enableMask() {

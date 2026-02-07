@@ -1,5 +1,6 @@
 import type { SDL } from '@/sdl';
 import type { Renderer, Texture } from '@/sdl/types/definition';
+import type { Float, Int32 } from '@/types/primitive';
 import { CStruct } from '@cstruct';
 import type { RendererLogicalPresentation } from '../../../ffi/render/constant';
 import { Event } from '../../events/struct';
@@ -30,8 +31,8 @@ export function setRenderLogicalPresentation(
   this: SDL,
   options: {
     renderer: Renderer;
-    w: number;
-    h: number;
+    w: Int32;
+    h: Int32;
     mode: RendererLogicalPresentation;
   }
 ) {
@@ -58,8 +59,8 @@ export function getRenderLogicalPresentation(this: SDL, renderer: Renderer) {
   if (!success) return null;
 
   return {
-    w: wStruct.getValue(0, 'i32'),
-    h: hStruct.getValue(0, 'i32'),
+    w: wStruct.getValue(0, 'i32') as Int32,
+    h: hStruct.getValue(0, 'i32') as Int32,
     mode: modeStruct.getValue(0, 'i32') as RendererLogicalPresentation,
   };
 }
@@ -86,8 +87,8 @@ export function renderCoordinatesFromWindow(
   this: SDL,
   options: {
     renderer: Renderer;
-    windowX: number;
-    windowY: number;
+    windowX: Float;
+    windowY: Float;
   }
 ) {
   const xStruct = new CStruct({ length: CStruct.BYTE_SIZE.f32 });
@@ -104,8 +105,8 @@ export function renderCoordinatesFromWindow(
   if (!success) return null;
 
   return {
-    x: xStruct.getValue(0, 'f32'),
-    y: yStruct.getValue(0, 'f32'),
+    x: xStruct.getValue(0, 'f32') as Float,
+    y: yStruct.getValue(0, 'f32') as Float,
   };
 }
 
@@ -113,8 +114,8 @@ export function renderCoordinatesToWindow(
   this: SDL,
   options: {
     renderer: Renderer;
-    x: number;
-    y: number;
+    x: Float;
+    y: Float;
   }
 ) {
   const windowXStruct = new CStruct({ length: CStruct.BYTE_SIZE.f32 });
@@ -131,8 +132,8 @@ export function renderCoordinatesToWindow(
   if (!success) return null;
 
   return {
-    windowX: windowXStruct.getValue(0, 'f32'),
-    windowY: windowYStruct.getValue(0, 'f32'),
+    windowX: windowXStruct.getValue(0, 'f32') as Float,
+    windowY: windowYStruct.getValue(0, 'f32') as Float,
   };
 }
 
@@ -223,8 +224,8 @@ export function setRenderScale(
   this: SDL,
   options: {
     renderer: Renderer;
-    scaleX: number;
-    scaleY: number;
+    scaleX: Float;
+    scaleY: Float;
   }
 ) {
   return this.symbols.SDL_SetRenderScale(
@@ -247,7 +248,7 @@ export function getRenderScale(this: SDL, renderer: Renderer) {
   if (!success) return null;
 
   return {
-    scaleX: scaleXStruct.getValue(0, 'f32'),
-    scaleY: scaleYStruct.getValue(0, 'f32'),
+    scaleX: scaleXStruct.getValue(0, 'f32') as Float,
+    scaleY: scaleYStruct.getValue(0, 'f32') as Float,
   };
 }

@@ -1,4 +1,5 @@
 import { BaseStruct } from '@basestruct';
+import type { Float, Int32, UInt32 } from '@/types/primitive';
 import type { GPUCompareOp } from '@sdl/ffi/constant/gpu';
 import { ByteOffset } from './constant';
 
@@ -6,66 +7,66 @@ export class GPUSamplerCreateInfo extends BaseStruct {
   public static override readonly BYTE_SIZE = 56;
 
   public get minFilter() {
-    return this.$view.getInt32(ByteOffset.min_filter, true);
+    return this.$view.getInt32(ByteOffset.min_filter, true) as Int32;
   }
 
-  public set minFilter(value: number) {
+  public set minFilter(value: Int32) {
     this.$view.setInt32(ByteOffset.min_filter, value, true);
   }
 
   public get magFilter() {
-    return this.$view.getInt32(ByteOffset.mag_filter, true);
+    return this.$view.getInt32(ByteOffset.mag_filter, true) as Int32;
   }
 
-  public set magFilter(value: number) {
+  public set magFilter(value: Int32) {
     this.$view.setInt32(ByteOffset.mag_filter, value, true);
   }
 
   public get mipmapMode() {
-    return this.$view.getInt32(ByteOffset.mipmap_mode, true);
+    return this.$view.getInt32(ByteOffset.mipmap_mode, true) as Int32;
   }
 
-  public set mipmapMode(value: number) {
+  public set mipmapMode(value: Int32) {
     this.$view.setInt32(ByteOffset.mipmap_mode, value, true);
   }
 
   public get addressModeU() {
-    return this.$view.getInt32(ByteOffset.address_mode_u, true);
+    return this.$view.getInt32(ByteOffset.address_mode_u, true) as Int32;
   }
 
-  public set addressModeU(value: number) {
+  public set addressModeU(value: Int32) {
     this.$view.setInt32(ByteOffset.address_mode_u, value, true);
   }
 
   public get addressModeV() {
-    return this.$view.getInt32(ByteOffset.address_mode_v, true);
+    return this.$view.getInt32(ByteOffset.address_mode_v, true) as Int32;
   }
 
-  public set addressModeV(value: number) {
+  public set addressModeV(value: Int32) {
     this.$view.setInt32(ByteOffset.address_mode_v, value, true);
   }
 
   public get addressModeW() {
-    return this.$view.getInt32(ByteOffset.address_mode_w, true);
+    return this.$view.getInt32(ByteOffset.address_mode_w, true) as Int32;
   }
 
-  public set addressModeW(value: number) {
+  public set addressModeW(value: Int32) {
     this.$view.setInt32(ByteOffset.address_mode_w, value, true);
   }
 
   public get mipLodBias() {
-    return this.$view.getFloat32(ByteOffset.mip_lod_bias, true);
+    return this.$view.getFloat32(ByteOffset.mip_lod_bias, true) as Float;
   }
 
-  public set mipLodBias(value: number) {
+  public set mipLodBias(value: Float) {
     this.$view.setFloat32(ByteOffset.mip_lod_bias, value, true);
   }
 
   public get maxAnisotropy() {
-    return this.$view.getFloat32(ByteOffset.max_anisotropy, true);
+    return this.$view.getFloat32(ByteOffset.max_anisotropy, true) as Float;
   }
 
-  public set maxAnisotropy(value: number) {
+  public set maxAnisotropy(value: Float) {
     this.$view.setFloat32(ByteOffset.max_anisotropy, value, true);
   }
 
@@ -78,18 +79,18 @@ export class GPUSamplerCreateInfo extends BaseStruct {
   }
 
   public get minLod() {
-    return this.$view.getFloat32(ByteOffset.min_lod, true);
+    return this.$view.getFloat32(ByteOffset.min_lod, true) as Float;
   }
 
-  public set minLod(value: number) {
+  public set minLod(value: Float) {
     this.$view.setFloat32(ByteOffset.min_lod, value, true);
   }
 
   public get maxLod() {
-    return this.$view.getFloat32(ByteOffset.max_lod, true);
+    return this.$view.getFloat32(ByteOffset.max_lod, true) as Float;
   }
 
-  public set maxLod(value: number) {
+  public set maxLod(value: Float) {
     this.$view.setFloat32(ByteOffset.max_lod, value, true);
   }
 
@@ -110,10 +111,10 @@ export class GPUSamplerCreateInfo extends BaseStruct {
   }
 
   public get props() {
-    return this.$view.getUint32(ByteOffset.props, true);
+    return this.$view.getUint32(ByteOffset.props, true) as UInt32;
   }
 
-  public set props(value: number) {
+  public set props(value: UInt32) {
     this.$view.setUint32(ByteOffset.props, value, true);
   }
 }

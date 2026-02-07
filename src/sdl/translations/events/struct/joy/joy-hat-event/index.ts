@@ -1,3 +1,4 @@
+import type { UInt32, UInt8 } from '@/types/primitive';
 import { BaseStruct } from '@basestruct';
 import type { JoyHatPosition } from '@sdl/ffi/constant/joystick';
 import { ByteOffset } from './constant';
@@ -15,10 +16,10 @@ export class JoyHatEvent extends BaseStruct {
   }
 
   public get reserved() {
-    return this.$view.getUint32(ByteOffset.reserved, true);
+    return this.$view.getUint32(ByteOffset.reserved, true) as UInt32;
   }
 
-  public set reserved(value: number) {
+  public set reserved(value: UInt32) {
     this.$view.setUint32(ByteOffset.reserved, value, true);
   }
 
@@ -31,18 +32,18 @@ export class JoyHatEvent extends BaseStruct {
   }
 
   public get which() {
-    return this.$view.getUint32(ByteOffset.which, true);
+    return this.$view.getUint32(ByteOffset.which, true) as UInt32;
   }
 
-  public set which(value: number) {
+  public set which(value: UInt32) {
     this.$view.setUint32(ByteOffset.which, value, true);
   }
 
   public get hat() {
-    return this.$view.getUint8(ByteOffset.hat);
+    return this.$view.getUint8(ByteOffset.hat) as UInt8;
   }
 
-  public set hat(value: number) {
+  public set hat(value: UInt8) {
     this.$view.setUint8(ByteOffset.hat, value);
   }
 

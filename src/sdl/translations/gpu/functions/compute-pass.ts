@@ -6,6 +6,7 @@ import type {
   GPUComputePipeline,
   GPUTexture,
 } from '@/sdl/types/definition';
+import type { UInt32 } from '@/types/primitive';
 import { CStruct } from '@cstruct';
 import {
   GPUStorageBufferReadWriteBinding,
@@ -63,7 +64,7 @@ export function bindGPUComputeSamplers(
   this: SDL,
   options: {
     computePass: GPUComputePass;
-    firstSlot: number;
+    firstSlot: UInt32;
     textureSamplerBindings: GPUTextureSamplerBinding[];
   }
 ) {
@@ -84,7 +85,7 @@ export function bindGPUComputeStorageTextures(
   this: SDL,
   options: {
     computePass: GPUComputePass;
-    firstSlot: number;
+    firstSlot: UInt32;
     storageTextures: GPUTexture[];
   }
 ) {
@@ -102,7 +103,7 @@ export function bindGPUComputeStorageBuffers(
   this: SDL,
   options: {
     computePass: GPUComputePass;
-    firstSlot: number;
+    firstSlot: UInt32;
     storageBuffers: GPUBuffer[];
   }
 ) {
@@ -120,9 +121,9 @@ export function dispatchGPUCompute(
   this: SDL,
   options: {
     computePass: GPUComputePass;
-    groupCountX: number;
-    groupCountY: number;
-    groupCountZ: number;
+    groupCountX: UInt32;
+    groupCountY: UInt32;
+    groupCountZ: UInt32;
   }
 ) {
   this.symbols.SDL_DispatchGPUCompute(
@@ -138,7 +139,7 @@ export function dispatchGPUComputeIndirect(
   options: {
     computePass: GPUComputePass;
     buffer: GPUBuffer;
-    offset: number;
+    offset: UInt32;
   }
 ) {
   this.symbols.SDL_DispatchGPUComputeIndirect(

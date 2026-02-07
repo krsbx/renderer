@@ -1,5 +1,6 @@
 import type { SDL } from '@/sdl';
 import type { Renderer } from '@/sdl/types/definition';
+import type { Int32, UInt32 } from '@/types/primitive';
 import { CStruct } from '@cstruct';
 
 // Metal
@@ -18,7 +19,7 @@ export function addVulkanRenderSemaphores(
   this: SDL,
   options: {
     renderer: Renderer;
-    waitStageMask: number;
+    waitStageMask: UInt32;
     waitSemaphore: bigint;
     signalSemaphore: bigint;
   }
@@ -37,7 +38,7 @@ export function setRenderVSync(
   this: SDL,
   options: {
     renderer: Renderer;
-    vsync: number;
+    vsync: Int32;
   }
 ) {
   return this.symbols.SDL_SetRenderVSync(options.renderer, options.vsync);
@@ -53,5 +54,5 @@ export function getRenderVSync(this: SDL, renderer: Renderer) {
 
   if (!success) return null;
 
-  return vsyncStruct.getValue(0, 'i32');
+  return vsyncStruct.getValue(0, 'i32') as Int32;
 }

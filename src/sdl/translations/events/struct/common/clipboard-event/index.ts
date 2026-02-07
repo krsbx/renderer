@@ -1,3 +1,4 @@
+import type { Int32, UInt32 } from '@/types/primitive';
 import { BaseStruct } from '@basestruct';
 import { CStruct } from '@utility/cstruct';
 import { CString, type Pointer } from 'bun:ffi';
@@ -22,10 +23,10 @@ export class ClipboardEvent extends BaseStruct {
   }
 
   public get reserved() {
-    return this.$view.getUint32(ByteOffset.reserved, true);
+    return this.$view.getUint32(ByteOffset.reserved, true) as UInt32;
   }
 
-  public set reserved(value: number) {
+  public set reserved(value: UInt32) {
     this.$view.setUint32(ByteOffset.reserved, value, true);
   }
 
@@ -46,10 +47,10 @@ export class ClipboardEvent extends BaseStruct {
   }
 
   public get mimeTypesCount() {
-    return this.$view.getInt32(ByteOffset.num_mime_types, true);
+    return this.$view.getInt32(ByteOffset.num_mime_types, true) as Int32;
   }
 
-  public set mimeTypesCount(value: number) {
+  public set mimeTypesCount(value: Int32) {
     this.$view.setInt32(ByteOffset.num_mime_types, value, true);
   }
 
@@ -66,9 +67,9 @@ export class ClipboardEvent extends BaseStruct {
   }
 
   public set mimeTypes(value: string[]) {
-    this.mimeTypesCount = value.length;
+    this.mimeTypesCount = value.length as Int32;
 
-    if (this.mimeTypesCount === 0) {
+    if (this.mimeTypesCount === (0 as Int32)) {
       this.$view.setBigUint64(ByteOffset.mime_types, 0n, true);
       this.$mimeTypesBuffer = null;
       return;

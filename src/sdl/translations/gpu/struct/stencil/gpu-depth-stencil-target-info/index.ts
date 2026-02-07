@@ -1,4 +1,5 @@
 import { BaseStruct } from '@basestruct';
+import type { Float, UInt8 } from '@/types/primitive';
 import type { GPULoadOp, GPUStoreOp } from '@sdl/ffi/constant/gpu';
 import type { GPUTexture } from '@/sdl/types/definition';
 import { ByteOffset } from './constant';
@@ -17,10 +18,10 @@ export class GPUDepthStencilTargetInfo extends BaseStruct {
   }
 
   public get clearDepth() {
-    return this.$view.getFloat32(ByteOffset.clear_depth, true);
+    return this.$view.getFloat32(ByteOffset.clear_depth, true) as Float;
   }
 
-  public set clearDepth(value: number) {
+  public set clearDepth(value: Float) {
     this.$view.setFloat32(ByteOffset.clear_depth, value, true);
   }
 
@@ -65,26 +66,26 @@ export class GPUDepthStencilTargetInfo extends BaseStruct {
   }
 
   public get clearStencil() {
-    return this.$view.getUint8(ByteOffset.clear_stencil);
+    return this.$view.getUint8(ByteOffset.clear_stencil) as UInt8;
   }
 
-  public set clearStencil(value: number) {
+  public set clearStencil(value: UInt8) {
     this.$view.setUint8(ByteOffset.clear_stencil, value);
   }
 
   public get mipLevel() {
-    return this.$view.getUint8(ByteOffset.mip_level);
+    return this.$view.getUint8(ByteOffset.mip_level) as UInt8;
   }
 
-  public set mipLevel(value: number) {
+  public set mipLevel(value: UInt8) {
     this.$view.setUint8(ByteOffset.mip_level, value);
   }
 
   public get layer() {
-    return this.$view.getUint8(ByteOffset.layer);
+    return this.$view.getUint8(ByteOffset.layer) as UInt8;
   }
 
-  public set layer(value: number) {
+  public set layer(value: UInt8) {
     this.$view.setUint8(ByteOffset.layer, value);
   }
 }

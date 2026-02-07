@@ -1,4 +1,5 @@
 import type { SDL } from '@/sdl';
+import type { Int32, UInt8, UInt32 } from '@/types/primitive';
 import { CStruct } from '@cstruct';
 import type { PixelFormat } from '../../../ffi/pixels/constant';
 import { Color, Palette, PixelFormatDetails } from '../struct';
@@ -26,22 +27,22 @@ export function getMasksForPixelFormat(this: SDL, format: PixelFormat) {
   if (!success) return null;
 
   return {
-    bpp: bppStruct.getValue(0, 'i32'),
-    rMask: rMaskStruct.getValue(0, 'u32'),
-    gMask: gMaskStruct.getValue(0, 'u32'),
-    bMask: bMaskStruct.getValue(0, 'u32'),
-    aMask: aMaskStruct.getValue(0, 'u32'),
+    bpp: bppStruct.getValue(0, 'i32') as Int32,
+    rMask: rMaskStruct.getValue(0, 'u32') as UInt32,
+    gMask: gMaskStruct.getValue(0, 'u32') as UInt32,
+    bMask: bMaskStruct.getValue(0, 'u32') as UInt32,
+    aMask: aMaskStruct.getValue(0, 'u32') as UInt32,
   };
 }
 
 export function getPixelFormatForMasks(
   this: SDL,
   options: {
-    bpp: number;
-    rMask: number;
-    gMask: number;
-    bMask: number;
-    aMask: number;
+    bpp: Int32;
+    rMask: UInt32;
+    gMask: UInt32;
+    bMask: UInt32;
+    aMask: UInt32;
   }
 ) {
   return this.symbols.SDL_GetPixelFormatForMasks(
@@ -61,7 +62,7 @@ export function getPixelFormatDetails(this: SDL, format: PixelFormat) {
   return new PixelFormatDetails(ptr);
 }
 
-export function createPalette(this: SDL, ncolors: number) {
+export function createPalette(this: SDL, ncolors: Int32) {
   const ptr = this.symbols.SDL_CreatePalette(ncolors);
 
   if (!ptr) return null;
@@ -74,7 +75,7 @@ export function setPaletteColors(
   options: {
     palette: Palette;
     colors: Color[];
-    firstcolor: number;
+    firstcolor: Int32;
   }
 ) {
   const { buffer: colors } = CStruct.writeArray(
@@ -99,9 +100,9 @@ export function mapRGB(
   options: {
     format: PixelFormatDetails;
     palette?: Palette | null;
-    r: number;
-    g: number;
-    b: number;
+    r: UInt8;
+    g: UInt8;
+    b: UInt8;
   }
 ) {
   return this.symbols.SDL_MapRGB(
@@ -118,10 +119,10 @@ export function mapRGBA(
   options: {
     format: PixelFormatDetails;
     palette?: Palette | null;
-    r: number;
-    g: number;
-    b: number;
-    a: number;
+    r: UInt8;
+    g: UInt8;
+    b: UInt8;
+    a: UInt8;
   }
 ) {
   return this.symbols.SDL_MapRGBA(
@@ -137,7 +138,7 @@ export function mapRGBA(
 export function getRGB(
   this: SDL,
   options: {
-    pixel: number;
+    pixel: UInt32;
     format: PixelFormatDetails;
     palette?: Palette | null;
   }
@@ -156,16 +157,16 @@ export function getRGB(
   );
 
   return {
-    r: rStruct.getValue(0, 'u8'),
-    g: gStruct.getValue(0, 'u8'),
-    b: bStruct.getValue(0, 'u8'),
+    r: rStruct.getValue(0, 'u8') as UInt8,
+    g: gStruct.getValue(0, 'u8') as UInt8,
+    b: bStruct.getValue(0, 'u8') as UInt8,
   };
 }
 
 export function getRGBA(
   this: SDL,
   options: {
-    pixel: number;
+    pixel: UInt32;
     format: PixelFormatDetails;
     palette?: Palette | null;
   }
@@ -186,9 +187,9 @@ export function getRGBA(
   );
 
   return {
-    r: rStruct.getValue(0, 'u8'),
-    g: gStruct.getValue(0, 'u8'),
-    b: bStruct.getValue(0, 'u8'),
-    a: aStruct.getValue(0, 'u8'),
+    r: rStruct.getValue(0, 'u8') as UInt8,
+    g: gStruct.getValue(0, 'u8') as UInt8,
+    b: bStruct.getValue(0, 'u8') as UInt8,
+    a: aStruct.getValue(0, 'u8') as UInt8,
   };
 }

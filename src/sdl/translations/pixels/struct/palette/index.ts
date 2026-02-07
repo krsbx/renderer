@@ -1,3 +1,4 @@
+import type { Int32, UInt32 } from '@/types/primitive';
 import { CStruct } from '@/utility/cstruct';
 import { BaseStruct } from '@basestruct';
 import type { Pointer } from 'bun:ffi';
@@ -10,10 +11,10 @@ export class Palette extends BaseStruct {
   private $colorsBuffer: Uint8Array | null = null;
 
   public get colorCount() {
-    return this.$view.getInt32(ByteOffset.ncolors, true);
+    return this.$view.getInt32(ByteOffset.ncolors, true) as Int32;
   }
 
-  public set colorCount(value: number) {
+  public set colorCount(value: Int32) {
     this.$view.setInt32(ByteOffset.ncolors, value, true);
   }
 
@@ -26,7 +27,7 @@ export class Palette extends BaseStruct {
   }
 
   public set colors(value: Color[]) {
-    this.colorCount = value.length;
+    this.colorCount = value.length as Int32;
 
     if (value.length === 0) {
       this.$colorsBuffer = null;
@@ -42,18 +43,18 @@ export class Palette extends BaseStruct {
   }
 
   public get version() {
-    return this.$view.getUint32(ByteOffset.version, true);
+    return this.$view.getUint32(ByteOffset.version, true) as UInt32;
   }
 
-  public set version(value: number) {
+  public set version(value: UInt32) {
     this.$view.setUint32(ByteOffset.version, value, true);
   }
 
   public get refcount() {
-    return this.$view.getInt32(ByteOffset.refcount, true);
+    return this.$view.getInt32(ByteOffset.refcount, true) as Int32;
   }
 
-  public set refcount(value: number) {
+  public set refcount(value: Int32) {
     this.$view.setInt32(ByteOffset.refcount, value, true);
   }
 }

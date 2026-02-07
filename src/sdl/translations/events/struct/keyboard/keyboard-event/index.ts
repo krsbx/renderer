@@ -1,3 +1,4 @@
+import type { UInt16, UInt32 } from '@/types/primitive';
 import { BaseStruct } from '@basestruct';
 import { ByteOffset } from './constant';
 import type { KeyboardEventType } from './types';
@@ -14,10 +15,10 @@ export class KeyboardEvent extends BaseStruct {
   }
 
   public get reserved() {
-    return this.$view.getUint32(ByteOffset.reserved, true);
+    return this.$view.getUint32(ByteOffset.reserved, true) as UInt32;
   }
 
-  public set reserved(value: number) {
+  public set reserved(value: UInt32) {
     this.$view.setUint32(ByteOffset.reserved, value, true);
   }
 
@@ -30,50 +31,50 @@ export class KeyboardEvent extends BaseStruct {
   }
 
   public get windowId() {
-    return this.$view.getUint32(ByteOffset.windowID, true);
+    return this.$view.getUint32(ByteOffset.windowID, true) as UInt32;
   }
 
-  public set windowID(value: number) {
+  public set windowID(value: UInt32) {
     this.$view.setUint32(ByteOffset.windowID, value, true);
   }
 
   public get which() {
-    return this.$view.getUint32(ByteOffset.which, true);
+    return this.$view.getUint32(ByteOffset.which, true) as UInt32;
   }
 
-  public set which(value: number) {
+  public set which(value: UInt32) {
     this.$view.setUint32(ByteOffset.which, value, true);
   }
 
   public get scancode() {
-    return this.$view.getUint32(ByteOffset.scancode, true);
+    return this.$view.getUint32(ByteOffset.scancode, true) as UInt32;
   }
 
-  public set scancode(value: number) {
+  public set scancode(value: UInt32) {
     this.$view.setUint32(ByteOffset.scancode, value, true);
   }
 
   public get key() {
-    return this.$view.getUint32(ByteOffset.key, true);
+    return this.$view.getUint32(ByteOffset.key, true) as UInt32;
   }
 
-  public set key(value: number) {
+  public set key(value: UInt32) {
     this.$view.setUint32(ByteOffset.key, value, true);
   }
 
   public get mod() {
-    return this.$view.getUint16(ByteOffset.mod, true);
+    return this.$view.getUint16(ByteOffset.mod, true) as UInt16;
   }
 
-  public set mod(value: number) {
+  public set mod(value: UInt16) {
     this.$view.setUint16(ByteOffset.mod, value, true);
   }
 
   public get raw() {
-    return this.$view.getUint16(ByteOffset.raw, true);
+    return this.$view.getUint16(ByteOffset.raw, true) as UInt16;
   }
 
-  public set raw(value: number) {
+  public set raw(value: UInt16) {
     this.$view.setUint16(ByteOffset.raw, value, true);
   }
 

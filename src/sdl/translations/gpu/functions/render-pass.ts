@@ -6,6 +6,7 @@ import type {
   GPURenderPass,
   GPUTexture,
 } from '@/sdl/types/definition';
+import type { Int32, UInt8, UInt32 } from '@/types/primitive';
 import { CStruct } from '@/utility/cstruct';
 import type { GPUIndexElementSize } from '../../../ffi/gpu/constant';
 import { FColor } from '../../pixels/struct';
@@ -91,7 +92,7 @@ export function setGPUStencilReference(
   this: SDL,
   options: {
     renderPass: GPURenderPass;
-    reference: number;
+    reference: UInt8;
   }
 ) {
   this.symbols.SDL_SetGPUStencilReference(
@@ -106,7 +107,7 @@ export function bindGPUVertexBuffers(
   this: SDL,
   options: {
     renderPass: GPURenderPass;
-    firstSlot: number;
+    firstSlot: UInt32;
     bindings: GPUBufferBinding[];
   }
 ) {
@@ -144,7 +145,7 @@ export function bindGPUVertexSamplers(
   this: SDL,
   options: {
     renderPass: GPURenderPass;
-    firstSlot: number;
+    firstSlot: UInt32;
     textureSamplerBindings: GPUTextureSamplerBinding[];
   }
 ) {
@@ -165,7 +166,7 @@ export function bindGPUVertexStorageTextures(
   this: SDL,
   options: {
     renderPass: GPURenderPass;
-    firstSlot: number;
+    firstSlot: UInt32;
     storageTextures: GPUTexture[];
   }
 ) {
@@ -183,7 +184,7 @@ export function bindGPUVertexStorageBuffers(
   this: SDL,
   options: {
     renderPass: GPURenderPass;
-    firstSlot: number;
+    firstSlot: UInt32;
     storageBuffers: GPUBuffer[];
   }
 ) {
@@ -203,7 +204,7 @@ export function bindGPUFragmentSamplers(
   this: SDL,
   options: {
     renderPass: GPURenderPass;
-    firstSlot: number;
+    firstSlot: UInt32;
     textureSamplerBindings: GPUTextureSamplerBinding[];
   }
 ) {
@@ -224,7 +225,7 @@ export function bindGPUFragmentStorageTextures(
   this: SDL,
   options: {
     renderPass: GPURenderPass;
-    firstSlot: number;
+    firstSlot: UInt32;
     storageTextures: GPUTexture[];
   }
 ) {
@@ -242,7 +243,7 @@ export function bindGPUFragmentStorageBuffers(
   this: SDL,
   options: {
     renderPass: GPURenderPass;
-    firstSlot: number;
+    firstSlot: UInt32;
     storageBuffers: GPUBuffer[];
   }
 ) {
@@ -262,11 +263,11 @@ export function drawGPUIndexedPrimitives(
   this: SDL,
   options: {
     renderPass: GPURenderPass;
-    numIndices: number;
-    numInstances: number;
-    firstIndex: number;
-    vertexOffset: number;
-    firstInstance: number;
+    numIndices: UInt32;
+    numInstances: UInt32;
+    firstIndex: UInt32;
+    vertexOffset: Int32;
+    firstInstance: UInt32;
   }
 ) {
   this.symbols.SDL_DrawGPUIndexedPrimitives(
@@ -283,10 +284,10 @@ export function drawGPUPrimitives(
   this: SDL,
   options: {
     renderPass: GPURenderPass;
-    numVertices: number;
-    numInstances: number;
-    firstVertex: number;
-    firstInstance: number;
+    numVertices: UInt32;
+    numInstances: UInt32;
+    firstVertex: UInt32;
+    firstInstance: UInt32;
   }
 ) {
   this.symbols.SDL_DrawGPUPrimitives(
@@ -303,8 +304,8 @@ export function drawGPUPrimitivesIndirect(
   options: {
     renderPass: GPURenderPass;
     buffer: GPUBuffer;
-    offset: number;
-    drawCount: number;
+    offset: UInt32;
+    drawCount: UInt32;
   }
 ) {
   this.symbols.SDL_DrawGPUPrimitivesIndirect(
@@ -320,8 +321,8 @@ export function drawGPUIndexedPrimitivesIndirect(
   options: {
     renderPass: GPURenderPass;
     buffer: GPUBuffer;
-    offset: number;
-    drawCount: number;
+    offset: UInt32;
+    drawCount: UInt32;
   }
 ) {
   this.symbols.SDL_DrawGPUIndexedPrimitivesIndirect(

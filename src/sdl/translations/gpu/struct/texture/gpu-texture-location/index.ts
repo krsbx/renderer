@@ -1,4 +1,5 @@
 import { BaseStruct } from '@basestruct';
+import type { UInt32 } from '@/types/primitive';
 import type { GPUTexture } from '@/sdl/types/definition';
 import { ByteOffset } from './constant';
 
@@ -16,42 +17,42 @@ export class GPUTextureLocation extends BaseStruct {
   }
 
   public get mipLevel() {
-    return this.$view.getUint32(ByteOffset.mip_level, true);
+    return this.$view.getUint32(ByteOffset.mip_level, true) as UInt32;
   }
 
-  public set mipLevel(value: number) {
+  public set mipLevel(value: UInt32) {
     this.$view.setUint32(ByteOffset.mip_level, value, true);
   }
 
   public get layer() {
-    return this.$view.getUint32(ByteOffset.layer, true);
+    return this.$view.getUint32(ByteOffset.layer, true) as UInt32;
   }
 
-  public set layer(value: number) {
+  public set layer(value: UInt32) {
     this.$view.setUint32(ByteOffset.layer, value, true);
   }
 
   public get x() {
-    return this.$view.getUint32(ByteOffset.x, true);
+    return this.$view.getUint32(ByteOffset.x, true) as UInt32;
   }
 
-  public set x(value: number) {
+  public set x(value: UInt32) {
     this.$view.setUint32(ByteOffset.x, value, true);
   }
 
   public get y() {
-    return this.$view.getUint32(ByteOffset.y, true);
+    return this.$view.getUint32(ByteOffset.y, true) as UInt32;
   }
 
-  public set y(value: number) {
+  public set y(value: UInt32) {
     this.$view.setUint32(ByteOffset.y, value, true);
   }
 
   public get z() {
-    return this.$view.getUint32(ByteOffset.z, true);
+    return this.$view.getUint32(ByteOffset.z, true) as UInt32;
   }
 
-  public set z(value: number) {
+  public set z(value: UInt32) {
     this.$view.setUint32(ByteOffset.z, value, true);
   }
 }

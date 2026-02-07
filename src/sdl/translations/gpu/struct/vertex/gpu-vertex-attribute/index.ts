@@ -1,4 +1,5 @@
 import { BaseStruct } from '@basestruct';
+import type { UInt32 } from '@/types/primitive';
 import type { GPUVertexElementFormat } from '@sdl/ffi/constant/gpu';
 import { ByteOffset } from './constant';
 
@@ -6,18 +7,18 @@ export class GPUVertexAttribute extends BaseStruct {
   public static override readonly BYTE_SIZE = 16;
 
   public get location() {
-    return this.$view.getUint32(ByteOffset.location, true);
+    return this.$view.getUint32(ByteOffset.location, true) as UInt32;
   }
 
-  public set location(value: number) {
+  public set location(value: UInt32) {
     this.$view.setUint32(ByteOffset.location, value, true);
   }
 
   public get bufferSlot() {
-    return this.$view.getUint32(ByteOffset.buffer_slot, true);
+    return this.$view.getUint32(ByteOffset.buffer_slot, true) as UInt32;
   }
 
-  public set bufferSlot(value: number) {
+  public set bufferSlot(value: UInt32) {
     this.$view.setUint32(ByteOffset.buffer_slot, value, true);
   }
 
@@ -33,10 +34,10 @@ export class GPUVertexAttribute extends BaseStruct {
   }
 
   public get offset() {
-    return this.$view.getUint32(ByteOffset.offset, true);
+    return this.$view.getUint32(ByteOffset.offset, true) as UInt32;
   }
 
-  public set offset(value: number) {
+  public set offset(value: UInt32) {
     this.$view.setUint32(ByteOffset.offset, value, true);
   }
 }

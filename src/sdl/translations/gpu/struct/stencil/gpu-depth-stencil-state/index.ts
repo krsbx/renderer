@@ -1,4 +1,5 @@
 import { BaseStruct, type BaseStructOptions } from '@basestruct';
+import type { UInt8 } from '@/types/primitive';
 import type { GPUCompareOp } from '@sdl/ffi/constant/gpu';
 import { GPUStencilOpState } from '../gpu-stencil-op-state';
 import { ByteOffset } from './constant';
@@ -35,18 +36,18 @@ export class GPUDepthStencilState extends BaseStruct {
   }
 
   public get compareMask() {
-    return this.$view.getUint8(ByteOffset.compare_mask);
+    return this.$view.getUint8(ByteOffset.compare_mask) as UInt8;
   }
 
-  public set compareMask(value: number) {
+  public set compareMask(value: UInt8) {
     this.$view.setUint8(ByteOffset.compare_mask, value);
   }
 
   public get writeMask() {
-    return this.$view.getUint8(ByteOffset.write_mask);
+    return this.$view.getUint8(ByteOffset.write_mask) as UInt8;
   }
 
-  public set writeMask(value: number) {
+  public set writeMask(value: UInt8) {
     this.$view.setUint8(ByteOffset.write_mask, value);
   }
 

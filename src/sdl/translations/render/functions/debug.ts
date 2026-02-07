@@ -1,5 +1,6 @@
 import type { SDL } from '@/sdl';
 import type { Renderer } from '@/sdl/types/definition';
+import type { Float } from '@/types/primitive';
 import { CStruct } from '@cstruct';
 import { stringToCString } from '@utility/common';
 import type { ScaleMode } from '../../../ffi/surface/constant';
@@ -10,8 +11,8 @@ export function renderDebugText(
   this: SDL,
   options: {
     renderer: Renderer;
-    x: number;
-    y: number;
+    x: Float;
+    y: Float;
     str: string;
   }
 ) {
@@ -27,8 +28,8 @@ export function renderDebugTextFormat(
   this: SDL,
   options: {
     renderer: Renderer;
-    x: number;
-    y: number;
+    x: Float;
+    y: Float;
     fmt: string;
   }
 ) {

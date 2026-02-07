@@ -1,5 +1,6 @@
 import type { SDL } from '@/sdl';
 import type { Renderer } from '@/sdl/types/definition';
+import type { Float, UInt8 } from '@/types/primitive';
 import { CStruct } from '@cstruct';
 import type { BlendMode } from '../../../ffi/blend-mode/constant';
 
@@ -9,10 +10,10 @@ export function setRenderDrawColor(
   this: SDL,
   options: {
     renderer: Renderer;
-    r: number;
-    g: number;
-    b: number;
-    a: number;
+    r: UInt8;
+    g: UInt8;
+    b: UInt8;
+    a: UInt8;
   }
 ) {
   return this.symbols.SDL_SetRenderDrawColor(
@@ -28,10 +29,10 @@ export function setRenderDrawColorFloat(
   this: SDL,
   options: {
     renderer: Renderer;
-    r: number;
-    g: number;
-    b: number;
-    a: number;
+    r: Float;
+    g: Float;
+    b: Float;
+    a: Float;
   }
 ) {
   return this.symbols.SDL_SetRenderDrawColorFloat(
@@ -60,10 +61,10 @@ export function getRenderDrawColor(this: SDL, renderer: Renderer) {
   if (!success) return null;
 
   return {
-    r: rStruct.getValue(0, 'u8'),
-    g: gStruct.getValue(0, 'u8'),
-    b: bStruct.getValue(0, 'u8'),
-    a: aStruct.getValue(0, 'u8'),
+    r: rStruct.getValue(0, 'u8') as UInt8,
+    g: gStruct.getValue(0, 'u8') as UInt8,
+    b: bStruct.getValue(0, 'u8') as UInt8,
+    a: aStruct.getValue(0, 'u8') as UInt8,
   };
 }
 
@@ -84,10 +85,10 @@ export function getRenderDrawColorFloat(this: SDL, renderer: Renderer) {
   if (!success) return null;
 
   return {
-    r: rStruct.getValue(0, 'f32'),
-    g: gStruct.getValue(0, 'f32'),
-    b: bStruct.getValue(0, 'f32'),
-    a: aStruct.getValue(0, 'f32'),
+    r: rStruct.getValue(0, 'f32') as Float,
+    g: gStruct.getValue(0, 'f32') as Float,
+    b: bStruct.getValue(0, 'f32') as Float,
+    a: aStruct.getValue(0, 'f32') as Float,
   };
 }
 
@@ -97,7 +98,7 @@ export function setRenderColorScale(
   this: SDL,
   options: {
     renderer: Renderer;
-    scale: number;
+    scale: Float;
   }
 ) {
   return this.symbols.SDL_SetRenderColorScale(options.renderer, options.scale);
@@ -113,7 +114,7 @@ export function getRenderColorScale(this: SDL, renderer: Renderer) {
 
   if (!success) return null;
 
-  return scaleStruct.getValue(0, 'f32');
+  return scaleStruct.getValue(0, 'f32') as Float;
 }
 
 // Draw Blend Mode

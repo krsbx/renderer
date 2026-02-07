@@ -1,5 +1,6 @@
 import type { SDL } from '@/sdl';
 import type { Renderer, Texture } from '@/sdl/types/definition';
+import type { Float } from '@/types/primitive';
 import { CStruct } from '@cstruct';
 import { FPoint, FRect } from '../../rect/struct';
 
@@ -15,8 +16,8 @@ export function renderPoint(
   this: SDL,
   options: {
     renderer: Renderer;
-    x: number;
-    y: number;
+    x: Float;
+    y: Float;
   }
 ) {
   return this.symbols.SDL_RenderPoint(options.renderer, options.x, options.y);
@@ -47,10 +48,10 @@ export function renderLine(
   this: SDL,
   options: {
     renderer: Renderer;
-    x1: number;
-    y1: number;
-    x2: number;
-    y2: number;
+    x1: Float;
+    y1: Float;
+    x2: Float;
+    y2: Float;
   }
 ) {
   return this.symbols.SDL_RenderLine(

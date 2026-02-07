@@ -1,3 +1,4 @@
+import type { Float, Int32, UInt32 } from '@/types/primitive';
 import { BaseStruct } from '@basestruct';
 import { ByteOffset } from './constant';
 import type { GamepadTouchpadEventType } from './types';
@@ -17,10 +18,10 @@ export class GamepadTouchpadEvent extends BaseStruct {
   }
 
   public get reserved() {
-    return this.$view.getUint32(ByteOffset.reserved, true);
+    return this.$view.getUint32(ByteOffset.reserved, true) as UInt32;
   }
 
-  public set reserved(value: number) {
+  public set reserved(value: UInt32) {
     this.$view.setUint32(ByteOffset.reserved, value, true);
   }
 
@@ -33,50 +34,50 @@ export class GamepadTouchpadEvent extends BaseStruct {
   }
 
   public get which() {
-    return this.$view.getUint32(ByteOffset.which, true);
+    return this.$view.getUint32(ByteOffset.which, true) as UInt32;
   }
 
-  public set which(value: number) {
+  public set which(value: UInt32) {
     this.$view.setUint32(ByteOffset.which, value, true);
   }
 
   public get touchpad() {
-    return this.$view.getInt32(ByteOffset.touchpad, true);
+    return this.$view.getInt32(ByteOffset.touchpad, true) as Int32;
   }
 
-  public set touchpad(value: number) {
+  public set touchpad(value: Int32) {
     this.$view.setInt32(ByteOffset.touchpad, value, true);
   }
 
   public get finger() {
-    return this.$view.getInt32(ByteOffset.finger, true);
+    return this.$view.getInt32(ByteOffset.finger, true) as Int32;
   }
 
-  public set finger(value: number) {
+  public set finger(value: Int32) {
     this.$view.setInt32(ByteOffset.finger, value, true);
   }
 
   public get x() {
-    return this.$view.getFloat32(ByteOffset.x, true);
+    return this.$view.getFloat32(ByteOffset.x, true) as Float;
   }
 
-  public set x(value: number) {
+  public set x(value: Float) {
     this.$view.setFloat32(ByteOffset.x, value, true);
   }
 
   public get y() {
-    return this.$view.getFloat32(ByteOffset.y, true);
+    return this.$view.getFloat32(ByteOffset.y, true) as Float;
   }
 
-  public set y(value: number) {
+  public set y(value: Float) {
     this.$view.setFloat32(ByteOffset.y, value, true);
   }
 
   public get pressure() {
-    return this.$view.getFloat32(ByteOffset.pressure, true);
+    return this.$view.getFloat32(ByteOffset.pressure, true) as Float;
   }
 
-  public set pressure(value: number) {
+  public set pressure(value: Float) {
     this.$view.setFloat32(ByteOffset.pressure, value, true);
   }
 }

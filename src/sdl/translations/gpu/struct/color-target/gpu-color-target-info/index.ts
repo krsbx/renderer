@@ -1,4 +1,5 @@
 import { BaseStruct, type BaseStructOptions } from '@basestruct';
+import type { UInt32 } from '@/types/primitive';
 import type { GPULoadOp, GPUStoreOp } from '@sdl/ffi/constant/gpu';
 import type { GPUTexture } from '@/sdl/types/definition';
 import { FColor } from '../../../../pixels/struct';
@@ -31,18 +32,21 @@ export class GPUColorTargetInfo extends BaseStruct {
   }
 
   public get mipLevel() {
-    return this.$view.getUint32(ByteOffset.mip_level, true);
+    return this.$view.getUint32(ByteOffset.mip_level, true) as UInt32;
   }
 
-  public set mipLevel(value: number) {
+  public set mipLevel(value: UInt32) {
     this.$view.setUint32(ByteOffset.mip_level, value, true);
   }
 
   public get layerOrDepthPlane() {
-    return this.$view.getUint32(ByteOffset.layer_or_depth_plane, true);
+    return this.$view.getUint32(
+      ByteOffset.layer_or_depth_plane,
+      true
+    ) as UInt32;
   }
 
-  public set layerOrDepthPlane(value: number) {
+  public set layerOrDepthPlane(value: UInt32) {
     this.$view.setUint32(ByteOffset.layer_or_depth_plane, value, true);
   }
 
@@ -73,18 +77,18 @@ export class GPUColorTargetInfo extends BaseStruct {
   }
 
   public get resolveMipLevel() {
-    return this.$view.getUint32(ByteOffset.resolve_mip_level, true);
+    return this.$view.getUint32(ByteOffset.resolve_mip_level, true) as UInt32;
   }
 
-  public set resolveMipLevel(value: number) {
+  public set resolveMipLevel(value: UInt32) {
     this.$view.setUint32(ByteOffset.resolve_mip_level, value, true);
   }
 
   public get resolveLayer() {
-    return this.$view.getUint32(ByteOffset.resolve_layer, true);
+    return this.$view.getUint32(ByteOffset.resolve_layer, true) as UInt32;
   }
 
-  public set resolveLayer(value: number) {
+  public set resolveLayer(value: UInt32) {
     this.$view.setUint32(ByteOffset.resolve_layer, value, true);
   }
 

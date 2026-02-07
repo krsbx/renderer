@@ -1,62 +1,63 @@
 import { BaseStruct } from '@basestruct';
+import type { Int32 } from '@/types/primitive';
 import { ByteOffset } from './constant';
 
 export class GPUColorTargetBlendState extends BaseStruct {
   public static override readonly BYTE_SIZE = 32;
 
   public get srcColorBlendFactor() {
-    return this.$view.getInt32(ByteOffset.src_color_blendfactor, true);
+    return this.$view.getInt32(ByteOffset.src_color_blendfactor, true) as Int32;
   }
 
-  public set srcColorBlendFactor(value: number) {
+  public set srcColorBlendFactor(value: Int32) {
     this.$view.setInt32(ByteOffset.src_color_blendfactor, value, true);
   }
 
   public get dstColorBlendFactor() {
-    return this.$view.getInt32(ByteOffset.dst_color_blendfactor, true);
+    return this.$view.getInt32(ByteOffset.dst_color_blendfactor, true) as Int32;
   }
 
-  public set dstColorBlendFactor(value: number) {
+  public set dstColorBlendFactor(value: Int32) {
     this.$view.setInt32(ByteOffset.dst_color_blendfactor, value, true);
   }
 
   public get colorBlendOp() {
-    return this.$view.getInt32(ByteOffset.color_blend_op, true);
+    return this.$view.getInt32(ByteOffset.color_blend_op, true) as Int32;
   }
 
-  public set colorBlendOp(value: number) {
+  public set colorBlendOp(value: Int32) {
     this.$view.setInt32(ByteOffset.color_blend_op, value, true);
   }
 
   public get srcAlphaBlendFactor() {
-    return this.$view.getInt32(ByteOffset.src_alpha_blendfactor, true);
+    return this.$view.getInt32(ByteOffset.src_alpha_blendfactor, true) as Int32;
   }
 
-  public set srcAlphaBlendFactor(value: number) {
+  public set srcAlphaBlendFactor(value: Int32) {
     this.$view.setInt32(ByteOffset.src_alpha_blendfactor, value, true);
   }
 
   public get dstAlphaBlendFactor() {
-    return this.$view.getInt32(ByteOffset.dst_alpha_blendfactor, true);
+    return this.$view.getInt32(ByteOffset.dst_alpha_blendfactor, true) as Int32;
   }
 
-  public set dstAlphaBlendFactor(value: number) {
+  public set dstAlphaBlendFactor(value: Int32) {
     this.$view.setInt32(ByteOffset.dst_alpha_blendfactor, value, true);
   }
 
   public get alphaBlendOp() {
-    return this.$view.getInt32(ByteOffset.alpha_blend_op, true);
+    return this.$view.getInt32(ByteOffset.alpha_blend_op, true) as Int32;
   }
 
-  public set alphaBlendOp(value: number) {
+  public set alphaBlendOp(value: Int32) {
     this.$view.setInt32(ByteOffset.alpha_blend_op, value, true);
   }
 
   public get colorWriteMask() {
-    return this.$view.getInt32(ByteOffset.color_write_mask, true);
+    return this.$view.getInt32(ByteOffset.color_write_mask, true) as Int32;
   }
 
-  public set colorWriteMask(value: number) {
+  public set colorWriteMask(value: Int32) {
     this.$view.setInt32(ByteOffset.color_write_mask, value, true);
   }
 

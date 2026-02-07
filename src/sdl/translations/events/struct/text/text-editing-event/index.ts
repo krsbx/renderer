@@ -1,3 +1,4 @@
+import type { Int32, UInt32 } from '@/types/primitive';
 import { BaseStruct } from '@basestruct';
 import { stringToCString } from '@utility/common';
 import { CString, type Pointer } from 'bun:ffi';
@@ -19,10 +20,10 @@ export class TextEditingEvent extends BaseStruct {
   }
 
   public get reserved() {
-    return this.$view.getUint32(ByteOffset.reserved, true);
+    return this.$view.getUint32(ByteOffset.reserved, true) as UInt32;
   }
 
-  public set reserved(value: number) {
+  public set reserved(value: UInt32) {
     this.$view.setUint32(ByteOffset.reserved, value, true);
   }
 
@@ -35,10 +36,10 @@ export class TextEditingEvent extends BaseStruct {
   }
 
   public get windowId() {
-    return this.$view.getUint32(ByteOffset.windowID, true);
+    return this.$view.getUint32(ByteOffset.windowID, true) as UInt32;
   }
 
-  public set windowID(value: number) {
+  public set windowID(value: UInt32) {
     this.$view.setUint32(ByteOffset.windowID, value, true);
   }
 
@@ -60,18 +61,18 @@ export class TextEditingEvent extends BaseStruct {
   }
 
   public get start() {
-    return this.$view.getInt32(ByteOffset.start, true);
+    return this.$view.getInt32(ByteOffset.start, true) as Int32;
   }
 
-  public set start(value: number) {
+  public set start(value: Int32) {
     this.$view.setInt32(ByteOffset.start, value, true);
   }
 
   public get length() {
-    return this.$view.getInt32(ByteOffset.length, true);
+    return this.$view.getInt32(ByteOffset.length, true) as Int32;
   }
 
-  public set length(value: number) {
+  public set length(value: Int32) {
     this.$view.setInt32(ByteOffset.length, value, true);
   }
 }

@@ -1,5 +1,6 @@
 import type { SDL } from '@/sdl';
 import type { GPUDevice, Renderer, Window } from '@/sdl/types/definition';
+import type { Int32, UInt32 } from '@/types/primitive';
 import { CStruct } from '@cstruct';
 import { stringToCString } from '@utility/common';
 import type { WindowFlags } from '../../../ffi/video/constant';
@@ -9,8 +10,8 @@ export function createWindowAndRenderer(
   this: SDL,
   options: {
     title: string;
-    width: number;
-    height: number;
+    width: Int32;
+    height: Int32;
     windowFlags: WindowFlags;
   }
 ) {
@@ -47,7 +48,7 @@ export function createRenderer(
   ) as Renderer | null;
 }
 
-export function createRendererWithProperties(this: SDL, props: number) {
+export function createRendererWithProperties(this: SDL, props: UInt32) {
   return this.symbols.SDL_CreateRendererWithProperties(
     props
   ) as Renderer | null;
@@ -89,7 +90,7 @@ export function getRendererName(this: SDL, renderer: Renderer) {
 }
 
 export function getRendererProperties(this: SDL, renderer: Renderer) {
-  return this.symbols.SDL_GetRendererProperties(renderer);
+  return this.symbols.SDL_GetRendererProperties(renderer) as UInt32;
 }
 
 export function getRenderOutputSize(this: SDL, renderer: Renderer) {
@@ -105,8 +106,8 @@ export function getRenderOutputSize(this: SDL, renderer: Renderer) {
   if (!success) return null;
 
   return {
-    w: wStruct.getValue(0, 'i32'),
-    h: hStruct.getValue(0, 'i32'),
+    w: wStruct.getValue(0, 'i32') as Int32,
+    h: hStruct.getValue(0, 'i32') as Int32,
   };
 }
 
@@ -123,7 +124,7 @@ export function getCurrentRenderOutputSize(this: SDL, renderer: Renderer) {
   if (!success) return null;
 
   return {
-    w: wStruct.getValue(0, 'i32'),
-    h: hStruct.getValue(0, 'i32'),
+    w: wStruct.getValue(0, 'i32') as Int32,
+    h: hStruct.getValue(0, 'i32') as Int32,
   };
 }

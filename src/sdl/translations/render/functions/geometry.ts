@@ -1,5 +1,6 @@
 import type { SDL } from '@/sdl';
 import type { Renderer, Texture } from '@/sdl/types/definition';
+import type { Int32 } from '@/types/primitive';
 import { CStruct } from '@cstruct';
 import type { TextureAddressMode } from '../../../ffi/render/constant';
 import { FColor } from '../../pixels/struct';
@@ -44,15 +45,15 @@ export function renderGeometryRaw(
     renderer: Renderer;
     texture?: Texture | null;
     xy: Uint8Array;
-    xyStride: number;
+    xyStride: Int32;
     color: FColor;
-    colorStride: number;
+    colorStride: Int32;
     uv: Uint8Array;
-    uvStride: number;
-    numVertices: number;
+    uvStride: Int32;
+    numVertices: Int32;
     indices?: Uint8Array | null;
-    numIndices: number;
-    sizeIndices: number;
+    numIndices: Int32;
+    sizeIndices: Int32;
   }
 ) {
   return this.symbols.SDL_RenderGeometryRaw(

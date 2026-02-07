@@ -1,5 +1,6 @@
 import type { SDL } from '@/sdl';
 import type { Renderer, Texture } from '@/sdl/types/definition';
+import type { Float, Int32, UInt8, UInt32 } from '@/types/primitive';
 import { CStruct } from '@cstruct';
 import type { BlendMode } from '../../../ffi/blend-mode/constant';
 import type { PixelFormat } from '../../../ffi/pixels/constant';
@@ -15,8 +16,8 @@ export function createTexture(
     renderer: Renderer;
     format: PixelFormat;
     access: TextureAccess;
-    w: number;
-    h: number;
+    w: Int32;
+    h: Int32;
   }
 ) {
   return this.symbols.SDL_CreateTexture(
@@ -45,7 +46,7 @@ export function createTextureWithProperties(
   this: SDL,
   options: {
     renderer: Renderer;
-    props: number;
+    props: UInt32;
   }
 ) {
   return this.symbols.SDL_CreateTextureWithProperties(
@@ -55,7 +56,7 @@ export function createTextureWithProperties(
 }
 
 export function getTextureProperties(this: SDL, texture: Texture) {
-  return this.symbols.SDL_GetTextureProperties(texture);
+  return this.symbols.SDL_GetTextureProperties(texture) as UInt32;
 }
 
 export function getRendererFromTexture(this: SDL, texture: Texture) {
@@ -75,8 +76,8 @@ export function getTextureSize(this: SDL, texture: Texture) {
   if (!success) return null;
 
   return {
-    w: wStruct.getValue(0, 'f32'),
-    h: hStruct.getValue(0, 'f32'),
+    w: wStruct.getValue(0, 'f32') as Float,
+    h: hStruct.getValue(0, 'f32') as Float,
   };
 }
 
@@ -105,9 +106,9 @@ export function setTextureColorMod(
   this: SDL,
   options: {
     texture: Texture;
-    r: number;
-    g: number;
-    b: number;
+    r: UInt8;
+    g: UInt8;
+    b: UInt8;
   }
 ) {
   return this.symbols.SDL_SetTextureColorMod(
@@ -122,9 +123,9 @@ export function setTextureColorModFloat(
   this: SDL,
   options: {
     texture: Texture;
-    r: number;
-    g: number;
-    b: number;
+    r: Float;
+    g: Float;
+    b: Float;
   }
 ) {
   return this.symbols.SDL_SetTextureColorModFloat(
@@ -150,9 +151,9 @@ export function getTextureColorMod(this: SDL, texture: Texture) {
   if (!success) return null;
 
   return {
-    r: rStruct.getValue(0, 'u8'),
-    g: gStruct.getValue(0, 'u8'),
-    b: bStruct.getValue(0, 'u8'),
+    r: rStruct.getValue(0, 'u8') as UInt8,
+    g: gStruct.getValue(0, 'u8') as UInt8,
+    b: bStruct.getValue(0, 'u8') as UInt8,
   };
 }
 
@@ -171,9 +172,9 @@ export function getTextureColorModFloat(this: SDL, texture: Texture) {
   if (!success) return null;
 
   return {
-    r: rStruct.getValue(0, 'f32'),
-    g: gStruct.getValue(0, 'f32'),
-    b: bStruct.getValue(0, 'f32'),
+    r: rStruct.getValue(0, 'f32') as Float,
+    g: gStruct.getValue(0, 'f32') as Float,
+    b: bStruct.getValue(0, 'f32') as Float,
   };
 }
 
@@ -181,7 +182,7 @@ export function setTextureAlphaMod(
   this: SDL,
   options: {
     texture: Texture;
-    alpha: number;
+    alpha: UInt8;
   }
 ) {
   return this.symbols.SDL_SetTextureAlphaMod(options.texture, options.alpha);
@@ -191,7 +192,7 @@ export function setTextureAlphaModFloat(
   this: SDL,
   options: {
     texture: Texture;
-    alpha: number;
+    alpha: Float;
   }
 ) {
   return this.symbols.SDL_SetTextureAlphaModFloat(
@@ -210,7 +211,7 @@ export function getTextureAlphaMod(this: SDL, texture: Texture) {
 
   if (!success) return null;
 
-  return alphaStruct.getValue(0, 'u8');
+  return alphaStruct.getValue(0, 'u8') as UInt8;
 }
 
 export function getTextureAlphaModFloat(this: SDL, texture: Texture) {
@@ -223,7 +224,7 @@ export function getTextureAlphaModFloat(this: SDL, texture: Texture) {
 
   if (!success) return null;
 
-  return alphaStruct.getValue(0, 'f32');
+  return alphaStruct.getValue(0, 'f32') as Float;
 }
 
 export function setTextureBlendMode(
@@ -284,7 +285,7 @@ export function updateTexture(
     texture: Texture;
     rect?: Rect | null;
     pixels: Uint8Array;
-    pitch: number;
+    pitch: Int32;
   }
 ) {
   return this.symbols.SDL_UpdateTexture(
@@ -301,11 +302,11 @@ export function updateYUVTexture(
     texture: Texture;
     rect?: Rect | null;
     yPlane: Uint8Array;
-    yPitch: number;
+    yPitch: Int32;
     uPlane: Uint8Array;
-    uPitch: number;
+    uPitch: Int32;
     vPlane: Uint8Array;
-    vPitch: number;
+    vPitch: Int32;
   }
 ) {
   return this.symbols.SDL_UpdateYUVTexture(
@@ -326,9 +327,9 @@ export function updateNVTexture(
     texture: Texture;
     rect?: Rect | null;
     yPlane: Uint8Array;
-    yPitch: number;
+    yPitch: Int32;
     uvPlane: Uint8Array;
-    uvPitch: number;
+    uvPitch: Int32;
   }
 ) {
   return this.symbols.SDL_UpdateNVTexture(
@@ -362,7 +363,7 @@ export function lockTexture(
 
   return {
     pixels: pixelsStruct.getValue(0, 'ptr'),
-    pitch: pitchStruct.getValue(0, 'i32'),
+    pitch: pitchStruct.getValue(0, 'i32') as Int32,
   };
 }
 

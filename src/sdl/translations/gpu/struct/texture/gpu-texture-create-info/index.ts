@@ -1,4 +1,5 @@
 import { BaseStruct } from '@basestruct';
+import type { UInt32 } from '@/types/primitive';
 import type {
   GPUSampleCount,
   GPUTextureFormat,
@@ -35,34 +36,37 @@ export class GPUTextureCreateInfo extends BaseStruct {
   }
 
   public get width() {
-    return this.$view.getUint32(ByteOffset.width, true);
+    return this.$view.getUint32(ByteOffset.width, true) as UInt32;
   }
 
-  public set width(value: number) {
+  public set width(value: UInt32) {
     this.$view.setUint32(ByteOffset.width, value, true);
   }
 
   public get height() {
-    return this.$view.getUint32(ByteOffset.height, true);
+    return this.$view.getUint32(ByteOffset.height, true) as UInt32;
   }
 
-  public set height(value: number) {
+  public set height(value: UInt32) {
     this.$view.setUint32(ByteOffset.height, value, true);
   }
 
   public get layerCountOrDepth() {
-    return this.$view.getUint32(ByteOffset.layer_count_or_depth, true);
+    return this.$view.getUint32(
+      ByteOffset.layer_count_or_depth,
+      true
+    ) as UInt32;
   }
 
-  public set layerCountOrDepth(value: number) {
+  public set layerCountOrDepth(value: UInt32) {
     this.$view.setUint32(ByteOffset.layer_count_or_depth, value, true);
   }
 
   public get levelCount() {
-    return this.$view.getUint32(ByteOffset.num_levels, true);
+    return this.$view.getUint32(ByteOffset.num_levels, true) as UInt32;
   }
 
-  public set levelCount(value: number) {
+  public set levelCount(value: UInt32) {
     this.$view.setUint32(ByteOffset.num_levels, value, true);
   }
 
@@ -75,10 +79,10 @@ export class GPUTextureCreateInfo extends BaseStruct {
   }
 
   public get props() {
-    return this.$view.getUint32(ByteOffset.props, true);
+    return this.$view.getUint32(ByteOffset.props, true) as UInt32;
   }
 
-  public set props(value: number) {
+  public set props(value: UInt32) {
     this.$view.setUint32(ByteOffset.props, value, true);
   }
 }

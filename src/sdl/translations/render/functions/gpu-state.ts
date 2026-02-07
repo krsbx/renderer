@@ -1,5 +1,6 @@
 import type { SDL } from '@/sdl';
 import type { GPURenderState, Renderer } from '@/sdl/types/definition';
+import type { UInt32 } from '@/types/primitive';
 import { GPURenderStateCreateInfo } from '../struct';
 
 export function createGPURenderState(
@@ -19,9 +20,9 @@ export function setGPURenderStateFragmentUniforms(
   this: SDL,
   options: {
     state: GPURenderState;
-    slotIndex: number;
+    slotIndex: UInt32;
     data: Uint8Array;
-    length: number;
+    length: UInt32;
   }
 ) {
   return this.symbols.SDL_SetGPURenderStateFragmentUniforms(

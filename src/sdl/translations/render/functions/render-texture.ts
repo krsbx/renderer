@@ -1,5 +1,6 @@
 import type { SDL } from '@/sdl';
 import type { Renderer, Texture } from '@/sdl/types/definition';
+import type { Float } from '@/types/primitive';
 import type { FlipMode } from '../../../ffi/surface/constant';
 import { FPoint, FRect } from '../../rect/struct';
 
@@ -10,7 +11,7 @@ export function renderTextureRotated(
     texture: Texture;
     srcRect?: FRect | null;
     dstRect?: FRect | null;
-    angle: number;
+    angle: Float;
     center?: FPoint | null;
     flip: FlipMode;
   }
@@ -53,7 +54,7 @@ export function renderTextureTiled(
     renderer: Renderer;
     texture: Texture;
     srcRect?: FRect | null;
-    scale: number;
+    scale: Float;
     dstRect?: FRect | null;
   }
 ) {
@@ -72,11 +73,11 @@ export function renderTexture9Grid(
     renderer: Renderer;
     texture: Texture;
     srcRect?: FRect | null;
-    leftWidth: number;
-    rightWidth: number;
-    topHeight: number;
-    bottomHeight: number;
-    scale: number;
+    leftWidth: Float;
+    rightWidth: Float;
+    topHeight: Float;
+    bottomHeight: Float;
+    scale: Float;
     dstRect?: FRect | null;
   }
 ) {
@@ -99,13 +100,13 @@ export function renderTexture9GridTiled(
     renderer: Renderer;
     texture: Texture;
     srcRect?: FRect | null;
-    leftWidth: number;
-    rightWidth: number;
-    topHeight: number;
-    bottomHeight: number;
-    scale: number;
+    leftWidth: Float;
+    rightWidth: Float;
+    topHeight: Float;
+    bottomHeight: Float;
+    scale: Float;
     dstRect?: FRect | null;
-    tileScale: number;
+    tileScale: Float;
   }
 ) {
   return this.symbols.SDL_RenderTexture9GridTiled(

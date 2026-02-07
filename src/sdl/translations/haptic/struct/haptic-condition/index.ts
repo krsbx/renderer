@@ -1,4 +1,5 @@
 import type { BuildTuple } from '@/types/shared';
+import type { UInt16, UInt32 } from '@/types/primitive';
 import { BaseStruct, type BaseStructOptions } from '@basestruct';
 import type { HapticEffectType } from '@sdl/ffi/constant/haptic';
 import { HapticDirection } from '../haptic-direction';
@@ -36,34 +37,34 @@ export class HapticCondition extends BaseStruct {
   }
 
   public get length() {
-    return this.$view.getUint32(ByteOffset.length, true);
+    return this.$view.getUint32(ByteOffset.length, true) as UInt32;
   }
 
-  public set length(value: number) {
+  public set length(value: UInt32) {
     this.$view.setUint32(ByteOffset.length, value, true);
   }
 
   public get delay() {
-    return this.$view.getUint16(ByteOffset.delay, true);
+    return this.$view.getUint16(ByteOffset.delay, true) as UInt16;
   }
 
-  public set delay(value: number) {
+  public set delay(value: UInt16) {
     this.$view.setUint16(ByteOffset.delay, value, true);
   }
 
   public get button() {
-    return this.$view.getUint16(ByteOffset.button, true);
+    return this.$view.getUint16(ByteOffset.button, true) as UInt16;
   }
 
-  public set button(value: number) {
+  public set button(value: UInt16) {
     this.$view.setUint16(ByteOffset.button, value, true);
   }
 
   public get interval() {
-    return this.$view.getUint16(ByteOffset.interval, true);
+    return this.$view.getUint16(ByteOffset.interval, true) as UInt16;
   }
 
-  public set interval(value: number) {
+  public set interval(value: UInt16) {
     this.$view.setUint16(ByteOffset.interval, value, true);
   }
 

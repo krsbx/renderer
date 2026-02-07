@@ -1,30 +1,31 @@
 import type { SDL } from '@/sdl';
 import type { Gamepad } from '@/sdl/types/definition';
+import type { Float, Int32 } from '@/types/primitive';
 import { CStruct } from '@cstruct';
 
 export function getNumGamepadTouchpads(this: SDL, gamepad: Gamepad) {
-  return this.symbols.SDL_GetNumGamepadTouchpads(gamepad);
+  return this.symbols.SDL_GetNumGamepadTouchpads(gamepad) as Int32;
 }
 
 export function getNumGamepadTouchpadFingers(
   this: SDL,
   options: {
     gamepad: Gamepad;
-    touchpad: number;
+    touchpad: Int32;
   }
 ) {
   return this.symbols.SDL_GetNumGamepadTouchpadFingers(
     options.gamepad,
     options.touchpad
-  );
+  ) as Int32;
 }
 
 export function getGamepadTouchpadFinger(
   this: SDL,
   options: {
     gamepad: Gamepad;
-    touchpad: number;
-    finger: number;
+    touchpad: Int32;
+    finger: Int32;
   }
 ) {
   const downStruct = new CStruct({ length: CStruct.BYTE_SIZE.u8 });
@@ -46,8 +47,8 @@ export function getGamepadTouchpadFinger(
 
   return {
     down: downStruct.getValue(0, 'u8') === 1,
-    x: xStruct.getValue(0, 'f32'),
-    y: yStruct.getValue(0, 'f32'),
-    pressure: pressureStruct.getValue(0, 'f32'),
+    x: xStruct.getValue(0, 'f32') as Float,
+    y: yStruct.getValue(0, 'f32') as Float,
+    pressure: pressureStruct.getValue(0, 'f32') as Float,
   };
 }

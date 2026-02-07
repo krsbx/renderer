@@ -1,3 +1,4 @@
+import type { Int32 } from '@/types/primitive';
 import { BaseStruct, type BaseStructOptions } from '@basestruct';
 import { GamepadBindingType, GamepadButton } from '@sdl/ffi/constant/gamepad';
 import { ByteOffset } from './constant';
@@ -28,35 +29,35 @@ export class GamepadBinding extends BaseStruct {
       },
       axis: {
         get axis() {
-          return view.getInt32(ByteOffset.input.axis.axis, true);
+          return view.getInt32(ByteOffset.input.axis.axis, true) as Int32;
         },
-        set axis(value: number) {
+        set axis(value: Int32) {
           view.setInt32(ByteOffset.input.axis.axis, value, true);
         },
         get min() {
-          return view.getInt32(ByteOffset.input.axis.axis_min, true);
+          return view.getInt32(ByteOffset.input.axis.axis_min, true) as Int32;
         },
-        set min(value: number) {
+        set min(value: Int32) {
           view.setInt32(ByteOffset.input.axis.axis_min, value, true);
         },
         get max() {
-          return view.getInt32(ByteOffset.input.axis.axis_max, true);
+          return view.getInt32(ByteOffset.input.axis.axis_max, true) as Int32;
         },
-        set max(value: number) {
+        set max(value: Int32) {
           view.setInt32(ByteOffset.input.axis.axis_max, value, true);
         },
       },
       hat: {
         get hat() {
-          return view.getInt32(ByteOffset.input.hat.hat, true);
+          return view.getInt32(ByteOffset.input.hat.hat, true) as Int32;
         },
-        set hat(value: number) {
+        set hat(value: Int32) {
           view.setInt32(ByteOffset.input.hat.hat, value, true);
         },
         get mask() {
-          return view.getInt32(ByteOffset.input.hat.hat_mask, true);
+          return view.getInt32(ByteOffset.input.hat.hat_mask, true) as Int32;
         },
-        set mask(value: number) {
+        set mask(value: Int32) {
           view.setInt32(ByteOffset.input.hat.hat_mask, value, true);
         },
       },
@@ -75,21 +76,21 @@ export class GamepadBinding extends BaseStruct {
       },
       axis: {
         get axis() {
-          return view.getInt32(ByteOffset.output.axis.axis, true);
+          return view.getInt32(ByteOffset.output.axis.axis, true) as Int32;
         },
-        set axis(value: number) {
+        set axis(value: Int32) {
           view.setInt32(ByteOffset.output.axis.axis, value, true);
         },
         get min() {
-          return view.getInt32(ByteOffset.output.axis.axis_min, true);
+          return view.getInt32(ByteOffset.output.axis.axis_min, true) as Int32;
         },
-        set min(value: number) {
+        set min(value: Int32) {
           view.setInt32(ByteOffset.output.axis.axis_min, value, true);
         },
         get max() {
-          return view.getInt32(ByteOffset.output.axis.axis_max, true);
+          return view.getInt32(ByteOffset.output.axis.axis_max, true) as Int32;
         },
-        set max(value: number) {
+        set max(value: Int32) {
           view.setInt32(ByteOffset.output.axis.axis_max, value, true);
         },
       },

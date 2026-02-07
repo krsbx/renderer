@@ -1,3 +1,4 @@
+import type { Int32, UInt16 } from '@/types/primitive';
 import { BaseStruct } from '@basestruct';
 import { CWideString } from '@cwstring';
 import type { HIDBusType } from '@sdl/ffi/constant/hidapi';
@@ -30,18 +31,18 @@ export class HIDDeviceInfo extends BaseStruct {
   }
 
   public get vendorId() {
-    return this.$view.getUint16(ByteOffset.vendor_id, true);
+    return this.$view.getUint16(ByteOffset.vendor_id, true) as UInt16;
   }
 
-  public set vendorId(value: number) {
+  public set vendorId(value: UInt16) {
     this.$view.setUint16(ByteOffset.vendor_id, value, true);
   }
 
   public get productId() {
-    return this.$view.getUint16(ByteOffset.product_id, true);
+    return this.$view.getUint16(ByteOffset.product_id, true) as UInt16;
   }
 
-  public set productId(value: number) {
+  public set productId(value: UInt16) {
     this.$view.setUint16(ByteOffset.product_id, value, true);
   }
 
@@ -56,11 +57,11 @@ export class HIDDeviceInfo extends BaseStruct {
   }
 
   public get releaseNumber() {
-    return this.$view.getUint16(ByteOffset.release_number, true);
+    return this.$view.getUint16(ByteOffset.release_number, true) as UInt16;
   }
 
-  public set releaseNumber(value: number) {
-    this.$view.setUint16(ByteOffset.serial_number, value, true);
+  public set releaseNumber(value: UInt16) {
+    this.$view.setUint16(ByteOffset.release_number, value, true);
   }
 
   public get manufacturerString() {
@@ -84,50 +85,50 @@ export class HIDDeviceInfo extends BaseStruct {
   }
 
   public get usagePage() {
-    return this.$view.getUint16(ByteOffset.usage_page, true);
+    return this.$view.getUint16(ByteOffset.usage_page, true) as UInt16;
   }
 
-  public set usagePage(value: number) {
+  public set usagePage(value: UInt16) {
     this.$view.setUint16(ByteOffset.usage_page, value, true);
   }
 
   public get usage() {
-    return this.$view.getUint16(ByteOffset.usage, true);
+    return this.$view.getUint16(ByteOffset.usage, true) as UInt16;
   }
 
-  public set usage(value: number) {
+  public set usage(value: UInt16) {
     this.$view.setUint16(ByteOffset.usage, value, true);
   }
 
   public get interfaceNumber() {
-    return this.$view.getInt32(ByteOffset.interface_number, true);
+    return this.$view.getInt32(ByteOffset.interface_number, true) as Int32;
   }
 
-  public set interfaceNumber(value: number) {
+  public set interfaceNumber(value: Int32) {
     this.$view.setInt32(ByteOffset.interface_number, value, true);
   }
 
   public get interfaceClass() {
-    return this.$view.getInt32(ByteOffset.interface_class, true);
+    return this.$view.getInt32(ByteOffset.interface_class, true) as Int32;
   }
 
-  public set interfaceClass(value: number) {
+  public set interfaceClass(value: Int32) {
     this.$view.setInt32(ByteOffset.interface_class, value, true);
   }
 
   public get interfaceSubclass() {
-    return this.$view.getInt32(ByteOffset.interface_subclass, true);
+    return this.$view.getInt32(ByteOffset.interface_subclass, true) as Int32;
   }
 
-  public set interfaceSubclass(value: number) {
+  public set interfaceSubclass(value: Int32) {
     this.$view.setInt32(ByteOffset.interface_subclass, value, true);
   }
 
   public get interfaceProtocol() {
-    return this.$view.getInt32(ByteOffset.interface_protocol, true);
+    return this.$view.getInt32(ByteOffset.interface_protocol, true) as Int32;
   }
 
-  public set interfaceProtocol(value: number) {
+  public set interfaceProtocol(value: Int32) {
     this.$view.setInt32(ByteOffset.interface_protocol, value, true);
   }
 

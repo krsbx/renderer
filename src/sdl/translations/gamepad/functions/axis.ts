@@ -1,5 +1,6 @@
 import type { SDL } from '@/sdl';
 import type { Gamepad } from '@/sdl/types/definition';
+import type { Int16 } from '@/types/primitive';
 import { stringToCString } from '@utility/common';
 import type { GamepadAxis } from '../../../ffi/gamepad/constant';
 
@@ -30,5 +31,8 @@ export function getGamepadAxis(
     axis: GamepadAxis;
   }
 ) {
-  return this.symbols.SDL_GetGamepadAxis(options.gamepad, options.axis);
+  return this.symbols.SDL_GetGamepadAxis(
+    options.gamepad,
+    options.axis
+  ) as Int16;
 }

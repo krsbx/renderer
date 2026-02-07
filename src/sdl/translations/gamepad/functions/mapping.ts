@@ -1,12 +1,15 @@
 import type { SDL } from '@/sdl';
 import type { Gamepad, IOStream } from '@/sdl/types/definition';
+import type { Int32, UInt32 } from '@/types/primitive';
 import { CStruct } from '@cstruct';
 import { stringToCString } from '@utility/common';
 import { CString } from 'bun:ffi';
 import { GUID } from '../../guid/struct';
 
 export function addGamepadMapping(this: SDL, mapping: string) {
-  return this.symbols.SDL_AddGamepadMapping(stringToCString(mapping).ptr);
+  return this.symbols.SDL_AddGamepadMapping(
+    stringToCString(mapping).ptr
+  ) as Int32;
 }
 
 export function addGamepadMappingsFromIO(
@@ -19,11 +22,13 @@ export function addGamepadMappingsFromIO(
   return this.symbols.SDL_AddGamepadMappingsFromIO(
     options.src,
     options.closeio
-  );
+  ) as Int32;
 }
 
 export function addGamepadMappingsFromFile(this: SDL, file: string) {
-  return this.symbols.SDL_AddGamepadMappingsFromFile(stringToCString(file).ptr);
+  return this.symbols.SDL_AddGamepadMappingsFromFile(
+    stringToCString(file).ptr
+  ) as Int32;
 }
 
 export function reloadGamepadMappings(this: SDL) {
@@ -72,7 +77,7 @@ export function getGamepadMapping(this: SDL, gamepad: Gamepad) {
 export function setGamepadMapping(
   this: SDL,
   options: {
-    instanceId: number;
+    instanceId: UInt32;
     mapping: string;
   }
 ) {

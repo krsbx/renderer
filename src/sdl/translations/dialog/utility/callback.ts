@@ -1,4 +1,5 @@
 import { CallbackManager } from '@/sdl/utility';
+import type { Int32 } from '@/types/primitive';
 import { CStruct } from '@/utility/cstruct';
 import { type Pointer, FFIType, JSCallback } from 'bun:ffi';
 import type { DialogFileFilter } from '../struct';
@@ -17,7 +18,7 @@ export function createDialogCallback(
   const key = getDialogCallbackKey();
 
   const cb = new JSCallback(
-    (_: Pointer, filelistPtr: Pointer | null, filterIndex: number) => {
+    (_: Pointer, filelistPtr: Pointer | null, filterIndex: Int32) => {
       const files = filelistPtr
         ? CStruct.readArrayString(filelistPtr, null)
         : [];

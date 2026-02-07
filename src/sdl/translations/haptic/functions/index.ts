@@ -1,5 +1,6 @@
 import type { SDL } from '@/sdl';
 import type { Haptic, Joystick } from '@/sdl/types/definition';
+import type { Float, Int32, UInt32 } from '@/types/primitive';
 import { CStruct } from '@cstruct';
 import { HapticEffect } from '../struct';
 
@@ -18,20 +19,20 @@ export function getHaptics(this: SDL) {
   return haptics;
 }
 
-export function getHapticNameForID(this: SDL, instanceId: number) {
+export function getHapticNameForID(this: SDL, instanceId: UInt32) {
   return this.symbols.SDL_GetHapticNameForID(instanceId).toString();
 }
 
-export function openHaptic(this: SDL, instanceId: number) {
+export function openHaptic(this: SDL, instanceId: UInt32) {
   return this.symbols.SDL_OpenHaptic(instanceId) as Haptic | null;
 }
 
-export function getHapticFromID(this: SDL, instanceId: number) {
+export function getHapticFromID(this: SDL, instanceId: UInt32) {
   return this.symbols.SDL_GetHapticFromID(instanceId) as Haptic | null;
 }
 
 export function getHapticID(this: SDL, haptic: Haptic) {
-  return this.symbols.SDL_GetHapticID(haptic);
+  return this.symbols.SDL_GetHapticID(haptic) as UInt32;
 }
 
 export function getHapticName(this: SDL, haptic: Haptic) {
@@ -59,19 +60,19 @@ export function closeHaptic(this: SDL, haptic: Haptic) {
 }
 
 export function getMaxHapticEffects(this: SDL, haptic: Haptic) {
-  return this.symbols.SDL_GetMaxHapticEffects(haptic);
+  return this.symbols.SDL_GetMaxHapticEffects(haptic) as Int32;
 }
 
 export function getMaxHapticEffectsPlaying(this: SDL, haptic: Haptic) {
-  return this.symbols.SDL_GetMaxHapticEffectsPlaying(haptic);
+  return this.symbols.SDL_GetMaxHapticEffectsPlaying(haptic) as Int32;
 }
 
 export function getHapticFeatures(this: SDL, haptic: Haptic) {
-  return this.symbols.SDL_GetHapticFeatures(haptic);
+  return this.symbols.SDL_GetHapticFeatures(haptic) as UInt32;
 }
 
 export function getNumHapticAxes(this: SDL, haptic: Haptic) {
-  return this.symbols.SDL_GetNumHapticAxes(haptic);
+  return this.symbols.SDL_GetNumHapticAxes(haptic) as Int32;
 }
 
 export function hapticEffectSupported(
@@ -97,14 +98,14 @@ export function createHapticEffect(
   return this.symbols.SDL_CreateHapticEffect(
     options.haptic,
     options.effect.$memory
-  );
+  ) as Int32;
 }
 
 export function updateHapticEffect(
   this: SDL,
   options: {
     haptic: Haptic;
-    effect: number;
+    effect: Int32;
     data: HapticEffect;
   }
 ) {
@@ -119,8 +120,8 @@ export function runHapticEffect(
   this: SDL,
   options: {
     haptic: Haptic;
-    effect: number;
-    iterations: number;
+    effect: Int32;
+    iterations: UInt32;
   }
 ) {
   return this.symbols.SDL_RunHapticEffect(
@@ -134,7 +135,7 @@ export function stopHapticEffect(
   this: SDL,
   options: {
     haptic: Haptic;
-    effect: number;
+    effect: Int32;
   }
 ) {
   return this.symbols.SDL_StopHapticEffect(options.haptic, options.effect);
@@ -144,7 +145,7 @@ export function destroyHapticEffect(
   this: SDL,
   options: {
     haptic: Haptic;
-    effect: number;
+    effect: Int32;
   }
 ) {
   this.symbols.SDL_DestroyHapticEffect(options.haptic, options.effect);
@@ -154,7 +155,7 @@ export function getHapticEffectStatus(
   this: SDL,
   options: {
     haptic: Haptic;
-    effect: number;
+    effect: Int32;
   }
 ) {
   return this.symbols.SDL_GetHapticEffectStatus(options.haptic, options.effect);
@@ -164,7 +165,7 @@ export function setHapticGain(
   this: SDL,
   options: {
     haptic: Haptic;
-    gain: number;
+    gain: Int32;
   }
 ) {
   return this.symbols.SDL_SetHapticGain(options.haptic, options.gain);
@@ -174,7 +175,7 @@ export function setHapticAutocenter(
   this: SDL,
   options: {
     haptic: Haptic;
-    autocenter: number;
+    autocenter: Int32;
   }
 ) {
   return this.symbols.SDL_SetHapticAutocenter(
@@ -207,8 +208,8 @@ export function playHapticRumble(
   this: SDL,
   options: {
     haptic: Haptic;
-    strength: number;
-    length: number;
+    strength: Float;
+    length: UInt32;
   }
 ) {
   return this.symbols.SDL_PlayHapticRumble(

@@ -22,7 +22,7 @@ export function quitSubSystem(this: SDL, flags: InitFlags) {
 }
 
 export function wasInit(this: SDL, flags: InitFlags) {
-  return this.symbols.SDL_WasInit(flags);
+  return this.symbols.SDL_WasInit(flags) as InitFlags;
 }
 
 export function quit(this: SDL) {

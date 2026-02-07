@@ -1,5 +1,6 @@
 import type { SDL } from '@/sdl';
 import type { Gamepad, Joystick } from '@/sdl/types/definition';
+import type { Int32, UInt16, UInt32 } from '@/types/primitive';
 import { CStruct } from '@cstruct';
 import { stringToCString } from '@utility/common';
 import { CString } from 'bun:ffi';
@@ -33,23 +34,23 @@ export function getGamepads(this: SDL) {
   return gamepads;
 }
 
-export function isGamepad(this: SDL, instanceId: number) {
+export function isGamepad(this: SDL, instanceId: UInt32) {
   return this.symbols.SDL_IsGamepad(instanceId);
 }
 
-export function getGamepadNameForID(this: SDL, instanceId: number) {
+export function getGamepadNameForID(this: SDL, instanceId: UInt32) {
   return this.symbols.SDL_GetGamepadNameForID(instanceId).toString();
 }
 
-export function getGamepadPathForID(this: SDL, instanceId: number) {
+export function getGamepadPathForID(this: SDL, instanceId: UInt32) {
   return this.symbols.SDL_GetGamepadPathForID(instanceId).toString();
 }
 
-export function getGamepadPlayerIndexForID(this: SDL, instanceId: number) {
-  return this.symbols.SDL_GetGamepadPlayerIndexForID(instanceId);
+export function getGamepadPlayerIndexForID(this: SDL, instanceId: UInt32) {
+  return this.symbols.SDL_GetGamepadPlayerIndexForID(instanceId) as Int32;
 }
 
-export function getGamepadGUIDForID(this: SDL, instanceId: number) {
+export function getGamepadGUIDForID(this: SDL, instanceId: UInt32) {
   const guid = this.symbols.SDL_GetGamepadGUIDForID(instanceId);
 
   if (!guid) return null;
@@ -57,27 +58,27 @@ export function getGamepadGUIDForID(this: SDL, instanceId: number) {
   return new GUID(guid);
 }
 
-export function getGamepadVendorForID(this: SDL, instanceId: number) {
-  return this.symbols.SDL_GetGamepadVendorForID(instanceId);
+export function getGamepadVendorForID(this: SDL, instanceId: UInt32) {
+  return this.symbols.SDL_GetGamepadVendorForID(instanceId) as UInt16;
 }
 
-export function getGamepadProductForID(this: SDL, instanceId: number) {
-  return this.symbols.SDL_GetGamepadProductForID(instanceId);
+export function getGamepadProductForID(this: SDL, instanceId: UInt32) {
+  return this.symbols.SDL_GetGamepadProductForID(instanceId) as UInt16;
 }
 
-export function getGamepadProductVersionForID(this: SDL, instanceId: number) {
-  return this.symbols.SDL_GetGamepadProductVersionForID(instanceId);
+export function getGamepadProductVersionForID(this: SDL, instanceId: UInt32) {
+  return this.symbols.SDL_GetGamepadProductVersionForID(instanceId) as UInt16;
 }
 
-export function getGamepadTypeForID(this: SDL, instanceId: number) {
+export function getGamepadTypeForID(this: SDL, instanceId: UInt32) {
   return this.symbols.SDL_GetGamepadTypeForID(instanceId) as GamepadType;
 }
 
-export function getRealGamepadTypeForID(this: SDL, instanceId: number) {
+export function getRealGamepadTypeForID(this: SDL, instanceId: UInt32) {
   return this.symbols.SDL_GetRealGamepadTypeForID(instanceId) as GamepadType;
 }
 
-export function getGamepadMappingForID(this: SDL, instanceId: number) {
+export function getGamepadMappingForID(this: SDL, instanceId: UInt32) {
   const ptr = this.symbols.SDL_GetGamepadMappingForID(instanceId);
 
   if (!ptr) return null;
@@ -89,26 +90,26 @@ export function getGamepadMappingForID(this: SDL, instanceId: number) {
   return mapping.toString();
 }
 
-export function openGamepad(this: SDL, instanceId: number) {
+export function openGamepad(this: SDL, instanceId: UInt32) {
   return this.symbols.SDL_OpenGamepad(instanceId) as Gamepad | null;
 }
 
-export function getGamepadFromID(this: SDL, instanceId: number) {
+export function getGamepadFromID(this: SDL, instanceId: UInt32) {
   return this.symbols.SDL_GetGamepadFromID(instanceId) as Gamepad | null;
 }
 
-export function getGamepadFromPlayerIndex(this: SDL, playerIndex: number) {
+export function getGamepadFromPlayerIndex(this: SDL, playerIndex: Int32) {
   return this.symbols.SDL_GetGamepadFromPlayerIndex(
     playerIndex
   ) as Gamepad | null;
 }
 
 export function getGamepadProperties(this: SDL, gamepad: Gamepad) {
-  return this.symbols.SDL_GetGamepadProperties(gamepad);
+  return this.symbols.SDL_GetGamepadProperties(gamepad) as UInt32;
 }
 
 export function getGamepadID(this: SDL, gamepad: Gamepad) {
-  return this.symbols.SDL_GetGamepadID(gamepad);
+  return this.symbols.SDL_GetGamepadID(gamepad) as UInt32;
 }
 
 export function getGamepadName(this: SDL, gamepad: Gamepad) {
@@ -128,14 +129,14 @@ export function getRealGamepadType(this: SDL, gamepad: Gamepad) {
 }
 
 export function getGamepadPlayerIndex(this: SDL, gamepad: Gamepad) {
-  return this.symbols.SDL_GetGamepadPlayerIndex(gamepad);
+  return this.symbols.SDL_GetGamepadPlayerIndex(gamepad) as Int32;
 }
 
 export function setGamepadPlayerIndex(
   this: SDL,
   options: {
     gamepad: Gamepad;
-    playerIndex: number;
+    playerIndex: Int32;
   }
 ) {
   return this.symbols.SDL_SetGamepadPlayerIndex(
@@ -145,19 +146,19 @@ export function setGamepadPlayerIndex(
 }
 
 export function getGamepadVendor(this: SDL, gamepad: Gamepad) {
-  return this.symbols.SDL_GetGamepadVendor(gamepad);
+  return this.symbols.SDL_GetGamepadVendor(gamepad) as UInt16;
 }
 
 export function getGamepadProduct(this: SDL, gamepad: Gamepad) {
-  return this.symbols.SDL_GetGamepadProduct(gamepad);
+  return this.symbols.SDL_GetGamepadProduct(gamepad) as UInt16;
 }
 
 export function getGamepadProductVersion(this: SDL, gamepad: Gamepad) {
-  return this.symbols.SDL_GetGamepadProductVersion(gamepad);
+  return this.symbols.SDL_GetGamepadProductVersion(gamepad) as UInt16;
 }
 
 export function getGamepadFirmwareVersion(this: SDL, gamepad: Gamepad) {
-  return this.symbols.SDL_GetGamepadFirmwareVersion(gamepad);
+  return this.symbols.SDL_GetGamepadFirmwareVersion(gamepad) as UInt16;
 }
 
 export function getGamepadSerial(this: SDL, gamepad: Gamepad) {
@@ -181,7 +182,7 @@ export function getGamepadPowerInfo(this: SDL, gamepad: Gamepad) {
     gamepad,
     struct.$memory
   ) as PowerState;
-  const percent = struct.getValue(0, 'i32');
+  const percent = struct.getValue(0, 'i32') as Int32;
 
   return {
     state,

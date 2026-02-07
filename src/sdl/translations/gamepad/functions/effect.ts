@@ -1,13 +1,14 @@
 import type { SDL } from '@/sdl';
 import type { Gamepad } from '@/sdl/types/definition';
+import type { UInt8, UInt16, UInt32 } from '@/types/primitive';
 
 export function rumbleGamepad(
   this: SDL,
   options: {
     gamepad: Gamepad;
-    lowFrequencyRumble: number;
-    highFrequencyRumble: number;
-    durationMs: number;
+    lowFrequencyRumble: UInt16;
+    highFrequencyRumble: UInt16;
+    durationMs: UInt32;
   }
 ) {
   return this.symbols.SDL_RumbleGamepad(
@@ -22,9 +23,9 @@ export function rumbleGamepadTriggers(
   this: SDL,
   options: {
     gamepad: Gamepad;
-    leftRumble: number;
-    rightRumble: number;
-    durationMs: number;
+    leftRumble: UInt16;
+    rightRumble: UInt16;
+    durationMs: UInt32;
   }
 ) {
   return this.symbols.SDL_RumbleGamepadTriggers(
@@ -39,9 +40,9 @@ export function setGamepadLED(
   this: SDL,
   options: {
     gamepad: Gamepad;
-    red: number;
-    green: number;
-    blue: number;
+    red: UInt8;
+    green: UInt8;
+    blue: UInt8;
   }
 ) {
   return this.symbols.SDL_SetGamepadLED(

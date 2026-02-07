@@ -1,5 +1,6 @@
 import type { SDL } from '@/sdl';
 import type { Gamepad } from '@/sdl/types/definition';
+import type { Float, Int32 } from '@/types/primitive';
 import type { SensorType } from '../../../ffi/sensor/constant';
 
 export function gamepadHasSensor(
@@ -47,7 +48,7 @@ export function getGamepadSensorDataRate(
   return this.symbols.SDL_GetGamepadSensorDataRate(
     options.gamepad,
     options.type
-  );
+  ) as Float;
 }
 
 export function getGamepadSensorData(
@@ -55,7 +56,7 @@ export function getGamepadSensorData(
   options: {
     gamepad: Gamepad;
     type: SensorType;
-    numValues: number;
+    numValues: Int32;
   }
 ) {
   const data = new Float32Array(options.numValues);

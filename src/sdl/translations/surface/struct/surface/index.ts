@@ -1,3 +1,4 @@
+import type { Int32 } from '@/types/primitive';
 import { BaseStruct } from '@basestruct';
 import type { PixelFormat } from '@sdl/ffi/constant/pixels';
 import type { SurfaceFlags } from '@sdl/ffi/constant/surface';
@@ -24,26 +25,26 @@ export class Surface extends BaseStruct {
   }
 
   public get w() {
-    return this.$view.getInt32(ByteOffset.w, true);
+    return this.$view.getInt32(ByteOffset.w, true) as Int32;
   }
 
-  public set w(value: number) {
+  public set w(value: Int32) {
     this.$view.setInt32(ByteOffset.w, value, true);
   }
 
   public get h() {
-    return this.$view.getInt32(ByteOffset.h, true);
+    return this.$view.getInt32(ByteOffset.h, true) as Int32;
   }
 
-  public set h(value: number) {
+  public set h(value: Int32) {
     this.$view.setInt32(ByteOffset.h, value, true);
   }
 
   public get pitch() {
-    return this.$view.getInt32(ByteOffset.pitch, true);
+    return this.$view.getInt32(ByteOffset.pitch, true) as Int32;
   }
 
-  public set pitch(value: number) {
+  public set pitch(value: Int32) {
     this.$view.setInt32(ByteOffset.pitch, value, true);
   }
 
@@ -58,10 +59,10 @@ export class Surface extends BaseStruct {
   }
 
   public get refcount() {
-    return this.$view.getInt32(ByteOffset.refcount, true);
+    return this.$view.getInt32(ByteOffset.refcount, true) as Int32;
   }
 
-  public set refcount(value: number) {
+  public set refcount(value: Int32) {
     this.$view.setInt32(ByteOffset.refcount, value, true);
   }
 }

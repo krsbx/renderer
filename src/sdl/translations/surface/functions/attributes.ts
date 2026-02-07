@@ -1,4 +1,5 @@
 import type { SDL } from '@/sdl';
+import type { UInt8, UInt32 } from '@/types/primitive';
 import { CStruct } from '@cstruct';
 import type { BlendMode } from '../../../ffi/blend-mode/constant';
 import { Rect } from '../../rect/struct';
@@ -30,7 +31,7 @@ export function setSurfaceColorKey(
   options: {
     surface: Surface;
     enabled: boolean;
-    key: number;
+    key: UInt32;
   }
 ) {
   return this.symbols.SDL_SetSurfaceColorKey(
@@ -54,7 +55,7 @@ export function getSurfaceColorKey(this: SDL, surface: Surface) {
 
   if (!success) return null;
 
-  return keyStruct.getValue(0, 'u32');
+  return keyStruct.getValue(0, 'u32') as UInt32;
 }
 
 // Color Mod
@@ -63,9 +64,9 @@ export function setSurfaceColorMod(
   this: SDL,
   options: {
     surface: Surface;
-    r: number;
-    g: number;
-    b: number;
+    r: UInt8;
+    g: UInt8;
+    b: UInt8;
   }
 ) {
   return this.symbols.SDL_SetSurfaceColorMod(
@@ -91,9 +92,9 @@ export function getSurfaceColorMod(this: SDL, surface: Surface) {
   if (!success) return null;
 
   return {
-    r: rStruct.getValue(0, 'u8'),
-    g: gStruct.getValue(0, 'u8'),
-    b: bStruct.getValue(0, 'u8'),
+    r: rStruct.getValue(0, 'u8') as UInt8,
+    g: gStruct.getValue(0, 'u8') as UInt8,
+    b: bStruct.getValue(0, 'u8') as UInt8,
   };
 }
 
@@ -103,7 +104,7 @@ export function setSurfaceAlphaMod(
   this: SDL,
   options: {
     surface: Surface;
-    alpha: number;
+    alpha: UInt8;
   }
 ) {
   return this.symbols.SDL_SetSurfaceAlphaMod(
@@ -122,7 +123,7 @@ export function getSurfaceAlphaMod(this: SDL, surface: Surface) {
 
   if (!success) return null;
 
-  return alphaStruct.getValue(0, 'u8');
+  return alphaStruct.getValue(0, 'u8') as UInt8;
 }
 
 // Blend Mode

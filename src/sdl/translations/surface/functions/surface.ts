@@ -1,4 +1,5 @@
 import type { SDL } from '@/sdl';
+import type { Int32, UInt32 } from '@/types/primitive';
 import type { Colorspace, PixelFormat } from '../../../ffi/pixels/constant';
 import { Surface } from '../struct';
 
@@ -7,8 +8,8 @@ import { Surface } from '../struct';
 export function createSurface(
   this: SDL,
   options: {
-    width: number;
-    height: number;
+    width: Int32;
+    height: Int32;
     format: PixelFormat;
   }
 ) {
@@ -26,11 +27,11 @@ export function createSurface(
 export function createSurfaceFrom(
   this: SDL,
   options: {
-    width: number;
-    height: number;
+    width: Int32;
+    height: Int32;
     format: PixelFormat;
     pixels?: Uint8Array | null;
-    pitch?: number;
+    pitch?: Int32;
   }
 ) {
   const surface = this.symbols.SDL_CreateSurfaceFrom(
@@ -53,7 +54,7 @@ export function destroySurface(this: SDL, surface: Surface) {
 // Properties
 
 export function getSurfaceProperties(this: SDL, surface: Surface) {
-  return this.symbols.SDL_GetSurfaceProperties(surface.$memory);
+  return this.symbols.SDL_GetSurfaceProperties(surface.$memory) as UInt32;
 }
 
 // Colorspace

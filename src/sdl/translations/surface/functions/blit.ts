@@ -1,4 +1,5 @@
 import type { SDL } from '@/sdl';
+import type { Float, Int32 } from '@/types/primitive';
 import type { ScaleMode } from '../../../ffi/surface/constant';
 import { Rect } from '../../rect/struct';
 import { Surface } from '../struct';
@@ -116,7 +117,7 @@ export function blitSurfaceTiledWithScale(
   options: {
     src: Surface;
     srcrect?: Rect | null;
-    scale: number;
+    scale: Float;
     scaleMode: ScaleMode;
     dst: Surface;
     dstrect?: Rect | null;
@@ -137,11 +138,11 @@ export function blitSurface9Grid(
   options: {
     src: Surface;
     srcrect?: Rect | null;
-    leftWidth: number;
-    rightWidth: number;
-    topHeight: number;
-    bottomHeight: number;
-    scale: number;
+    leftWidth: Int32;
+    rightWidth: Int32;
+    topHeight: Int32;
+    bottomHeight: Int32;
+    scale: Float;
     scaleMode: ScaleMode;
     dst: Surface;
     dstrect?: Rect | null;

@@ -1,4 +1,5 @@
 import type { SDL } from '@/sdl';
+import type { Float, Int32, UInt32 } from '@/types/primitive';
 import type { Colorspace, PixelFormat } from '../../../ffi/pixels/constant';
 import type { FlipMode, ScaleMode } from '../../../ffi/surface/constant';
 import { Palette } from '../../pixels/struct';
@@ -22,7 +23,7 @@ export function rotateSurface(
   this: SDL,
   options: {
     surface: Surface;
-    angle: number;
+    angle: Float;
   }
 ) {
   const surface = this.symbols.SDL_RotateSurface(
@@ -51,8 +52,8 @@ export function scaleSurface(
   this: SDL,
   options: {
     surface: Surface;
-    width: number;
-    height: number;
+    width: Int32;
+    height: Int32;
     scaleMode: ScaleMode;
   }
 ) {
@@ -94,7 +95,7 @@ export function convertSurfaceAndColorspace(
     format: PixelFormat;
     palette?: Palette | null;
     colorspace: Colorspace;
-    props?: number;
+    props?: UInt32;
   }
 ) {
   const surface = this.symbols.SDL_ConvertSurfaceAndColorspace(

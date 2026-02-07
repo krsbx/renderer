@@ -1,4 +1,5 @@
 import type { SDL } from '@/sdl';
+import type { Float, Int32, UInt8, UInt32 } from '@/types/primitive';
 import { CStruct } from '@cstruct';
 import type { Colorspace, PixelFormat } from '../../../ffi/pixels/constant';
 import { Rect } from '../../rect/struct';
@@ -9,14 +10,14 @@ import { Surface } from '../struct';
 export function convertPixels(
   this: SDL,
   options: {
-    width: number;
-    height: number;
+    width: Int32;
+    height: Int32;
     srcFormat: PixelFormat;
     src: Uint8Array;
-    srcPitch: number;
+    srcPitch: Int32;
     dstFormat: PixelFormat;
     dst: Uint8Array;
-    dstPitch: number;
+    dstPitch: Int32;
   }
 ) {
   return this.symbols.SDL_ConvertPixels(
@@ -34,18 +35,18 @@ export function convertPixels(
 export function convertPixelsAndColorspace(
   this: SDL,
   options: {
-    width: number;
-    height: number;
+    width: Int32;
+    height: Int32;
     srcFormat: PixelFormat;
     srcColorspace: Colorspace;
-    srcProperties?: number;
+    srcProperties?: UInt32;
     src: Uint8Array;
-    srcPitch: number;
+    srcPitch: Int32;
     dstFormat: PixelFormat;
     dstColorspace: Colorspace;
-    dstProperties?: number;
+    dstProperties?: UInt32;
     dst: Uint8Array;
-    dstPitch: number;
+    dstPitch: Int32;
   }
 ) {
   return this.symbols.SDL_ConvertPixelsAndColorspace(
@@ -69,14 +70,14 @@ export function convertPixelsAndColorspace(
 export function premultiplyAlpha(
   this: SDL,
   options: {
-    width: number;
-    height: number;
+    width: Int32;
+    height: Int32;
     srcFormat: PixelFormat;
     src: Uint8Array;
-    srcPitch: number;
+    srcPitch: Int32;
     dstFormat: PixelFormat;
     dst: Uint8Array;
-    dstPitch: number;
+    dstPitch: Int32;
     linear: boolean;
   }
 ) {
@@ -112,10 +113,10 @@ export function clearSurface(
   this: SDL,
   options: {
     surface: Surface;
-    r: number;
-    g: number;
-    b: number;
-    a: number;
+    r: Float;
+    g: Float;
+    b: Float;
+    a: Float;
   }
 ) {
   return this.symbols.SDL_ClearSurface(
@@ -132,7 +133,7 @@ export function fillSurfaceRect(
   options: {
     dst: Surface;
     rect?: Rect | null;
-    color: number;
+    color: UInt32;
   }
 ) {
   return this.symbols.SDL_FillSurfaceRect(
@@ -147,7 +148,7 @@ export function fillSurfaceRects(
   options: {
     dst: Surface;
     rects: Rect[];
-    color: number;
+    color: UInt32;
   }
 ) {
   const { buffer: rects } = CStruct.writeArray(options.rects, Rect.BYTE_SIZE);
@@ -166,9 +167,9 @@ export function mapSurfaceRGB(
   this: SDL,
   options: {
     surface: Surface;
-    r: number;
-    g: number;
-    b: number;
+    r: UInt8;
+    g: UInt8;
+    b: UInt8;
   }
 ) {
   return this.symbols.SDL_MapSurfaceRGB(
@@ -183,10 +184,10 @@ export function mapSurfaceRGBA(
   this: SDL,
   options: {
     surface: Surface;
-    r: number;
-    g: number;
-    b: number;
-    a: number;
+    r: UInt8;
+    g: UInt8;
+    b: UInt8;
+    a: UInt8;
   }
 ) {
   return this.symbols.SDL_MapSurfaceRGBA(
@@ -204,8 +205,8 @@ export function readSurfacePixel(
   this: SDL,
   options: {
     surface: Surface;
-    x: number;
-    y: number;
+    x: Int32;
+    y: Int32;
   }
 ) {
   const rStruct = new CStruct({ length: CStruct.BYTE_SIZE.u8 });
@@ -226,10 +227,10 @@ export function readSurfacePixel(
   if (!success) return null;
 
   return {
-    r: rStruct.getValue(0, 'u8'),
-    g: gStruct.getValue(0, 'u8'),
-    b: bStruct.getValue(0, 'u8'),
-    a: aStruct.getValue(0, 'u8'),
+    r: rStruct.getValue(0, 'u8') as UInt8,
+    g: gStruct.getValue(0, 'u8') as UInt8,
+    b: bStruct.getValue(0, 'u8') as UInt8,
+    a: aStruct.getValue(0, 'u8') as UInt8,
   };
 }
 
@@ -237,8 +238,8 @@ export function readSurfacePixelFloat(
   this: SDL,
   options: {
     surface: Surface;
-    x: number;
-    y: number;
+    x: Int32;
+    y: Int32;
   }
 ) {
   const rStruct = new CStruct({ length: CStruct.BYTE_SIZE.f32 });
@@ -259,10 +260,10 @@ export function readSurfacePixelFloat(
   if (!success) return null;
 
   return {
-    r: rStruct.getValue(0, 'f32'),
-    g: gStruct.getValue(0, 'f32'),
-    b: bStruct.getValue(0, 'f32'),
-    a: aStruct.getValue(0, 'f32'),
+    r: rStruct.getValue(0, 'f32') as Float,
+    g: gStruct.getValue(0, 'f32') as Float,
+    b: bStruct.getValue(0, 'f32') as Float,
+    a: aStruct.getValue(0, 'f32') as Float,
   };
 }
 
@@ -272,12 +273,12 @@ export function writeSurfacePixel(
   this: SDL,
   options: {
     surface: Surface;
-    x: number;
-    y: number;
-    r: number;
-    g: number;
-    b: number;
-    a: number;
+    x: Int32;
+    y: Int32;
+    r: UInt8;
+    g: UInt8;
+    b: UInt8;
+    a: UInt8;
   }
 ) {
   return this.symbols.SDL_WriteSurfacePixel(
@@ -295,12 +296,12 @@ export function writeSurfacePixelFloat(
   this: SDL,
   options: {
     surface: Surface;
-    x: number;
-    y: number;
-    r: number;
-    g: number;
-    b: number;
-    a: number;
+    x: Int32;
+    y: Int32;
+    r: Float;
+    g: Float;
+    b: Float;
+    a: Float;
   }
 ) {
   return this.symbols.SDL_WriteSurfacePixelFloat(

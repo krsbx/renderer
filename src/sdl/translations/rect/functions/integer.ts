@@ -1,4 +1,5 @@
 import type { SDL } from '@/sdl';
+import type { Int32 } from '@/types/primitive';
 import { CStruct } from '@cstruct';
 import { Point, Rect } from '../struct';
 
@@ -84,10 +85,10 @@ export function getRectAndLineIntersection(
   this: SDL,
   options: {
     rect: Rect;
-    x1: number;
-    y1: number;
-    x2: number;
-    y2: number;
+    x1: Int32;
+    y1: Int32;
+    x2: Int32;
+    y2: Int32;
   }
 ) {
   const x1Struct = new CStruct({
@@ -117,9 +118,9 @@ export function getRectAndLineIntersection(
   if (!success) return null;
 
   return {
-    x1: x1Struct.getValue(0, 'i32'),
-    y1: y1Struct.getValue(0, 'i32'),
-    x2: x2Struct.getValue(0, 'i32'),
-    y2: y2Struct.getValue(0, 'i32'),
+    x1: x1Struct.getValue(0, 'i32') as Int32,
+    y1: y1Struct.getValue(0, 'i32') as Int32,
+    x2: x2Struct.getValue(0, 'i32') as Int32,
+    y2: y2Struct.getValue(0, 'i32') as Int32,
   };
 }

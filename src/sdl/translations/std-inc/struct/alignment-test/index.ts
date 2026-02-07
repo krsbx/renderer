@@ -1,3 +1,4 @@
+import type { UInt8 } from '@/types/primitive';
 import { BaseStruct } from '@basestruct';
 import { type Pointer } from 'bun:ffi';
 import { ByteOffset } from './constant';
@@ -6,10 +7,10 @@ export class AlignmentTest extends BaseStruct {
   public static override readonly BYTE_SIZE = 16;
 
   public get a() {
-    return this.$view.getUint8(ByteOffset.a);
+    return this.$view.getUint8(ByteOffset.a) as UInt8;
   }
 
-  public set a(value: number) {
+  public set a(value: UInt8) {
     this.$view.setUint8(ByteOffset.a, value);
   }
 

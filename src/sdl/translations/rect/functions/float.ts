@@ -1,4 +1,5 @@
 import type { SDL } from '@/sdl';
+import type { Float } from '@/types/primitive';
 import { CStruct } from '@cstruct';
 import { FPoint, FRect } from '../struct';
 
@@ -84,10 +85,10 @@ export function getRectAndLineIntersectionFloat(
   this: SDL,
   options: {
     rect: FRect;
-    x1: number;
-    y1: number;
-    x2: number;
-    y2: number;
+    x1: Float;
+    y1: Float;
+    x2: Float;
+    y2: Float;
   }
 ) {
   const x1Struct = new CStruct({
@@ -117,9 +118,9 @@ export function getRectAndLineIntersectionFloat(
   if (!success) return null;
 
   return {
-    x1: x1Struct.getValue(0, 'f32'),
-    y1: y1Struct.getValue(0, 'f32'),
-    x2: x2Struct.getValue(0, 'f32'),
-    y2: y2Struct.getValue(0, 'f32'),
+    x1: x1Struct.getValue(0, 'f32') as Float,
+    y1: y1Struct.getValue(0, 'f32') as Float,
+    x2: x2Struct.getValue(0, 'f32') as Float,
+    y2: y2Struct.getValue(0, 'f32') as Float,
   };
 }

@@ -1,5 +1,6 @@
 import type { SDL } from '@/sdl';
 import type { Sensor } from '@/sdl/types/definition';
+import type { Int32, UInt32 } from '@/types/primitive';
 import { CStruct } from '@cstruct';
 import type { SensorType } from '../../../ffi/sensor/constant';
 
@@ -18,28 +19,28 @@ export function getSensors(this: SDL) {
   return sensors;
 }
 
-export function getSensorNameForID(this: SDL, instanceId: number) {
+export function getSensorNameForID(this: SDL, instanceId: UInt32) {
   return this.symbols.SDL_GetSensorNameForID(instanceId).toString();
 }
 
-export function getSensorTypeForID(this: SDL, instanceId: number) {
+export function getSensorTypeForID(this: SDL, instanceId: UInt32) {
   return this.symbols.SDL_GetSensorTypeForID(instanceId) as SensorType;
 }
 
-export function getSensorNonPortableTypeForID(this: SDL, instanceId: number) {
-  return this.symbols.SDL_GetSensorNonPortableTypeForID(instanceId);
+export function getSensorNonPortableTypeForID(this: SDL, instanceId: UInt32) {
+  return this.symbols.SDL_GetSensorNonPortableTypeForID(instanceId) as Int32;
 }
 
-export function openSensor(this: SDL, instanceId: number) {
+export function openSensor(this: SDL, instanceId: UInt32) {
   return this.symbols.SDL_OpenSensor(instanceId) as Sensor | null;
 }
 
-export function getSensorFromID(this: SDL, instanceId: number) {
+export function getSensorFromID(this: SDL, instanceId: UInt32) {
   return this.symbols.SDL_GetSensorFromID(instanceId) as Sensor | null;
 }
 
 export function getSensorProperties(this: SDL, sensor: Sensor) {
-  return this.symbols.SDL_GetSensorProperties(sensor);
+  return this.symbols.SDL_GetSensorProperties(sensor) as UInt32;
 }
 
 export function getSensorName(this: SDL, sensor: Sensor) {
@@ -51,18 +52,18 @@ export function getSensorType(this: SDL, sensor: Sensor) {
 }
 
 export function getSensorNonPortableType(this: SDL, sensor: Sensor) {
-  return this.symbols.SDL_GetSensorNonPortableType(sensor);
+  return this.symbols.SDL_GetSensorNonPortableType(sensor) as Int32;
 }
 
 export function getSensorID(this: SDL, sensor: Sensor) {
-  return this.symbols.SDL_GetSensorID(sensor);
+  return this.symbols.SDL_GetSensorID(sensor) as UInt32;
 }
 
 export function getSensorData(
   this: SDL,
   options: {
     sensor: Sensor;
-    numValues: number;
+    numValues: Int32;
   }
 ) {
   const data = new Float32Array(options.numValues);

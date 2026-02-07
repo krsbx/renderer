@@ -1,4 +1,5 @@
 import type { SDL } from '@/sdl';
+import type { TimerID } from '@/sdl/types/definition';
 import { CallbackManager } from '@/sdl/utility';
 import type { UInt32 } from '@/types/primitive';
 import type { NSTimerCallbackFn, TimerCallbackFn } from '../types/callback';
@@ -50,7 +51,7 @@ export function addTimer(
     options.interval,
     cb.ptr,
     null
-  ) as UInt32;
+  ) as TimerID;
 
   if (timerID === 0) {
     cb.close();
@@ -77,7 +78,7 @@ export function addTimerNS(
     options.interval,
     cb.ptr,
     null
-  ) as UInt32;
+  ) as TimerID;
 
   if (timerID === 0) {
     cb.close();
@@ -91,7 +92,7 @@ export function addTimerNS(
   return timerID;
 }
 
-export function removeTimer(this: SDL, id: UInt32) {
+export function removeTimer(this: SDL, id: TimerID) {
   const timerKey = getTimerCallbackKey(id);
   const nsTimerKey = getNSTimerCallbackKey(id);
 

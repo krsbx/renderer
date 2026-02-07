@@ -1,3 +1,4 @@
+import type { WindowID } from '@/sdl/types/definition';
 import type { Int32, UInt32 } from '@/types/primitive';
 import { BaseStruct } from '@basestruct';
 import { CStruct } from '@utility/cstruct';
@@ -41,10 +42,10 @@ export class TextEditingCandidatesEvent extends BaseStruct {
   }
 
   public get windowId() {
-    return this.$view.getUint32(ByteOffset.windowID, true) as UInt32;
+    return this.$view.getUint32(ByteOffset.windowID, true) as WindowID;
   }
 
-  public set windowID(value: UInt32) {
+  public set windowID(value: WindowID) {
     this.$view.setUint32(ByteOffset.windowID, value, true);
   }
 

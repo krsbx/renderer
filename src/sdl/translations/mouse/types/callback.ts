@@ -1,11 +1,11 @@
-import type { Window } from '@/sdl/types/definition';
-import type { Float, UInt32 } from '@/types/primitive';
+import type { MouseID, Window } from '@/sdl/types/definition';
+import type { Float } from '@/types/primitive';
 
 export interface MouseMotionTransformCallbackFn {
   (options: {
     timestamp: bigint;
     window: Window;
-    mouseId: UInt32;
+    mouseId: MouseID;
     x: Float;
     y: Float;
   }): {

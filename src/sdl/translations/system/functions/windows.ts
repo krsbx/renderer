@@ -1,5 +1,6 @@
 import type { SDL } from '@/sdl';
-import type { Int32, UInt32 } from '@/types/primitive';
+import type { DisplayID } from '@/sdl/types/definition';
+import type { Int32 } from '@/types/primitive';
 import { CallbackManager } from '@/sdl/utility';
 import { CStruct } from '@cstruct';
 import type { WindowsMessageHookCallbackFn } from '../types/callback';
@@ -23,11 +24,11 @@ export function setWindowsMessageHook(
   this.symbols.SDL_SetWindowsMessageHook(cb.ptr, null);
 }
 
-export function getDirect3D9AdapterIndex(this: SDL, displayId: UInt32) {
+export function getDirect3D9AdapterIndex(this: SDL, displayId: DisplayID) {
   return this.symbols.SDL_GetDirect3D9AdapterIndex(displayId) as Int32;
 }
 
-export function getDXGIOutputInfo(this: SDL, displayId: UInt32) {
+export function getDXGIOutputInfo(this: SDL, displayId: DisplayID) {
   const adapterIndexStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
   const outputIndexStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 

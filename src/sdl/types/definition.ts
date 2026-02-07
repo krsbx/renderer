@@ -1,11 +1,19 @@
+import type { Int32, UInt32 } from '@/types/primitive';
 import type { Brand } from '@/types/shared';
 import type { Pointer } from 'bun:ffi';
 
 type SDLOpaque<
-  K extends string,
+  Key extends string,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  T = K extends `SDL_${infer _}` ? K : `SDL_${K}`,
-> = Pointer | Brand<Pointer, T>;
+  FinalKey = Key extends `SDL_${infer _}` ? Key : `SDL_${Key}`,
+> = Pointer | Brand<Pointer, FinalKey>;
+type SDLId<
+  Key extends string,
+  Unsigned extends boolean = true,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  FinalKey = Key extends `SDL_${infer _}` ? Key : `SDL_${Key}`,
+  MergeWith = Unsigned extends true ? UInt32 : Int32,
+> = number | Brand<number, FinalKey> | MergeWith;
 
 // Async IO
 export type AsyncIO = SDLOpaque<'AsyncIO'>;
@@ -13,9 +21,11 @@ export type AsyncIOQueue = SDLOpaque<'AsyncIOQueue'>;
 
 // Audio
 export type AudioStream = SDLOpaque<'AudioStream'>;
+export type AudioDeviceID = SDLId<'AudioDeviceID'>;
 
 // Camera
 export type Camera = SDLOpaque<'Camera'>;
+export type CameraID = SDLId<'CameraID'>;
 
 // Gamepad
 export type Gamepad = SDLOpaque<'Gamepad'>;
@@ -37,18 +47,28 @@ export type GPUFence = SDLOpaque<'GPUFence'>;
 
 // Haptic
 export type Haptic = SDLOpaque<'Haptic'>;
+export type HapticID = SDLId<'HapticID'>;
+export type HapticEffectID = SDLId<'HapticEffectID', false>;
 
 // Joystick
 export type Joystick = SDLOpaque<'Joystick'>;
+export type JoystickID = SDLId<'JoystickID'>;
 
 // IO Stream
 export type IOStream = SDLOpaque<'IOStream'>;
+
+// Keyboard
+export type KeyboardID = SDLId<'KeyboardID'>;
 
 // Metal
 export type MetalView = SDLOpaque<'MetalView'>;
 
 // Mouse
 export type Cursor = SDLOpaque<'Cursor'>;
+export type MouseID = SDLId<'MouseID'>;
+
+// Pen
+export type PenID = SDLId<'PenID'>;
 
 // Mutex
 export type Mutex = SDLOpaque<'Mutex'>;
@@ -59,6 +79,9 @@ export type Condition = SDLOpaque<'Condition'>;
 // Process
 export type Process = SDLOpaque<'Process'>;
 
+// Properties
+export type PropertiesID = SDLId<'PropertiesID'>;
+
 // Renderer
 export type Renderer = SDLOpaque<'Renderer'>;
 export type Texture = SDLOpaque<'Texture'>;
@@ -66,6 +89,7 @@ export type GPURenderState = SDLOpaque<'GPURenderState'>;
 
 // Sensor
 export type Sensor = SDLOpaque<'Sensor'>;
+export type SensorID = SDLId<'SensorID'>;
 
 // Shared Object
 export type SharedObject = SDLOpaque<'SharedObject'>;
@@ -75,6 +99,9 @@ export type Storage = SDLOpaque<'Storage'>;
 
 // Thread
 export type Thread = SDLOpaque<'Thread'>;
+
+// Timer
+export type TimerID = SDLId<'TimerID'>;
 
 // Tray
 export type Tray = SDLOpaque<'Tray'>;
@@ -87,9 +114,11 @@ export type VkSurfaceKHR = SDLOpaque<'VkSurfaceKHR'>;
 export type VkPhysicalDevice = SDLOpaque<'VkPhysicalDevice'>;
 
 // Video
+export type DisplayID = SDLId<'DisplayID'>;
 export type GLContext = SDLOpaque<'GLContext'>;
 export type EGLDisplay = SDLOpaque<'EGLDisplay'>;
 export type EGLConfig = SDLOpaque<'EGLConfig'>;
 
 // Window
 export type Window = SDLOpaque<'Window'>;
+export type WindowID = SDLId<'WindowID'>;

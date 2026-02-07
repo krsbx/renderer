@@ -1,6 +1,6 @@
 import { BaseStruct, type BaseStructOptions } from '@basestruct';
-import type { Int32, UInt32 } from '@/types/primitive';
-import type { GPUShader } from '@/sdl/types/definition';
+import type { Int32 } from '@/types/primitive';
+import type { GPUShader, PropertiesID } from '@/sdl/types/definition';
 import { GPUMultisampleState, GPURasterizerState } from '../../common';
 import { GPUDepthStencilState } from '../../stencil';
 import { GPUVertexInputState } from '../../vertex';
@@ -80,10 +80,10 @@ export class GPUGraphicsPipelineCreateInfo extends BaseStruct {
   }
 
   public get props() {
-    return this.$view.getUint32(ByteOffset.props, true) as UInt32;
+    return this.$view.getUint32(ByteOffset.props, true) as PropertiesID;
   }
 
-  public set props(value: UInt32) {
+  public set props(value: PropertiesID) {
     this.$view.setUint32(ByteOffset.props, value, true);
   }
 }

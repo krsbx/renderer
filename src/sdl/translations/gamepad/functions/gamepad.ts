@@ -1,6 +1,11 @@
 import type { SDL } from '@/sdl';
-import type { Gamepad, Joystick } from '@/sdl/types/definition';
-import type { Int32, UInt16, UInt32 } from '@/types/primitive';
+import type {
+  Gamepad,
+  Joystick,
+  JoystickID,
+  PropertiesID,
+} from '@/sdl/types/definition';
+import type { Int32, UInt16 } from '@/types/primitive';
 import { CStruct } from '@cstruct';
 import { stringToCString } from '@utility/common';
 import { CString } from 'bun:ffi';
@@ -34,23 +39,23 @@ export function getGamepads(this: SDL) {
   return gamepads;
 }
 
-export function isGamepad(this: SDL, instanceId: UInt32) {
+export function isGamepad(this: SDL, instanceId: JoystickID) {
   return this.symbols.SDL_IsGamepad(instanceId);
 }
 
-export function getGamepadNameForID(this: SDL, instanceId: UInt32) {
+export function getGamepadNameForID(this: SDL, instanceId: JoystickID) {
   return this.symbols.SDL_GetGamepadNameForID(instanceId).toString();
 }
 
-export function getGamepadPathForID(this: SDL, instanceId: UInt32) {
+export function getGamepadPathForID(this: SDL, instanceId: JoystickID) {
   return this.symbols.SDL_GetGamepadPathForID(instanceId).toString();
 }
 
-export function getGamepadPlayerIndexForID(this: SDL, instanceId: UInt32) {
+export function getGamepadPlayerIndexForID(this: SDL, instanceId: JoystickID) {
   return this.symbols.SDL_GetGamepadPlayerIndexForID(instanceId) as Int32;
 }
 
-export function getGamepadGUIDForID(this: SDL, instanceId: UInt32) {
+export function getGamepadGUIDForID(this: SDL, instanceId: JoystickID) {
   const guid = this.symbols.SDL_GetGamepadGUIDForID(instanceId);
 
   if (!guid) return null;
@@ -58,27 +63,30 @@ export function getGamepadGUIDForID(this: SDL, instanceId: UInt32) {
   return new GUID(guid);
 }
 
-export function getGamepadVendorForID(this: SDL, instanceId: UInt32) {
+export function getGamepadVendorForID(this: SDL, instanceId: JoystickID) {
   return this.symbols.SDL_GetGamepadVendorForID(instanceId) as UInt16;
 }
 
-export function getGamepadProductForID(this: SDL, instanceId: UInt32) {
+export function getGamepadProductForID(this: SDL, instanceId: JoystickID) {
   return this.symbols.SDL_GetGamepadProductForID(instanceId) as UInt16;
 }
 
-export function getGamepadProductVersionForID(this: SDL, instanceId: UInt32) {
+export function getGamepadProductVersionForID(
+  this: SDL,
+  instanceId: JoystickID
+) {
   return this.symbols.SDL_GetGamepadProductVersionForID(instanceId) as UInt16;
 }
 
-export function getGamepadTypeForID(this: SDL, instanceId: UInt32) {
+export function getGamepadTypeForID(this: SDL, instanceId: JoystickID) {
   return this.symbols.SDL_GetGamepadTypeForID(instanceId) as GamepadType;
 }
 
-export function getRealGamepadTypeForID(this: SDL, instanceId: UInt32) {
+export function getRealGamepadTypeForID(this: SDL, instanceId: JoystickID) {
   return this.symbols.SDL_GetRealGamepadTypeForID(instanceId) as GamepadType;
 }
 
-export function getGamepadMappingForID(this: SDL, instanceId: UInt32) {
+export function getGamepadMappingForID(this: SDL, instanceId: JoystickID) {
   const ptr = this.symbols.SDL_GetGamepadMappingForID(instanceId);
 
   if (!ptr) return null;
@@ -90,11 +98,11 @@ export function getGamepadMappingForID(this: SDL, instanceId: UInt32) {
   return mapping.toString();
 }
 
-export function openGamepad(this: SDL, instanceId: UInt32) {
+export function openGamepad(this: SDL, instanceId: JoystickID) {
   return this.symbols.SDL_OpenGamepad(instanceId) as Gamepad | null;
 }
 
-export function getGamepadFromID(this: SDL, instanceId: UInt32) {
+export function getGamepadFromID(this: SDL, instanceId: JoystickID) {
   return this.symbols.SDL_GetGamepadFromID(instanceId) as Gamepad | null;
 }
 
@@ -105,11 +113,11 @@ export function getGamepadFromPlayerIndex(this: SDL, playerIndex: Int32) {
 }
 
 export function getGamepadProperties(this: SDL, gamepad: Gamepad) {
-  return this.symbols.SDL_GetGamepadProperties(gamepad) as UInt32;
+  return this.symbols.SDL_GetGamepadProperties(gamepad) as PropertiesID;
 }
 
 export function getGamepadID(this: SDL, gamepad: Gamepad) {
-  return this.symbols.SDL_GetGamepadID(gamepad) as UInt32;
+  return this.symbols.SDL_GetGamepadID(gamepad) as JoystickID;
 }
 
 export function getGamepadName(this: SDL, gamepad: Gamepad) {

@@ -1,5 +1,10 @@
 import type { SDL } from '@/sdl';
-import type { AudioStream, IOStream } from '@/sdl/types/definition';
+import type {
+  AudioDeviceID,
+  AudioStream,
+  IOStream,
+  PropertiesID,
+} from '@/sdl/types/definition';
 import { CallbackManager } from '@/sdl/utility';
 import type { Float, Int32, UInt32 } from '@/types/primitive';
 import { CStruct } from '@cstruct';
@@ -63,14 +68,14 @@ export function getAudioRecordingDevices(this: SDL) {
   return devices;
 }
 
-export function getAudioDeviceName(this: SDL, deviceId: UInt32) {
+export function getAudioDeviceName(this: SDL, deviceId: AudioDeviceID) {
   return this.symbols.SDL_GetAudioDeviceName(deviceId).toString();
 }
 
 export function getAudioDeviceFormat(
   this: SDL,
   options: {
-    deviceId: UInt32;
+    deviceId: AudioDeviceID;
     spec?: AudioSpec | null;
   }
 ) {
@@ -91,7 +96,7 @@ export function getAudioDeviceFormat(
   };
 }
 
-export function getAudioDeviceChannelMap(this: SDL, deviceId: UInt32) {
+export function getAudioDeviceChannelMap(this: SDL, deviceId: AudioDeviceID) {
   const struct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
   const listPtr = this.symbols.SDL_GetAudioDeviceChannelMap(
@@ -113,7 +118,7 @@ export function getAudioDeviceChannelMap(this: SDL, deviceId: UInt32) {
 export function openAudioDevice(
   this: SDL,
   options: {
-    deviceId: UInt32;
+    deviceId: AudioDeviceID;
     spec: AudioSpec;
   }
 ) {
@@ -123,48 +128,48 @@ export function openAudioDevice(
   );
 }
 
-export function isAudioDevicePhysical(this: SDL, deviceId: UInt32) {
+export function isAudioDevicePhysical(this: SDL, deviceId: AudioDeviceID) {
   return this.symbols.SDL_IsAudioDevicePhysical(deviceId);
 }
 
-export function isAudioDevicePlayback(this: SDL, deviceId: UInt32) {
+export function isAudioDevicePlayback(this: SDL, deviceId: AudioDeviceID) {
   return this.symbols.SDL_IsAudioDevicePlayback(deviceId);
 }
 
-export function pauseAudioDevice(this: SDL, deviceId: UInt32) {
+export function pauseAudioDevice(this: SDL, deviceId: AudioDeviceID) {
   return this.symbols.SDL_PauseAudioDevice(deviceId);
 }
 
-export function resumeAudioDevice(this: SDL, deviceId: UInt32) {
+export function resumeAudioDevice(this: SDL, deviceId: AudioDeviceID) {
   return this.symbols.SDL_ResumeAudioDevice(deviceId);
 }
 
-export function audioDevicePaused(this: SDL, deviceId: UInt32) {
+export function audioDevicePaused(this: SDL, deviceId: AudioDeviceID) {
   return this.symbols.SDL_AudioDevicePaused(deviceId);
 }
 
-export function getAudioDeviceGain(this: SDL, deviceId: UInt32) {
+export function getAudioDeviceGain(this: SDL, deviceId: AudioDeviceID) {
   return this.symbols.SDL_GetAudioDeviceGain(deviceId) as Float;
 }
 
 export function setAudioDeviceGain(
   this: SDL,
   options: {
-    deviceId: UInt32;
+    deviceId: AudioDeviceID;
     gain: Float;
   }
 ) {
   return this.symbols.SDL_SetAudioDeviceGain(options.deviceId, options.gain);
 }
 
-export function closeAudioDevice(this: SDL, deviceId: UInt32) {
+export function closeAudioDevice(this: SDL, deviceId: AudioDeviceID) {
   this.symbols.SDL_CloseAudioDevice(deviceId);
 }
 
 export function bindAudioStreams(
   this: SDL,
   options: {
-    deviceId: UInt32;
+    deviceId: AudioDeviceID;
     streams: AudioStream[];
   }
 ) {
@@ -180,7 +185,7 @@ export function bindAudioStreams(
 export function bindAudioStream(
   this: SDL,
   options: {
-    deviceId: UInt32;
+    deviceId: AudioDeviceID;
     stream: AudioStream;
   }
 ) {
@@ -198,7 +203,7 @@ export function unbindAudioStream(this: SDL, stream: AudioStream) {
 }
 
 export function getAudioStreamDevice(this: SDL, stream: AudioStream) {
-  return this.symbols.SDL_GetAudioStreamDevice(stream) as UInt32;
+  return this.symbols.SDL_GetAudioStreamDevice(stream) as AudioDeviceID;
 }
 
 export function createAudioStream(
@@ -215,7 +220,7 @@ export function createAudioStream(
 }
 
 export function getAudioStreamProperties(this: SDL, stream: AudioStream) {
-  return this.symbols.SDL_GetAudioStreamProperties(stream) as UInt32;
+  return this.symbols.SDL_GetAudioStreamProperties(stream) as PropertiesID;
 }
 
 export function getAudioStreamFormat(
@@ -547,7 +552,7 @@ export function destroyAudioStream(this: SDL, stream: AudioStream) {
 export function openAudioDeviceStream(
   this: SDL,
   options: {
-    deviceId: UInt32;
+    deviceId: AudioDeviceID;
     spec: AudioSpec | null;
     callback: AudioStreamCallbackFn | null;
   }
@@ -584,7 +589,7 @@ export function openAudioDeviceStream(
 export function setAudioPostmixCallback(
   this: SDL,
   options: {
-    deviceId: UInt32;
+    deviceId: AudioDeviceID;
     callback: AudioPostmixCallbackFn | null;
   }
 ) {

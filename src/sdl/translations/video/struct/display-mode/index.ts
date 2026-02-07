@@ -1,4 +1,5 @@
-import type { Float, Int32, UInt32 } from '@/types/primitive';
+import type { DisplayID } from '@/sdl/types/definition';
+import type { Float, Int32 } from '@/types/primitive';
 import { BaseStruct } from '@basestruct';
 import { ByteOffset } from './constant';
 
@@ -6,10 +7,10 @@ export class DisplayMode extends BaseStruct {
   public static override readonly BYTE_SIZE = 32;
 
   public get displayId() {
-    return this.$view.getUint32(ByteOffset.displayID, true) as UInt32;
+    return this.$view.getUint32(ByteOffset.displayID, true) as DisplayID;
   }
 
-  public set displayID(value: UInt32) {
+  public set displayID(value: DisplayID) {
     this.$view.setUint32(ByteOffset.displayID, value, true);
   }
 

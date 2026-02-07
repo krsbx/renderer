@@ -1,6 +1,10 @@
 import type { SDL } from '@/sdl';
-import type { Joystick } from '@/sdl/types/definition';
-import type { Int32, UInt16, UInt32 } from '@/types/primitive';
+import type {
+  Joystick,
+  JoystickID,
+  PropertiesID,
+} from '@/sdl/types/definition';
+import type { Int32, UInt16 } from '@/types/primitive';
 import { CStruct } from '@cstruct';
 import type {
   JoystickConnectionState,
@@ -42,19 +46,19 @@ export function getJoysticks(this: SDL) {
 
 // Info by Instance ID
 
-export function getJoystickNameForID(this: SDL, instanceId: UInt32) {
+export function getJoystickNameForID(this: SDL, instanceId: JoystickID) {
   return this.symbols.SDL_GetJoystickNameForID(instanceId).toString();
 }
 
-export function getJoystickPathForID(this: SDL, instanceId: UInt32) {
+export function getJoystickPathForID(this: SDL, instanceId: JoystickID) {
   return this.symbols.SDL_GetJoystickPathForID(instanceId).toString();
 }
 
-export function getJoystickPlayerIndexForID(this: SDL, instanceId: UInt32) {
+export function getJoystickPlayerIndexForID(this: SDL, instanceId: JoystickID) {
   return this.symbols.SDL_GetJoystickPlayerIndexForID(instanceId) as Int32;
 }
 
-export function getJoystickGUIDForID(this: SDL, instanceId: UInt32) {
+export function getJoystickGUIDForID(this: SDL, instanceId: JoystickID) {
   const guid = this.symbols.SDL_GetJoystickGUIDForID(instanceId);
 
   if (!guid) return null;
@@ -62,29 +66,32 @@ export function getJoystickGUIDForID(this: SDL, instanceId: UInt32) {
   return new GUID(guid);
 }
 
-export function getJoystickVendorForID(this: SDL, instanceId: UInt32) {
+export function getJoystickVendorForID(this: SDL, instanceId: JoystickID) {
   return this.symbols.SDL_GetJoystickVendorForID(instanceId) as UInt16;
 }
 
-export function getJoystickProductForID(this: SDL, instanceId: UInt32) {
+export function getJoystickProductForID(this: SDL, instanceId: JoystickID) {
   return this.symbols.SDL_GetJoystickProductForID(instanceId) as UInt16;
 }
 
-export function getJoystickProductVersionForID(this: SDL, instanceId: UInt32) {
+export function getJoystickProductVersionForID(
+  this: SDL,
+  instanceId: JoystickID
+) {
   return this.symbols.SDL_GetJoystickProductVersionForID(instanceId) as UInt16;
 }
 
-export function getJoystickTypeForID(this: SDL, instanceId: UInt32) {
+export function getJoystickTypeForID(this: SDL, instanceId: JoystickID) {
   return this.symbols.SDL_GetJoystickTypeForID(instanceId) as JoystickType;
 }
 
 // Open/Get Joystick
 
-export function openJoystick(this: SDL, instanceId: UInt32) {
+export function openJoystick(this: SDL, instanceId: JoystickID) {
   return this.symbols.SDL_OpenJoystick(instanceId) as Joystick | null;
 }
 
-export function getJoystickFromID(this: SDL, instanceId: UInt32) {
+export function getJoystickFromID(this: SDL, instanceId: JoystickID) {
   return this.symbols.SDL_GetJoystickFromID(instanceId) as Joystick | null;
 }
 
@@ -97,7 +104,7 @@ export function getJoystickFromPlayerIndex(this: SDL, playerIndex: Int32) {
 // Properties
 
 export function getJoystickProperties(this: SDL, joystick: Joystick) {
-  return this.symbols.SDL_GetJoystickProperties(joystick) as UInt32;
+  return this.symbols.SDL_GetJoystickProperties(joystick) as PropertiesID;
 }
 
 // Info by Joystick Pointer
@@ -188,7 +195,7 @@ export function joystickConnected(this: SDL, joystick: Joystick) {
 }
 
 export function getJoystickID(this: SDL, joystick: Joystick) {
-  return this.symbols.SDL_GetJoystickID(joystick) as UInt32;
+  return this.symbols.SDL_GetJoystickID(joystick) as JoystickID;
 }
 
 // Counts

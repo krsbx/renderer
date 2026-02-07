@@ -1,6 +1,6 @@
 import type { SDL } from '@/sdl';
-import type { Renderer, Texture } from '@/sdl/types/definition';
-import type { Float, Int32, UInt8, UInt32 } from '@/types/primitive';
+import type { PropertiesID, Renderer, Texture } from '@/sdl/types/definition';
+import type { Float, Int32, UInt8 } from '@/types/primitive';
 import { CStruct } from '@cstruct';
 import type { BlendMode } from '../../../ffi/blend-mode/constant';
 import type { PixelFormat } from '../../../ffi/pixels/constant';
@@ -46,7 +46,7 @@ export function createTextureWithProperties(
   this: SDL,
   options: {
     renderer: Renderer;
-    props: UInt32;
+    props: PropertiesID;
   }
 ) {
   return this.symbols.SDL_CreateTextureWithProperties(
@@ -56,7 +56,7 @@ export function createTextureWithProperties(
 }
 
 export function getTextureProperties(this: SDL, texture: Texture) {
-  return this.symbols.SDL_GetTextureProperties(texture) as UInt32;
+  return this.symbols.SDL_GetTextureProperties(texture) as PropertiesID;
 }
 
 export function getRendererFromTexture(this: SDL, texture: Texture) {

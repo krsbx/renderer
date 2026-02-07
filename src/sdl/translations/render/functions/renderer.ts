@@ -1,6 +1,11 @@
 import type { SDL } from '@/sdl';
-import type { GPUDevice, Renderer, Window } from '@/sdl/types/definition';
-import type { Int32, UInt32 } from '@/types/primitive';
+import type {
+  GPUDevice,
+  PropertiesID,
+  Renderer,
+  Window,
+} from '@/sdl/types/definition';
+import type { Int32 } from '@/types/primitive';
 import { CStruct } from '@cstruct';
 import { stringToCString } from '@utility/common';
 import type { WindowFlags } from '../../../ffi/video/constant';
@@ -48,7 +53,7 @@ export function createRenderer(
   ) as Renderer | null;
 }
 
-export function createRendererWithProperties(this: SDL, props: UInt32) {
+export function createRendererWithProperties(this: SDL, props: PropertiesID) {
   return this.symbols.SDL_CreateRendererWithProperties(
     props
   ) as Renderer | null;
@@ -90,7 +95,7 @@ export function getRendererName(this: SDL, renderer: Renderer) {
 }
 
 export function getRendererProperties(this: SDL, renderer: Renderer) {
-  return this.symbols.SDL_GetRendererProperties(renderer) as UInt32;
+  return this.symbols.SDL_GetRendererProperties(renderer) as PropertiesID;
 }
 
 export function getRenderOutputSize(this: SDL, renderer: Renderer) {

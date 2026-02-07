@@ -1,3 +1,4 @@
+import type { JoystickID } from '@/sdl/types/definition';
 import type { Int32, UInt32 } from '@/types/primitive';
 import { BaseStruct } from '@basestruct';
 import type { PowerState } from '@sdl/ffi/constant/power';
@@ -32,10 +33,10 @@ export class JoyBatteryEvent extends BaseStruct {
   }
 
   public get which() {
-    return this.$view.getUint32(ByteOffset.which, true) as UInt32;
+    return this.$view.getUint32(ByteOffset.which, true) as JoystickID;
   }
 
-  public set which(value: UInt32) {
+  public set which(value: JoystickID) {
     this.$view.setUint32(ByteOffset.which, value, true);
   }
 

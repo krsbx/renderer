@@ -1,6 +1,6 @@
 import type { SDL } from '@/sdl';
-import type { Window } from '@/sdl/types/definition';
-import type { Float, Int32, UInt32 } from '@/types/primitive';
+import type { PropertiesID, Window, WindowID } from '@/sdl/types/definition';
+import type { Float, Int32 } from '@/types/primitive';
 import { CStruct } from '@cstruct';
 import { stringToCString } from '@utility/common';
 import type { PixelFormat } from '../../../ffi/pixels/constant';
@@ -131,15 +131,15 @@ export function createPopupWindow(
   ) as Window | null;
 }
 
-export function createWindowWithProperties(this: SDL, props: UInt32) {
+export function createWindowWithProperties(this: SDL, props: PropertiesID) {
   return this.symbols.SDL_CreateWindowWithProperties(props) as Window | null;
 }
 
 export function getWindowId(this: SDL, window: Window) {
-  return this.symbols.SDL_GetWindowID(window) as UInt32;
+  return this.symbols.SDL_GetWindowID(window) as WindowID;
 }
 
-export function getWindowFromId(this: SDL, id: UInt32) {
+export function getWindowFromId(this: SDL, id: WindowID) {
   return this.symbols.SDL_GetWindowFromID(id) as Window | null;
 }
 
@@ -148,7 +148,7 @@ export function getWindowParent(this: SDL, window: Window) {
 }
 
 export function getWindowProperties(this: SDL, window: Window) {
-  return this.symbols.SDL_GetWindowProperties(window) as UInt32;
+  return this.symbols.SDL_GetWindowProperties(window) as PropertiesID;
 }
 
 export function getWindowFlags(this: SDL, window: Window) {

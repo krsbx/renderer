@@ -1,5 +1,6 @@
 import type { SDL } from '@/sdl';
-import type { Int32, UInt32 } from '@/types/primitive';
+import type { PropertiesID } from '@/sdl/types/definition';
+import type { Int32 } from '@/types/primitive';
 import type { Colorspace, PixelFormat } from '../../../ffi/pixels/constant';
 import { Surface } from '../struct';
 
@@ -54,7 +55,7 @@ export function destroySurface(this: SDL, surface: Surface) {
 // Properties
 
 export function getSurfaceProperties(this: SDL, surface: Surface) {
-  return this.symbols.SDL_GetSurfaceProperties(surface.$memory) as UInt32;
+  return this.symbols.SDL_GetSurfaceProperties(surface.$memory) as PropertiesID;
 }
 
 // Colorspace

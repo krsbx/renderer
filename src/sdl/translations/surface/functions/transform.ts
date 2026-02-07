@@ -1,5 +1,6 @@
 import type { SDL } from '@/sdl';
-import type { Float, Int32, UInt32 } from '@/types/primitive';
+import type { PropertiesID } from '@/sdl/types/definition';
+import type { Float, Int32 } from '@/types/primitive';
 import type { Colorspace, PixelFormat } from '../../../ffi/pixels/constant';
 import type { FlipMode, ScaleMode } from '../../../ffi/surface/constant';
 import { Palette } from '../../pixels/struct';
@@ -95,7 +96,7 @@ export function convertSurfaceAndColorspace(
     format: PixelFormat;
     palette?: Palette | null;
     colorspace: Colorspace;
-    props?: UInt32;
+    props?: PropertiesID;
   }
 ) {
   const surface = this.symbols.SDL_ConvertSurfaceAndColorspace(

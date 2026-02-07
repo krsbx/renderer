@@ -1,6 +1,6 @@
 import type { SDL } from '@/sdl';
-import type { Gamepad, IOStream } from '@/sdl/types/definition';
-import type { Int32, UInt32 } from '@/types/primitive';
+import type { Gamepad, IOStream, JoystickID } from '@/sdl/types/definition';
+import type { Int32 } from '@/types/primitive';
 import { CStruct } from '@cstruct';
 import { stringToCString } from '@utility/common';
 import { CString } from 'bun:ffi';
@@ -77,7 +77,7 @@ export function getGamepadMapping(this: SDL, gamepad: Gamepad) {
 export function setGamepadMapping(
   this: SDL,
   options: {
-    instanceId: UInt32;
+    instanceId: JoystickID;
     mapping: string;
   }
 ) {

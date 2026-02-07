@@ -1,6 +1,6 @@
-import type { AudioStream } from '@/sdl/types/definition';
+import type { AudioDeviceID, AudioStream } from '@/sdl/types/definition';
 import { CallbackManager } from '@/sdl/utility';
-import type { Int32, UInt32 } from '@/types/primitive';
+import type { Int32 } from '@/types/primitive';
 import { FFIType, JSCallback, toArrayBuffer, type Pointer } from 'bun:ffi';
 import { AudioSpec } from '../struct';
 import type {
@@ -79,7 +79,7 @@ export function createStreamCallback(callback: AudioStreamCallbackFn) {
   return cb;
 }
 
-export function getPostmixRegistryKey(deviceId: UInt32) {
+export function getPostmixRegistryKey(deviceId: AudioDeviceID) {
   return `${AudioPostmixPrefix}${deviceId}` as const;
 }
 

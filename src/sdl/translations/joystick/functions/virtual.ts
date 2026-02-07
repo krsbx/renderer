@@ -1,18 +1,18 @@
 import type { SDL } from '@/sdl';
-import type { Joystick } from '@/sdl/types/definition';
-import type { Float, Int16, Int32, UInt8, UInt32 } from '@/types/primitive';
+import type { Joystick, JoystickID } from '@/sdl/types/definition';
+import type { Float, Int16, Int32, UInt8 } from '@/types/primitive';
 import type { SensorType } from '../../../ffi/sensor/constant';
 import { VirtualJoystickDesc } from '../struct';
 
 export function attachVirtualJoystick(this: SDL, desc: VirtualJoystickDesc) {
-  return this.symbols.SDL_AttachVirtualJoystick(desc.$memory) as UInt32;
+  return this.symbols.SDL_AttachVirtualJoystick(desc.$memory) as JoystickID;
 }
 
-export function detachVirtualJoystick(this: SDL, instanceId: UInt32) {
+export function detachVirtualJoystick(this: SDL, instanceId: JoystickID) {
   return this.symbols.SDL_DetachVirtualJoystick(instanceId);
 }
 
-export function isJoystickVirtual(this: SDL, instanceId: UInt32) {
+export function isJoystickVirtual(this: SDL, instanceId: JoystickID) {
   return this.symbols.SDL_IsJoystickVirtual(instanceId);
 }
 

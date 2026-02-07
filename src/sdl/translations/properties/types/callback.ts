@@ -1,9 +1,9 @@
-import type { UInt32 } from '@/types/primitive';
+import type { PropertiesID } from '@/sdl/types/definition';
 
 export interface CleanupPropertyCallbackFn {
   (value: Uint8Array | null): void;
 }
 
 export interface EnumeratePropertiesCallbackFn {
-  (options: { props: UInt32; name: string }): void;
+  (options: { props: PropertiesID; name: string }): void;
 }

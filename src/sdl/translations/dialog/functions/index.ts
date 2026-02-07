@@ -1,6 +1,5 @@
 import type { SDL } from '@/sdl';
-import type { Window } from '@/sdl/types/definition';
-import type { UInt32 } from '@/types/primitive';
+import type { PropertiesID, Window } from '@/sdl/types/definition';
 import { CStruct } from '@cstruct';
 import type { FileDialogType } from '@sdl/ffi/constant/dialog';
 import { stringToCString } from '@utility/common';
@@ -107,7 +106,7 @@ export function showFileDialogWithProperties(
   options: {
     type: FileDialogType;
     callback: DialogFileCallbackFn;
-    props: UInt32;
+    props: PropertiesID;
   }
 ) {
   const cb = createDialogCallback(options.callback, []);

@@ -1,6 +1,6 @@
 import type { SDL } from '@/sdl';
-import type { Camera } from '@/sdl/types/definition';
-import type { Int32, UInt32 } from '@/types/primitive';
+import type { Camera, CameraID, PropertiesID } from '@/sdl/types/definition';
+import type { Int32 } from '@/types/primitive';
 import { CStruct } from '@cstruct';
 import type {
   CameraPermissionState,
@@ -37,7 +37,7 @@ export function getCameras(this: SDL) {
   return cameras;
 }
 
-export function getCameraSupportedFormats(this: SDL, cameraId: UInt32) {
+export function getCameraSupportedFormats(this: SDL, cameraId: CameraID) {
   const struct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
   const listPtr = this.symbols.SDL_GetCameraSupportedFormats(
@@ -56,18 +56,18 @@ export function getCameraSupportedFormats(this: SDL, cameraId: UInt32) {
   return formats;
 }
 
-export function getCameraName(this: SDL, cameraId: UInt32) {
+export function getCameraName(this: SDL, cameraId: CameraID) {
   return this.symbols.SDL_GetCameraName(cameraId).toString();
 }
 
-export function getCameraPosition(this: SDL, cameraId: UInt32) {
+export function getCameraPosition(this: SDL, cameraId: CameraID) {
   return this.symbols.SDL_GetCameraPosition(cameraId) as CameraPosition;
 }
 
 export function openCamera(
   this: SDL,
   options: {
-    cameraId: UInt32;
+    cameraId: CameraID;
     spec?: CameraSpec | null;
   }
 ) {
@@ -89,11 +89,11 @@ export function getCameraPermissionState(this: SDL, camera: Camera) {
 }
 
 export function getCameraId(this: SDL, camera: Camera) {
-  return this.symbols.SDL_GetCameraID(camera) as UInt32;
+  return this.symbols.SDL_GetCameraID(camera) as CameraID;
 }
 
 export function getCameraProperties(this: SDL, camera: Camera) {
-  return this.symbols.SDL_GetCameraProperties(camera) as UInt32;
+  return this.symbols.SDL_GetCameraProperties(camera) as PropertiesID;
 }
 
 export function getCameraFormat(

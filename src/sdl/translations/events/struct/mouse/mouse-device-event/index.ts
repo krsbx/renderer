@@ -1,3 +1,4 @@
+import type { MouseID } from '@/sdl/types/definition';
 import type { UInt32 } from '@/types/primitive';
 import { BaseStruct } from '@basestruct';
 import { ByteOffset } from './constant';
@@ -31,10 +32,10 @@ export class MouseDeviceEvent extends BaseStruct {
   }
 
   public get which() {
-    return this.$view.getUint32(ByteOffset.which, true) as UInt32;
+    return this.$view.getUint32(ByteOffset.which, true) as MouseID;
   }
 
-  public set which(value: UInt32) {
+  public set which(value: MouseID) {
     this.$view.setUint32(ByteOffset.which, value, true);
   }
 }

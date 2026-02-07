@@ -1,6 +1,6 @@
 import type { SDL } from '@/sdl';
-import type { Cursor, Window } from '@/sdl/types/definition';
-import type { Float, Int32, UInt32 } from '@/types/primitive';
+import type { Cursor, MouseID, Window } from '@/sdl/types/definition';
+import type { Float, Int32 } from '@/types/primitive';
 import { CallbackManager } from '@/sdl/utility';
 import { CStruct } from '@cstruct';
 import type {
@@ -34,7 +34,7 @@ export function getMice(this: SDL) {
   return mice;
 }
 
-export function getMouseNameForID(this: SDL, instanceId: UInt32) {
+export function getMouseNameForID(this: SDL, instanceId: MouseID) {
   return this.symbols.SDL_GetMouseNameForID(instanceId).toString();
 }
 

@@ -1,6 +1,6 @@
 import type { SDL } from '@/sdl';
-import type { IOStream, Process } from '@/sdl/types/definition';
-import type { Int32, UInt32 } from '@/types/primitive';
+import type { IOStream, Process, PropertiesID } from '@/sdl/types/definition';
+import type { Int32 } from '@/types/primitive';
 import { CStruct } from '@cstruct';
 
 export function createProcess(
@@ -18,12 +18,12 @@ export function createProcess(
   ) as Process | null;
 }
 
-export function createProcessWithProperties(this: SDL, props: UInt32) {
+export function createProcessWithProperties(this: SDL, props: PropertiesID) {
   return this.symbols.SDL_CreateProcessWithProperties(props) as Process | null;
 }
 
 export function getProcessProperties(this: SDL, process: Process) {
-  return this.symbols.SDL_GetProcessProperties(process) as UInt32;
+  return this.symbols.SDL_GetProcessProperties(process) as PropertiesID;
 }
 
 export function readProcess(this: SDL, process: Process) {

@@ -1,3 +1,4 @@
+import type { SensorID } from '@/sdl/types/definition';
 import type { UInt32 } from '@/types/primitive';
 import type { BuildTuple } from '@/types/shared';
 import { BaseStruct } from '@basestruct';
@@ -34,10 +35,10 @@ export class SensorEvent extends BaseStruct {
   }
 
   public get which() {
-    return this.$view.getUint32(ByteOffset.which, true) as UInt32;
+    return this.$view.getUint32(ByteOffset.which, true) as SensorID;
   }
 
-  public set which(value: UInt32) {
+  public set which(value: SensorID) {
     this.$view.setUint32(ByteOffset.which, value, true);
   }
 

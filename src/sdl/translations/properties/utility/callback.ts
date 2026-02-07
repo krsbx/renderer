@@ -1,5 +1,5 @@
 import { CallbackManager } from '@/sdl/utility';
-import type { UInt32 } from '@/types/primitive';
+import type { PropertiesID } from '@/sdl/types/definition';
 import { CStruct } from '@/utility/cstruct';
 import { CString, FFIType, JSCallback, type Pointer } from 'bun:ffi';
 import type {
@@ -42,7 +42,7 @@ export function createEnumeratePropertiesCallback(
   callback: EnumeratePropertiesCallbackFn
 ) {
   const cb = new JSCallback(
-    (_: Pointer, props: UInt32, name: Pointer) => {
+    (_: Pointer, props: PropertiesID, name: Pointer) => {
       callback({
         props,
         name: new CString(name).toString(),

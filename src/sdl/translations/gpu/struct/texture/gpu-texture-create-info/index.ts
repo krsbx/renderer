@@ -1,4 +1,5 @@
 import { BaseStruct } from '@basestruct';
+import type { PropertiesID } from '@/sdl/types/definition';
 import type { UInt32 } from '@/types/primitive';
 import type {
   GPUSampleCount,
@@ -79,10 +80,10 @@ export class GPUTextureCreateInfo extends BaseStruct {
   }
 
   public get props() {
-    return this.$view.getUint32(ByteOffset.props, true) as UInt32;
+    return this.$view.getUint32(ByteOffset.props, true) as PropertiesID;
   }
 
-  public set props(value: UInt32) {
+  public set props(value: PropertiesID) {
     this.$view.setUint32(ByteOffset.props, value, true);
   }
 }

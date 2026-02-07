@@ -1,5 +1,6 @@
 import type { SDL } from '@/sdl';
-import type { Float, UInt32 } from '@/types/primitive';
+import type { PropertiesID } from '@/sdl/types/definition';
+import type { Float } from '@/types/primitive';
 import { CallbackManager } from '@/sdl/utility';
 import { stringToCString } from '@utility/common';
 import type { PropertyType } from '../../../ffi/properties/constant';
@@ -14,35 +15,35 @@ import {
 } from '../utility/callback';
 
 export function getGlobalProperties(this: SDL) {
-  return this.symbols.SDL_GetGlobalProperties() as UInt32;
+  return this.symbols.SDL_GetGlobalProperties() as PropertiesID;
 }
 
 export function createProperties(this: SDL) {
-  return this.symbols.SDL_CreateProperties() as UInt32;
+  return this.symbols.SDL_CreateProperties() as PropertiesID;
 }
 
 export function copyProperties(
   this: SDL,
   options: {
-    src: UInt32;
-    dest: UInt32;
+    src: PropertiesID;
+    dest: PropertiesID;
   }
 ) {
   return this.symbols.SDL_CopyProperties(options.src, options.dest);
 }
 
-export function lockProperties(this: SDL, props: UInt32) {
+export function lockProperties(this: SDL, props: PropertiesID) {
   return this.symbols.SDL_LockProperties(props);
 }
 
-export function unlockProperties(this: SDL, props: UInt32) {
+export function unlockProperties(this: SDL, props: PropertiesID) {
   return this.symbols.SDL_UnlockProperties(props);
 }
 
 export function setPointerPropertyWithCleanup(
   this: SDL,
   options: {
-    props: UInt32;
+    props: PropertiesID;
     name: string;
     value?: Uint8Array | null;
     cleanup: CleanupPropertyCallbackFn;
@@ -72,7 +73,7 @@ export function setPointerPropertyWithCleanup(
 export function setPointerProperty(
   this: SDL,
   options: {
-    props: UInt32;
+    props: PropertiesID;
     name: string;
     value?: Uint8Array | null;
   }
@@ -87,7 +88,7 @@ export function setPointerProperty(
 export function setStringProperty(
   this: SDL,
   options: {
-    props: UInt32;
+    props: PropertiesID;
     name: string;
     value: string;
   }
@@ -102,7 +103,7 @@ export function setStringProperty(
 export function setNumberProperty(
   this: SDL,
   options: {
-    props: UInt32;
+    props: PropertiesID;
     name: string;
     value: bigint;
   }
@@ -117,7 +118,7 @@ export function setNumberProperty(
 export function setFloatProperty(
   this: SDL,
   options: {
-    props: UInt32;
+    props: PropertiesID;
     name: string;
     value: Float;
   }
@@ -132,7 +133,7 @@ export function setFloatProperty(
 export function setBooleanProperty(
   this: SDL,
   options: {
-    props: UInt32;
+    props: PropertiesID;
     name: string;
     value: boolean;
   }
@@ -147,7 +148,7 @@ export function setBooleanProperty(
 export function hasProperty(
   this: SDL,
   options: {
-    props: UInt32;
+    props: PropertiesID;
     name: string;
   }
 ) {
@@ -160,7 +161,7 @@ export function hasProperty(
 export function getPropertyType(
   this: SDL,
   options: {
-    props: UInt32;
+    props: PropertiesID;
     name: string;
   }
 ) {
@@ -173,7 +174,7 @@ export function getPropertyType(
 export function getPointerProperty(
   this: SDL,
   options: {
-    props: UInt32;
+    props: PropertiesID;
     name: string;
     defaultValue?: Uint8Array | null;
   }
@@ -188,7 +189,7 @@ export function getPointerProperty(
 export function getStringProperty(
   this: SDL,
   options: {
-    props: UInt32;
+    props: PropertiesID;
     name: string;
     defaultValue: string;
   }
@@ -205,7 +206,7 @@ export function getStringProperty(
 export function getNumberProperty(
   this: SDL,
   options: {
-    props: UInt32;
+    props: PropertiesID;
     name: string;
     defaultValue: bigint;
   }
@@ -220,7 +221,7 @@ export function getNumberProperty(
 export function getFloatProperty(
   this: SDL,
   options: {
-    props: UInt32;
+    props: PropertiesID;
     name: string;
     defaultValue: Float;
   }
@@ -235,7 +236,7 @@ export function getFloatProperty(
 export function getBooleanProperty(
   this: SDL,
   options: {
-    props: UInt32;
+    props: PropertiesID;
     name: string;
     defaultValue: boolean;
   }
@@ -250,7 +251,7 @@ export function getBooleanProperty(
 export function clearProperties(
   this: SDL,
   options: {
-    props: UInt32;
+    props: PropertiesID;
     name: string;
   }
 ) {
@@ -263,7 +264,7 @@ export function clearProperties(
 export function enumerateProperties(
   this: SDL,
   options: {
-    props: UInt32;
+    props: PropertiesID;
     callback: EnumeratePropertiesCallbackFn;
   }
 ) {
@@ -281,6 +282,6 @@ export function enumerateProperties(
   return result;
 }
 
-export function destroyProperties(this: SDL, props: UInt32) {
+export function destroyProperties(this: SDL, props: PropertiesID) {
   return this.symbols.SDL_DestroyProperties(props);
 }

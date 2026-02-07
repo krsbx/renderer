@@ -1,6 +1,5 @@
 import type { SDL } from '@/sdl';
-import type { Storage } from '@/sdl/types/definition';
-import type { UInt32 } from '@/types/primitive';
+import type { PropertiesID, Storage } from '@/sdl/types/definition';
 import { CStruct } from '@cstruct';
 import { stringToCString } from '@utility/common';
 import { ptr, type Pointer } from 'bun:ffi';
@@ -14,7 +13,7 @@ export function openTitleStorage(
   this: SDL,
   options: {
     override?: string | null;
-    props: UInt32;
+    props: PropertiesID;
   }
 ) {
   return this.symbols.SDL_OpenTitleStorage(
@@ -28,7 +27,7 @@ export function openUserStorage(
   options: {
     org: string;
     app: string;
-    props: UInt32;
+    props: PropertiesID;
   }
 ) {
   return this.symbols.SDL_OpenUserStorage(

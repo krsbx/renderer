@@ -1,3 +1,4 @@
+import type { WindowID } from '@/sdl/types/definition';
 import type { Float, UInt32 } from '@/types/primitive';
 import { BaseStruct } from '@basestruct';
 import { ByteOffset } from './constant';
@@ -87,10 +88,10 @@ export class TouchFingerEvent extends BaseStruct {
   }
 
   public get windowId() {
-    return this.$view.getUint32(ByteOffset.windowID, true) as UInt32;
+    return this.$view.getUint32(ByteOffset.windowID, true) as WindowID;
   }
 
-  public set windowID(value: UInt32) {
+  public set windowID(value: WindowID) {
     this.$view.setUint32(ByteOffset.windowID, value, true);
   }
 }

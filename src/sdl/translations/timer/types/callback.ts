@@ -1,3 +1,4 @@
+import type { TimerID } from '@/sdl/types/definition';
 import type { UInt32 } from '@/types/primitive';
 
 /**
@@ -11,7 +12,7 @@ import type { UInt32 } from '@/types/primitive';
  * @returns The next callback interval in ms, or 0 to cancel the timer
  */
 export interface TimerCallbackFn {
-  (options: { timerID: UInt32; interval: UInt32 }): UInt32;
+  (options: { timerID: TimerID; interval: UInt32 }): UInt32;
 }
 
 /**
@@ -25,5 +26,5 @@ export interface TimerCallbackFn {
  * @returns The next callback interval in ns, or 0n to cancel the timer
  */
 export interface NSTimerCallbackFn {
-  (options: { timerID: UInt32; interval: bigint }): bigint;
+  (options: { timerID: TimerID; interval: bigint }): bigint;
 }

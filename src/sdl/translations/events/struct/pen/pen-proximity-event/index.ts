@@ -1,3 +1,4 @@
+import type { PenID, WindowID } from '@/sdl/types/definition';
 import type { UInt32 } from '@/types/primitive';
 import { BaseStruct } from '@basestruct';
 import { ByteOffset } from './constant';
@@ -31,18 +32,18 @@ export class PenProximityEvent extends BaseStruct {
   }
 
   public get windowId() {
-    return this.$view.getUint32(ByteOffset.windowID, true) as UInt32;
+    return this.$view.getUint32(ByteOffset.windowID, true) as WindowID;
   }
 
-  public set windowID(value: UInt32) {
+  public set windowID(value: WindowID) {
     this.$view.setUint32(ByteOffset.windowID, value, true);
   }
 
   public get which() {
-    return this.$view.getUint32(ByteOffset.which, true) as UInt32;
+    return this.$view.getUint32(ByteOffset.which, true) as PenID;
   }
 
-  public set which(value: UInt32) {
+  public set which(value: PenID) {
     this.$view.setUint32(ByteOffset.which, value, true);
   }
 }

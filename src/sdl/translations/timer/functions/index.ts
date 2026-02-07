@@ -1,5 +1,6 @@
 import type { SDL } from '@/sdl';
 import { CallbackManager } from '@/sdl/utility';
+import type { UInt32 } from '@/types/primitive';
 import type { NSTimerCallbackFn, TimerCallbackFn } from '../types/callback';
 import {
   createNSTimerCallback,
@@ -24,7 +25,7 @@ export function getPerformanceFrequency(this: SDL) {
   return this.symbols.SDL_GetPerformanceFrequency();
 }
 
-export function delay(this: SDL, ms: number) {
+export function delay(this: SDL, ms: UInt32) {
   this.symbols.SDL_Delay(ms);
 }
 
@@ -39,13 +40,17 @@ export function delayPrecise(this: SDL, ns: bigint) {
 export function addTimer(
   this: SDL,
   options: {
-    interval: number;
+    interval: UInt32;
     callback: TimerCallbackFn;
   }
 ) {
   const cb = createTimerCallback(options.callback);
 
-  const timerID = this.symbols.SDL_AddTimer(options.interval, cb.ptr, null);
+  const timerID = this.symbols.SDL_AddTimer(
+    options.interval,
+    cb.ptr,
+    null
+  ) as UInt32;
 
   if (timerID === 0) {
     cb.close();
@@ -68,7 +73,11 @@ export function addTimerNS(
 ) {
   const cb = createNSTimerCallback(options.callback);
 
-  const timerID = this.symbols.SDL_AddTimerNS(options.interval, cb.ptr, null);
+  const timerID = this.symbols.SDL_AddTimerNS(
+    options.interval,
+    cb.ptr,
+    null
+  ) as UInt32;
 
   if (timerID === 0) {
     cb.close();
@@ -82,7 +91,7 @@ export function addTimerNS(
   return timerID;
 }
 
-export function removeTimer(this: SDL, id: number) {
+export function removeTimer(this: SDL, id: UInt32) {
   const timerKey = getTimerCallbackKey(id);
   const nsTimerKey = getNSTimerCallbackKey(id);
 

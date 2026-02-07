@@ -1,3 +1,4 @@
+import type { Float } from '@/types/primitive';
 import { BaseStruct } from '@basestruct';
 import { ByteOffset } from './constant';
 
@@ -13,26 +14,26 @@ export class Finger extends BaseStruct {
   }
 
   public get x() {
-    return this.$view.getFloat32(ByteOffset.x, true);
+    return this.$view.getFloat32(ByteOffset.x, true) as Float;
   }
 
-  public set x(value: number) {
+  public set x(value: Float) {
     this.$view.setFloat32(ByteOffset.x, value, true);
   }
 
   public get y() {
-    return this.$view.getFloat32(ByteOffset.y, true);
+    return this.$view.getFloat32(ByteOffset.y, true) as Float;
   }
 
-  public set y(value: number) {
+  public set y(value: Float) {
     this.$view.setFloat32(ByteOffset.y, value, true);
   }
 
   public get pressure() {
-    return this.$view.getFloat32(ByteOffset.pressure, true);
+    return this.$view.getFloat32(ByteOffset.pressure, true) as Float;
   }
 
-  public set pressure(value: number) {
+  public set pressure(value: Float) {
     this.$view.setFloat32(ByteOffset.pressure, value, true);
   }
 }

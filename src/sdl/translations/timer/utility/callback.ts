@@ -1,21 +1,22 @@
 import { CallbackManager } from '@/sdl/utility';
+import type { UInt32 } from '@/types/primitive';
 import { FFIType, JSCallback, type Pointer } from 'bun:ffi';
 import type { NSTimerCallbackFn, TimerCallbackFn } from '../types/callback';
 
 const TimerCallbackKeyPrefix = 'timer:ms:' as const;
 const NSTimerCallbackKeyPrefix = 'timer:ns:' as const;
 
-export function getTimerCallbackKey(timerID: number) {
+export function getTimerCallbackKey(timerID: UInt32) {
   return `${TimerCallbackKeyPrefix}${timerID}` as const;
 }
 
-export function getNSTimerCallbackKey(timerID: number) {
+export function getNSTimerCallbackKey(timerID: UInt32) {
   return `${NSTimerCallbackKeyPrefix}${timerID}` as const;
 }
 
 export function createTimerCallback(callback: TimerCallbackFn) {
   const cb = new JSCallback(
-    (_: Pointer, timerID: number, interval: number) => {
+    (_: Pointer, timerID: UInt32, interval: UInt32) => {
       const nextInterval = callback({
         timerID,
         interval,
@@ -39,7 +40,7 @@ export function createTimerCallback(callback: TimerCallbackFn) {
 
 export function createNSTimerCallback(callback: NSTimerCallbackFn) {
   const cb = new JSCallback(
-    (_: Pointer, timerID: number, interval: bigint) => {
+    (_: Pointer, timerID: UInt32, interval: bigint) => {
       const nextInterval = callback({
         timerID,
         interval,

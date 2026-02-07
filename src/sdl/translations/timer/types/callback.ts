@@ -1,3 +1,5 @@
+import type { UInt32 } from '@/types/primitive';
+
 /**
  * Callback function for millisecond timers.
  *
@@ -9,7 +11,7 @@
  * @returns The next callback interval in ms, or 0 to cancel the timer
  */
 export interface TimerCallbackFn {
-  (options: { timerID: number; interval: number }): number;
+  (options: { timerID: UInt32; interval: UInt32 }): UInt32;
 }
 
 /**
@@ -23,5 +25,5 @@ export interface TimerCallbackFn {
  * @returns The next callback interval in ns, or 0n to cancel the timer
  */
 export interface NSTimerCallbackFn {
-  (options: { timerID: number; interval: bigint }): bigint;
+  (options: { timerID: UInt32; interval: bigint }): bigint;
 }

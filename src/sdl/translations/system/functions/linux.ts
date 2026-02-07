@@ -1,10 +1,11 @@
 import type { SDL } from '@/sdl';
+import type { Int32 } from '@/types/primitive';
 
 export function setLinuxThreadPriority(
   this: SDL,
   options: {
     threadId: bigint;
-    priority: number;
+    priority: Int32;
   }
 ) {
   return this.symbols.SDL_SetLinuxThreadPriority(
@@ -17,8 +18,8 @@ export function setLinuxThreadPriorityAndPolicy(
   this: SDL,
   options: {
     threadId: bigint;
-    sdlPriority: number;
-    schedPolicy: number;
+    sdlPriority: Int32;
+    schedPolicy: Int32;
   }
 ) {
   return this.symbols.SDL_SetLinuxThreadPriorityAndPolicy(

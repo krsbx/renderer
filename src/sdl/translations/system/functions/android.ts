@@ -1,4 +1,5 @@
 import type { SDL } from '@/sdl';
+import type { Int32, UInt32 } from '@/types/primitive';
 import { stringToCString } from '@utility/common';
 import type { AndroidPermissionCallbackFn } from '../types/callback';
 import { createAndroidPermissionCallback } from '../utility/callback';
@@ -12,7 +13,7 @@ export function getAndroidActivity(this: SDL) {
 }
 
 export function getAndroidSDKVersion(this: SDL) {
-  return this.symbols.SDL_GetAndroidSDKVersion();
+  return this.symbols.SDL_GetAndroidSDKVersion() as Int32;
 }
 
 export function isChromebook(this: SDL) {
@@ -32,7 +33,7 @@ export function getAndroidInternalStoragePath(this: SDL) {
 }
 
 export function getAndroidExternalStorageState(this: SDL) {
-  return this.symbols.SDL_GetAndroidExternalStorageState();
+  return this.symbols.SDL_GetAndroidExternalStorageState() as UInt32;
 }
 
 export function getAndroidExternalStoragePath(this: SDL) {
@@ -63,10 +64,10 @@ export function showAndroidToast(
   this: SDL,
   options: {
     message: string;
-    duration: number;
-    gravity: number;
-    xoffset: number;
-    yoffset: number;
+    duration: Int32;
+    gravity: Int32;
+    xoffset: Int32;
+    yoffset: Int32;
   }
 ) {
   return this.symbols.SDL_ShowAndroidToast(
@@ -81,8 +82,8 @@ export function showAndroidToast(
 export function sendAndroidMessage(
   this: SDL,
   options: {
-    command: number;
-    param: number;
+    command: UInt32;
+    param: Int32;
   }
 ) {
   return this.symbols.SDL_SendAndroidMessage(options.command, options.param);

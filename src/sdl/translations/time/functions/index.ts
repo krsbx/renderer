@@ -1,4 +1,5 @@
 import type { SDL } from '@/sdl';
+import type { Int32, UInt32 } from '@/types/primitive';
 import { CStruct } from '@cstruct';
 import type { DateFormat, TimeFormat } from '../../../ffi/time/constant';
 import { DateTime } from '../struct';
@@ -78,8 +79,8 @@ export function timeToWindows(this: SDL, ticks: bigint) {
 export function timeFromWindows(
   this: SDL,
   options: {
-    dwLowDateTime: number;
-    dwHighDateTime: number;
+    dwLowDateTime: UInt32;
+    dwHighDateTime: UInt32;
   }
 ) {
   return this.symbols.SDL_TimeFromWindows(
@@ -91,39 +92,39 @@ export function timeFromWindows(
 export function getDaysInMonth(
   this: SDL,
   options: {
-    year: number;
-    month: number;
+    year: Int32;
+    month: Int32;
   }
 ) {
-  return this.symbols.SDL_GetDaysInMonth(options.year, options.month);
+  return this.symbols.SDL_GetDaysInMonth(options.year, options.month) as Int32;
 }
 
 export function getDayOfYear(
   this: SDL,
   options: {
-    year: number;
-    month: number;
-    day: number;
+    year: Int32;
+    month: Int32;
+    day: Int32;
   }
 ) {
   return this.symbols.SDL_GetDayOfYear(
     options.year,
     options.month,
     options.day
-  );
+  ) as Int32;
 }
 
 export function getDayOfWeek(
   this: SDL,
   options: {
-    year: number;
-    month: number;
-    day: number;
+    year: Int32;
+    month: Int32;
+    day: Int32;
   }
 ) {
   return this.symbols.SDL_GetDayOfWeek(
     options.year,
     options.month,
     options.day
-  );
+  ) as Int32;
 }

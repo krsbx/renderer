@@ -1,5 +1,6 @@
 import type { SDL } from '@/sdl';
 import type { Window } from '@/sdl/types/definition';
+import type { Int32 } from '@/types/primitive';
 import { CallbackManager } from '@/sdl/utility';
 import type { iOSAnimationCallbackFn } from '../types/callback';
 import {
@@ -11,7 +12,7 @@ export function setiOSAnimationCallback(
   this: SDL,
   options: {
     window: Window;
-    interval: number;
+    interval: Int32;
     callback: iOSAnimationCallbackFn | null;
   }
 ) {

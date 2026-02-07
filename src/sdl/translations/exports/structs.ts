@@ -5,6 +5,7 @@ export * from '../audio/struct';
 export * from '../camera/struct';
 export * from '../dialog/struct';
 export * from '../events/struct';
+export * from '../extras/struct';
 export * from '../file-system/struct';
 export * from '../gamepad/struct';
 export * from '../gpu/struct';

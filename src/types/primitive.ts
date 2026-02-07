@@ -1,13 +1,13 @@
 import type { Brand } from '@/types/shared';
 
-export type Float = Brand<number, 'Float'>;
-export type UFloat = Brand<number, 'UFloat'>;
-export type Int = Brand<number, 'Int'>;
-export type Int8 = Brand<number, 'Int8'>;
-export type Int16 = Brand<number, 'Int16'>;
-export type Int32 = Brand<number, 'Int32'>;
-export type UInt = Brand<number, 'UInt'>;
-export type UInt8 = Brand<number, 'UInt8'>;
-export type UInt16 = Brand<number, 'UInt16'>;
-export type UInt32 = Brand<number, 'UInt32'>;
-export type Bool = Brand<boolean, 'Bool'>;
+export type PrimitiveNumber<K extends string> = number | Brand<number, K>;
+
+export type Float = PrimitiveNumber<'Float'>;
+export type UFloat = PrimitiveNumber<'UFloat'>;
+export type Int8 = PrimitiveNumber<'Int8'>;
+export type Int16 = PrimitiveNumber<'Int16'>;
+export type Int32 = PrimitiveNumber<'Int32'>;
+export type UInt8 = PrimitiveNumber<'UInt8'>;
+export type UInt16 = PrimitiveNumber<'UInt16'>;
+export type UInt32 = PrimitiveNumber<'UInt32'>;
+export type Bool = boolean | Brand<boolean, 'Bool'>;

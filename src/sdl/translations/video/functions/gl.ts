@@ -1,6 +1,7 @@
 import type { BaseSDL } from '@/sdl';
 import type { GLContext, Window } from '@/sdl/types/definition';
 import { CallbackManager } from '@/sdl/utility';
+import type { Int32 } from '@/types/primitive';
 import { CStruct } from '@cstruct';
 import { stringToCString } from '@utility/common';
 import type { GLAttr } from '../../../ffi/video/constant';
@@ -50,7 +51,7 @@ export function glSetAttribute(
   this: BaseSDL,
   options: {
     attr: GLAttr;
-    value: number;
+    value: Int32;
   }
 ) {
   return this.symbols.SDL_GL_SetAttribute(options.attr, options.value);
@@ -61,7 +62,7 @@ export function glGetAttribute(this: BaseSDL, attr: GLAttr) {
 
   const success = this.symbols.SDL_GL_GetAttribute(attr, valueStruct.$memory);
 
-  return success ? valueStruct.getValue(0, 'i32') : null;
+  return success ? (valueStruct.getValue(0, 'i32') as Int32) : null;
 }
 
 export function glCreateContext(this: BaseSDL, window: Window) {
@@ -141,7 +142,7 @@ export function eglSetAttributeCallbacks(
   );
 }
 
-export function glSetSwapInterval(this: BaseSDL, interval: number) {
+export function glSetSwapInterval(this: BaseSDL, interval: Int32) {
   return this.symbols.SDL_GL_SetSwapInterval(interval);
 }
 
@@ -150,7 +151,7 @@ export function glGetSwapInterval(this: BaseSDL) {
 
   const success = this.symbols.SDL_GL_GetSwapInterval(intervalStruct.$memory);
 
-  return success ? intervalStruct.getValue(0, 'i32') : null;
+  return success ? (intervalStruct.getValue(0, 'i32') as Int32) : null;
 }
 
 export function glSwapWindow(this: BaseSDL, window: Window) {

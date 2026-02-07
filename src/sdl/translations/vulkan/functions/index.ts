@@ -5,6 +5,7 @@ import type {
   VkSurfaceKHR,
   Window,
 } from '@/sdl/types/definition';
+import type { UInt32 } from '@/types/primitive';
 import { CStruct } from '@cstruct';
 import { stringToCString } from '@utility/common';
 import { type Pointer } from 'bun:ffi';
@@ -80,7 +81,7 @@ export function vulkanGetPresentationSupport(
   options: {
     instance: VkInstance;
     physicalDevice: VkPhysicalDevice;
-    queueFamilyIndex: number;
+    queueFamilyIndex: UInt32;
   }
 ) {
   return this.symbols.SDL_Vulkan_GetPresentationSupport(

@@ -1,5 +1,6 @@
 import type { SDL } from '@/sdl';
 import type { Window } from '@/sdl/types/definition';
+import type { Float, Int32, UInt32 } from '@/types/primitive';
 import { CStruct } from '@cstruct';
 import { stringToCString } from '@utility/common';
 import type { PixelFormat } from '../../../ffi/pixels/constant';
@@ -19,11 +20,11 @@ import {
 } from '../utility/callback';
 
 export function getWindowPixelDensity(this: SDL, window: Window) {
-  return this.symbols.SDL_GetWindowPixelDensity(window);
+  return this.symbols.SDL_GetWindowPixelDensity(window) as Float;
 }
 
 export function getWindowDisplayScale(this: SDL, window: Window) {
-  return this.symbols.SDL_GetWindowDisplayScale(window);
+  return this.symbols.SDL_GetWindowDisplayScale(window) as Float;
 }
 
 export function setWindowFullscreenMode(
@@ -96,8 +97,8 @@ export function createWindow(
   this: SDL,
   options: {
     title: string;
-    w: number;
-    h: number;
+    w: Int32;
+    h: Int32;
     flags: WindowFlags;
   }
 ) {
@@ -113,10 +114,10 @@ export function createPopupWindow(
   this: SDL,
   options: {
     parent: Window;
-    x: number;
-    y: number;
-    w: number;
-    h: number;
+    x: Int32;
+    y: Int32;
+    w: Int32;
+    h: Int32;
     flags: WindowFlags;
   }
 ) {
@@ -130,15 +131,15 @@ export function createPopupWindow(
   ) as Window | null;
 }
 
-export function createWindowWithProperties(this: SDL, props: number) {
+export function createWindowWithProperties(this: SDL, props: UInt32) {
   return this.symbols.SDL_CreateWindowWithProperties(props) as Window | null;
 }
 
 export function getWindowId(this: SDL, window: Window) {
-  return this.symbols.SDL_GetWindowID(window);
+  return this.symbols.SDL_GetWindowID(window) as UInt32;
 }
 
-export function getWindowFromId(this: SDL, id: number) {
+export function getWindowFromId(this: SDL, id: UInt32) {
   return this.symbols.SDL_GetWindowFromID(id) as Window | null;
 }
 
@@ -147,7 +148,7 @@ export function getWindowParent(this: SDL, window: Window) {
 }
 
 export function getWindowProperties(this: SDL, window: Window) {
-  return this.symbols.SDL_GetWindowProperties(window);
+  return this.symbols.SDL_GetWindowProperties(window) as UInt32;
 }
 
 export function getWindowFlags(this: SDL, window: Window) {
@@ -185,8 +186,8 @@ export function setWindowPosition(
   this: SDL,
   options: {
     window: Window;
-    x: number;
-    y: number;
+    x: Int32;
+    y: Int32;
   }
 ) {
   return this.symbols.SDL_SetWindowPosition(
@@ -209,8 +210,8 @@ export function getWindowPosition(this: SDL, window: Window) {
   if (!success) return null;
 
   return {
-    x: posXStruct.getValue(0, 'i32'),
-    y: posYStruct.getValue(0, 'i32'),
+    x: posXStruct.getValue(0, 'i32') as Int32,
+    y: posYStruct.getValue(0, 'i32') as Int32,
   };
 }
 
@@ -218,8 +219,8 @@ export function setWindowSize(
   this: SDL,
   options: {
     window: Window;
-    w: number;
-    h: number;
+    w: Int32;
+    h: Int32;
   }
 ) {
   return this.symbols.SDL_SetWindowSize(options.window, options.w, options.h);
@@ -238,8 +239,8 @@ export function getWindowSize(this: SDL, window: Window) {
   if (!success) return null;
 
   return {
-    w: wStruct.getValue(0, 'i32'),
-    h: hStruct.getValue(0, 'i32'),
+    w: wStruct.getValue(0, 'i32') as Int32,
+    h: hStruct.getValue(0, 'i32') as Int32,
   };
 }
 
@@ -257,8 +258,8 @@ export function setWindowAspectRatio(
   this: SDL,
   options: {
     window: Window;
-    minAspect: number;
-    maxAspect: number;
+    minAspect: Float;
+    maxAspect: Float;
   }
 ) {
   return this.symbols.SDL_SetWindowAspectRatio(
@@ -281,8 +282,8 @@ export function getWindowAspectRatio(this: SDL, window: Window) {
   if (!success) return null;
 
   return {
-    minAspect: minAspectStruct.getValue(0, 'f32'),
-    maxAspect: maxAspectStruct.getValue(0, 'f32'),
+    minAspect: minAspectStruct.getValue(0, 'f32') as Float,
+    maxAspect: maxAspectStruct.getValue(0, 'f32') as Float,
   };
 }
 
@@ -303,10 +304,10 @@ export function getWindowBordersSize(this: SDL, window: Window) {
   if (!success) return null;
 
   return {
-    top: topStruct.getValue(0, 'i32'),
-    left: leftStruct.getValue(0, 'i32'),
-    bottom: bottomStruct.getValue(0, 'i32'),
-    right: rightStruct.getValue(0, 'i32'),
+    top: topStruct.getValue(0, 'i32') as Int32,
+    left: leftStruct.getValue(0, 'i32') as Int32,
+    bottom: bottomStruct.getValue(0, 'i32') as Int32,
+    right: rightStruct.getValue(0, 'i32') as Int32,
   };
 }
 
@@ -323,8 +324,8 @@ export function getWindowSizeInPixels(this: SDL, window: Window) {
   if (!success) return null;
 
   return {
-    w: wStruct.getValue(0, 'i32'),
-    h: hStruct.getValue(0, 'i32'),
+    w: wStruct.getValue(0, 'i32') as Int32,
+    h: hStruct.getValue(0, 'i32') as Int32,
   };
 }
 
@@ -332,8 +333,8 @@ export function setWindowMinimumSize(
   this: SDL,
   options: {
     window: Window;
-    minW: number;
-    minH: number;
+    minW: Int32;
+    minH: Int32;
   }
 ) {
   return this.symbols.SDL_SetWindowMinimumSize(
@@ -356,8 +357,8 @@ export function getWindowMinimumSize(this: SDL, window: Window) {
   if (!success) return null;
 
   return {
-    w: wStruct.getValue(0, 'i32'),
-    h: hStruct.getValue(0, 'i32'),
+    w: wStruct.getValue(0, 'i32') as Int32,
+    h: hStruct.getValue(0, 'i32') as Int32,
   };
 }
 
@@ -365,8 +366,8 @@ export function setWindowMaximumSize(
   this: SDL,
   options: {
     window: Window;
-    maxW: number;
-    maxH: number;
+    maxW: Int32;
+    maxH: Int32;
   }
 ) {
   return this.symbols.SDL_SetWindowMaximumSize(
@@ -389,8 +390,8 @@ export function getWindowMaximumSize(this: SDL, window: Window) {
   if (!success) return null;
 
   return {
-    w: wStruct.getValue(0, 'i32'),
-    h: hStruct.getValue(0, 'i32'),
+    w: wStruct.getValue(0, 'i32') as Int32,
+    h: hStruct.getValue(0, 'i32') as Int32,
   };
 }
 
@@ -494,7 +495,7 @@ export function setWindowSurfaceVSync(
   this: SDL,
   options: {
     window: Window;
-    vsync: number;
+    vsync: Int32;
   }
 ) {
   return this.symbols.SDL_SetWindowSurfaceVSync(options.window, options.vsync);
@@ -508,7 +509,7 @@ export function getWindowSurfaceVSync(this: SDL, window: Window) {
     vsyncStruct.$memory
   );
 
-  return success ? vsyncStruct.getValue(0, 'i32') : null;
+  return success ? (vsyncStruct.getValue(0, 'i32') as Int32) : null;
 }
 
 export function updateWindowSurface(this: SDL, window: Window) {
@@ -590,14 +591,14 @@ export function setWindowOpacity(
   this: SDL,
   options: {
     window: Window;
-    opacity: number;
+    opacity: Float;
   }
 ) {
   return this.symbols.SDL_SetWindowOpacity(options.window, options.opacity);
 }
 
 export function getWindowOpacity(this: SDL, window: Window) {
-  return this.symbols.SDL_GetWindowOpacity(window);
+  return this.symbols.SDL_GetWindowOpacity(window) as Float;
 }
 
 export function setWindowParent(
@@ -634,8 +635,8 @@ export function showWindowSystemMenu(
   this: SDL,
   options: {
     window: Window;
-    x: number;
-    y: number;
+    x: Int32;
+    y: Int32;
   }
 ) {
   return this.symbols.SDL_ShowWindowSystemMenu(
@@ -703,14 +704,14 @@ export function setWindowProgressValue(
   this: SDL,
   options: {
     window: Window;
-    value: number;
+    value: Float;
   }
 ) {
   return this.symbols.SDL_SetWindowProgressValue(options.window, options.value);
 }
 
 export function getWindowProgressValue(this: SDL, window: Window) {
-  return this.symbols.SDL_GetWindowProgressValue(window);
+  return this.symbols.SDL_GetWindowProgressValue(window) as Float;
 }
 
 export function destroyWindow(this: SDL, window: Window) {

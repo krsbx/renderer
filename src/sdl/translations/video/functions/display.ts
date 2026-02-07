@@ -1,5 +1,6 @@
 import type { SDL } from '@/sdl';
 import type { Window } from '@/sdl/types/definition';
+import type { Float, Int32, UInt32 } from '@/types/primitive';
 import { CStruct } from '@cstruct';
 import type {
   DisplayOrientation,
@@ -9,10 +10,10 @@ import { Point, Rect } from '../../rect/struct';
 import { DisplayMode } from '../struct';
 
 export function getNumVideoDrivers(this: SDL) {
-  return this.symbols.SDL_GetNumVideoDrivers();
+  return this.symbols.SDL_GetNumVideoDrivers() as Int32;
 }
 
-export function getVideoDriver(this: SDL, index: number) {
+export function getVideoDriver(this: SDL, index: Int32) {
   return this.symbols.SDL_GetVideoDriver(index).toString();
 }
 
@@ -40,18 +41,18 @@ export function getDisplays(this: SDL) {
 }
 
 export function getPrimaryDisplay(this: SDL) {
-  return this.symbols.SDL_GetPrimaryDisplay();
+  return this.symbols.SDL_GetPrimaryDisplay() as UInt32;
 }
 
-export function getDisplayProperties(this: SDL, displayID: number) {
-  return this.symbols.SDL_GetDisplayProperties(displayID);
+export function getDisplayProperties(this: SDL, displayID: UInt32) {
+  return this.symbols.SDL_GetDisplayProperties(displayID) as UInt32;
 }
 
-export function getDisplayName(this: SDL, displayID: number) {
+export function getDisplayName(this: SDL, displayID: UInt32) {
   return this.symbols.SDL_GetDisplayName(displayID).toString();
 }
 
-export function getDisplayBounds(this: SDL, displayID: number) {
+export function getDisplayBounds(this: SDL, displayID: UInt32) {
   const rect = Rect.create();
 
   const success = this.symbols.SDL_GetDisplayBounds(displayID, rect.$memory);
@@ -61,7 +62,7 @@ export function getDisplayBounds(this: SDL, displayID: number) {
   return rect;
 }
 
-export function getDisplayUsableBounds(this: SDL, displayID: number) {
+export function getDisplayUsableBounds(this: SDL, displayID: UInt32) {
   const rect = Rect.create();
 
   const success = this.symbols.SDL_GetDisplayUsableBounds(
@@ -74,23 +75,23 @@ export function getDisplayUsableBounds(this: SDL, displayID: number) {
   return rect;
 }
 
-export function getNaturalDisplayOrientation(this: SDL, displayID: number) {
+export function getNaturalDisplayOrientation(this: SDL, displayID: UInt32) {
   return this.symbols.SDL_GetNaturalDisplayOrientation(
     displayID
   ) as DisplayOrientation;
 }
 
-export function getCurrentDisplayOrientation(this: SDL, displayID: number) {
+export function getCurrentDisplayOrientation(this: SDL, displayID: UInt32) {
   return this.symbols.SDL_GetCurrentDisplayOrientation(
     displayID
   ) as DisplayOrientation;
 }
 
-export function getDisplayContentScale(this: SDL, displayID: number) {
-  return this.symbols.SDL_GetDisplayContentScale(displayID);
+export function getDisplayContentScale(this: SDL, displayID: UInt32) {
+  return this.symbols.SDL_GetDisplayContentScale(displayID) as Float;
 }
 
-export function getFullscreenDisplayModes(this: SDL, displayID: number) {
+export function getFullscreenDisplayModes(this: SDL, displayID: UInt32) {
   const countStruct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
   const listPtr = this.symbols.SDL_GetFullscreenDisplayModes(
@@ -111,10 +112,10 @@ export function getFullscreenDisplayModes(this: SDL, displayID: number) {
 export function getClosestFullscreenDisplayMode(
   this: SDL,
   options: {
-    displayID: number;
-    w: number;
-    h: number;
-    refreshRate: number;
+    displayID: UInt32;
+    w: Int32;
+    h: Int32;
+    refreshRate: Float;
     /**
      * @default true
      */
@@ -137,7 +138,7 @@ export function getClosestFullscreenDisplayMode(
   return displayMode;
 }
 
-export function getDesktopDisplayMode(this: SDL, displayID: number) {
+export function getDesktopDisplayMode(this: SDL, displayID: UInt32) {
   const result = this.symbols.SDL_GetDesktopDisplayMode(displayID);
 
   if (!result) return null;
@@ -145,7 +146,7 @@ export function getDesktopDisplayMode(this: SDL, displayID: number) {
   return new DisplayMode(result);
 }
 
-export function getCurrentDisplayMode(this: SDL, displayID: number) {
+export function getCurrentDisplayMode(this: SDL, displayID: UInt32) {
   const result = this.symbols.SDL_GetCurrentDisplayMode(displayID);
 
   if (!result) return null;
@@ -154,13 +155,13 @@ export function getCurrentDisplayMode(this: SDL, displayID: number) {
 }
 
 export function getDisplayForPoint(this: SDL, point: Point) {
-  return this.symbols.SDL_GetDisplayForPoint(point.$memory);
+  return this.symbols.SDL_GetDisplayForPoint(point.$memory) as UInt32;
 }
 
 export function getDisplayForRect(this: SDL, rect: Rect) {
-  return this.symbols.SDL_GetDisplayForRect(rect.$memory);
+  return this.symbols.SDL_GetDisplayForRect(rect.$memory) as UInt32;
 }
 
 export function getDisplayForWindow(this: SDL, window: Window) {
-  return this.symbols.SDL_GetDisplayForWindow(window);
+  return this.symbols.SDL_GetDisplayForWindow(window) as UInt32;
 }

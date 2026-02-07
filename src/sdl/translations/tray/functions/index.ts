@@ -1,5 +1,6 @@
 import type { SDL } from '@/sdl';
 import type { Tray, TrayEntry, TrayMenu } from '@/sdl/types/definition';
+import type { Int32 } from '@/types/primitive';
 import { CStruct } from '@cstruct';
 import { stringToCString } from '@utility/common';
 import { type Pointer } from 'bun:ffi';
@@ -92,7 +93,7 @@ export function insertTrayEntryAt(
   this: SDL,
   options: {
     menu: TrayMenu;
-    pos: number;
+    pos: Int32;
     label: string;
     flags: TrayEntryFlags;
   }

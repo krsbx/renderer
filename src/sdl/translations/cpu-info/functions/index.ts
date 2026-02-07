@@ -1,11 +1,12 @@
 import type { SDL } from '@/sdl';
+import type { Int32 } from '@/types/primitive';
 
 export function getNumLogicalCPUCores(this: SDL) {
-  return this.symbols.SDL_GetNumLogicalCPUCores();
+  return this.symbols.SDL_GetNumLogicalCPUCores() as Int32;
 }
 
 export function getCPUCacheLineSize(this: SDL) {
-  return this.symbols.SDL_GetCPUCacheLineSize();
+  return this.symbols.SDL_GetCPUCacheLineSize() as Int32;
 }
 
 export function hasAltiVec(this: SDL) {
@@ -65,7 +66,7 @@ export function hasLASX(this: SDL) {
 }
 
 export function getSystemRAM(this: SDL) {
-  return this.symbols.SDL_GetSystemRAM();
+  return this.symbols.SDL_GetSystemRAM() as Int32;
 }
 
 export function getSIMDAlignment(this: SDL) {

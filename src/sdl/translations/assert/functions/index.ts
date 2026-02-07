@@ -1,5 +1,6 @@
 import type { SDL } from '@/sdl';
 import { CallbackManager } from '@/sdl/utility';
+import type { Int32 } from '@/types/primitive';
 import type { AssertState } from '@sdl/ffi/constant/assert';
 import { stringToCString } from '@utility/common';
 import { type Pointer } from 'bun:ffi';
@@ -16,7 +17,7 @@ export function reportAssertion(
     data: AssertData;
     func: string;
     file: string;
-    line: number;
+    line: Int32;
   }
 ) {
   const result = this.symbols.SDL_ReportAssertion(

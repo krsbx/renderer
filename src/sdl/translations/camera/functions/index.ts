@@ -1,5 +1,6 @@
 import type { SDL } from '@/sdl';
 import type { Camera } from '@/sdl/types/definition';
+import type { Int32, UInt32 } from '@/types/primitive';
 import { CStruct } from '@cstruct';
 import type {
   CameraPermissionState,
@@ -9,10 +10,10 @@ import { Surface } from '../../surface/struct';
 import { CameraSpec } from '../struct';
 
 export function getNumCameraDrivers(this: SDL) {
-  return this.symbols.SDL_GetNumCameraDrivers();
+  return this.symbols.SDL_GetNumCameraDrivers() as Int32;
 }
 
-export function getCameraDriver(this: SDL, index: number) {
+export function getCameraDriver(this: SDL, index: Int32) {
   return this.symbols.SDL_GetCameraDriver(index).toString();
 }
 
@@ -36,7 +37,7 @@ export function getCameras(this: SDL) {
   return cameras;
 }
 
-export function getCameraSupportedFormats(this: SDL, cameraId: number) {
+export function getCameraSupportedFormats(this: SDL, cameraId: UInt32) {
   const struct = new CStruct({ length: CStruct.BYTE_SIZE.i32 });
 
   const listPtr = this.symbols.SDL_GetCameraSupportedFormats(
@@ -55,18 +56,18 @@ export function getCameraSupportedFormats(this: SDL, cameraId: number) {
   return formats;
 }
 
-export function getCameraName(this: SDL, cameraId: number) {
+export function getCameraName(this: SDL, cameraId: UInt32) {
   return this.symbols.SDL_GetCameraName(cameraId).toString();
 }
 
-export function getCameraPosition(this: SDL, cameraId: number) {
+export function getCameraPosition(this: SDL, cameraId: UInt32) {
   return this.symbols.SDL_GetCameraPosition(cameraId) as CameraPosition;
 }
 
 export function openCamera(
   this: SDL,
   options: {
-    cameraId: number;
+    cameraId: UInt32;
     spec?: CameraSpec | null;
   }
 ) {
@@ -88,11 +89,11 @@ export function getCameraPermissionState(this: SDL, camera: Camera) {
 }
 
 export function getCameraId(this: SDL, camera: Camera) {
-  return this.symbols.SDL_GetCameraID(camera);
+  return this.symbols.SDL_GetCameraID(camera) as UInt32;
 }
 
 export function getCameraProperties(this: SDL, camera: Camera) {
-  return this.symbols.SDL_GetCameraProperties(camera);
+  return this.symbols.SDL_GetCameraProperties(camera) as UInt32;
 }
 
 export function getCameraFormat(

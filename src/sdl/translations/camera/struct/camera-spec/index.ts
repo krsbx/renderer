@@ -1,3 +1,4 @@
+import type { Int32 } from '@/types/primitive';
 import { BaseStruct } from '@basestruct';
 import type { Colorspace, PixelFormat } from '@sdl/ffi/constant/pixels';
 import { ByteOffset } from './constant';
@@ -22,34 +23,34 @@ export class CameraSpec extends BaseStruct {
   }
 
   public get width() {
-    return this.$view.getInt32(ByteOffset.width, true);
+    return this.$view.getInt32(ByteOffset.width, true) as Int32;
   }
 
-  public set width(value: number) {
+  public set width(value: Int32) {
     this.$view.setInt32(ByteOffset.width, value, true);
   }
 
   public get height() {
-    return this.$view.getInt32(ByteOffset.height, true);
+    return this.$view.getInt32(ByteOffset.height, true) as Int32;
   }
 
-  public set height(value: number) {
+  public set height(value: Int32) {
     this.$view.setInt32(ByteOffset.height, value, true);
   }
 
   public get framerateNumerator() {
-    return this.$view.getInt32(ByteOffset.framerate_numerator, true);
+    return this.$view.getInt32(ByteOffset.framerate_numerator, true) as Int32;
   }
 
-  public set framerateNumerator(value: number) {
+  public set framerateNumerator(value: Int32) {
     this.$view.setInt32(ByteOffset.framerate_numerator, value, true);
   }
 
   public get framerateDenominator() {
-    return this.$view.getInt32(ByteOffset.framerate_denominator, true);
+    return this.$view.getInt32(ByteOffset.framerate_denominator, true) as Int32;
   }
 
-  public set framerateDenominator(value: number) {
+  public set framerateDenominator(value: Int32) {
     this.$view.setInt32(ByteOffset.framerate_denominator, value, true);
   }
 }

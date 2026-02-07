@@ -1,11 +1,15 @@
 import type { SDL } from '@/sdl';
 import type { AsyncIO, AsyncIOQueue } from '@/sdl/types/definition';
+import type { Int32 } from '@/types/primitive';
 import { stringToCString } from '@utility/common';
 import { AsyncIOOutcome } from '../struct';
 
 export function asyncIOFromFile(
   this: SDL,
-  options: { file: string; mode: string }
+  options: {
+    file: string;
+    mode: string;
+  }
 ) {
   return this.symbols.SDL_AsyncIOFromFile(
     stringToCString(options.file).ptr,
@@ -105,7 +109,7 @@ export function waitAsyncIOResult(
   options: {
     queue: AsyncIOQueue;
     outcome?: AsyncIOOutcome | null;
-    timeoutMS: number;
+    timeoutMS: Int32;
   }
 ) {
   const outcome = options.outcome ?? AsyncIOOutcome.create();

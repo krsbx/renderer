@@ -1,11 +1,12 @@
 import type { AudioStream } from '@/sdl/types/definition';
+import type { Int32 } from '@/types/primitive';
 import type { AudioSpec } from '../struct';
 
 export interface AudioStreamCallbackFn {
   (options: {
     stream: AudioStream;
-    additionalAmount: number;
-    totalAmount: number;
+    additionalAmount: Int32;
+    totalAmount: Int32;
   }): void;
 }
 

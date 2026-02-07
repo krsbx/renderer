@@ -1,3 +1,4 @@
+import type { Int32, UInt32 } from '@/types/primitive';
 import { BaseStruct } from '@basestruct';
 import { stringToCString } from '@utility/common';
 import { CString, type Pointer } from 'bun:ffi';
@@ -21,10 +22,10 @@ export class AssertData extends BaseStruct {
   }
 
   public get triggerCount() {
-    return this.$view.getUint32(ByteOffset.trigger_count, true);
+    return this.$view.getUint32(ByteOffset.trigger_count, true) as UInt32;
   }
 
-  public set triggerCount(value: number) {
+  public set triggerCount(value: UInt32) {
     this.$view.setUint32(ByteOffset.trigger_count, value, true);
   }
 
@@ -63,10 +64,10 @@ export class AssertData extends BaseStruct {
   }
 
   public get lineNum() {
-    return this.$view.getInt32(ByteOffset.linenum, true);
+    return this.$view.getInt32(ByteOffset.linenum, true) as Int32;
   }
 
-  public set lineNum(value: number) {
+  public set lineNum(value: Int32) {
     this.$view.setInt32(ByteOffset.linenum, value, true);
   }
 
